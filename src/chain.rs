@@ -13,6 +13,6 @@ pub trait Chain {
 pub trait ChainMetadata {
     /// Whether the chain supports EIP 1559 or not.
     fn is_legacy(&self) -> bool;
-    /// Whether the chain supports the Shanghai hard fork or not.
+    /// Whether the chain supports push0 or not.
     fn supports_push0(&self) -> bool;
 }

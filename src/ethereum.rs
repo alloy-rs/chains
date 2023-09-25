@@ -8,17 +8,11 @@ use alloc::string::{String, ToString};
 /// Canonical Ethereum Mainnet Chain representation.
 /// Contains the correct chain ID and name,
 /// along with information about EIP 1559 and hard-fork support.
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Default, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Mainnet {
     id: u64,
     name: String,
-}
-
-impl Default for Mainnet {
-    fn default() -> Self {
-        Self::new()
-    }
 }
 
 impl Mainnet {
@@ -54,17 +48,11 @@ impl ChainMetadata for Mainnet {
 /// Canonical Ethereum Sepolia Chain representation.
 /// Contains the correct chain ID and name,
 /// along with information about EIP 1559 and hard-fork support.
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug, Default, PartialEq, Eq, PartialOrd, Ord)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Sepolia {
     id: u64,
     name: String,
-}
-
-impl Default for Sepolia {
-    fn default() -> Self {
-        Self::new()
-    }
 }
 
 impl Sepolia {
@@ -88,12 +76,10 @@ impl Chain for Sepolia {
 }
 
 impl ChainMetadata for Sepolia {
-    /// Returns true if the chain does not support EIP 1559.
     fn is_legacy(&self) -> bool {
         false
     }
 
-    /// Returns true if te chain supports the Shanghai hard fork.
     fn supports_push0(&self) -> bool {
         true
     }
