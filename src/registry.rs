@@ -7,15 +7,10 @@ use crate::{Chain, Mainnet, Sepolia};
 use alloc::{boxed::Box, collections::BTreeMap};
 
 /// Runtime chain registry.
+#[derive(Default)]
 pub struct ChainRegistry {
     /// The registry of chains.
     pub chains: BTreeMap<u64, Box<dyn Chain>>,
-}
-
-impl Default for ChainRegistry {
-    fn default() -> Self {
-        Self::new()
-    }
 }
 
 impl ChainRegistry {
