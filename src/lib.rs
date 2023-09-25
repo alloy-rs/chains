@@ -21,5 +21,6 @@ pub use chain::{Chain, ChainMetadata};
 mod ethereum;
 pub use ethereum::{Mainnet, Sepolia};
 
+/// Runtime chain registry.
 mod registry;
 pub use registry::ChainRegistry;
