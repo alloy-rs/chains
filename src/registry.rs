@@ -44,7 +44,7 @@ impl ChainRegistry {
         self.chains.insert(chain.chain_id(), chain);
     }
 
-    /// Removes a chain from the registry.
+    /// Removes a chain from the registry. Returns Some if the chain already existed, None if it did not.
     pub fn remove_chain(&mut self, id: u64) -> Option<Box<dyn Chain>> {
         self.chains.remove(&id)
     }
