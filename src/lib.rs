@@ -1,6 +1,6 @@
 //! # Chains.
 //!
-//! Base Chain trait and canonical representations of Ethereum Mainnet and Testnet chains.
+//! Base Chain struct and canonical representations of Ethereum Mainnet and Testnet chains.
 
 #![warn(
     missing_docs,
@@ -14,12 +14,12 @@
 #![cfg_attr(docsrs, feature(doc_cfg, doc_auto_cfg))]
 
 /// Main Chain trait.
-mod chain;
-pub use chain::{Chain, ChainMetadata};
+pub mod chain;
+pub use chain::*;
 
 /// Canonical representations of Ethereum-related chains.
 mod ethereum;
-pub use ethereum::{Mainnet, Sepolia};
+pub use ethereum::{MAINNET, SEPOLIA};
 
 /// Runtime chain registry.
 mod registry;
