@@ -29,15 +29,18 @@ impl Chain {
 /// # Examples
 ///
 /// ```
-/// # #[macro_use] extern crate my_lib;
+/// # #[macro_use] extern crate chains;
+/// 
+/// use chains::Chain;
+/// 
 /// # fn main() {
-///     create_chains!(
+///     chains!(
 ///         MAINNET, 1, "Ethereum";
 ///         SEPOLIA, 11155111, "Sepolia"
 ///     );
 /// 
-/// println!("Ethereum: {}, {}", MAINNET.id, MAINNET.name);
-/// println!("Sepolia: {}, {}", SEPOLIA.id, SEPOLIA.name);
+///     println!("Ethereum: {}, {}", MAINNET.id, MAINNET.name);
+///     println!("Sepolia: {}, {}", SEPOLIA.id, SEPOLIA.name);
 /// # }
 /// ```
 
