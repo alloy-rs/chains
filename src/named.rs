@@ -2,7 +2,7 @@ use core::{fmt, time::Duration};
 use num_enum::TryFromPrimitiveError;
 
 // When adding a new chain:
-//   1. add new variant to the Chain enum;
+//   1. add new variant to the NamedChain enum;
 //   2. add extra information in the last `impl` block (explorer URLs, block time) when applicable;
 //   3. (optional) add aliases:
 //     - Strum (in kebab-case): `#[strum(to_string = "<main>", serialize = "<aliasX>", ...)]`
@@ -14,25 +14,25 @@ use num_enum::TryFromPrimitiveError;
 //      More info: <https://serde.rs/variant-attrs.html>
 //     - Add a test at the bottom of the file
 
-// We don't derive Serialize because it is manually implemented using AsRef<str> and it would
-// break a lot of things since Serialize is `kebab-case` vs Deserialize `snake_case`.
-// This means that the Chain type is not "round-trippable", because the Serialize and Deserialize
-// implementations do not use the same case style.
+// We don't derive Serialize because it is manually implemented using AsRef<str> and it would break
+// a lot of things since Serialize is `kebab-case` vs Deserialize `snake_case`. This means that the
+// NamedChain type is not "round-trippable", because the Serialize and Deserialize implementations
+// do not use the same case style.
 
 /// An Ethereum EIP-155 chain.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[derive(strum::AsRefStr)] // AsRef<str>, fmt::Display and serde::Serialize
-#[derive(strum::EnumVariantNames)] // Chain::VARIANTS
+#[derive(strum::EnumVariantNames)] // NamedChain::VARIANTS
 #[derive(strum::EnumString)] // FromStr, TryFrom<&str>
-#[derive(strum::EnumIter)] // Chain::iter
-#[derive(strum::EnumCount)] // Chain::COUNT
+#[derive(strum::EnumIter)] // NamedChain::iter
+#[derive(strum::EnumCount)] // NamedChain::COUNT
 #[derive(num_enum::TryFromPrimitive)] // TryFrom<u64>
 #[cfg_attr(feature = "serde", derive(serde::Deserialize))]
 #[strum(serialize_all = "kebab-case")]
 #[cfg_attr(feature = "serde", serde(rename_all = "snake_case"))]
 #[repr(u64)]
 #[allow(missing_docs)]
-pub enum Chain {
+pub enum NamedChain {
     #[strum(to_string = "mainnet", serialize = "ethlive")]
     #[cfg_attr(feature = "serde", serde(alias = "ethlive"))]
     Mainnet = 1,
@@ -158,7 +158,7 @@ pub enum Chain {
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
 // the `#[default]` attribute as its own `#[num_enum(default)]`
-impl Default for Chain {
+impl Default for NamedChain {
     fn default() -> Self {
         Self::Mainnet
     }
@@ -167,8 +167,8 @@ impl Default for Chain {
 macro_rules! impl_try_from_numeric {
     ($($native:ty)+) => {
         $(
-            impl TryFrom<$native> for Chain {
-                type Error = TryFromPrimitiveError<Chain>;
+            impl TryFrom<$native> for NamedChain {
+                type Error = TryFromPrimitiveError<NamedChain>;
 
                 fn try_from(value: $native) -> Result<Self, Self::Error> {
                     (value as u64).try_into()
@@ -178,32 +178,32 @@ macro_rules! impl_try_from_numeric {
     };
 }
 
-impl From<Chain> for u64 {
-    fn from(chain: Chain) -> Self {
+impl From<NamedChain> for u64 {
+    fn from(chain: NamedChain) -> Self {
         chain as u64
     }
 }
 
 impl_try_from_numeric!(u8 u16 u32 usize);
 
-impl fmt::Display for Chain {
+impl fmt::Display for NamedChain {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.pad(self.as_ref())
     }
 }
 
 #[cfg(feature = "serde")]
-impl serde::Serialize for Chain {
+impl serde::Serialize for NamedChain {
     fn serialize<S: serde::Serializer>(&self, s: S) -> Result<S::Ok, S::Error> {
         s.serialize_str(self.as_ref())
     }
 }
 
 // NB: all utility functions *should* be explicitly exhaustive (not use `_` matcher) so we don't
-//     forget to update them when adding a new `Chain` variant.
+//     forget to update them when adding a new `NamedChain` variant.
 #[allow(clippy::match_like_matches_macro)]
 #[deny(unreachable_patterns, unused_variables)]
-impl Chain {
+impl NamedChain {
     /// Returns the chain's average blocktime, if applicable.
     ///
     /// It can be beneficial to know the average blocktime to adjust the polling of an HTTP provider
@@ -216,14 +216,14 @@ impl Chain {
     /// # Examples
     ///
     /// ```
-    /// use alloy_chains::Chain;
+    /// use alloy_chains::NamedChain;
     /// use std::time::Duration;
     ///
-    /// assert_eq!(Chain::Mainnet.average_blocktime_hint(), Some(Duration::from_millis(12_000)),);
-    /// assert_eq!(Chain::Optimism.average_blocktime_hint(), Some(Duration::from_millis(2_000)),);
+    /// assert_eq!(NamedChain::Mainnet.average_blocktime_hint(), Some(Duration::from_millis(12_000)),);
+    /// assert_eq!(NamedChain::Optimism.average_blocktime_hint(), Some(Duration::from_millis(2_000)),);
     /// ```
     pub const fn average_blocktime_hint(&self) -> Option<Duration> {
-        use Chain::*;
+        use NamedChain::*;
 
         let ms = match self {
             Mainnet => 12_000,
@@ -259,13 +259,13 @@ impl Chain {
     /// # Examples
     ///
     /// ```
-    /// use alloy_chains::Chain;
+    /// use alloy_chains::NamedChain;
     ///
-    /// assert!(!Chain::Mainnet.is_legacy());
-    /// assert!(Chain::Celo.is_legacy());
+    /// assert!(!NamedChain::Mainnet.is_legacy());
+    /// assert!(NamedChain::Celo.is_legacy());
     /// ```
     pub const fn is_legacy(&self) -> bool {
-        use Chain::*;
+        use NamedChain::*;
 
         match self {
             // Known legacy chains / non EIP-1559 compliant
@@ -330,7 +330,11 @@ impl Chain {
     /// `<https://eips.ethereum.org/EIPS/eip-3855>`
     pub const fn supports_push0(&self) -> bool {
         match self {
-            Chain::Mainnet | Chain::Goerli | Chain::Sepolia | Chain::Gnosis | Chain::Chiado => true,
+            NamedChain::Mainnet
+            | NamedChain::Goerli
+            | NamedChain::Sepolia
+            | NamedChain::Gnosis
+            | NamedChain::Chiado => true,
             _ => false,
         }
     }
@@ -342,20 +346,20 @@ impl Chain {
     /// # Examples
     ///
     /// ```
-    /// use alloy_chains::Chain;
+    /// use alloy_chains::NamedChain;
     ///
     /// assert_eq!(
-    ///     Chain::Mainnet.etherscan_urls(),
+    ///     NamedChain::Mainnet.etherscan_urls(),
     ///     Some(("https://api.etherscan.io/api", "https://etherscan.io"))
     /// );
     /// assert_eq!(
-    ///     Chain::Avalanche.etherscan_urls(),
+    ///     NamedChain::Avalanche.etherscan_urls(),
     ///     Some(("https://api.snowtrace.io/api", "https://snowtrace.io"))
     /// );
-    /// assert_eq!(Chain::AnvilHardhat.etherscan_urls(), None);
+    /// assert_eq!(NamedChain::AnvilHardhat.etherscan_urls(), None);
     /// ```
     pub const fn etherscan_urls(&self) -> Option<(&'static str, &'static str)> {
-        use Chain::*;
+        use NamedChain::*;
 
         let urls = match self {
             Mainnet => ("https://api.etherscan.io/api", "https://etherscan.io"),
@@ -522,13 +526,13 @@ impl Chain {
     /// # Examples
     ///
     /// ```
-    /// use alloy_chains::Chain;
+    /// use alloy_chains::NamedChain;
     ///
-    /// assert_eq!(Chain::Mainnet.etherscan_api_key_name(), Some("ETHERSCAN_API_KEY"));
-    /// assert_eq!(Chain::AnvilHardhat.etherscan_api_key_name(), None);
+    /// assert_eq!(NamedChain::Mainnet.etherscan_api_key_name(), Some("ETHERSCAN_API_KEY"));
+    /// assert_eq!(NamedChain::AnvilHardhat.etherscan_api_key_name(), None);
     /// ```
     pub const fn etherscan_api_key_name(&self) -> Option<&'static str> {
-        use Chain::*;
+        use NamedChain::*;
 
         let api_key_name = match self {
             Mainnet
@@ -602,14 +606,14 @@ impl Chain {
     }
 
     /// Returns the chain's blockchain explorer's API key, from the environment variable with the
-    /// name specified in [`etherscan_api_key_name`](Chain::etherscan_api_key_name).
+    /// name specified in [`etherscan_api_key_name`](NamedChain::etherscan_api_key_name).
     ///
     /// # Examples
     ///
     /// ```
-    /// use alloy_chains::Chain;
+    /// use alloy_chains::NamedChain;
     ///
-    /// let chain = Chain::Mainnet;
+    /// let chain = NamedChain::Mainnet;
     /// std::env::set_var(chain.etherscan_api_key_name().unwrap(), "KEY");
     /// assert_eq!(chain.etherscan_api_key().as_deref(), Some("KEY"));
     /// ```
@@ -628,43 +632,43 @@ mod tests {
     #[test]
     #[cfg(feature = "serde")]
     fn default() {
-        assert_eq!(serde_json::to_string(&Chain::default()).unwrap(), "\"mainnet\"");
+        assert_eq!(serde_json::to_string(&NamedChain::default()).unwrap(), "\"mainnet\"");
     }
 
     #[test]
     fn enum_iter() {
-        assert_eq!(Chain::COUNT, Chain::iter().size_hint().0);
+        assert_eq!(NamedChain::COUNT, NamedChain::iter().size_hint().0);
     }
 
     #[test]
     fn roundtrip_string() {
-        for chain in Chain::iter() {
+        for chain in NamedChain::iter() {
             let chain_string = chain.to_string();
             assert_eq!(chain_string, format!("{chain}"));
             assert_eq!(chain_string.as_str(), chain.as_ref());
             #[cfg(feature = "serde")]
             assert_eq!(serde_json::to_string(&chain).unwrap(), format!("\"{chain_string}\""));
 
-            assert_eq!(chain_string.parse::<Chain>().unwrap(), chain);
+            assert_eq!(chain_string.parse::<NamedChain>().unwrap(), chain);
         }
     }
 
     #[test]
     #[cfg(feature = "serde")]
     fn roundtrip_serde() {
-        for chain in Chain::iter() {
+        for chain in NamedChain::iter() {
             let chain_string = serde_json::to_string(&chain).unwrap();
             let chain_string = chain_string.replace('-', "_");
-            assert_eq!(serde_json::from_str::<'_, Chain>(&chain_string).unwrap(), chain);
+            assert_eq!(serde_json::from_str::<'_, NamedChain>(&chain_string).unwrap(), chain);
         }
     }
 
     #[test]
     fn aliases() {
-        use Chain::*;
+        use NamedChain::*;
 
         // kebab-case
-        const ALIASES: &[(Chain, &[&str])] = &[
+        const ALIASES: &[(NamedChain, &[&str])] = &[
             (Mainnet, &["ethlive"]),
             (BinanceSmartChain, &["bsc", "binance-smart-chain"]),
             (BinanceSmartChainTestnet, &["bsc-testnet", "binance-smart-chain-testnet"]),
@@ -681,12 +685,15 @@ mod tests {
 
         for &(chain, aliases) in ALIASES {
             for &alias in aliases {
-                assert_eq!(alias.parse::<Chain>().unwrap(), chain);
+                assert_eq!(alias.parse::<NamedChain>().unwrap(), chain);
 
                 #[cfg(feature = "serde")]
                 {
                     let s = alias.to_string().replace('-', "_");
-                    assert_eq!(serde_json::from_str::<Chain>(&format!("\"{s}\"")).unwrap(), chain);
+                    assert_eq!(
+                        serde_json::from_str::<NamedChain>(&format!("\"{s}\"")).unwrap(),
+                        chain
+                    );
                 }
             }
         }
@@ -695,7 +702,7 @@ mod tests {
     #[test]
     #[cfg(feature = "serde")]
     fn serde_to_string_match() {
-        for chain in Chain::iter() {
+        for chain in NamedChain::iter() {
             let chain_serde = serde_json::to_string(&chain).unwrap();
             let chain_string = format!("\"{chain}\"");
             assert_eq!(chain_serde, chain_string);
