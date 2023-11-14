@@ -1,8 +1,23 @@
 [package]
-name = "chains"
+name = "alloy-chains"
+description = "Canonical type definitions for EIP-155 chains"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+rust-version = "1.65"
+keywords = ["ethers", "primitives", "ethereum", "revm", "reth"]
+categories = ["no-std", "data-structures", "cryptography::cryptocurrencies"]
+homepage = "https://github.com/alloy-rs/chains"
+repository = "https://github.com/alloy-rs/chains"
 
 [dependencies]
+num_enum = { version = "0.7", default-features = false }
+serde = { version = "1.0", default-features = false, features = ["derive"], optional = true }
+strum = { version = "0.25", default-features = false, features = ["derive"] }
+
+[dev-dependencies]
+serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
+
+[features]
+default = ["std"]
+std = ["strum/std", "serde?/std"]
+serde = ["dep:serde"]
