@@ -21,7 +21,7 @@
 extern crate alloc;
 
 mod chain;
-pub use chain::Chain;
+pub use chain::{Chain, ChainKind};
 
 mod named;
-pub use named::NamedChain;
+pub use named::{NamedChain, NamedChainIter};
