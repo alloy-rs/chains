@@ -199,6 +199,28 @@ impl serde::Serialize for NamedChain {
     }
 }
 
+#[cfg(feature = "rlp")]
+impl alloy_rlp::Encodable for NamedChain {
+    #[inline]
+    fn encode(&self, out: &mut dyn alloy_rlp::BufMut) {
+        (*self as u64).encode(out)
+    }
+
+    #[inline]
+    fn length(&self) -> usize {
+        (*self as u64).length()
+    }
+}
+
+#[cfg(feature = "rlp")]
+impl alloy_rlp::Decodable for NamedChain {
+    #[inline]
+    fn decode(buf: &mut &[u8]) -> alloy_rlp::Result<Self> {
+        let n = u64::decode(buf)?;
+        Self::try_from(n).map_err(|_| alloy_rlp::Error::Overflow)
+    }
+}
+
 // NB: all utility functions *should* be explicitly exhaustive (not use `_` matcher) so we don't
 //     forget to update them when adding a new `NamedChain` variant.
 #[allow(clippy::match_like_matches_macro)]

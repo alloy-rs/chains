@@ -176,27 +176,27 @@ impl fmt::Display for Chain {
     }
 }
 
-#[cfg(TODO)]
+#[cfg(feature = "rlp")]
 impl alloy_rlp::Encodable for Chain {
     fn encode(&self, out: &mut dyn alloy_rlp::BufMut) {
         match self {
-            Self::Named(chain) => u64::from(*chain).encode(out),
+            Self::Named(chain) => chain.encode(out),
             Self::Id(id) => id.encode(out),
         }
     }
 
     fn length(&self) -> usize {
         match self {
-            Self::Named(chain) => u64::from(*chain).length(),
+            Self::Named(chain) => chain.length(),
             Self::Id(id) => id.length(),
         }
     }
 }
 
-#[cfg(TODO)]
+#[cfg(feature = "rlp")]
 impl alloy_rlp::Decodable for Chain {
     fn decode(buf: &mut &[u8]) -> alloy_rlp::Result<Self> {
-        Ok(u64::decode(buf)?.into())
+        u64::decode(buf).map(Self::from)
     }
 }
 
@@ -236,41 +236,34 @@ mod tests {
 
     #[test]
     fn test_id() {
-        let chain = Chain::Id(1234);
-        assert_eq!(chain.id(), 1234);
+        assert_eq!(Chain::Id(1234).id(), 1234);
     }
 
     #[test]
     fn test_named_id() {
-        let chain = Chain::Named(NamedChain::Goerli);
-        assert_eq!(chain.id(), 5);
+        assert_eq!(Chain::Named(NamedChain::Goerli).id(), 5);
     }
 
     #[test]
     fn test_display_named_chain() {
-        let chain = Chain::Named(NamedChain::Mainnet);
-        assert_eq!(format!("{chain}"), "mainnet");
+        assert_eq!(Chain::Named(NamedChain::Mainnet).to_string(), "mainnet");
     }
 
     #[test]
     fn test_display_id_chain() {
-        let chain = Chain::Id(1234);
-        assert_eq!(format!("{chain}"), "1234");
+        assert_eq!(Chain::Id(1234).to_string(), "1234");
     }
 
     #[test]
     fn test_from_str_named_chain() {
         let result = Chain::from_str("mainnet");
         let expected = Chain::Named(NamedChain::Mainnet);
-
-        assert!(result.is_ok());
         assert_eq!(result.unwrap(), expected);
     }
 
     #[test]
     fn test_from_str_named_chain_error() {
         let result = Chain::from_str("chain");
-
         assert!(result.is_err());
     }
 
@@ -278,8 +271,6 @@ mod tests {
     fn test_from_str_id_chain() {
         let result = Chain::from_str("1234");
         let expected = Chain::Id(1234);
-
-        assert!(result.is_ok());
         assert_eq!(result.unwrap(), expected);
     }
 
@@ -287,15 +278,15 @@ mod tests {
     fn test_default() {
         let default = Chain::default();
         let expected = Chain::Named(NamedChain::Mainnet);
-
         assert_eq!(default, expected);
     }
 
-    #[cfg(TODO)]
+    #[cfg(feature = "rlp")]
     #[test]
     fn test_id_chain_encodable_length() {
-        let chain = Chain::Id(1234);
+        use alloy_rlp::Encodable;
 
+        let chain = Chain::Id(1234);
         assert_eq!(chain.length(), 3);
     }
 
