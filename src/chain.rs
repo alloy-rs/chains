@@ -1,6 +1,6 @@
 use crate::NamedChain;
 use alloc::string::String;
-use core::{fmt, str::FromStr};
+use core::{fmt, str::FromStr, time::Duration};
 
 #[cfg(feature = "arbitrary")]
 use proptest::{
@@ -35,7 +35,7 @@ impl fmt::Debug for Chain {
 impl Default for Chain {
     #[inline]
     fn default() -> Self {
-        Self::from_named(NamedChain::Mainnet)
+        Self::from_named(NamedChain::default())
     }
 }
 
@@ -75,6 +75,7 @@ impl TryFrom<Chain> for NamedChain {
 impl FromStr for Chain {
     type Err = core::num::ParseIntError;
 
+    #[inline]
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         if let Ok(chain) = NamedChain::from_str(s) {
             Ok(Self::from_named(chain))
@@ -85,6 +86,7 @@ impl FromStr for Chain {
 }
 
 impl fmt::Display for Chain {
+    #[inline]
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self.kind() {
             ChainKind::Named(chain) => chain.fmt(f),
@@ -286,19 +288,81 @@ impl Chain {
             ChainKind::Id(id) => id,
         }
     }
+}
+
+/// Methods delegated to `NamedChain`. Note that [`ChainKind::Id`] won't be converted because it was
+/// already done at construction.
+impl Chain {
+    /// Returns the chain's average blocktime, if applicable.
+    ///
+    /// See [`NamedChain::average_blocktime_hint`] for more info.
+    pub const fn average_blocktime_hint(self) -> Option<Duration> {
+        match self.kind() {
+            ChainKind::Named(named) => named.average_blocktime_hint(),
+            ChainKind::Id(_) => None,
+        }
+    }
+
+    /// Returns whether the chain implements EIP-1559 (with the type 2 EIP-2718 transaction type).
+    ///
+    /// See [`NamedChain::is_legacy`] for more info.
+    pub const fn is_legacy(self) -> bool {
+        match self.kind() {
+            ChainKind::Named(named) => named.is_legacy(),
+            ChainKind::Id(_) => false,
+        }
+    }
+
+    /// Returns whether the chain supports the `PUSH0` opcode or not.
+    ///
+    /// See [`NamedChain::supports_push0`] for more info.
+    pub const fn supports_push0(self) -> bool {
+        match self.kind() {
+            ChainKind::Named(named) => named.supports_push0(),
+            ChainKind::Id(_) => false,
+        }
+    }
+
+    /// Returns the chain's blockchain explorer and its API (Etherscan and Etherscan-like) URLs.
+    ///
+    /// See [`NamedChain::etherscan_urls`] for more info.
+    pub const fn etherscan_urls(self) -> Option<(&'static str, &'static str)> {
+        match self.kind() {
+            ChainKind::Named(named) => named.etherscan_urls(),
+            ChainKind::Id(_) => None,
+        }
+    }
+
+    /// Returns the chain's blockchain explorer's API key environment variable's default name.
+    ///
+    /// See [`NamedChain::etherscan_api_key_name`] for more info.
+    pub const fn etherscan_api_key_name(self) -> Option<&'static str> {
+        match self.kind() {
+            ChainKind::Named(named) => named.etherscan_api_key_name(),
+            ChainKind::Id(_) => None,
+        }
+    }
+
+    /// Returns the chain's blockchain explorer's API key, from the environment variable with the
+    /// name specified in [`etherscan_api_key_name`](NamedChain::etherscan_api_key_name).
+    ///
+    /// See [`NamedChain::etherscan_api_key`] for more info.
+    #[cfg(feature = "std")]
+    pub fn etherscan_api_key(self) -> Option<String> {
+        match self.kind() {
+            ChainKind::Named(named) => named.etherscan_api_key(),
+            ChainKind::Id(_) => None,
+        }
+    }
 
     /// Returns the address of the public DNS node list for the given chain.
     ///
-    /// See also <https://github.com/ethereum/discv4-dns-lists>
+    /// See [`NamedChain::public_dns_network_protocol`] for more info.
     pub fn public_dns_network_protocol(self) -> Option<String> {
-        use NamedChain as C;
-        const DNS_PREFIX: &str = "enrtree://AKA3AM6LPBYEUDMVNU3BSVQJ5AD45Y7YPOHJLEF6W26QOE4VTUDPE@";
-
-        let named: NamedChain = self.try_into().ok()?;
-        if matches!(named, C::Mainnet | C::Goerli | C::Sepolia | C::Ropsten | C::Rinkeby) {
-            return Some(format!("{DNS_PREFIX}all.{}.ethdisco.net", named.as_ref().to_lowercase()));
+        match self.kind() {
+            ChainKind::Named(named) => named.public_dns_network_protocol(),
+            ChainKind::Id(_) => None,
         }
-        None
     }
 }
 
@@ -361,12 +425,5 @@ mod tests {
 
         let chain = Chain::from_id(1234);
         assert_eq!(chain.length(), 3);
-    }
-
-    #[test]
-    fn test_dns_network() {
-        let s = "enrtree://AKA3AM6LPBYEUDMVNU3BSVQJ5AD45Y7YPOHJLEF6W26QOE4VTUDPE@all.mainnet.ethdisco.net";
-        let chain: Chain = NamedChain::Mainnet.into();
-        assert_eq!(s, chain.public_dns_network_protocol().unwrap().as_str());
     }
 }

@@ -1,3 +1,4 @@
+use alloc::string::String;
 use core::{fmt, time::Duration};
 use num_enum::TryFromPrimitiveError;
 
@@ -159,10 +160,26 @@ pub enum NamedChain {
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
 // the `#[default]` attribute as its own `#[num_enum(default)]`
 impl Default for NamedChain {
+    #[inline]
     fn default() -> Self {
         Self::Mainnet
     }
 }
+
+macro_rules! impl_into_numeric {
+    ($($t:ty)+) => {$(
+        impl From<NamedChain> for $t {
+            #[inline]
+            fn from(chain: NamedChain) -> Self {
+                chain as $t
+            }
+        }
+    )+};
+}
+
+impl_into_numeric!(u64 i64 u128 i128);
+#[cfg(target_pointer_width = "64")]
+impl_into_numeric!(usize isize);
 
 macro_rules! impl_try_from_numeric {
     ($($native:ty)+) => {
@@ -170,6 +187,7 @@ macro_rules! impl_try_from_numeric {
             impl TryFrom<$native> for NamedChain {
                 type Error = TryFromPrimitiveError<NamedChain>;
 
+                #[inline]
                 fn try_from(value: $native) -> Result<Self, Self::Error> {
                     (value as u64).try_into()
                 }
@@ -178,17 +196,11 @@ macro_rules! impl_try_from_numeric {
     };
 }
 
-impl From<NamedChain> for u64 {
-    fn from(chain: NamedChain) -> Self {
-        chain as u64
-    }
-}
-
-impl_try_from_numeric!(u8 u16 u32 usize);
+impl_try_from_numeric!(u8 i8 u16 i16 u32 i32 usize isize);
 
 impl fmt::Display for NamedChain {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.pad(self.as_ref())
+        f.pad(self.as_str())
     }
 }
 
@@ -226,6 +238,12 @@ impl alloy_rlp::Decodable for NamedChain {
 #[allow(clippy::match_like_matches_macro)]
 #[deny(unreachable_patterns, unused_variables)]
 impl NamedChain {
+    /// Returns the string representation of the chain.
+    #[inline]
+    pub fn as_str(&self) -> &str {
+        self.as_ref()
+    }
+
     /// Returns the chain's average blocktime, if applicable.
     ///
     /// It can be beneficial to know the average blocktime to adjust the polling of an HTTP provider
@@ -244,7 +262,7 @@ impl NamedChain {
     /// assert_eq!(NamedChain::Mainnet.average_blocktime_hint(), Some(Duration::from_millis(12_000)),);
     /// assert_eq!(NamedChain::Optimism.average_blocktime_hint(), Some(Duration::from_millis(2_000)),);
     /// ```
-    pub const fn average_blocktime_hint(&self) -> Option<Duration> {
+    pub const fn average_blocktime_hint(self) -> Option<Duration> {
         use NamedChain::*;
 
         let ms = match self {
@@ -286,7 +304,7 @@ impl NamedChain {
     /// assert!(!NamedChain::Mainnet.is_legacy());
     /// assert!(NamedChain::Celo.is_legacy());
     /// ```
-    pub const fn is_legacy(&self) -> bool {
+    pub const fn is_legacy(self) -> bool {
         use NamedChain::*;
 
         match self {
@@ -350,7 +368,7 @@ impl NamedChain {
     ///
     /// For more information, see EIP-3855:
     /// `<https://eips.ethereum.org/EIPS/eip-3855>`
-    pub const fn supports_push0(&self) -> bool {
+    pub const fn supports_push0(self) -> bool {
         match self {
             NamedChain::Mainnet
             | NamedChain::Goerli
@@ -380,7 +398,7 @@ impl NamedChain {
     /// );
     /// assert_eq!(NamedChain::AnvilHardhat.etherscan_urls(), None);
     /// ```
-    pub const fn etherscan_urls(&self) -> Option<(&'static str, &'static str)> {
+    pub const fn etherscan_urls(self) -> Option<(&'static str, &'static str)> {
         use NamedChain::*;
 
         let urls = match self {
@@ -553,7 +571,7 @@ impl NamedChain {
     /// assert_eq!(NamedChain::Mainnet.etherscan_api_key_name(), Some("ETHERSCAN_API_KEY"));
     /// assert_eq!(NamedChain::AnvilHardhat.etherscan_api_key_name(), None);
     /// ```
-    pub const fn etherscan_api_key_name(&self) -> Option<&'static str> {
+    pub const fn etherscan_api_key_name(self) -> Option<&'static str> {
         use NamedChain::*;
 
         let api_key_name = match self {
@@ -640,8 +658,30 @@ impl NamedChain {
     /// assert_eq!(chain.etherscan_api_key().as_deref(), Some("KEY"));
     /// ```
     #[cfg(feature = "std")]
-    pub fn etherscan_api_key(&self) -> Option<String> {
+    pub fn etherscan_api_key(self) -> Option<String> {
         self.etherscan_api_key_name().and_then(|name| std::env::var(name).ok())
+    }
+
+    /// Returns the address of the public DNS node list for the given chain.
+    ///
+    /// See also <https://github.com/ethereum/discv4-dns-lists>.
+    pub fn public_dns_network_protocol(self) -> Option<String> {
+        const DNS_PREFIX: &str = "enrtree://AKA3AM6LPBYEUDMVNU3BSVQJ5AD45Y7YPOHJLEF6W26QOE4VTUDPE@";
+        if let Self::Mainnet | Self::Goerli | Self::Sepolia | Self::Ropsten | Self::Rinkeby = self {
+            // `{DNS_PREFIX}all.{self.lower()}.ethdisco.net`
+            let mut s = String::with_capacity(DNS_PREFIX.len() + 32);
+            s.push_str(DNS_PREFIX);
+            s.push_str("all.");
+            let chain_str = self.as_ref();
+            s.push_str(chain_str);
+            let l = s.len();
+            s[l - chain_str.len()..].make_ascii_lowercase();
+            s.push_str(".ethdisco.net");
+
+            Some(s)
+        } else {
+            None
+        }
     }
 }
 
@@ -729,5 +769,11 @@ mod tests {
             let chain_string = format!("\"{chain}\"");
             assert_eq!(chain_serde, chain_string);
         }
+    }
+
+    #[test]
+    fn test_dns_network() {
+        let s = "enrtree://AKA3AM6LPBYEUDMVNU3BSVQJ5AD45Y7YPOHJLEF6W26QOE4VTUDPE@all.mainnet.ethdisco.net";
+        assert_eq!(NamedChain::Mainnet.public_dns_network_protocol().unwrap(), s);
     }
 }
