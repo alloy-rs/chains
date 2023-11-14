@@ -20,5 +20,8 @@
 #[macro_use]
 extern crate alloc;
 
+mod chain;
+pub use chain::Chain;
+
 mod named;
 pub use named::NamedChain;
