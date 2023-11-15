@@ -14,7 +14,7 @@ use strum::{EnumCount, IntoEnumIterator};
 #[derive(Clone, Copy, PartialEq, Eq, Hash)]
 pub struct Chain(ChainKind);
 
-/// The kind of chain. Returned by [`Chain::kind`].
+/// The kind of chain. Returned by [`Chain::kind`]. Prefer using [`Chain`] instead.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub enum ChainKind {
     /// Known chain.
