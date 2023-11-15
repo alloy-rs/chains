@@ -115,16 +115,20 @@ impl<'de> serde::Deserialize<'de> for Chain {
                 formatter.write_str("chain name or ID")
             }
 
+            fn visit_i64<E: serde::de::Error>(self, v: i64) -> Result<Self::Value, E> {
+                if v.is_negative() {
+                    Err(serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &self))
+                } else {
+                    Ok(Chain::from_id(v as u64))
+                }
+            }
+
             fn visit_u64<E: serde::de::Error>(self, value: u64) -> Result<Self::Value, E> {
                 Ok(Chain::from_id(value))
             }
 
             fn visit_str<E: serde::de::Error>(self, value: &str) -> Result<Self::Value, E> {
                 value.parse().map_err(serde::de::Error::custom)
-            }
-
-            fn visit_string<E: serde::de::Error>(self, v: String) -> Result<Self::Value, E> {
-                self.visit_str(&v)
             }
         }
 
