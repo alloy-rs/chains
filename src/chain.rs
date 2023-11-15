@@ -12,12 +12,10 @@ use strum::{EnumCount, IntoEnumIterator};
 
 /// Either a known [`NamedChain`] or a EIP-155 chain ID.
 #[derive(Clone, Copy, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Chain(ChainKind);
 
-/// The kind of chain. Returned by [`Chain::kind`].
+/// The kind of chain. Returned by [`Chain::kind`]. Prefer using [`Chain`] instead.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum ChainKind {
     /// Known chain.
     Named(NamedChain),
@@ -92,6 +90,49 @@ impl fmt::Display for Chain {
             ChainKind::Named(chain) => chain.fmt(f),
             ChainKind::Id(id) => id.fmt(f),
         }
+    }
+}
+
+#[cfg(feature = "serde")]
+impl serde::Serialize for Chain {
+    fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
+        match self.kind() {
+            ChainKind::Named(chain) => chain.serialize(serializer),
+            ChainKind::Id(id) => id.serialize(serializer),
+        }
+    }
+}
+
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for Chain {
+    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        struct ChainVisitor;
+
+        impl<'de> serde::de::Visitor<'de> for ChainVisitor {
+            type Value = Chain;
+
+            fn expecting(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
+                formatter.write_str("chain name or ID")
+            }
+
+            fn visit_i64<E: serde::de::Error>(self, v: i64) -> Result<Self::Value, E> {
+                if v.is_negative() {
+                    Err(serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &self))
+                } else {
+                    Ok(Chain::from_id(v as u64))
+                }
+            }
+
+            fn visit_u64<E: serde::de::Error>(self, value: u64) -> Result<Self::Value, E> {
+                Ok(Chain::from_id(value))
+            }
+
+            fn visit_str<E: serde::de::Error>(self, value: &str) -> Result<Self::Value, E> {
+                value.parse().map_err(serde::de::Error::custom)
+            }
+        }
+
+        deserializer.deserialize_any(ChainVisitor)
     }
 }
 
@@ -425,5 +466,21 @@ mod tests {
 
         let chain = Chain::from_id(1234);
         assert_eq!(chain.length(), 3);
+    }
+
+    #[cfg(feature = "serde")]
+    #[test]
+    fn test_serde() {
+        let chains = r#"["mainnet",1,80001,80002,"mumbai"]"#;
+        let re = r#"["mainnet","mainnet","mumbai",80002,"mumbai"]"#;
+        let expected = [
+            Chain::mainnet(),
+            Chain::mainnet(),
+            Chain::from_named(NamedChain::PolygonMumbai),
+            Chain::from_id(80002),
+            Chain::from_named(NamedChain::PolygonMumbai),
+        ];
+        assert_eq!(serde_json::from_str::<alloc::vec::Vec<Chain>>(chains).unwrap(), expected);
+        assert_eq!(serde_json::to_string(&expected).unwrap(), re);
     }
 }
