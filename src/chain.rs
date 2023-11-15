@@ -476,7 +476,7 @@ mod tests {
             Chain::from_id(80002),
             Chain::from_named(NamedChain::PolygonMumbai),
         ];
-        assert_eq!(serde_json::from_str::<Vec<Chain>>(chains).unwrap(), expected);
+        assert_eq!(serde_json::from_str::<alloc::vec::Vec<Chain>>(chains).unwrap(), expected);
         assert_eq!(serde_json::to_string(&expected).unwrap(), re);
     }
 }
