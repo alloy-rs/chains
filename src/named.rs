@@ -375,19 +375,30 @@ impl NamedChain {
         }
     }
 
-    /// Returns whether the chain supports the `PUSH0` opcode or not.
+    /// Returns whether the chain supports the [Shanghai hardfork][ref].
     ///
-    /// For more information, see EIP-3855:
-    /// `<https://eips.ethereum.org/EIPS/eip-3855>`
-    pub const fn supports_push0(self) -> bool {
+    /// [ref]: https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/shanghai.md
+    pub const fn supports_shanghai(self) -> bool {
+        use NamedChain as C;
+
         match self {
-            NamedChain::Mainnet
-            | NamedChain::Goerli
-            | NamedChain::Sepolia
-            | NamedChain::Gnosis
-            | NamedChain::Chiado => true,
+            C::Mainnet
+            | C::Goerli
+            | C::Sepolia
+            | C::OptimismGoerli
+            | C::OptimismSepolia
+            | C::BaseGoerli
+            | C::Gnosis
+            | C::Chiado
+            | C::ZoraSepolia => true,
             _ => false,
         }
+    }
+
+    #[doc(hidden)]
+    #[deprecated(since = "0.1.3", note = "use `supports_shanghai` instead")]
+    pub const fn supports_push0(self) -> bool {
+        self.supports_shanghai()
     }
 
     /// Returns the chain's blockchain explorer and its API (Etherscan and Etherscan-like) URLs.
