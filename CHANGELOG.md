@@ -12,12 +12,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Zora chain ([#8])
+- `supports_shanghai` ([#9])
 
 ### Changed
 
 - Metis to return `true` for `is_legacy` ([#11])
 
+### Deprecated
+
+- `supports_push0` ([#9])
+
 [#8]: https://github.com/alloy-rs/chains/pull/8
+[#9]: https://github.com/alloy-rs/chains/pull/9
 [#11]: https://github.com/alloy-rs/chains/pull/11
 
 ## [0.1.2](https://github.com/alloy-rs/chains/releases/tag/v0.1.2) - 2023-11-15
