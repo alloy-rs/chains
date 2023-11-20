@@ -354,14 +354,22 @@ impl Chain {
         }
     }
 
-    /// Returns whether the chain supports the `PUSH0` opcode or not.
+    /// Returns whether the chain supports the [Shanghai hardfork][ref].
     ///
-    /// See [`NamedChain::supports_push0`] for more info.
-    pub const fn supports_push0(self) -> bool {
+    /// See [`NamedChain::supports_shanghai`] for more info.
+    ///
+    /// [ref]: https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/shanghai.md
+    pub const fn supports_shanghai(self) -> bool {
         match self.kind() {
-            ChainKind::Named(named) => named.supports_push0(),
+            ChainKind::Named(named) => named.supports_shanghai(),
             ChainKind::Id(_) => false,
         }
+    }
+
+    #[doc(hidden)]
+    #[deprecated(since = "0.1.3", note = "use `supports_shanghai` instead")]
+    pub const fn supports_push0(self) -> bool {
+        self.supports_shanghai()
     }
 
     /// Returns the chain's blockchain explorer and its API (Etherscan and Etherscan-like) URLs.
