@@ -276,7 +276,14 @@ impl NamedChain {
             | C::ArbitrumGoerli
             | C::ArbitrumSepolia
             | C::ArbitrumNova => 1_300,
-            C::Optimism | C::OptimismGoerli | C::OptimismSepolia => 2_000,
+            C::Optimism
+            | C::OptimismGoerli
+            | C::OptimismSepolia
+            | C::Base
+            | C::BaseGoerli
+            | C::Zora
+            | C::ZoraGoerli
+            | C::ZoraSepolia => 2_000,
             C::Polygon | C::PolygonMumbai => 2_100,
             C::Moonbeam | C::Moonriver => 12_500,
             C::BinanceSmartChain | C::BinanceSmartChainTestnet => 3_000,
@@ -308,8 +315,6 @@ impl NamedChain {
             | C::Rsk
             | C::EmeraldTestnet
             | C::Boba
-            | C::Base
-            | C::BaseGoerli
             | C::ZkSync
             | C::ZkSyncTestnet
             | C::PolygonZkEvm
@@ -318,10 +323,7 @@ impl NamedChain {
             | C::Linea
             | C::LineaTestnet
             | C::Mantle
-            | C::MantleTestnet
-            | C::Zora
-            | C::ZoraGoerli
-            | C::ZoraSepolia => return None,
+            | C::MantleTestnet => return None,
         };
 
         Some(Duration::from_millis(ms))
