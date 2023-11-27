@@ -1,368 +1,442 @@
-use crate::NamedChain;
 use alloc::string::String;
-use core::{fmt, str::FromStr, time::Duration};
+use core::{fmt, time::Duration};
+use num_enum::TryFromPrimitiveError;
 
-#[cfg(feature = "arbitrary")]
-use proptest::{
-    sample::Selector,
-    strategy::{Map, TupleUnion, WA},
-};
-#[cfg(feature = "arbitrary")]
-use strum::{EnumCount, IntoEnumIterator};
+// When adding a new chain:
+//   1. add new variant to the NamedChain enum;
+//   2. add extra information in the last `impl` block (explorer URLs, block time) when applicable;
+//   3. (optional) add aliases:
+//     - Strum (in kebab-case): `#[strum(to_string = "<main>", serialize = "<aliasX>", ...)]`
+//      `to_string = "<main>"` must be present and will be used in `Display`, `Serialize`
+//      and `FromStr`, while `serialize = "<aliasX>"` will be appended to `FromStr`.
+//      More info: <https://docs.rs/strum/latest/strum/additional_attributes/index.html#attributes-on-variants>
+//     - Serde (in snake_case): `#[cfg_attr(feature = "serde", serde(alias = "<aliasX>", ...))]`
+//      Aliases are appended to the `Deserialize` implementation.
+//      More info: <https://serde.rs/variant-attrs.html>
+//     - Add a test at the bottom of the file
 
-/// Either a known [`NamedChain`] or a EIP-155 chain ID.
-#[derive(Clone, Copy, PartialEq, Eq, Hash)]
-pub struct Chain(ChainKind);
+// We don't derive Serialize because it is manually implemented using AsRef<str> and it would break
+// a lot of things since Serialize is `kebab-case` vs Deserialize `snake_case`. This means that the
+// NamedChain type is not "round-trippable", because the Serialize and Deserialize implementations
+// do not use the same case style.
 
-/// The kind of chain. Returned by [`Chain::kind`]. Prefer using [`Chain`] instead.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-pub enum ChainKind {
-    /// Known chain.
-    Named(NamedChain),
-    /// EIP-155 chain ID.
-    Id(u64),
+/// An Ethereum EIP-155 chain.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(strum::AsRefStr)] // AsRef<str>, fmt::Display and serde::Serialize
+#[derive(strum::EnumVariantNames)] // NamedChain::VARIANTS
+#[derive(strum::EnumString)] // FromStr, TryFrom<&str>
+#[derive(strum::EnumIter)] // NamedChain::iter
+#[derive(strum::EnumCount)] // NamedChain::COUNT
+#[derive(num_enum::TryFromPrimitive)] // TryFrom<u64>
+#[cfg_attr(feature = "serde", derive(serde::Deserialize))]
+#[strum(serialize_all = "kebab-case")]
+#[cfg_attr(feature = "serde", serde(rename_all = "snake_case"))]
+#[repr(u64)]
+#[allow(missing_docs)]
+pub enum NamedChain {
+    #[strum(to_string = "mainnet", serialize = "ethlive")]
+    #[cfg_attr(feature = "serde", serde(alias = "ethlive"))]
+    Mainnet = 1,
+    Morden = 2,
+    Ropsten = 3,
+    Rinkeby = 4,
+    Goerli = 5,
+    Kovan = 42,
+    Holesky = 17000,
+    Sepolia = 11155111,
+
+    Optimism = 10,
+    OptimismKovan = 69,
+    OptimismGoerli = 420,
+    OptimismSepolia = 11155420,
+
+    Arbitrum = 42161,
+    ArbitrumTestnet = 421611,
+    ArbitrumGoerli = 421613,
+    ArbitrumSepolia = 421614,
+    ArbitrumNova = 42170,
+
+    Cronos = 25,
+    CronosTestnet = 338,
+
+    Rsk = 30,
+
+    #[strum(to_string = "bsc", serialize = "binance-smart-chain")]
+    #[cfg_attr(feature = "serde", serde(alias = "bsc"))]
+    BinanceSmartChain = 56,
+    #[strum(to_string = "bsc-testnet", serialize = "binance-smart-chain-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "bsc_testnet"))]
+    BinanceSmartChainTestnet = 97,
+
+    Poa = 99,
+    Sokol = 77,
+
+    Scroll = 534352,
+    ScrollAlphaTestnet = 534353,
+
+    Metis = 1088,
+
+    #[strum(to_string = "xdai", serialize = "gnosis", serialize = "gnosis-chain")]
+    #[cfg_attr(feature = "serde", serde(alias = "xdai", alias = "gnosis", alias = "gnosis_chain"))]
+    Gnosis = 100,
+
+    Polygon = 137,
+    #[strum(to_string = "mumbai", serialize = "polygon-mumbai")]
+    #[cfg_attr(feature = "serde", serde(alias = "mumbai"))]
+    PolygonMumbai = 80001,
+    #[strum(serialize = "polygon-zkevm", serialize = "zkevm")]
+    #[cfg_attr(feature = "serde", serde(alias = "zkevm", alias = "polygon_zkevm"))]
+    PolygonZkEvm = 1101,
+    #[strum(serialize = "polygon-zkevm-testnet", serialize = "zkevm-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "zkevm_testnet", alias = "polygon_zkevm_testnet"))]
+    PolygonZkEvmTestnet = 1442,
+
+    Fantom = 250,
+    FantomTestnet = 4002,
+
+    Moonbeam = 1284,
+    MoonbeamDev = 1281,
+
+    Moonriver = 1285,
+
+    Moonbase = 1287,
+
+    Dev = 1337,
+    #[strum(to_string = "anvil-hardhat", serialize = "anvil", serialize = "hardhat")]
+    #[cfg_attr(feature = "serde", serde(alias = "anvil", alias = "hardhat"))]
+    AnvilHardhat = 31337,
+
+    Evmos = 9001,
+    EvmosTestnet = 9000,
+
+    Chiado = 10200,
+
+    Oasis = 26863,
+
+    Emerald = 42262,
+    EmeraldTestnet = 42261,
+
+    FilecoinMainnet = 314,
+    FilecoinCalibrationTestnet = 314159,
+
+    Avalanche = 43114,
+    #[strum(to_string = "fuji", serialize = "avalanche-fuji")]
+    #[cfg_attr(feature = "serde", serde(alias = "fuji"))]
+    AvalancheFuji = 43113,
+
+    Celo = 42220,
+    CeloAlfajores = 44787,
+    CeloBaklava = 62320,
+
+    Aurora = 1313161554,
+    AuroraTestnet = 1313161555,
+
+    Canto = 7700,
+    CantoTestnet = 740,
+
+    Boba = 288,
+
+    Base = 8453,
+    BaseGoerli = 84531,
+
+    Linea = 59144,
+    LineaTestnet = 59140,
+
+    #[strum(to_string = "zksync")]
+    #[cfg_attr(feature = "serde", serde(alias = "zksync"))]
+    ZkSync = 324,
+    #[strum(to_string = "zksync-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "zksync_testnet"))]
+    ZkSyncTestnet = 280,
+
+    #[strum(to_string = "mantle")]
+    #[cfg_attr(feature = "serde", serde(alias = "mantle"))]
+    Mantle = 5000,
+    #[strum(to_string = "mantle-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "mantle_testnet"))]
+    MantleTestnet = 5001,
+
+    Zora = 7777777,
+    ZoraGoerli = 999,
+    ZoraSepolia = 999999999,
 }
 
-impl fmt::Debug for Chain {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("Chain::")?;
-        self.kind().fmt(f)
-    }
-}
-
-impl Default for Chain {
+// This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
+// the `#[default]` attribute as its own `#[num_enum(default)]`
+impl Default for NamedChain {
     #[inline]
     fn default() -> Self {
-        Self::from_named(NamedChain::default())
+        Self::Mainnet
     }
 }
 
-impl From<NamedChain> for Chain {
-    #[inline]
-    fn from(id: NamedChain) -> Self {
-        Self::from_named(id)
-    }
-}
-
-impl From<u64> for Chain {
-    #[inline]
-    fn from(id: u64) -> Self {
-        Self::from_id(id)
-    }
-}
-
-impl From<Chain> for u64 {
-    #[inline]
-    fn from(chain: Chain) -> Self {
-        chain.id()
-    }
-}
-
-impl TryFrom<Chain> for NamedChain {
-    type Error = <NamedChain as TryFrom<u64>>::Error;
-
-    #[inline]
-    fn try_from(chain: Chain) -> Result<Self, Self::Error> {
-        match *chain.kind() {
-            ChainKind::Named(chain) => Ok(chain),
-            ChainKind::Id(id) => id.try_into(),
-        }
-    }
-}
-
-impl FromStr for Chain {
-    type Err = core::num::ParseIntError;
-
-    #[inline]
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if let Ok(chain) = NamedChain::from_str(s) {
-            Ok(Self::from_named(chain))
-        } else {
-            s.parse::<u64>().map(Self::from_id)
-        }
-    }
-}
-
-impl fmt::Display for Chain {
-    #[inline]
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self.kind() {
-            ChainKind::Named(chain) => chain.fmt(f),
-            ChainKind::Id(id) => id.fmt(f),
-        }
-    }
-}
-
-#[cfg(feature = "serde")]
-impl serde::Serialize for Chain {
-    fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
-        match self.kind() {
-            ChainKind::Named(chain) => chain.serialize(serializer),
-            ChainKind::Id(id) => id.serialize(serializer),
-        }
-    }
-}
-
-#[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for Chain {
-    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-        struct ChainVisitor;
-
-        impl<'de> serde::de::Visitor<'de> for ChainVisitor {
-            type Value = Chain;
-
-            fn expecting(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
-                formatter.write_str("chain name or ID")
+macro_rules! impl_into_numeric {
+    ($($t:ty)+) => {$(
+        impl From<NamedChain> for $t {
+            #[inline]
+            fn from(chain: NamedChain) -> Self {
+                chain as $t
             }
+        }
+    )+};
+}
 
-            fn visit_i64<E: serde::de::Error>(self, v: i64) -> Result<Self::Value, E> {
-                if v.is_negative() {
-                    Err(serde::de::Error::invalid_value(serde::de::Unexpected::Signed(v), &self))
-                } else {
-                    Ok(Chain::from_id(v as u64))
+impl_into_numeric!(u64 i64 u128 i128);
+#[cfg(target_pointer_width = "64")]
+impl_into_numeric!(usize isize);
+
+macro_rules! impl_try_from_numeric {
+    ($($native:ty)+) => {
+        $(
+            impl TryFrom<$native> for NamedChain {
+                type Error = TryFromPrimitiveError<NamedChain>;
+
+                #[inline]
+                fn try_from(value: $native) -> Result<Self, Self::Error> {
+                    (value as u64).try_into()
                 }
             }
+        )+
+    };
+}
 
-            fn visit_u64<E: serde::de::Error>(self, value: u64) -> Result<Self::Value, E> {
-                Ok(Chain::from_id(value))
-            }
+impl_try_from_numeric!(u8 i8 u16 i16 u32 i32 usize isize);
 
-            fn visit_str<E: serde::de::Error>(self, value: &str) -> Result<Self::Value, E> {
-                value.parse().map_err(serde::de::Error::custom)
-            }
-        }
+impl fmt::Display for NamedChain {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.pad(self.as_str())
+    }
+}
 
-        deserializer.deserialize_any(ChainVisitor)
+#[cfg(feature = "serde")]
+impl serde::Serialize for NamedChain {
+    fn serialize<S: serde::Serializer>(&self, s: S) -> Result<S::Ok, S::Error> {
+        s.serialize_str(self.as_ref())
     }
 }
 
 #[cfg(feature = "rlp")]
-impl alloy_rlp::Encodable for Chain {
+impl alloy_rlp::Encodable for NamedChain {
     #[inline]
     fn encode(&self, out: &mut dyn alloy_rlp::BufMut) {
-        self.id().encode(out)
+        (*self as u64).encode(out)
     }
 
     #[inline]
     fn length(&self) -> usize {
-        self.id().length()
+        (*self as u64).length()
     }
 }
 
 #[cfg(feature = "rlp")]
-impl alloy_rlp::Decodable for Chain {
+impl alloy_rlp::Decodable for NamedChain {
     #[inline]
     fn decode(buf: &mut &[u8]) -> alloy_rlp::Result<Self> {
-        u64::decode(buf).map(Self::from)
+        let n = u64::decode(buf)?;
+        Self::try_from(n).map_err(|_| alloy_rlp::Error::Overflow)
     }
 }
 
-#[cfg(feature = "arbitrary")]
-impl<'a> arbitrary::Arbitrary<'a> for Chain {
-    fn arbitrary(u: &mut arbitrary::Unstructured<'a>) -> arbitrary::Result<Self> {
-        if u.ratio(1, 2)? {
-            let chain = u.int_in_range(0..=(NamedChain::COUNT - 1))?;
-
-            return Ok(Self::from_named(NamedChain::iter().nth(chain).expect("in range")));
-        }
-
-        Ok(Self::from_id(u64::arbitrary(u)?))
-    }
-}
-
-#[cfg(feature = "arbitrary")]
-impl proptest::arbitrary::Arbitrary for Chain {
-    type Parameters = ();
-    type Strategy = TupleUnion<(
-        WA<Map<proptest::sample::SelectorStrategy, fn(proptest::sample::Selector) -> Chain>>,
-        WA<Map<proptest::num::u64::Any, fn(u64) -> Chain>>,
-    )>;
-
-    fn arbitrary_with((): ()) -> Self::Strategy {
-        use proptest::prelude::*;
-        prop_oneof![
-            any::<Selector>().prop_map(move |sel| Self::from_named(sel.select(NamedChain::iter()))),
-            any::<u64>().prop_map(Self::from_id),
-        ]
-    }
-}
-
-impl Chain {
-    #[allow(non_snake_case)]
-    #[doc(hidden)]
-    #[deprecated(since = "0.1.0", note = "use `Self::from_named()` instead")]
+// NB: all utility functions *should* be explicitly exhaustive (not use `_` matcher) so we don't
+//     forget to update them when adding a new `NamedChain` variant.
+#[allow(clippy::match_like_matches_macro)]
+#[deny(unreachable_patterns, unused_variables)]
+impl NamedChain {
+    /// Returns the string representation of the chain.
     #[inline]
-    pub const fn Named(named: NamedChain) -> Self {
-        Self::from_named(named)
+    pub fn as_str(&self) -> &str {
+        self.as_ref()
     }
 
-    #[allow(non_snake_case)]
-    #[doc(hidden)]
-    #[deprecated(since = "0.1.0", note = "use `Self::from_id()` instead")]
-    #[inline]
-    pub const fn Id(id: u64) -> Self {
-        Self::from_id_unchecked(id)
-    }
-
-    /// Creates a new [`Chain`] by wrapping a [`NamedChain`].
-    #[inline]
-    pub const fn from_named(named: NamedChain) -> Self {
-        Self(ChainKind::Named(named))
-    }
-
-    /// Creates a new [`Chain`] by wrapping a [`NamedChain`].
-    #[inline]
-    pub fn from_id(id: u64) -> Self {
-        if let Ok(named) = NamedChain::try_from(id) {
-            Self::from_named(named)
-        } else {
-            Self::from_id_unchecked(id)
-        }
-    }
-
-    /// Creates a new [`Chain`] from the given ID, without checking if an associated [`NamedChain`]
-    /// exists.
-    ///
-    /// This is discouraged, as other methods assume that the chain ID is not known, but it is not
-    /// unsafe.
-    #[inline]
-    pub const fn from_id_unchecked(id: u64) -> Self {
-        Self(ChainKind::Id(id))
-    }
-
-    /// Returns the mainnet chain.
-    #[inline]
-    pub const fn mainnet() -> Self {
-        Self::from_named(NamedChain::Mainnet)
-    }
-
-    /// Returns the goerli chain.
-    #[inline]
-    pub const fn goerli() -> Self {
-        Self::from_named(NamedChain::Goerli)
-    }
-
-    /// Returns the sepolia chain.
-    #[inline]
-    pub const fn sepolia() -> Self {
-        Self::from_named(NamedChain::Sepolia)
-    }
-
-    /// Returns the holesky chain.
-    #[inline]
-    pub const fn holesky() -> Self {
-        Self::from_named(NamedChain::Holesky)
-    }
-
-    /// Returns the optimism goerli chain.
-    #[inline]
-    pub const fn optimism_goerli() -> Self {
-        Self::from_named(NamedChain::OptimismGoerli)
-    }
-
-    /// Returns the optimism mainnet chain.
-    #[inline]
-    pub const fn optimism_mainnet() -> Self {
-        Self::from_named(NamedChain::Optimism)
-    }
-
-    /// Returns the base goerli chain.
-    #[inline]
-    pub const fn base_goerli() -> Self {
-        Self::from_named(NamedChain::BaseGoerli)
-    }
-
-    /// Returns the base mainnet chain.
-    #[inline]
-    pub const fn base_mainnet() -> Self {
-        Self::from_named(NamedChain::Base)
-    }
-
-    /// Returns the dev chain.
-    #[inline]
-    pub const fn dev() -> Self {
-        Self::from_named(NamedChain::Dev)
-    }
-
-    /// Returns the kind of this chain.
-    #[inline]
-    pub const fn kind(&self) -> &ChainKind {
-        &self.0
-    }
-
-    /// Returns the kind of this chain.
-    #[inline]
-    pub const fn into_kind(self) -> ChainKind {
-        self.0
-    }
-
-    /// Returns true if the chain contains Optimism configuration.
-    #[inline]
-    pub const fn is_optimism(self) -> bool {
-        matches!(
-            self.kind(),
-            ChainKind::Named(
-                NamedChain::Optimism
-                    | NamedChain::OptimismGoerli
-                    | NamedChain::OptimismKovan
-                    | NamedChain::OptimismSepolia
-                    | NamedChain::Base
-                    | NamedChain::BaseGoerli
-            )
-        )
-    }
-
-    /// Attempts to convert the chain into a named chain.
-    #[inline]
-    pub const fn named(self) -> Option<NamedChain> {
-        match *self.kind() {
-            ChainKind::Named(named) => Some(named),
-            ChainKind::Id(_) => None,
-        }
-    }
-
-    /// The ID of the chain.
-    #[inline]
-    pub const fn id(self) -> u64 {
-        match *self.kind() {
-            ChainKind::Named(named) => named as u64,
-            ChainKind::Id(id) => id,
-        }
-    }
-}
-
-/// Methods delegated to `NamedChain`. Note that [`ChainKind::Id`] won't be converted because it was
-/// already done at construction.
-impl Chain {
     /// Returns the chain's average blocktime, if applicable.
     ///
-    /// See [`NamedChain::average_blocktime_hint`] for more info.
+    /// It can be beneficial to know the average blocktime to adjust the polling of an HTTP provider
+    /// for example.
+    ///
+    /// **Note:** this is not an accurate average, but is rather a sensible default derived from
+    /// blocktime charts such as [Etherscan's](https://etherscan.com/chart/blocktime)
+    /// or [Polygonscan's](https://polygonscan.com/chart/blocktime).
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use alloy_chains::NamedChain;
+    /// use std::time::Duration;
+    ///
+    /// assert_eq!(NamedChain::Mainnet.average_blocktime_hint(), Some(Duration::from_millis(12_000)),);
+    /// assert_eq!(NamedChain::Optimism.average_blocktime_hint(), Some(Duration::from_millis(2_000)),);
+    /// ```
     pub const fn average_blocktime_hint(self) -> Option<Duration> {
-        match self.kind() {
-            ChainKind::Named(named) => named.average_blocktime_hint(),
-            ChainKind::Id(_) => None,
-        }
+        use NamedChain as C;
+
+        let ms = match self {
+            C::Mainnet => 12_000,
+            C::Arbitrum
+            | C::ArbitrumTestnet
+            | C::ArbitrumGoerli
+            | C::ArbitrumSepolia
+            | C::ArbitrumNova => 1_300,
+            C::Optimism
+            | C::OptimismGoerli
+            | C::OptimismSepolia
+            | C::Base
+            | C::BaseGoerli
+            | C::Zora
+            | C::ZoraGoerli
+            | C::ZoraSepolia => 2_000,
+            C::Polygon | C::PolygonMumbai => 2_100,
+            C::Moonbeam | C::Moonriver => 12_500,
+            C::BinanceSmartChain | C::BinanceSmartChainTestnet => 3_000,
+            C::Avalanche | C::AvalancheFuji => 2_000,
+            C::Fantom | C::FantomTestnet => 1_200,
+            C::Cronos | C::CronosTestnet | C::Canto | C::CantoTestnet => 5_700,
+            C::Evmos | C::EvmosTestnet => 1_900,
+            C::Aurora | C::AuroraTestnet => 1_100,
+            C::Oasis => 5_500,
+            C::Emerald => 6_000,
+            C::Dev | C::AnvilHardhat => 200,
+            C::Celo | C::CeloAlfajores | C::CeloBaklava => 5_000,
+            C::FilecoinCalibrationTestnet | C::FilecoinMainnet => 30_000,
+            C::Scroll | C::ScrollAlphaTestnet => 3_000,
+            C::Gnosis | C::Chiado => 5_000,
+            // Explicitly exhaustive. See NB above.
+            C::Morden
+            | C::Ropsten
+            | C::Rinkeby
+            | C::Goerli
+            | C::Kovan
+            | C::Sepolia
+            | C::Holesky
+            | C::Moonbase
+            | C::MoonbeamDev
+            | C::OptimismKovan
+            | C::Poa
+            | C::Sokol
+            | C::Rsk
+            | C::EmeraldTestnet
+            | C::Boba
+            | C::ZkSync
+            | C::ZkSyncTestnet
+            | C::PolygonZkEvm
+            | C::PolygonZkEvmTestnet
+            | C::Metis
+            | C::Linea
+            | C::LineaTestnet
+            | C::Mantle
+            | C::MantleTestnet => return None,
+        };
+
+        Some(Duration::from_millis(ms))
     }
 
     /// Returns whether the chain implements EIP-1559 (with the type 2 EIP-2718 transaction type).
     ///
-    /// See [`NamedChain::is_legacy`] for more info.
+    /// # Examples
+    ///
+    /// ```
+    /// use alloy_chains::NamedChain;
+    ///
+    /// assert!(!NamedChain::Mainnet.is_legacy());
+    /// assert!(NamedChain::Celo.is_legacy());
+    /// ```
     pub const fn is_legacy(self) -> bool {
-        match self.kind() {
-            ChainKind::Named(named) => named.is_legacy(),
-            ChainKind::Id(_) => false,
+        use NamedChain as C;
+
+        match self {
+            // Known legacy chains / non EIP-1559 compliant
+            C::OptimismKovan
+            | C::Fantom
+            | C::FantomTestnet
+            | C::BinanceSmartChain
+            | C::BinanceSmartChainTestnet
+            | C::ArbitrumTestnet
+            | C::Rsk
+            | C::Oasis
+            | C::Emerald
+            | C::EmeraldTestnet
+            | C::Celo
+            | C::CeloAlfajores
+            | C::CeloBaklava
+            | C::Boba
+            | C::ZkSync
+            | C::ZkSyncTestnet
+            | C::Mantle
+            | C::MantleTestnet
+            | C::PolygonZkEvm
+            | C::PolygonZkEvmTestnet
+            | C::Scroll
+            | C::Metis => true,
+
+            // Known EIP-1559 chains
+            C::Mainnet
+            | C::Goerli
+            | C::Sepolia
+            | C::Holesky
+            | C::Base
+            | C::BaseGoerli
+            | C::Optimism
+            | C::OptimismGoerli
+            | C::OptimismSepolia
+            | C::Polygon
+            | C::PolygonMumbai
+            | C::Avalanche
+            | C::AvalancheFuji
+            | C::Arbitrum
+            | C::ArbitrumGoerli
+            | C::ArbitrumSepolia
+            | C::ArbitrumNova
+            | C::FilecoinMainnet
+            | C::Linea
+            | C::LineaTestnet
+            | C::FilecoinCalibrationTestnet
+            | C::Gnosis
+            | C::Chiado
+            | C::Zora
+            | C::ZoraGoerli
+            | C::ZoraSepolia => false,
+
+            // Unknown / not applicable, default to false for backwards compatibility
+            C::Dev
+            | C::AnvilHardhat
+            | C::Morden
+            | C::Ropsten
+            | C::Rinkeby
+            | C::Cronos
+            | C::CronosTestnet
+            | C::Kovan
+            | C::Sokol
+            | C::Poa
+            | C::Moonbeam
+            | C::MoonbeamDev
+            | C::Moonriver
+            | C::Moonbase
+            | C::Evmos
+            | C::EvmosTestnet
+            | C::Aurora
+            | C::AuroraTestnet
+            | C::Canto
+            | C::CantoTestnet
+            | C::ScrollAlphaTestnet => false,
         }
     }
 
     /// Returns whether the chain supports the [Shanghai hardfork][ref].
     ///
-    /// See [`NamedChain::supports_shanghai`] for more info.
-    ///
     /// [ref]: https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/shanghai.md
     pub const fn supports_shanghai(self) -> bool {
-        match self.kind() {
-            ChainKind::Named(named) => named.supports_shanghai(),
-            ChainKind::Id(_) => false,
+        use NamedChain as C;
+
+        match self {
+            C::Mainnet
+            | C::Goerli
+            | C::Sepolia
+            | C::OptimismGoerli
+            | C::OptimismSepolia
+            | C::BaseGoerli
+            | C::Gnosis
+            | C::Chiado
+            | C::ZoraSepolia => true,
+            _ => false,
         }
     }
 
@@ -374,43 +448,348 @@ impl Chain {
 
     /// Returns the chain's blockchain explorer and its API (Etherscan and Etherscan-like) URLs.
     ///
-    /// See [`NamedChain::etherscan_urls`] for more info.
+    /// Returns `(API_URL, BASE_URL)`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use alloy_chains::NamedChain;
+    ///
+    /// assert_eq!(
+    ///     NamedChain::Mainnet.etherscan_urls(),
+    ///     Some(("https://api.etherscan.io/api", "https://etherscan.io"))
+    /// );
+    /// assert_eq!(
+    ///     NamedChain::Avalanche.etherscan_urls(),
+    ///     Some(("https://api.snowtrace.io/api", "https://snowtrace.io"))
+    /// );
+    /// assert_eq!(NamedChain::AnvilHardhat.etherscan_urls(), None);
+    /// ```
     pub const fn etherscan_urls(self) -> Option<(&'static str, &'static str)> {
-        match self.kind() {
-            ChainKind::Named(named) => named.etherscan_urls(),
-            ChainKind::Id(_) => None,
-        }
+        use NamedChain as C;
+
+        let urls = match self {
+            C::Mainnet => ("https://api.etherscan.io/api", "https://etherscan.io"),
+            C::Ropsten => ("https://api-ropsten.etherscan.io/api", "https://ropsten.etherscan.io"),
+            C::Kovan => ("https://api-kovan.etherscan.io/api", "https://kovan.etherscan.io"),
+            C::Rinkeby => ("https://api-rinkeby.etherscan.io/api", "https://rinkeby.etherscan.io"),
+            C::Goerli => ("https://api-goerli.etherscan.io/api", "https://goerli.etherscan.io"),
+            C::Sepolia => ("https://api-sepolia.etherscan.io/api", "https://sepolia.etherscan.io"),
+            C::Holesky => ("https://api-holesky.etherscan.io/api", "https://holesky.etherscan.io"),
+
+            C::Polygon => ("https://api.polygonscan.com/api", "https://polygonscan.com"),
+            C::PolygonMumbai => {
+                ("https://api-testnet.polygonscan.com/api", "https://mumbai.polygonscan.com")
+            }
+
+            C::PolygonZkEvm => {
+                ("https://api-zkevm.polygonscan.com/api", "https://zkevm.polygonscan.com")
+            }
+            C::PolygonZkEvmTestnet => (
+                "https://api-testnet-zkevm.polygonscan.com/api",
+                "https://testnet-zkevm.polygonscan.com",
+            ),
+
+            C::Avalanche => ("https://api.snowtrace.io/api", "https://snowtrace.io"),
+            C::AvalancheFuji => {
+                ("https://api-testnet.snowtrace.io/api", "https://testnet.snowtrace.io")
+            }
+
+            C::Optimism => {
+                ("https://api-optimistic.etherscan.io/api", "https://optimistic.etherscan.io")
+            }
+            C::OptimismGoerli => (
+                "https://api-goerli-optimistic.etherscan.io/api",
+                "https://goerli-optimism.etherscan.io",
+            ),
+            C::OptimismKovan => (
+                "https://api-kovan-optimistic.etherscan.io/api",
+                "https://kovan-optimistic.etherscan.io",
+            ),
+            C::OptimismSepolia => (
+                "https://api-sepolia-optimistic.etherscan.io/api",
+                "https://sepolia-optimism.etherscan.io",
+            ),
+
+            C::Fantom => ("https://api.ftmscan.com/api", "https://ftmscan.com"),
+            C::FantomTestnet => {
+                ("https://api-testnet.ftmscan.com/api", "https://testnet.ftmscan.com")
+            }
+
+            C::BinanceSmartChain => ("https://api.bscscan.com/api", "https://bscscan.com"),
+            C::BinanceSmartChainTestnet => {
+                ("https://api-testnet.bscscan.com/api", "https://testnet.bscscan.com")
+            }
+
+            C::Arbitrum => ("https://api.arbiscan.io/api", "https://arbiscan.io"),
+            C::ArbitrumTestnet => {
+                ("https://api-testnet.arbiscan.io/api", "https://testnet.arbiscan.io")
+            }
+            C::ArbitrumGoerli => {
+                ("https://api-goerli.arbiscan.io/api", "https://goerli.arbiscan.io")
+            }
+            C::ArbitrumSepolia => {
+                ("https://api-sepolia.arbiscan.io/api", "https://sepolia.arbiscan.io")
+            }
+            C::ArbitrumNova => ("https://api-nova.arbiscan.io/api", "https://nova.arbiscan.io/"),
+
+            C::Cronos => ("https://api.cronoscan.com/api", "https://cronoscan.com"),
+            C::CronosTestnet => {
+                ("https://api-testnet.cronoscan.com/api", "https://testnet.cronoscan.com")
+            }
+
+            C::Moonbeam => {
+                ("https://api-moonbeam.moonscan.io/api", "https://moonbeam.moonscan.io/")
+            }
+            C::Moonbase => {
+                ("https://api-moonbase.moonscan.io/api", "https://moonbase.moonscan.io/")
+            }
+            C::Moonriver => {
+                ("https://api-moonriver.moonscan.io/api", "https://moonriver.moonscan.io")
+            }
+
+            C::Gnosis => ("https://api.gnosisscan.io/api", "https://gnosisscan.io"),
+
+            C::Scroll => ("https://api.scrollscan.com", "https://scrollscan.com"),
+            C::ScrollAlphaTestnet => {
+                ("https://blockscout.scroll.io/api", "https://blockscout.scroll.io/")
+            }
+
+            C::Metis => {
+                ("https://andromeda-explorer.metis.io/api", "https://andromeda-explorer.metis.io/")
+            }
+
+            C::Chiado => {
+                ("https://blockscout.chiadochain.net/api", "https://blockscout.chiadochain.net")
+            }
+
+            C::FilecoinCalibrationTestnet => (
+                "https://api.calibration.node.glif.io/rpc/v1",
+                "https://calibration.filfox.info/en",
+            ),
+
+            C::Sokol => {
+                ("https://blockscout.com/poa/sokol/api", "https://blockscout.com/poa/sokol")
+            }
+
+            C::Poa => ("https://blockscout.com/poa/core/api", "https://blockscout.com/poa/core"),
+
+            C::Rsk => {
+                ("https://blockscout.com/rsk/mainnet/api", "https://blockscout.com/rsk/mainnet")
+            }
+
+            C::Oasis => ("https://scan.oasischain.io/api", "https://scan.oasischain.io/"),
+
+            C::Emerald => {
+                ("https://explorer.emerald.oasis.dev/api", "https://explorer.emerald.oasis.dev/")
+            }
+            C::EmeraldTestnet => (
+                "https://testnet.explorer.emerald.oasis.dev/api",
+                "https://testnet.explorer.emerald.oasis.dev/",
+            ),
+
+            C::Aurora => ("https://api.aurorascan.dev/api", "https://aurorascan.dev"),
+            C::AuroraTestnet => {
+                ("https://testnet.aurorascan.dev/api", "https://testnet.aurorascan.dev")
+            }
+
+            C::Evmos => ("https://evm.evmos.org/api", "https://evm.evmos.org/"),
+            C::EvmosTestnet => ("https://evm.evmos.dev/api", "https://evm.evmos.dev/"),
+
+            C::Celo => {
+                ("https://explorer.celo.org/mainnet/api", "https://explorer.celo.org/mainnet")
+            }
+            C::CeloAlfajores => {
+                ("https://explorer.celo.org/alfajores/api", "https://explorer.celo.org/alfajores")
+            }
+            C::CeloBaklava => {
+                ("https://explorer.celo.org/baklava/api", "https://explorer.celo.org/baklava")
+            }
+
+            C::Canto => ("https://evm.explorer.canto.io/api", "https://evm.explorer.canto.io/"),
+            C::CantoTestnet => (
+                "https://testnet-explorer.canto.neobase.one/api",
+                "https://testnet-explorer.canto.neobase.one/",
+            ),
+
+            C::Boba => ("https://api.bobascan.com/api", "https://bobascan.com"),
+
+            C::Base => ("https://api.basescan.org/api", "https://basescan.org"),
+
+            C::BaseGoerli => ("https://api-goerli.basescan.org/api", "https://goerli.basescan.org"),
+
+            C::ZkSync => {
+                ("https://zksync2-mainnet-explorer.zksync.io/", "https://explorer.zksync.io/")
+            }
+            C::ZkSyncTestnet => (
+                "https://zksync2-testnet-explorer.zksync.dev/",
+                "https://goerli.explorer.zksync.io/",
+            ),
+            C::Linea => ("https://api.lineascan.build/api", "https://lineascan.build/"),
+            C::LineaTestnet => {
+                ("https://explorer.goerli.linea.build/api", "https://explorer.goerli.linea.build/")
+            }
+            C::Mantle => ("https://explorer.mantle.xyz/api", "https://explorer.mantle.xyz"),
+            C::MantleTestnet => {
+                ("https://explorer.testnet.mantle.xyz/api", "https://explorer.testnet.mantle.xyz")
+            }
+
+            C::Zora => ("https://explorer.zora.energy/api", "https://explorer.zora.energy"),
+            C::ZoraGoerli => {
+                ("https://testnet.explorer.zora.energy/api", "https://testnet.explorer.zora.energy")
+            }
+            C::ZoraSepolia => {
+                ("https://sepolia.explorer.zora.energy/api", "https://sepolia.explorer.zora.energy")
+            }
+
+            C::AnvilHardhat | C::Dev | C::Morden | C::MoonbeamDev | C::FilecoinMainnet => {
+                return None;
+            }
+        };
+
+        Some(urls)
     }
 
     /// Returns the chain's blockchain explorer's API key environment variable's default name.
     ///
-    /// See [`NamedChain::etherscan_api_key_name`] for more info.
+    /// # Examples
+    ///
+    /// ```
+    /// use alloy_chains::NamedChain;
+    ///
+    /// assert_eq!(NamedChain::Mainnet.etherscan_api_key_name(), Some("ETHERSCAN_API_KEY"));
+    /// assert_eq!(NamedChain::AnvilHardhat.etherscan_api_key_name(), None);
+    /// ```
     pub const fn etherscan_api_key_name(self) -> Option<&'static str> {
-        match self.kind() {
-            ChainKind::Named(named) => named.etherscan_api_key_name(),
-            ChainKind::Id(_) => None,
-        }
+        use NamedChain as C;
+
+        let api_key_name = match self {
+            C::Mainnet
+            | C::Morden
+            | C::Ropsten
+            | C::Kovan
+            | C::Rinkeby
+            | C::Goerli
+            | C::Holesky
+            | C::Optimism
+            | C::OptimismGoerli
+            | C::OptimismKovan
+            | C::OptimismSepolia
+            | C::BinanceSmartChain
+            | C::BinanceSmartChainTestnet
+            | C::Arbitrum
+            | C::ArbitrumTestnet
+            | C::ArbitrumGoerli
+            | C::ArbitrumSepolia
+            | C::ArbitrumNova
+            | C::Cronos
+            | C::CronosTestnet
+            | C::Aurora
+            | C::AuroraTestnet
+            | C::Celo
+            | C::CeloAlfajores
+            | C::CeloBaklava
+            | C::Base
+            | C::Linea
+            | C::Mantle
+            | C::MantleTestnet
+            | C::BaseGoerli
+            | C::Gnosis
+            | C::Scroll => "ETHERSCAN_API_KEY",
+
+            C::Avalanche | C::AvalancheFuji => "SNOWTRACE_API_KEY",
+
+            C::Polygon | C::PolygonMumbai | C::PolygonZkEvm | C::PolygonZkEvmTestnet => {
+                "POLYGONSCAN_API_KEY"
+            }
+
+            C::Fantom | C::FantomTestnet => "FTMSCAN_API_KEY",
+
+            C::Moonbeam | C::Moonbase | C::MoonbeamDev | C::Moonriver => "MOONSCAN_API_KEY",
+
+            C::Canto | C::CantoTestnet | C::Zora | C::ZoraGoerli | C::ZoraSepolia => {
+                "BLOCKSCOUT_API_KEY"
+            }
+
+            C::Boba => "BOBASCAN_API_KEY",
+
+            // Explicitly exhaustive. See NB above.
+            C::ScrollAlphaTestnet
+            | C::Metis
+            | C::Chiado
+            | C::Sepolia
+            | C::Rsk
+            | C::Sokol
+            | C::Poa
+            | C::Oasis
+            | C::Emerald
+            | C::EmeraldTestnet
+            | C::Evmos
+            | C::EvmosTestnet
+            | C::AnvilHardhat
+            | C::Dev
+            | C::ZkSync
+            | C::ZkSyncTestnet
+            | C::FilecoinMainnet
+            | C::LineaTestnet
+            | C::FilecoinCalibrationTestnet => return None,
+        };
+
+        Some(api_key_name)
     }
 
     /// Returns the chain's blockchain explorer's API key, from the environment variable with the
     /// name specified in [`etherscan_api_key_name`](NamedChain::etherscan_api_key_name).
     ///
-    /// See [`NamedChain::etherscan_api_key`] for more info.
+    /// # Examples
+    ///
+    /// ```
+    /// use alloy_chains::NamedChain;
+    ///
+    /// let chain = NamedChain::Mainnet;
+    /// std::env::set_var(chain.etherscan_api_key_name().unwrap(), "KEY");
+    /// assert_eq!(chain.etherscan_api_key().as_deref(), Some("KEY"));
+    /// ```
     #[cfg(feature = "std")]
     pub fn etherscan_api_key(self) -> Option<String> {
-        match self.kind() {
-            ChainKind::Named(named) => named.etherscan_api_key(),
-            ChainKind::Id(_) => None,
-        }
+        self.etherscan_api_key_name().and_then(|name| std::env::var(name).ok())
     }
 
     /// Returns the address of the public DNS node list for the given chain.
     ///
-    /// See [`NamedChain::public_dns_network_protocol`] for more info.
+    /// See also <https://github.com/ethereum/discv4-dns-lists>.
     pub fn public_dns_network_protocol(self) -> Option<String> {
-        match self.kind() {
-            ChainKind::Named(named) => named.public_dns_network_protocol(),
-            ChainKind::Id(_) => None,
+        const DNS_PREFIX: &str = "enrtree://AKA3AM6LPBYEUDMVNU3BSVQJ5AD45Y7YPOHJLEF6W26QOE4VTUDPE@";
+        if let Self::Mainnet | Self::Goerli | Self::Sepolia | Self::Ropsten | Self::Rinkeby = self {
+            // `{DNS_PREFIX}all.{self.lower()}.ethdisco.net`
+            let mut s = String::with_capacity(DNS_PREFIX.len() + 32);
+            s.push_str(DNS_PREFIX);
+            s.push_str("all.");
+            let chain_str = self.as_ref();
+            s.push_str(chain_str);
+            let l = s.len();
+            s[l - chain_str.len()..].make_ascii_lowercase();
+            s.push_str(".ethdisco.net");
+
+            Some(s)
+        } else {
+            None
+        }
+    }
+    /// Returns true if the chain is a testnet.
+    pub fn is_testnet(&self) -> bool {
+        match self {
+            NamedChain::Goerli | NamedChain::Sepolia | NamedChain::Dev => true,
+            _ => false,
+        }
+    }
+    /// Return symbol of native currency used in the blockchain
+    pub fn native_currency_symbol(&self) -> &str {
+        match self {
+            NamedChain::Mainnet | NamedChain::Goerli | NamedChain::Rinkeby => "ETH",
+            NamedChain::BinanceSmartChain => "BNB",
+            // will add for others
+            _ => "Unknown",
         }
     }
 }
@@ -419,76 +798,91 @@ impl Chain {
 mod tests {
     use super::*;
     use alloc::string::ToString;
+    use strum::{EnumCount, IntoEnumIterator};
 
     #[test]
-    fn test_id() {
-        assert_eq!(Chain::from_id(1234).id(), 1234);
-    }
-
-    #[test]
-    fn test_named_id() {
-        assert_eq!(Chain::from_named(NamedChain::Goerli).id(), 5);
-    }
-
-    #[test]
-    fn test_display_named_chain() {
-        assert_eq!(Chain::from_named(NamedChain::Mainnet).to_string(), "mainnet");
-    }
-
-    #[test]
-    fn test_display_id_chain() {
-        assert_eq!(Chain::from_id(1234).to_string(), "1234");
-    }
-
-    #[test]
-    fn test_from_str_named_chain() {
-        let result = Chain::from_str("mainnet");
-        let expected = Chain::from_named(NamedChain::Mainnet);
-        assert_eq!(result.unwrap(), expected);
-    }
-
-    #[test]
-    fn test_from_str_named_chain_error() {
-        let result = Chain::from_str("chain");
-        assert!(result.is_err());
-    }
-
-    #[test]
-    fn test_from_str_id_chain() {
-        let result = Chain::from_str("1234");
-        let expected = Chain::from_id(1234);
-        assert_eq!(result.unwrap(), expected);
-    }
-
-    #[test]
-    fn test_default() {
-        let default = Chain::default();
-        let expected = Chain::from_named(NamedChain::Mainnet);
-        assert_eq!(default, expected);
-    }
-
-    #[cfg(feature = "rlp")]
-    #[test]
-    fn test_id_chain_encodable_length() {
-        use alloy_rlp::Encodable;
-
-        let chain = Chain::from_id(1234);
-        assert_eq!(chain.length(), 3);
-    }
-
     #[cfg(feature = "serde")]
+    fn default() {
+        assert_eq!(serde_json::to_string(&NamedChain::default()).unwrap(), "\"mainnet\"");
+    }
+
     #[test]
-    fn test_serde() {
-        let chains = r#"["mainnet",1,80001,80002,"mumbai"]"#;
-        let re = r#"["mainnet","mainnet","mumbai",80002,"mumbai"]"#;
-        let expected = [
-            Chain::mainnet(),
-            Chain::mainnet(),
-            Chain::from_named(NamedChain::PolygonMumbai),
-            Chain::from_id(80002),
-            Chain::from_named(NamedChain::PolygonMumbai),
+    fn enum_iter() {
+        assert_eq!(NamedChain::COUNT, NamedChain::iter().size_hint().0);
+    }
+
+    #[test]
+    fn roundtrip_string() {
+        for chain in NamedChain::iter() {
+            let chain_string = chain.to_string();
+            assert_eq!(chain_string, format!("{chain}"));
+            assert_eq!(chain_string.as_str(), chain.as_ref());
+            #[cfg(feature = "serde")]
+            assert_eq!(serde_json::to_string(&chain).unwrap(), format!("\"{chain_string}\""));
+
+            assert_eq!(chain_string.parse::<NamedChain>().unwrap(), chain);
+        }
+    }
+
+    #[test]
+    #[cfg(feature = "serde")]
+    fn roundtrip_serde() {
+        for chain in NamedChain::iter() {
+            let chain_string = serde_json::to_string(&chain).unwrap();
+            let chain_string = chain_string.replace('-', "_");
+            assert_eq!(serde_json::from_str::<'_, NamedChain>(&chain_string).unwrap(), chain);
+        }
+    }
+
+    #[test]
+    fn aliases() {
+        use NamedChain::*;
+
+        // kebab-case
+        const ALIASES: &[(NamedChain, &[&str])] = &[
+            (Mainnet, &["ethlive"]),
+            (BinanceSmartChain, &["bsc", "binance-smart-chain"]),
+            (BinanceSmartChainTestnet, &["bsc-testnet", "binance-smart-chain-testnet"]),
+            (Gnosis, &["gnosis", "gnosis-chain"]),
+            (PolygonMumbai, &["mumbai"]),
+            (PolygonZkEvm, &["zkevm", "polygon-zkevm"]),
+            (PolygonZkEvmTestnet, &["zkevm-testnet", "polygon-zkevm-testnet"]),
+            (AnvilHardhat, &["anvil", "hardhat"]),
+            (AvalancheFuji, &["fuji"]),
+            (ZkSync, &["zksync"]),
+            (Mantle, &["mantle"]),
+            (MantleTestnet, &["mantle-testnet"]),
         ];
-        assert_eq!(serde_json::from_str::<alloc::vec::Vec<Chain>>(chains).unwrap(), expected);
-        assert_eq!(serde_json::to_string(&expected).unwrap(), re);
+
+        for &(chain, aliases) in ALIASES {
+            for &alias in aliases {
+                assert_eq!(alias.parse::<NamedChain>().unwrap(), chain);
+
+                #[cfg(feature = "serde")]
+                {
+                    let s = alias.to_string().replace('-', "_");
+                    assert_eq!(
+                        serde_json::from_str::<NamedChain>(&format!("\"{s}\"")).unwrap(),
+                        chain
+                    );
+                }
+            }
+        }
+    }
+
+    #[test]
+    #[cfg(feature = "serde")]
+    fn serde_to_string_match() {
+        for chain in NamedChain::iter() {
+            let chain_serde = serde_json::to_string(&chain).unwrap();
+            let chain_string = format!("\"{chain}\"");
+            assert_eq!(chain_serde, chain_string);
+        }
+    }
+
+    #[test]
+    fn test_dns_network() {
+        let s = "enrtree://AKA3AM6LPBYEUDMVNU3BSVQJ5AD45Y7YPOHJLEF6W26QOE4VTUDPE@all.mainnet.ethdisco.net";
+        assert_eq!(NamedChain::Mainnet.public_dns_network_protocol().unwrap(), s);
     }
 }
