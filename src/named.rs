@@ -435,7 +435,9 @@ impl NamedChain {
             | C::BaseGoerli
             | C::Gnosis
             | C::Chiado
-            | C::ZoraSepolia => true,
+            | C::ZoraSepolia
+            | C::PolygonMumbai
+            | C::Polygon => true,
             _ => false,
         }
     }
