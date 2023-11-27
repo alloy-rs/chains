@@ -413,35 +413,8 @@ impl Chain {
             ChainKind::Id(_) => None,
         }
     }
-
-    /// Returns the block explorer URL for the chain.
-    pub fn get_block_explorer_url(self) -> Option<&'static str> {
-        match *self.kind() {
-            ChainKind::Named(named) => match named {
-                NamedChain::Mainnet => Some("https://etherscan.io"),
-                NamedChain::Goerli => Some("https://goerli.etherscan.io"),
-                NamedChain::Sepolia => Some("https://sepolia.etherscan.io"),
-
-                _ => None,
-            },
-            ChainKind::Id(_id) => None,
-        }
-    }
-
-    /// Converts a chain ID to its corresponding named chain, if it exists.
-    pub fn convert_to_named_chain(id: u64) -> Option<NamedChain> {
-        NamedChain::try_from(id).ok()
-    }
 }
-impl NamedChain {
-    /// Returns true if the chain is a testnet.
-    pub fn is_testnet(&self) -> bool {
-        match self {
-            NamedChain::Goerli | NamedChain::Sepolia | NamedChain::Dev => true,
-            _ => false,
-        }
-    }
-}
+
 #[cfg(test)]
 mod tests {
     use super::*;
