@@ -776,6 +776,22 @@ impl NamedChain {
             None
         }
     }
+    /// Returns true if the chain is a testnet.
+    pub fn is_testnet(&self) -> bool {
+        match self {
+            NamedChain::Goerli | NamedChain::Sepolia | NamedChain::Dev => true,
+            _ => false,
+        }
+    }
+    /// Return symbol of native currency used in the blockchain
+    pub fn native_currency_symbol(&self) -> &str {
+        match self {
+            NamedChain::Mainnet | NamedChain::Goerli | NamedChain::Rinkeby => "ETH",
+            NamedChain::BinanceSmartChain => "BNB",
+            // will add for others
+            _ => "Unknown",
+        }
+    }
 }
 
 #[cfg(test)]
