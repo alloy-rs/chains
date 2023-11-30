@@ -73,6 +73,11 @@ pub enum NamedChain {
 
     Scroll = 534352,
     ScrollAlphaTestnet = 534353,
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "scroll_sepolia", alias = "scroll_sepolia_testnet")
+    )]
+    ScrollSepolia = 534351,
 
     Metis = 1088,
 
@@ -297,7 +302,7 @@ impl NamedChain {
             C::Dev | C::AnvilHardhat => 200,
             C::Celo | C::CeloAlfajores | C::CeloBaklava => 5_000,
             C::FilecoinCalibrationTestnet | C::FilecoinMainnet => 30_000,
-            C::Scroll | C::ScrollAlphaTestnet => 3_000,
+            C::Scroll | C::ScrollSepolia | C::ScrollAlphaTestnet => 3_000,
             C::Gnosis | C::Chiado => 5_000,
             // Explicitly exhaustive. See NB above.
             C::Morden
@@ -365,6 +370,7 @@ impl NamedChain {
             | C::PolygonZkEvm
             | C::PolygonZkEvmTestnet
             | C::Scroll
+            | C::ScrollSepolia
             | C::Metis => true,
 
             // Known EIP-1559 chains
@@ -552,9 +558,12 @@ impl NamedChain {
 
             C::Gnosis => ("https://api.gnosisscan.io/api", "https://gnosisscan.io"),
 
-            C::Scroll => ("https://api.scrollscan.com", "https://scrollscan.com"),
+            C::Scroll => ("https://api.scrollscan.com/api", "https://scrollscan.com"),
+            C::ScrollSepolia => {
+                ("https://api-sepolia.scrollscan.com/api", "https://sepolia.scrollscan.com")
+            }
             C::ScrollAlphaTestnet => {
-                ("https://blockscout.scroll.io/api", "https://blockscout.scroll.io/")
+                ("https://alpha-blockscout.scroll.io/api", "https://alpha-blockscout.scroll.io/")
             }
 
             C::Metis => {
@@ -697,7 +706,8 @@ impl NamedChain {
             | C::MantleTestnet
             | C::BaseGoerli
             | C::Gnosis
-            | C::Scroll => "ETHERSCAN_API_KEY",
+            | C::Scroll
+            | C::ScrollSepolia => "ETHERSCAN_API_KEY",
 
             C::Avalanche | C::AvalancheFuji => "SNOWTRACE_API_KEY",
 
