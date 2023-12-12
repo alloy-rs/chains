@@ -52,6 +52,7 @@ pub enum NamedChain {
     OptimismGoerli = 420,
     OptimismSepolia = 11155420,
 
+    #[cfg_attr(feature = "serde", serde(alias = "arbitrum_one"))]
     Arbitrum = 42161,
     ArbitrumTestnet = 421611,
     ArbitrumGoerli = 421613,
