@@ -16,7 +16,10 @@ num_enum = { version = "0.7", default-features = false }
 strum = { version = "0.25", default-features = false, features = ["derive"] }
 
 # serde
-serde = { version = "1.0", default-features = false, features = ["derive"], optional = true }
+serde = { version = "1.0", default-features = false, features = [
+    "derive",
+    "alloc",
+], optional = true }
 
 # rlp
 alloy-rlp = { version = "0.3", default-features = false, features = ["derive"], optional = true }
