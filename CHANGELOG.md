@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [#19]: https://github.com/alloy-rs/chains/pull/19
 
-## [0.1.4](https://github.com/alloy-rs/chains/releases/tag/v0.1.4) - 2023-11-20
+## [0.1.4](https://github.com/alloy-rs/chains/releases/tag/v0.1.4) - 2023-12-01
 
 ### Added
 
