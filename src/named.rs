@@ -269,13 +269,15 @@ impl NamedChain {
     pub const fn average_blocktime_hint(self) -> Option<Duration> {
         use NamedChain as C;
 
-        let ms = match self {
+        Some(Duration::from_millis(match self {
             C::Mainnet => 12_000,
+
             C::Arbitrum
             | C::ArbitrumTestnet
             | C::ArbitrumGoerli
             | C::ArbitrumSepolia
             | C::ArbitrumNova => 1_300,
+
             C::Optimism
             | C::OptimismGoerli
             | C::OptimismSepolia
@@ -284,22 +286,37 @@ impl NamedChain {
             | C::Zora
             | C::ZoraGoerli
             | C::ZoraSepolia => 2_000,
+
             C::Polygon | C::PolygonMumbai => 2_100,
+
             C::Moonbeam | C::Moonriver => 12_500,
+
             C::BinanceSmartChain | C::BinanceSmartChainTestnet => 3_000,
+
             C::Avalanche | C::AvalancheFuji => 2_000,
+
             C::Fantom | C::FantomTestnet => 1_200,
+
             C::Cronos | C::CronosTestnet | C::Canto | C::CantoTestnet => 5_700,
+
             C::Evmos | C::EvmosTestnet => 1_900,
+
             C::Aurora | C::AuroraTestnet => 1_100,
+
             C::Oasis => 5_500,
+
             C::Emerald => 6_000,
+
             C::Dev | C::AnvilHardhat => 200,
+
             C::Celo | C::CeloAlfajores | C::CeloBaklava => 5_000,
+
             C::FilecoinCalibrationTestnet | C::FilecoinMainnet => 30_000,
+
             C::Scroll | C::ScrollAlphaTestnet => 3_000,
+
             C::Gnosis | C::Chiado => 5_000,
-            // Explicitly exhaustive. See NB above.
+
             C::Morden
             | C::Ropsten
             | C::Rinkeby
@@ -324,9 +341,7 @@ impl NamedChain {
             | C::LineaTestnet
             | C::Mantle
             | C::MantleTestnet => return None,
-        };
-
-        Some(Duration::from_millis(ms))
+        }))
     }
 
     /// Returns whether the chain implements EIP-1559 (with the type 2 EIP-2718 transaction type).
@@ -343,7 +358,7 @@ impl NamedChain {
         use NamedChain as C;
 
         match self {
-            // Known legacy chains / non EIP-1559 compliant
+            // Known legacy chains / non EIP-1559 compliant.
             C::OptimismKovan
             | C::Fantom
             | C::FantomTestnet
@@ -367,7 +382,7 @@ impl NamedChain {
             | C::Scroll
             | C::Metis => true,
 
-            // Known EIP-1559 chains
+            // Known EIP-1559 chains.
             C::Mainnet
             | C::Goerli
             | C::Sepolia
@@ -395,7 +410,7 @@ impl NamedChain {
             | C::ZoraGoerli
             | C::ZoraSepolia => false,
 
-            // Unknown / not applicable, default to false for backwards compatibility
+            // Unknown / not applicable, default to false for backwards compatibility.
             C::Dev
             | C::AnvilHardhat
             | C::Morden
@@ -446,6 +461,109 @@ impl NamedChain {
         self.supports_shanghai()
     }
 
+    /// Returns whether the chain is a testnet.
+    pub const fn is_testnet(self) -> bool {
+        use NamedChain as C;
+
+        match self {
+            // Ethereum testnets.
+            C::Goerli
+            | C::Holesky
+            | C::Kovan
+            | C::Sepolia
+            | C::Morden
+            | C::Ropsten
+            | C::Rinkeby => true,
+
+            // Other testnets.
+            C::ArbitrumGoerli
+            | C::ArbitrumSepolia
+            | C::ArbitrumTestnet
+            | C::AuroraTestnet
+            | C::AvalancheFuji
+            | C::BaseGoerli
+            | C::BinanceSmartChainTestnet
+            | C::CantoTestnet
+            | C::CronosTestnet
+            | C::CeloAlfajores
+            | C::CeloBaklava
+            | C::EmeraldTestnet
+            | C::EvmosTestnet
+            | C::FantomTestnet
+            | C::FilecoinCalibrationTestnet
+            | C::LineaTestnet
+            | C::MantleTestnet
+            | C::MoonbeamDev
+            | C::OptimismGoerli
+            | C::OptimismKovan
+            | C::OptimismSepolia
+            | C::PolygonMumbai
+            | C::PolygonZkEvmTestnet
+            | C::ScrollAlphaTestnet
+            | C::ZkSyncTestnet
+            | C::ZoraGoerli
+            | C::ZoraSepolia => true,
+
+            // Dev chains.
+            C::Dev | C::AnvilHardhat => true,
+
+            // Mainnets.
+            C::Mainnet
+            | C::Optimism
+            | C::Arbitrum
+            | C::ArbitrumNova
+            | C::Cronos
+            | C::Rsk
+            | C::BinanceSmartChain
+            | C::Poa
+            | C::Sokol
+            | C::Scroll
+            | C::Metis
+            | C::Gnosis
+            | C::Polygon
+            | C::PolygonZkEvm
+            | C::Fantom
+            | C::Moonbeam
+            | C::Moonriver
+            | C::Moonbase
+            | C::Evmos
+            | C::Chiado
+            | C::Oasis
+            | C::Emerald
+            | C::FilecoinMainnet
+            | C::Avalanche
+            | C::Celo
+            | C::Aurora
+            | C::Canto
+            | C::Boba
+            | C::Base
+            | C::Linea
+            | C::ZkSync
+            | C::Mantle
+            | C::Zora => false,
+        }
+    }
+
+    /// Returns the symbol of the chain's native currency.
+    pub const fn native_currency_symbol(self) -> Option<&'static str> {
+        use NamedChain as C;
+
+        Some(match self {
+            C::Mainnet
+            | C::Goerli
+            | C::Holesky
+            | C::Kovan
+            | C::Sepolia
+            | C::Morden
+            | C::Ropsten
+            | C::Rinkeby => "ETH",
+
+            C::BinanceSmartChain | C::BinanceSmartChainTestnet => "BNB",
+
+            _ => return None,
+        })
+    }
+
     /// Returns the chain's blockchain explorer and its API (Etherscan and Etherscan-like) URLs.
     ///
     /// Returns `(API_URL, BASE_URL)`.
@@ -468,7 +586,7 @@ impl NamedChain {
     pub const fn etherscan_urls(self) -> Option<(&'static str, &'static str)> {
         use NamedChain as C;
 
-        let urls = match self {
+        Some(match self {
             C::Mainnet => ("https://api.etherscan.io/api", "https://etherscan.io"),
             C::Ropsten => ("https://api-ropsten.etherscan.io/api", "https://ropsten.etherscan.io"),
             C::Kovan => ("https://api-kovan.etherscan.io/api", "https://kovan.etherscan.io"),
@@ -615,7 +733,6 @@ impl NamedChain {
             C::Boba => ("https://api.bobascan.com/api", "https://bobascan.com"),
 
             C::Base => ("https://api.basescan.org/api", "https://basescan.org"),
-
             C::BaseGoerli => ("https://api-goerli.basescan.org/api", "https://goerli.basescan.org"),
 
             C::ZkSync => {
@@ -625,10 +742,12 @@ impl NamedChain {
                 "https://zksync2-testnet-explorer.zksync.dev/",
                 "https://goerli.explorer.zksync.io/",
             ),
+
             C::Linea => ("https://api.lineascan.build/api", "https://lineascan.build/"),
             C::LineaTestnet => {
                 ("https://explorer.goerli.linea.build/api", "https://explorer.goerli.linea.build/")
             }
+
             C::Mantle => ("https://explorer.mantle.xyz/api", "https://explorer.mantle.xyz"),
             C::MantleTestnet => {
                 ("https://explorer.testnet.mantle.xyz/api", "https://explorer.testnet.mantle.xyz")
@@ -645,9 +764,7 @@ impl NamedChain {
             C::AnvilHardhat | C::Dev | C::Morden | C::MoonbeamDev | C::FilecoinMainnet => {
                 return None;
             }
-        };
-
-        Some(urls)
+        })
     }
 
     /// Returns the chain's blockchain explorer's API key environment variable's default name.
@@ -774,22 +891,6 @@ impl NamedChain {
             Some(s)
         } else {
             None
-        }
-    }
-    /// Returns true if the chain is a testnet.
-    pub const fn is_testnet(&self) -> bool {
-        match self {
-            NamedChain::Goerli | NamedChain::Sepolia | NamedChain::Dev => true,
-            _ => false,
-        }
-    }
-    /// Return symbol of native currency used in the blockchain
-    pub const fn native_currency_symbol(&self) -> &str {
-        match self {
-            NamedChain::Mainnet | NamedChain::Goerli | NamedChain::Rinkeby => "ETH",
-            NamedChain::BinanceSmartChain => "BNB",
-            // will add for others
-            _ => "Unknown",
         }
     }
 }
