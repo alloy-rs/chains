@@ -508,6 +508,7 @@ impl NamedChain {
             | C::PolygonMumbai
             | C::PolygonZkEvmTestnet
             | C::ScrollAlphaTestnet
+            | C::ScrollSepolia
             | C::ZkSyncTestnet
             | C::ZoraGoerli
             | C::ZoraSepolia => true,
