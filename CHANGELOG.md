@@ -5,7 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/alloy-rs/chains/compare/v0.1.3...HEAD)
+## [Unreleased](https://github.com/alloy-rs/chains/compare/v0.1.4...HEAD)
+
+### Added
+
+- `is_testnet` and `native_currency_symbol` methods ([#14])
+- Chain specification ([#19])
+
+[#14]: https://github.com/alloy-rs/chains/pull/14
+[#19]: https://github.com/alloy-rs/chains/pull/19
+
+## [0.1.4](https://github.com/alloy-rs/chains/releases/tag/v0.1.4) - 2023-12-01
+
+### Added
+
+- Scroll sepolia chain ([#17])
+
+### Changed
+
+- OP stack blocktimes ([#12])
+- Shanghai support for Polygon ([#16])
+
+[#12]: https://github.com/alloy-rs/chains/pull/12
+[#16]: https://github.com/alloy-rs/chains/pull/16
+[#17]: https://github.com/alloy-rs/chains/pull/17
 
 ## [0.1.3](https://github.com/alloy-rs/chains/releases/tag/v0.1.3) - 2023-11-20
 

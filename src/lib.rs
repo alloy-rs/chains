@@ -25,3 +25,5 @@ pub use chain::{Chain, ChainKind};
 
 mod named;
 pub use named::{NamedChain, NamedChainIter};
+
+pub mod spec;

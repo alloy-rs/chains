@@ -14,6 +14,7 @@ use num_enum::TryFromPrimitiveError;
 //      Aliases are appended to the `Deserialize` implementation.
 //      More info: <https://serde.rs/variant-attrs.html>
 //     - Add a test at the bottom of the file
+//   4. run `cargo test --all-features` to update the JSON bindings and schema.
 
 // We don't derive Serialize because it is manually implemented using AsRef<str> and it would break
 // a lot of things since Serialize is `kebab-case` vs Deserialize `snake_case`. This means that the
@@ -22,13 +23,14 @@ use num_enum::TryFromPrimitiveError;
 
 /// An Ethereum EIP-155 chain.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[derive(strum::AsRefStr)] // AsRef<str>, fmt::Display and serde::Serialize
+#[derive(strum::IntoStaticStr)] // Into<&'static str>, AsRef<str>, fmt::Display and serde::Serialize
 #[derive(strum::EnumVariantNames)] // NamedChain::VARIANTS
 #[derive(strum::EnumString)] // FromStr, TryFrom<&str>
 #[derive(strum::EnumIter)] // NamedChain::iter
 #[derive(strum::EnumCount)] // NamedChain::COUNT
 #[derive(num_enum::TryFromPrimitive)] // TryFrom<u64>
 #[cfg_attr(feature = "serde", derive(serde::Deserialize))]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[strum(serialize_all = "kebab-case")]
 #[cfg_attr(feature = "serde", serde(rename_all = "snake_case"))]
 #[repr(u64)]
@@ -208,13 +210,22 @@ macro_rules! impl_try_from_numeric {
 impl_try_from_numeric!(u8 i8 u16 i16 u32 i32 usize isize);
 
 impl fmt::Display for NamedChain {
+    #[inline]
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.pad(self.as_str())
+        self.as_str().fmt(f)
+    }
+}
+
+impl AsRef<str> for NamedChain {
+    #[inline]
+    fn as_ref(&self) -> &str {
+        self.as_str()
     }
 }
 
 #[cfg(feature = "serde")]
 impl serde::Serialize for NamedChain {
+    #[inline]
     fn serialize<S: serde::Serializer>(&self, s: S) -> Result<S::Ok, S::Error> {
         s.serialize_str(self.as_ref())
     }
@@ -249,8 +260,8 @@ impl alloy_rlp::Decodable for NamedChain {
 impl NamedChain {
     /// Returns the string representation of the chain.
     #[inline]
-    pub fn as_str(&self) -> &str {
-        self.as_ref()
+    pub fn as_str(&self) -> &'static str {
+        self.into()
     }
 
     /// Returns the chain's average blocktime, if applicable.
