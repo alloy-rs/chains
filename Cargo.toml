@@ -25,6 +25,9 @@ alloy-rlp = { version = "0.3", default-features = false, features = ["derive"], 
 arbitrary = { version = "1.3.2", default-features = false, optional = true }
 proptest = { version = "1.4", default-features = false, features = ["alloc"], optional = true }
 
+# schema
+schemars = { version = "0.8", optional = true }
+
 [dev-dependencies]
 serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
 
@@ -34,3 +37,5 @@ std = ["strum/std", "serde?/std"]
 serde = ["dep:serde"]
 rlp = ["dep:alloy-rlp"]
 arbitrary = ["dep:arbitrary", "dep:proptest"]
+
+schema = ["dep:schemars"]
