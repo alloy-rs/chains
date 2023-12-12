@@ -9,8 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `is_testnet` and `native_currency_symbol` methods ([#14])
 - Chain specification ([#19])
 
+[#14]: https://github.com/alloy-rs/chains/pull/14
 [#19]: https://github.com/alloy-rs/chains/pull/19
 
 ## [0.1.4](https://github.com/alloy-rs/chains/releases/tag/v0.1.4) - 2023-12-01
