@@ -64,7 +64,11 @@ pub struct Chain {
 impl Chain {
     /// Constructs a new chain specification from the given [`NamedChain`].
     pub fn new(c: NamedChain) -> Self {
-        let (etherscan_api_url, etherscan_base_url) = c.etherscan_urls().unzip();
+        // TODO(MSRV-1.66): Use `Option::unzip`
+        let (etherscan_api_url, etherscan_base_url) = match c.etherscan_urls() {
+            Some((a, b)) => (Some(a), Some(b)),
+            None => (None, None),
+        };
         Self {
             internal_id: format!("{c:?}"),
             name: c.to_string(),
