@@ -53,6 +53,10 @@ pub struct Chain {
     pub is_legacy: bool,
     /// Whether the chain supports the Shanghai hardfork.
     pub supports_shanghai: bool,
+    /// Whether the chain is a testnet.
+    pub is_testnet: bool,
+    /// The chain's native currency symbol (e.g. `ETH`).
+    pub native_currency_symbol: Option<String>,
     /// The chain's base block explorer API URL (e.g. `https://api.etherscan.io/`).
     pub etherscan_api_url: Option<String>,
     /// The chain's base block explorer base URL (e.g. `https://etherscan.io/`).
@@ -77,6 +81,8 @@ impl Chain {
                 .map(|d| d.as_millis().try_into().unwrap_or(u64::MAX)),
             is_legacy: c.is_legacy(),
             supports_shanghai: c.supports_shanghai(),
+            is_testnet: c.is_testnet(),
+            native_currency_symbol: c.native_currency_symbol().map(Into::into),
             etherscan_api_url: etherscan_api_url.map(Into::into),
             etherscan_base_url: etherscan_base_url.map(Into::into),
             etherscan_api_key_name: c.etherscan_api_key_name().map(Into::into),

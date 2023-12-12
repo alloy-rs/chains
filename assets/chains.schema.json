@@ -22,6 +22,7 @@
       "required": [
         "internalId",
         "isLegacy",
+        "isTestnet",
         "name",
         "supportsShanghai"
       ],
@@ -64,9 +65,20 @@
           "description": "Whether the chain is a legacy chain, which does not support EIP-1559.",
           "type": "boolean"
         },
+        "isTestnet": {
+          "description": "Whether the chain is a testnet.",
+          "type": "boolean"
+        },
         "name": {
           "description": "The chain's name. This is used in CLI argument parsing, TOML serialization etc.",
           "type": "string"
+        },
+        "nativeCurrencySymbol": {
+          "description": "The chain's native currency symbol (e.g. `ETH`).",
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "supportsShanghai": {
           "description": "Whether the chain supports the Shanghai hardfork.",
