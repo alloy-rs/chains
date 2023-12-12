@@ -38,4 +38,4 @@ serde = ["dep:serde"]
 rlp = ["dep:alloy-rlp"]
 arbitrary = ["dep:arbitrary", "dep:proptest"]
 
-schema = ["dep:schemars"]
+schema = ["std", "dep:schemars"]

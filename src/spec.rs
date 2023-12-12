@@ -97,11 +97,13 @@ mod tests {
     }
 
     #[test]
+    #[cfg_attr(miri, ignore = "no fs")]
     fn spec_up_to_date() {
         ensure_file_contents(Path::new(JSON_PATH), &json_chains());
     }
 
     #[test]
+    #[cfg_attr(miri, ignore = "no fs")]
     fn schema_up_to_date() {
         ensure_file_contents(Path::new(SCHEMA_PATH), &json_schema());
     }
