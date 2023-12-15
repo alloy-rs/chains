@@ -902,20 +902,12 @@ impl NamedChain {
     /// See also <https://github.com/ethereum/discv4-dns-lists>.
     pub fn public_dns_network_protocol(self) -> Option<String> {
         const DNS_PREFIX: &str = "enrtree://AKA3AM6LPBYEUDMVNU3BSVQJ5AD45Y7YPOHJLEF6W26QOE4VTUDPE@";
-        if let Self::Mainnet | Self::Goerli | Self::Sepolia | Self::Ropsten | Self::Rinkeby = self {
-            // `{DNS_PREFIX}all.{self.lower()}.ethdisco.net`
-            let mut s = String::with_capacity(DNS_PREFIX.len() + 32);
-            s.push_str(DNS_PREFIX);
-            s.push_str("all.");
-            let chain_str = self.as_ref();
-            s.push_str(chain_str);
-            let l = s.len();
-            s[l - chain_str.len()..].make_ascii_lowercase();
-            s.push_str(".ethdisco.net");
-
-            Some(s)
-        } else {
-            None
+        match self {
+            Self::Mainnet | Self::Goerli | Self::Sepolia | Self::Ropsten | Self::Rinkeby => {
+                let chain_str = self.as_ref().to_ascii_lowercase();
+                Some(format!("{DNS_PREFIX}all.{chain_str}.ethdisco.net"))
+            }
+            _ => None,
         }
     }
 }
