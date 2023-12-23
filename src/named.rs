@@ -589,6 +589,8 @@ impl NamedChain {
     ///
     /// Returns `(API_URL, BASE_URL)`.
     ///
+    /// All URLs have no trailing `/`
+    ///
     /// # Examples
     ///
     /// ```
@@ -1005,5 +1007,15 @@ mod tests {
     fn test_dns_network() {
         let s = "enrtree://AKA3AM6LPBYEUDMVNU3BSVQJ5AD45Y7YPOHJLEF6W26QOE4VTUDPE@all.mainnet.ethdisco.net";
         assert_eq!(NamedChain::Mainnet.public_dns_network_protocol().unwrap(), s);
+    }
+
+    #[test]
+    fn ensure_no_trailing_etherscan_url_separator() {
+        for chain in NamedChain::iter() {
+            if let Some((api, base)) = chain.etherscan_urls() {
+                assert!(!api.ends_with('/'), "{:?} api url has trailing /", chain);
+                assert!(!base.ends_with('/'), "{:?} base url has trailing /", chain);
+            }
+        }
     }
 }
