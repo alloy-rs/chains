@@ -93,6 +93,13 @@ impl fmt::Display for Chain {
     }
 }
 
+impl PartialEq<u64> for Chain {
+    #[inline]
+    fn eq(&self, other: &u64) -> bool {
+        self.id().eq(other)
+    }
+}
+
 #[cfg(feature = "serde")]
 impl serde::Serialize for Chain {
     fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {

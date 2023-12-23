@@ -224,6 +224,13 @@ impl AsRef<str> for NamedChain {
     }
 }
 
+impl PartialEq<u64> for NamedChain {
+    #[inline]
+    fn eq(&self, other: &u64) -> bool {
+        (*self as u64) == *other
+    }
+}
+
 #[cfg(feature = "serde")]
 impl serde::Serialize for NamedChain {
     #[inline]
