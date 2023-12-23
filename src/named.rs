@@ -670,19 +670,15 @@ impl NamedChain {
             C::ArbitrumSepolia => {
                 ("https://api-sepolia.arbiscan.io/api", "https://sepolia.arbiscan.io")
             }
-            C::ArbitrumNova => ("https://api-nova.arbiscan.io/api", "https://nova.arbiscan.io/"),
+            C::ArbitrumNova => ("https://api-nova.arbiscan.io/api", "https://nova.arbiscan.io"),
 
             C::Cronos => ("https://api.cronoscan.com/api", "https://cronoscan.com"),
             C::CronosTestnet => {
                 ("https://api-testnet.cronoscan.com/api", "https://testnet.cronoscan.com")
             }
 
-            C::Moonbeam => {
-                ("https://api-moonbeam.moonscan.io/api", "https://moonbeam.moonscan.io/")
-            }
-            C::Moonbase => {
-                ("https://api-moonbase.moonscan.io/api", "https://moonbase.moonscan.io/")
-            }
+            C::Moonbeam => ("https://api-moonbeam.moonscan.io/api", "https://moonbeam.moonscan.io"),
+            C::Moonbase => ("https://api-moonbase.moonscan.io/api", "https://moonbase.moonscan.io"),
             C::Moonriver => {
                 ("https://api-moonriver.moonscan.io/api", "https://moonriver.moonscan.io")
             }
@@ -694,11 +690,11 @@ impl NamedChain {
                 ("https://api-sepolia.scrollscan.com/api", "https://sepolia.scrollscan.com")
             }
             C::ScrollAlphaTestnet => {
-                ("https://alpha-blockscout.scroll.io/api", "https://alpha-blockscout.scroll.io/")
+                ("https://alpha-blockscout.scroll.io/api", "https://alpha-blockscout.scroll.io")
             }
 
             C::Metis => {
-                ("https://andromeda-explorer.metis.io/api", "https://andromeda-explorer.metis.io/")
+                ("https://andromeda-explorer.metis.io/api", "https://andromeda-explorer.metis.io")
             }
 
             C::Chiado => {
@@ -720,14 +716,14 @@ impl NamedChain {
                 ("https://blockscout.com/rsk/mainnet/api", "https://blockscout.com/rsk/mainnet")
             }
 
-            C::Oasis => ("https://scan.oasischain.io/api", "https://scan.oasischain.io/"),
+            C::Oasis => ("https://scan.oasischain.io/api", "https://scan.oasischain.io"),
 
             C::Emerald => {
-                ("https://explorer.emerald.oasis.dev/api", "https://explorer.emerald.oasis.dev/")
+                ("https://explorer.emerald.oasis.dev/api", "https://explorer.emerald.oasis.dev")
             }
             C::EmeraldTestnet => (
                 "https://testnet.explorer.emerald.oasis.dev/api",
-                "https://testnet.explorer.emerald.oasis.dev/",
+                "https://testnet.explorer.emerald.oasis.dev",
             ),
 
             C::Aurora => ("https://api.aurorascan.dev/api", "https://aurorascan.dev"),
@@ -735,8 +731,8 @@ impl NamedChain {
                 ("https://testnet.aurorascan.dev/api", "https://testnet.aurorascan.dev")
             }
 
-            C::Evmos => ("https://evm.evmos.org/api", "https://evm.evmos.org/"),
-            C::EvmosTestnet => ("https://evm.evmos.dev/api", "https://evm.evmos.dev/"),
+            C::Evmos => ("https://evm.evmos.org/api", "https://evm.evmos.org"),
+            C::EvmosTestnet => ("https://evm.evmos.dev/api", "https://evm.evmos.dev"),
 
             C::Celo => {
                 ("https://explorer.celo.org/mainnet/api", "https://explorer.celo.org/mainnet")
@@ -748,10 +744,10 @@ impl NamedChain {
                 ("https://explorer.celo.org/baklava/api", "https://explorer.celo.org/baklava")
             }
 
-            C::Canto => ("https://evm.explorer.canto.io/api", "https://evm.explorer.canto.io/"),
+            C::Canto => ("https://evm.explorer.canto.io/api", "https://evm.explorer.canto.io"),
             C::CantoTestnet => (
                 "https://testnet-explorer.canto.neobase.one/api",
-                "https://testnet-explorer.canto.neobase.one/",
+                "https://testnet-explorer.canto.neobase.one",
             ),
 
             C::Boba => ("https://api.bobascan.com/api", "https://bobascan.com"),
@@ -760,16 +756,15 @@ impl NamedChain {
             C::BaseGoerli => ("https://api-goerli.basescan.org/api", "https://goerli.basescan.org"),
 
             C::ZkSync => {
-                ("https://zksync2-mainnet-explorer.zksync.io/", "https://explorer.zksync.io/")
+                ("https://zksync2-mainnet-explorer.zksync.io", "https://explorer.zksync.io")
             }
-            C::ZkSyncTestnet => (
-                "https://zksync2-testnet-explorer.zksync.dev/",
-                "https://goerli.explorer.zksync.io/",
-            ),
+            C::ZkSyncTestnet => {
+                ("https://zksync2-testnet-explorer.zksync.dev", "https://goerli.explorer.zksync.io")
+            }
 
-            C::Linea => ("https://api.lineascan.build/api", "https://lineascan.build/"),
+            C::Linea => ("https://api.lineascan.build/api", "https://lineascan.build"),
             C::LineaTestnet => {
-                ("https://explorer.goerli.linea.build/api", "https://explorer.goerli.linea.build/")
+                ("https://explorer.goerli.linea.build/api", "https://explorer.goerli.linea.build")
             }
 
             C::Mantle => ("https://explorer.mantle.xyz/api", "https://explorer.mantle.xyz"),
