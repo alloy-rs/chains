@@ -212,8 +212,8 @@
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://zksync2-testnet-explorer.zksync.dev/",
-      "etherscanBaseUrl": "https://goerli.explorer.zksync.io/",
+      "etherscanApiUrl": "https://zksync2-testnet-explorer.zksync.dev",
+      "etherscanBaseUrl": "https://goerli.explorer.zksync.io",
       "etherscanApiKeyName": null
     },
     "288": {
@@ -248,8 +248,8 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://zksync2-mainnet-explorer.zksync.io/",
-      "etherscanBaseUrl": "https://explorer.zksync.io/",
+      "etherscanApiUrl": "https://zksync2-mainnet-explorer.zksync.io",
+      "etherscanBaseUrl": "https://explorer.zksync.io",
       "etherscanApiKeyName": null
     },
     "338": {
@@ -285,7 +285,7 @@
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://testnet-explorer.canto.neobase.one/api",
-      "etherscanBaseUrl": "https://testnet-explorer.canto.neobase.one/",
+      "etherscanBaseUrl": "https://testnet-explorer.canto.neobase.one",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "999": {
@@ -309,7 +309,7 @@
       "isTestnet": false,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://andromeda-explorer.metis.io/api",
-      "etherscanBaseUrl": "https://andromeda-explorer.metis.io/",
+      "etherscanBaseUrl": "https://andromeda-explorer.metis.io",
       "etherscanApiKeyName": null
     },
     "1101": {
@@ -345,7 +345,7 @@
       "isTestnet": false,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api-moonbeam.moonscan.io/api",
-      "etherscanBaseUrl": "https://moonbeam.moonscan.io/",
+      "etherscanBaseUrl": "https://moonbeam.moonscan.io",
       "etherscanApiKeyName": "MOONSCAN_API_KEY"
     },
     "1285": {
@@ -369,7 +369,7 @@
       "isTestnet": false,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api-moonbase.moonscan.io/api",
-      "etherscanBaseUrl": "https://moonbase.moonscan.io/",
+      "etherscanBaseUrl": "https://moonbase.moonscan.io",
       "etherscanApiKeyName": "MOONSCAN_API_KEY"
     },
     "1337": {
@@ -441,7 +441,7 @@
       "isTestnet": false,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://evm.explorer.canto.io/api",
-      "etherscanBaseUrl": "https://evm.explorer.canto.io/",
+      "etherscanBaseUrl": "https://evm.explorer.canto.io",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "8453": {
@@ -465,7 +465,7 @@
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://evm.evmos.dev/api",
-      "etherscanBaseUrl": "https://evm.evmos.dev/",
+      "etherscanBaseUrl": "https://evm.evmos.dev",
       "etherscanApiKeyName": null
     },
     "9001": {
@@ -477,7 +477,7 @@
       "isTestnet": false,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://evm.evmos.org/api",
-      "etherscanBaseUrl": "https://evm.evmos.org/",
+      "etherscanBaseUrl": "https://evm.evmos.org",
       "etherscanApiKeyName": null
     },
     "10200": {
@@ -513,7 +513,7 @@
       "isTestnet": false,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://scan.oasischain.io/api",
-      "etherscanBaseUrl": "https://scan.oasischain.io/",
+      "etherscanBaseUrl": "https://scan.oasischain.io",
       "etherscanApiKeyName": null
     },
     "31337": {
@@ -549,7 +549,7 @@
       "isTestnet": false,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api-nova.arbiscan.io/api",
-      "etherscanBaseUrl": "https://nova.arbiscan.io/",
+      "etherscanBaseUrl": "https://nova.arbiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "42220": {
@@ -573,7 +573,7 @@
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://testnet.explorer.emerald.oasis.dev/api",
-      "etherscanBaseUrl": "https://testnet.explorer.emerald.oasis.dev/",
+      "etherscanBaseUrl": "https://testnet.explorer.emerald.oasis.dev",
       "etherscanApiKeyName": null
     },
     "42262": {
@@ -585,7 +585,7 @@
       "isTestnet": false,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://explorer.emerald.oasis.dev/api",
-      "etherscanBaseUrl": "https://explorer.emerald.oasis.dev/",
+      "etherscanBaseUrl": "https://explorer.emerald.oasis.dev",
       "etherscanApiKeyName": null
     },
     "43113": {
@@ -633,7 +633,7 @@
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://explorer.goerli.linea.build/api",
-      "etherscanBaseUrl": "https://explorer.goerli.linea.build/",
+      "etherscanBaseUrl": "https://explorer.goerli.linea.build",
       "etherscanApiKeyName": null
     },
     "59144": {
@@ -645,7 +645,7 @@
       "isTestnet": false,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api.lineascan.build/api",
-      "etherscanBaseUrl": "https://lineascan.build/",
+      "etherscanBaseUrl": "https://lineascan.build",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "62320": {
@@ -765,7 +765,7 @@
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://alpha-blockscout.scroll.io/api",
-      "etherscanBaseUrl": "https://alpha-blockscout.scroll.io/",
+      "etherscanBaseUrl": "https://alpha-blockscout.scroll.io",
       "etherscanApiKeyName": null
     },
     "7777777": {
