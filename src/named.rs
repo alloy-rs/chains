@@ -1,6 +1,7 @@
 use alloc::string::String;
 use core::{fmt, time::Duration};
 use num_enum::TryFromPrimitiveError;
+use std::cmp::Ordering;
 
 // When adding a new chain:
 //   1. add new variant to the NamedChain enum;
@@ -228,6 +229,13 @@ impl PartialEq<u64> for NamedChain {
     #[inline]
     fn eq(&self, other: &u64) -> bool {
         (*self as u64) == *other
+    }
+}
+
+impl PartialOrd<u64> for NamedChain {
+    #[inline]
+    fn partial_cmp(&self, other: &u64) -> Option<Ordering> {
+        (*self as u64).partial_cmp(other)
     }
 }
 

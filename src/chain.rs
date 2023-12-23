@@ -1,6 +1,7 @@
 use crate::NamedChain;
 use alloc::string::String;
 use core::{fmt, str::FromStr, time::Duration};
+use std::cmp::Ordering;
 
 #[cfg(feature = "arbitrary")]
 use proptest::{
@@ -97,6 +98,13 @@ impl PartialEq<u64> for Chain {
     #[inline]
     fn eq(&self, other: &u64) -> bool {
         self.id().eq(other)
+    }
+}
+
+impl PartialOrd<u64> for Chain {
+    #[inline]
+    fn partial_cmp(&self, other: &u64) -> Option<Ordering> {
+        self.id().partial_cmp(other)
     }
 }
 
