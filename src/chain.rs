@@ -1,6 +1,6 @@
 use crate::NamedChain;
 use alloc::string::String;
-use core::{fmt, str::FromStr, time::Duration};
+use core::{cmp::Ordering, fmt, str::FromStr, time::Duration};
 
 #[cfg(feature = "arbitrary")]
 use proptest::{
@@ -90,6 +90,20 @@ impl fmt::Display for Chain {
             ChainKind::Named(chain) => chain.fmt(f),
             ChainKind::Id(id) => id.fmt(f),
         }
+    }
+}
+
+impl PartialEq<u64> for Chain {
+    #[inline]
+    fn eq(&self, other: &u64) -> bool {
+        self.id().eq(other)
+    }
+}
+
+impl PartialOrd<u64> for Chain {
+    #[inline]
+    fn partial_cmp(&self, other: &u64) -> Option<Ordering> {
+        self.id().partial_cmp(other)
     }
 }
 

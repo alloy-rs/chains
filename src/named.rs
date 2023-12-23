@@ -1,5 +1,5 @@
 use alloc::string::String;
-use core::{fmt, time::Duration};
+use core::{cmp::Ordering, fmt, time::Duration};
 use num_enum::TryFromPrimitiveError;
 
 // When adding a new chain:
@@ -221,6 +221,20 @@ impl AsRef<str> for NamedChain {
     #[inline]
     fn as_ref(&self) -> &str {
         self.as_str()
+    }
+}
+
+impl PartialEq<u64> for NamedChain {
+    #[inline]
+    fn eq(&self, other: &u64) -> bool {
+        (*self as u64) == *other
+    }
+}
+
+impl PartialOrd<u64> for NamedChain {
+    #[inline]
+    fn partial_cmp(&self, other: &u64) -> Option<Ordering> {
+        (*self as u64).partial_cmp(other)
     }
 }
 
