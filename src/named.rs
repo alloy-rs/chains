@@ -1,7 +1,6 @@
 use alloc::string::String;
-use core::{fmt, time::Duration};
+use core::{cmp::Ordering, fmt, time::Duration};
 use num_enum::TryFromPrimitiveError;
-use std::cmp::Ordering;
 
 // When adding a new chain:
 //   1. add new variant to the NamedChain enum;

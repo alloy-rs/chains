@@ -1,7 +1,6 @@
 use crate::NamedChain;
 use alloc::string::String;
-use core::{fmt, str::FromStr, time::Duration};
-use std::cmp::Ordering;
+use core::{cmp::Ordering, fmt, str::FromStr, time::Duration};
 
 #[cfg(feature = "arbitrary")]
 use proptest::{
