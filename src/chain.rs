@@ -286,6 +286,12 @@ impl Chain {
         Self::from_named(NamedChain::BaseGoerli)
     }
 
+    /// Returns the base sepolia chain.
+    #[inline]
+    pub const fn base_sepolia() -> Self {
+        Self::from_named(NamedChain::BaseSepolia)
+    }
+
     /// Returns the base mainnet chain.
     #[inline]
     pub const fn base_mainnet() -> Self {
@@ -322,6 +328,7 @@ impl Chain {
                     | NamedChain::OptimismSepolia
                     | NamedChain::Base
                     | NamedChain::BaseGoerli
+                    | NamedChain::BaseSepolia
             )
         )
     }

@@ -684,6 +684,18 @@
       "etherscanBaseUrl": "https://goerli.basescan.org",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "84532": {
+      "internalId": "BaseSepolia",
+      "name": "base-sepolia",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://api-sepolia.basescan.org/api",
+      "etherscanBaseUrl": "https://sepolia.basescan.org",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "314159": {
       "internalId": "FilecoinCalibrationTestnet",
       "name": "filecoin-calibration-testnet",
