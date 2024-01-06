@@ -77,8 +77,8 @@ pub enum NamedChain {
     Scroll = 534352,
     ScrollAlphaTestnet = 534353,
     #[cfg_attr(
-    feature = "serde",
-    serde(alias = "scroll_sepolia", alias = "scroll_sepolia_testnet")
+        feature = "serde",
+        serde(alias = "scroll_sepolia", alias = "scroll_sepolia_testnet")
     )]
     ScrollSepolia = 534351,
 
@@ -817,9 +817,10 @@ impl NamedChain {
                 ("https://explorer.publicgoods.network/api", "https://explorer.publicgoods.network")
             }
 
-            C::PgnSepolia => {
-                ("https://explorer.sepolia.publicgoods.network/api", "https://explorer.sepolia.publicgoods.network")
-            }
+            C::PgnSepolia => (
+                "https://explorer.sepolia.publicgoods.network/api",
+                "https://explorer.sepolia.publicgoods.network",
+            ),
 
             C::AnvilHardhat | C::Dev | C::Morden | C::MoonbeamDev | C::FilecoinMainnet => {
                 return None;
@@ -837,7 +838,7 @@ impl NamedChain {
     /// assert_eq!(NamedChain::Mainnet.etherscan_api_key_name(), Some("ETHERSCAN_API_KEY"));
     /// assert_eq!(NamedChain::AnvilHardhat.etherscan_api_key_name(), None);
     /// ```
-    pub const fn etherscan_api_key_name(self) -> Option<&'static str> {
+    /// pub const fn etherscan_api_key_name(self) -> Option<&'static str> {
         use NamedChain as C;
 
         let api_key_name = match self {
@@ -886,9 +887,13 @@ impl NamedChain {
 
             C::Moonbeam | C::Moonbase | C::MoonbeamDev | C::Moonriver => "MOONSCAN_API_KEY",
 
-            C::Canto | C::CantoTestnet | C::Zora | C::ZoraGoerli | C::ZoraSepolia | C::Pgn | C::PgnSepolia => {
-                "BLOCKSCOUT_API_KEY"
-            }
+            C::Canto
+            | C::CantoTestnet
+            | C::Zora
+            | C::ZoraGoerli
+            | C::ZoraSepolia
+            | C::Pgn
+            | C::PgnSepolia => "BLOCKSCOUT_API_KEY",
 
             C::Boba => "BOBASCAN_API_KEY",
 
