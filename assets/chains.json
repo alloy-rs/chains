@@ -288,6 +288,18 @@
       "etherscanBaseUrl": "https://goerli-optimism.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "424": {
+      "internalId": "Pgn",
+      "name": "pgn",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://explorer.publicgoods.network/api",
+      "etherscanBaseUrl": "https://explorer.publicgoods.network",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "740": {
       "internalId": "CantoTestnet",
       "name": "canto-testnet",
@@ -635,6 +647,18 @@
       "etherscanApiUrl": "https://explorer.celo.org/alfajores/api",
       "etherscanBaseUrl": "https://explorer.celo.org/alfajores",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "58008": {
+      "internalId": "PgnSepolia",
+      "name": "pgn-sepolia",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://explorer.sepolia.publicgoods.network/api",
+      "etherscanBaseUrl": "https://explorer.sepolia.publicgoods.network",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "59140": {
       "internalId": "LineaTestnet",

@@ -170,6 +170,9 @@ pub enum NamedChain {
     Zora = 7777777,
     ZoraGoerli = 999,
     ZoraSepolia = 999999999,
+
+    Pgn = 424,
+    PgnSepolia = 58008,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -320,7 +323,9 @@ impl NamedChain {
             | C::BaseSepolia
             | C::Zora
             | C::ZoraGoerli
-            | C::ZoraSepolia => 2_000,
+            | C::ZoraSepolia
+            | C::Pgn
+            | C::PgnSepolia => 2_000,
 
             C::Viction => 2_000,
 
@@ -448,7 +453,9 @@ impl NamedChain {
             | C::Chiado
             | C::Zora
             | C::ZoraGoerli
-            | C::ZoraSepolia => false,
+            | C::ZoraSepolia
+            | C::Pgn
+            | C::PgnSepolia => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             C::Dev
@@ -547,7 +554,8 @@ impl NamedChain {
             | C::ScrollSepolia
             | C::ZkSyncTestnet
             | C::ZoraGoerli
-            | C::ZoraSepolia => true,
+            | C::ZoraSepolia
+            | C::PgnSepolia => true,
 
             // Dev chains.
             C::Dev | C::AnvilHardhat => true,
@@ -586,6 +594,7 @@ impl NamedChain {
             | C::ZkSync
             | C::Mantle
             | C::Zora
+            | C::Pgn
             | C::Viction => false,
         }
     }
@@ -812,6 +821,15 @@ impl NamedChain {
                 ("https://sepolia.explorer.zora.energy/api", "https://sepolia.explorer.zora.energy")
             }
 
+            C::Pgn => {
+                ("https://explorer.publicgoods.network/api", "https://explorer.publicgoods.network")
+            }
+
+            C::PgnSepolia => (
+                "https://explorer.sepolia.publicgoods.network/api",
+                "https://explorer.sepolia.publicgoods.network",
+            ),
+
             C::AnvilHardhat | C::Dev | C::Morden | C::MoonbeamDev | C::FilecoinMainnet => {
                 return None;
             }
@@ -877,9 +895,13 @@ impl NamedChain {
 
             C::Moonbeam | C::Moonbase | C::MoonbeamDev | C::Moonriver => "MOONSCAN_API_KEY",
 
-            C::Canto | C::CantoTestnet | C::Zora | C::ZoraGoerli | C::ZoraSepolia => {
-                "BLOCKSCOUT_API_KEY"
-            }
+            C::Canto
+            | C::CantoTestnet
+            | C::Zora
+            | C::ZoraGoerli
+            | C::ZoraSepolia
+            | C::Pgn
+            | C::PgnSepolia => "BLOCKSCOUT_API_KEY",
 
             C::Boba => "BOBASCAN_API_KEY",
 
