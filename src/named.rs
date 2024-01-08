@@ -165,6 +165,8 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "mantle_testnet"))]
     MantleTestnet = 5001,
 
+    Viction = 88,
+
     Zora = 7777777,
     ZoraGoerli = 999,
     ZoraSepolia = 999999999,
@@ -325,6 +327,8 @@ impl NamedChain {
             | C::Pgn
             | C::PgnSepolia => 2_000,
 
+            C::Viction => 2_000,
+
             C::Polygon | C::PolygonMumbai => 2_100,
 
             C::Moonbeam | C::Moonriver => 12_500,
@@ -419,7 +423,8 @@ impl NamedChain {
             | C::PolygonZkEvmTestnet
             | C::Scroll
             | C::ScrollSepolia
-            | C::Metis => true,
+            | C::Metis
+            | C::Viction => true,
 
             // Known EIP-1559 chains.
             C::Mainnet
@@ -589,7 +594,8 @@ impl NamedChain {
             | C::ZkSync
             | C::Mantle
             | C::Zora
-            | C::Pgn => false,
+            | C::Pgn
+            | C::Viction => false,
         }
     }
 
@@ -805,6 +811,8 @@ impl NamedChain {
                 ("https://explorer.testnet.mantle.xyz/api", "https://explorer.testnet.mantle.xyz")
             }
 
+            C::Viction => ("https://www.vicscan.xyz/api", "https://www.vicscan.xyz"),
+
             C::Zora => ("https://explorer.zora.energy/api", "https://explorer.zora.energy"),
             C::ZoraGoerli => {
                 ("https://testnet.explorer.zora.energy/api", "https://testnet.explorer.zora.energy")
@@ -838,7 +846,7 @@ impl NamedChain {
     /// assert_eq!(NamedChain::Mainnet.etherscan_api_key_name(), Some("ETHERSCAN_API_KEY"));
     /// assert_eq!(NamedChain::AnvilHardhat.etherscan_api_key_name(), None);
     /// ```
-    /// pub const fn etherscan_api_key_name(self) -> Option<&'static str> {
+    pub const fn etherscan_api_key_name(self) -> Option<&'static str> {
         use NamedChain as C;
 
         let api_key_name = match self {
@@ -916,7 +924,8 @@ impl NamedChain {
             | C::ZkSyncTestnet
             | C::FilecoinMainnet
             | C::LineaTestnet
-            | C::FilecoinCalibrationTestnet => return None,
+            | C::FilecoinCalibrationTestnet
+            | C::Viction => return None,
         };
 
         Some(api_key_name)

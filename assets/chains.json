@@ -144,6 +144,18 @@
       "etherscanBaseUrl": "https://blockscout.com/poa/sokol",
       "etherscanApiKeyName": null
     },
+    "88": {
+      "internalId": "Viction",
+      "name": "viction",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": true,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://www.vicscan.xyz/api",
+      "etherscanBaseUrl": "https://www.vicscan.xyz",
+      "etherscanApiKeyName": null
+    },
     "97": {
       "internalId": "BinanceSmartChainTestnet",
       "name": "bsc-testnet",
