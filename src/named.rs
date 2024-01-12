@@ -496,6 +496,7 @@ impl NamedChain {
             | C::Optimism
             | C::OptimismGoerli
             | C::OptimismSepolia
+            | C::Base
             | C::BaseGoerli
             | C::BaseSepolia
             | C::Gnosis

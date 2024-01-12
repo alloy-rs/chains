@@ -473,7 +473,7 @@
       "name": "base",
       "averageBlocktimeHint": 2000,
       "isLegacy": false,
-      "supportsShanghai": false,
+      "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api.basescan.org/api",
