@@ -5,9 +5,54 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/alloy-rs/chains/compare/v0.1.5...HEAD)
+## [Unreleased](https://github.com/alloy-rs/chains/compare/v0.1.9...HEAD)
 
-## [0.1.5](https://github.com/alloy-rs/chains/releases/tag/v0.1.5) - 2023-12-12
+## [0.1.9](https://github.com/foundry-rs/compilers/releases/tag/v0.1.9) - 2024-01-12
+
+### Miscellaneous Tasks
+
+- Release 0.1.9
+- Also add base to supports shanghai ([#29](https://github.com/foundry-rs/compilers/issues/29))
+
+## [0.1.8](https://github.com/foundry-rs/compilers/releases/tag/v0.1.8) - 2024-01-12
+
+### Features
+
+- Add public goods network and pgn sepolia to chainsˆ ([#25](https://github.com/foundry-rs/compilers/issues/25))
+- Add viction chain ([#26](https://github.com/foundry-rs/compilers/issues/26))
+
+### Miscellaneous Tasks
+
+- Release 0.1.8
+- Add holesky to dns match ([#28](https://github.com/foundry-rs/compilers/issues/28))
+- Mark Optimism + Holesky as supports shanghai ([#27](https://github.com/foundry-rs/compilers/issues/27))
+
+## [0.1.7](https://github.com/foundry-rs/compilers/releases/tag/v0.1.7) - 2023-12-29
+
+### Features
+
+- Add base sepolia ([#24](https://github.com/foundry-rs/compilers/issues/24))
+
+### Miscellaneous Tasks
+
+- Release 0.1.7
+
+## [0.1.6](https://github.com/foundry-rs/compilers/releases/tag/v0.1.6) - 2023-12-23
+
+### Features
+
+- Add PartialEq<u64> impls ([#22](https://github.com/foundry-rs/compilers/issues/22))
+
+### Miscellaneous Tasks
+
+- Release 0.1.6
+- Add arbitrum one alias ([#20](https://github.com/foundry-rs/compilers/issues/20))
+
+### Styling
+
+- Unify etherscan url format ([#23](https://github.com/foundry-rs/compilers/issues/23))
+
+## [0.1.5](https://github.com/foundry-rs/compilers/releases/tag/v0.1.5) - 2023-12-12
 
 ### Added
 
