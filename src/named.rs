@@ -492,6 +492,8 @@ impl NamedChain {
             C::Mainnet
             | C::Goerli
             | C::Sepolia
+            | C::Holesky
+            | C::Optimism
             | C::OptimismGoerli
             | C::OptimismSepolia
             | C::BaseGoerli
