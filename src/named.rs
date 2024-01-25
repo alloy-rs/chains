@@ -148,6 +148,8 @@ pub enum NamedChain {
     BaseGoerli = 84531,
     BaseSepolia = 84532,
 
+    BlastSepolia = 168587773,
+
     Linea = 59144,
     LineaTestnet = 59140,
 
@@ -321,6 +323,7 @@ impl NamedChain {
             | C::Base
             | C::BaseGoerli
             | C::BaseSepolia
+            | C::BlastSepolia
             | C::Zora
             | C::ZoraGoerli
             | C::ZoraSepolia
@@ -434,6 +437,7 @@ impl NamedChain {
             | C::Base
             | C::BaseGoerli
             | C::BaseSepolia
+            | C::BlastSepolia
             | C::Optimism
             | C::OptimismGoerli
             | C::OptimismSepolia
@@ -499,6 +503,7 @@ impl NamedChain {
             | C::Base
             | C::BaseGoerli
             | C::BaseSepolia
+            | C::BlastSepolia
             | C::Gnosis
             | C::Chiado
             | C::ZoraSepolia
@@ -536,6 +541,7 @@ impl NamedChain {
             | C::AvalancheFuji
             | C::BaseGoerli
             | C::BaseSepolia
+            | C::BlastSepolia
             | C::BinanceSmartChainTestnet
             | C::CantoTestnet
             | C::CronosTestnet
@@ -797,6 +803,11 @@ impl NamedChain {
                 ("https://api-sepolia.basescan.org/api", "https://sepolia.basescan.org")
             }
 
+            C::BlastSepolia => (
+                "https://api.routescan.io/v2/network/testnet/evm/168587773/etherscan",
+                "https://testnet.blastscan.io",
+            ),
+
             C::ZkSync => {
                 ("https://zksync2-mainnet-explorer.zksync.io", "https://explorer.zksync.io")
             }
@@ -884,6 +895,7 @@ impl NamedChain {
             | C::MantleTestnet
             | C::BaseGoerli
             | C::BaseSepolia
+            | C::BlastSepolia
             | C::Gnosis
             | C::Scroll
             | C::ScrollSepolia => "ETHERSCAN_API_KEY",
