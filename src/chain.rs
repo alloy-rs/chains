@@ -298,6 +298,12 @@ impl Chain {
         Self::from_named(NamedChain::Base)
     }
 
+    /// Returns the blast sepolia chain.
+    #[inline]
+    pub const fn blast_sepolia() -> Self {
+        Self::from_named(NamedChain::BlastSepolia)
+    }
+
     /// Returns the dev chain.
     #[inline]
     pub const fn dev() -> Self {

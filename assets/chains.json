@@ -852,6 +852,18 @@
       "etherscanBaseUrl": "https://sepolia-optimism.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "168587773": {
+      "internalId": "BlastSepolia",
+      "name": "blast-sepolia",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://api.routescan.io/v2/network/testnet/evm/168587773/etherscan",
+      "etherscanBaseUrl": "https://testnet.blastscan.io",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "999999999": {
       "internalId": "ZoraSepolia",
       "name": "zora-sepolia",
