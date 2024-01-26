@@ -1052,6 +1052,9 @@ mod tests {
             (ZkSync, &["zksync"]),
             (Mantle, &["mantle"]),
             (MantleTestnet, &["mantle-testnet"]),
+            (Base, &["base"]),
+            (BaseGoerli, &["base-goerli"]),
+            (BaseSepolia, &["base-sepolia"]),
         ];
 
         for &(chain, aliases) in ALIASES {
