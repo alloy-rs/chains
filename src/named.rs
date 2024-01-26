@@ -87,11 +87,7 @@ pub enum NamedChain {
     ScrollAlphaTestnet = 534353,
     #[cfg_attr(
         feature = "serde",
-        serde(
-            alias = "scroll_sepolia",
-            alias = "scroll_sepolia_testnet",
-            alias = "scroll-sepolia"
-        )
+        serde(alias = "scroll_sepolia_testnet", alias = "scroll-sepolia")
     )]
     ScrollSepolia = 534351,
 
