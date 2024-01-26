@@ -48,15 +48,21 @@ pub enum NamedChain {
     Sepolia = 11155111,
 
     Optimism = 10,
+    #[cfg_attr(feature = "serde", serde(alias = "optimism-kovan"))]
     OptimismKovan = 69,
+    #[cfg_attr(feature = "serde", serde(alias = "optimism-goerli"))]
     OptimismGoerli = 420,
+    #[cfg_attr(feature = "serde", serde(alias = "optimism-sepolia"))]
     OptimismSepolia = 11155420,
 
-    #[cfg_attr(feature = "serde", serde(alias = "arbitrum_one"))]
+    #[cfg_attr(feature = "serde", serde(alias = "arbitrum_one", alias = "arbitrum-one"))]
     Arbitrum = 42161,
     ArbitrumTestnet = 421611,
+    #[cfg_attr(feature = "serde", serde(alias = "arbitrum-goerli"))]
     ArbitrumGoerli = 421613,
+    #[cfg_attr(feature = "serde", serde(alias = "arbitrum-sepolia"))]
     ArbitrumSepolia = 421614,
+    #[cfg_attr(feature = "serde", serde(alias = "arbitrum-nova"))]
     ArbitrumNova = 42170,
 
     Cronos = 25,
@@ -65,10 +71,13 @@ pub enum NamedChain {
     Rsk = 30,
 
     #[strum(to_string = "bsc", serialize = "binance-smart-chain")]
-    #[cfg_attr(feature = "serde", serde(alias = "bsc"))]
+    #[cfg_attr(feature = "serde", serde(alias = "bsc", alias = "binance-smart-chain"))]
     BinanceSmartChain = 56,
     #[strum(to_string = "bsc-testnet", serialize = "binance-smart-chain-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "bsc_testnet"))]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "bsc_testnet", alias = "bsc-testnet", alias = "binance-smart-chain-testnet")
+    )]
     BinanceSmartChainTestnet = 97,
 
     Poa = 99,
@@ -78,25 +87,35 @@ pub enum NamedChain {
     ScrollAlphaTestnet = 534353,
     #[cfg_attr(
         feature = "serde",
-        serde(alias = "scroll_sepolia", alias = "scroll_sepolia_testnet")
+        serde(alias = "scroll_sepolia_testnet", alias = "scroll-sepolia")
     )]
     ScrollSepolia = 534351,
 
     Metis = 1088,
 
     #[strum(to_string = "xdai", serialize = "gnosis", serialize = "gnosis-chain")]
-    #[cfg_attr(feature = "serde", serde(alias = "xdai", alias = "gnosis", alias = "gnosis_chain"))]
+    #[cfg_attr(feature = "serde", serde(alias = "xdai", alias = "gnosis", alias = "gnosis-chain"))]
     Gnosis = 100,
 
     Polygon = 137,
     #[strum(to_string = "mumbai", serialize = "polygon-mumbai")]
-    #[cfg_attr(feature = "serde", serde(alias = "mumbai"))]
+    #[cfg_attr(feature = "serde", serde(alias = "mumbai", alias = "polygon-mumbai"))]
     PolygonMumbai = 80001,
     #[strum(serialize = "polygon-zkevm", serialize = "zkevm")]
-    #[cfg_attr(feature = "serde", serde(alias = "zkevm", alias = "polygon_zkevm"))]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "zkevm", alias = "polygon_zkevm", alias = "polygon-zkevm")
+    )]
     PolygonZkEvm = 1101,
     #[strum(serialize = "polygon-zkevm-testnet", serialize = "zkevm-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "zkevm_testnet", alias = "polygon_zkevm_testnet"))]
+    #[cfg_attr(
+        feature = "serde",
+        serde(
+            alias = "zkevm-testnet",
+            alias = "polygon_zkevm_testnet",
+            alias = "polygon-zkevm-testnet"
+        )
+    )]
     PolygonZkEvmTestnet = 1442,
 
     Fantom = 250,
@@ -111,7 +130,10 @@ pub enum NamedChain {
 
     Dev = 1337,
     #[strum(to_string = "anvil-hardhat", serialize = "anvil", serialize = "hardhat")]
-    #[cfg_attr(feature = "serde", serde(alias = "anvil", alias = "hardhat"))]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "anvil", alias = "hardhat", alias = "anvil-hardhat")
+    )]
     AnvilHardhat = 31337,
 
     Evmos = 9001,
@@ -145,9 +167,12 @@ pub enum NamedChain {
     Boba = 288,
 
     Base = 8453,
+    #[cfg_attr(feature = "serde", serde(alias = "base-goerli"))]
     BaseGoerli = 84531,
+    #[cfg_attr(feature = "serde", serde(alias = "base-sepolia"))]
     BaseSepolia = 84532,
 
+    #[cfg_attr(feature = "serde", serde(alias = "blast-sepolia"))]
     BlastSepolia = 168587773,
 
     Linea = 59144,
@@ -157,23 +182,26 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "zksync"))]
     ZkSync = 324,
     #[strum(to_string = "zksync-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "zksync_testnet"))]
+    #[cfg_attr(feature = "serde", serde(alias = "zksync_testnet", alias = "zksync-testnet"))]
     ZkSyncTestnet = 280,
 
     #[strum(to_string = "mantle")]
     #[cfg_attr(feature = "serde", serde(alias = "mantle"))]
     Mantle = 5000,
     #[strum(to_string = "mantle-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "mantle_testnet"))]
+    #[cfg_attr(feature = "serde", serde(alias = "mantle-testnet"))]
     MantleTestnet = 5001,
 
     Viction = 88,
 
     Zora = 7777777,
+    #[cfg_attr(feature = "serde", serde(alias = "zora-goerli"))]
     ZoraGoerli = 999,
+    #[cfg_attr(feature = "serde", serde(alias = "zora-sepolia"))]
     ZoraSepolia = 999999999,
 
     Pgn = 424,
+    #[cfg_attr(feature = "serde", serde(alias = "pgn-sepolia"))]
     PgnSepolia = 58008,
 }
 
@@ -1046,17 +1074,26 @@ mod tests {
             (ZkSync, &["zksync"]),
             (Mantle, &["mantle"]),
             (MantleTestnet, &["mantle-testnet"]),
+            (Base, &["base"]),
+            (BaseGoerli, &["base-goerli"]),
+            (BaseSepolia, &["base-sepolia"]),
+            (BlastSepolia, &["blast-sepolia"]),
         ];
 
         for &(chain, aliases) in ALIASES {
             for &alias in aliases {
-                assert_eq!(alias.parse::<NamedChain>().unwrap(), chain);
+                let named = alias.parse::<NamedChain>().unwrap();
+                assert_eq!(named, chain);
 
                 #[cfg(feature = "serde")]
                 {
-                    let s = alias.to_string().replace('-', "_");
                     assert_eq!(
-                        serde_json::from_str::<NamedChain>(&format!("\"{s}\"")).unwrap(),
+                        serde_json::from_str::<NamedChain>(&format!("\"{alias}\"")).unwrap(),
+                        chain
+                    );
+
+                    assert_eq!(
+                        serde_json::from_str::<NamedChain>(&format!("\"{named}\"")).unwrap(),
                         chain
                     );
                 }
