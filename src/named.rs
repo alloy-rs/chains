@@ -540,8 +540,6 @@ impl NamedChain {
             | C::BaseGoerli
             | C::BaseSepolia
             | C::BlastSepolia
-            | C::Mode
-            | C::ModeSepolia
             | C::Gnosis
             | C::Chiado
             | C::ZoraSepolia
