@@ -203,6 +203,10 @@ pub enum NamedChain {
     Pgn = 424,
     #[cfg_attr(feature = "serde", serde(alias = "pgn-sepolia"))]
     PgnSepolia = 58008,
+
+    Mode = 34443,
+    #[cfg_attr(feature = "serde", serde(alias = "mode-sepolia"))]
+    ModeSepolia = 919,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -355,6 +359,8 @@ impl NamedChain {
             | C::Zora
             | C::ZoraGoerli
             | C::ZoraSepolia
+            | C::Mode
+            | C::ModeSepolia
             | C::Pgn
             | C::PgnSepolia => 2_000,
 
@@ -486,6 +492,8 @@ impl NamedChain {
             | C::Zora
             | C::ZoraGoerli
             | C::ZoraSepolia
+            | C::Mode
+            | C::ModeSepolia
             | C::Pgn
             | C::PgnSepolia => false,
 
@@ -532,6 +540,8 @@ impl NamedChain {
             | C::BaseGoerli
             | C::BaseSepolia
             | C::BlastSepolia
+            | C::Mode
+            | C::ModeSepolia
             | C::Gnosis
             | C::Chiado
             | C::ZoraSepolia
@@ -592,6 +602,7 @@ impl NamedChain {
             | C::ZkSyncTestnet
             | C::ZoraGoerli
             | C::ZoraSepolia
+            | C::ModeSepolia
             | C::PgnSepolia => true,
 
             // Dev chains.
@@ -632,6 +643,7 @@ impl NamedChain {
             | C::Mantle
             | C::Zora
             | C::Pgn
+            | C::Mode
             | C::Viction => false,
         }
     }
@@ -872,6 +884,12 @@ impl NamedChain {
                 "https://explorer.sepolia.publicgoods.network",
             ),
 
+            C::Mode => ("https://explorer.mode.network/api", "https://explorer.mode.network"),
+            C::ModeSepolia => (
+                "https://sepolia.explorer.mode.network/api",
+                "https://sepolia.explorer.mode.network",
+            ),
+
             C::AnvilHardhat | C::Dev | C::Morden | C::MoonbeamDev | C::FilecoinMainnet => {
                 return None;
             }
@@ -943,6 +961,8 @@ impl NamedChain {
             | C::Zora
             | C::ZoraGoerli
             | C::ZoraSepolia
+            | C::Mode
+            | C::ModeSepolia
             | C::Pgn
             | C::PgnSepolia => "BLOCKSCOUT_API_KEY",
 

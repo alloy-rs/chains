@@ -312,6 +312,18 @@
       "etherscanBaseUrl": "https://testnet-explorer.canto.neobase.one",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "919": {
+      "internalId": "ModeSepolia",
+      "name": "mode-sepolia",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://sepolia.explorer.mode.network/api",
+      "etherscanBaseUrl": "https://sepolia.explorer.mode.network",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "999": {
       "internalId": "ZoraGoerli",
       "name": "zora-goerli",
@@ -551,6 +563,18 @@
       "etherscanApiUrl": null,
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": null
+    },
+    "34443": {
+      "internalId": "Mode",
+      "name": "mode",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://explorer.mode.network/api",
+      "etherscanBaseUrl": "https://explorer.mode.network",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "42161": {
       "internalId": "Arbitrum",
