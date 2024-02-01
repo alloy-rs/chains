@@ -732,6 +732,18 @@
       "etherscanBaseUrl": "https://mumbai.polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
     },
+    "80002": {
+      "internalId": "PolygonAmoy",
+      "name": "amoy",
+      "averageBlocktimeHint": 2100,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://faucet.polygon.technology",
+      "etherscanBaseUrl": "https://www.oklink.com/amoy",
+      "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
+    },
     "84531": {
       "internalId": "BaseGoerli",
       "name": "base-goerli",
