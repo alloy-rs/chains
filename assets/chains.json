@@ -737,7 +737,7 @@
       "name": "amoy",
       "averageBlocktimeHint": 2100,
       "isLegacy": false,
-      "supportsShanghai": true,
+      "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://faucet.polygon.technology",
