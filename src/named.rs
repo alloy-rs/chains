@@ -101,6 +101,9 @@ pub enum NamedChain {
     #[strum(to_string = "mumbai", serialize = "polygon-mumbai")]
     #[cfg_attr(feature = "serde", serde(alias = "mumbai", alias = "polygon-mumbai"))]
     PolygonMumbai = 80001,
+    #[strum(to_string = "amoy", serialize = "polygon-amoy")]
+    #[cfg_attr(feature = "serde", serde(alias = "amoy", alias = "polygon-amoy"))]
+    PolygonAmoy = 80002,
     #[strum(serialize = "polygon-zkevm", serialize = "zkevm")]
     #[cfg_attr(
         feature = "serde",
@@ -366,7 +369,7 @@ impl NamedChain {
 
             C::Viction => 2_000,
 
-            C::Polygon | C::PolygonMumbai => 2_100,
+            C::Polygon | C::PolygonMumbai | C::PolygonAmoy => 2_100,
 
             C::Moonbeam | C::Moonriver => 12_500,
 
@@ -477,6 +480,7 @@ impl NamedChain {
             | C::OptimismSepolia
             | C::Polygon
             | C::PolygonMumbai
+            | C::PolygonAmoy
             | C::Avalanche
             | C::AvalancheFuji
             | C::Arbitrum
@@ -594,6 +598,7 @@ impl NamedChain {
             | C::OptimismKovan
             | C::OptimismSepolia
             | C::PolygonMumbai
+            | C::PolygonAmoy
             | C::PolygonZkEvmTestnet
             | C::ScrollAlphaTestnet
             | C::ScrollSepolia
@@ -703,6 +708,7 @@ impl NamedChain {
             C::PolygonMumbai => {
                 ("https://api-testnet.polygonscan.com/api", "https://mumbai.polygonscan.com")
             }
+            C::PolygonAmoy => ("https://faucet.polygon.technology", "https://www.oklink.com/amoy"),
 
             C::PolygonZkEvm => {
                 ("https://api-zkevm.polygonscan.com/api", "https://zkevm.polygonscan.com")
@@ -946,9 +952,11 @@ impl NamedChain {
 
             C::Avalanche | C::AvalancheFuji => "SNOWTRACE_API_KEY",
 
-            C::Polygon | C::PolygonMumbai | C::PolygonZkEvm | C::PolygonZkEvmTestnet => {
-                "POLYGONSCAN_API_KEY"
-            }
+            C::Polygon
+            | C::PolygonMumbai
+            | C::PolygonAmoy
+            | C::PolygonZkEvm
+            | C::PolygonZkEvmTestnet => "POLYGONSCAN_API_KEY",
 
             C::Fantom | C::FantomTestnet => "FTMSCAN_API_KEY",
 
