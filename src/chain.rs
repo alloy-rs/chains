@@ -519,7 +519,7 @@ mod tests {
     #[test]
     fn test_serde() {
         let chains = r#"["mainnet",1,80001,80002,"mumbai"]"#;
-        let re = r#"["mainnet","mainnet","mumbai",80002,"mumbai"]"#;
+        let re = r#"["mainnet","mainnet","mumbai","amoy","mumbai"]"#;
         let expected = [
             Chain::mainnet(),
             Chain::mainnet(),
