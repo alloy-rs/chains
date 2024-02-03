@@ -347,6 +347,14 @@ impl Chain {
                     | NamedChain::Base
                     | NamedChain::BaseGoerli
                     | NamedChain::BaseSepolia
+                    | NamedChain::Mode
+                    | NamedChain::ModeSepolia
+                    | NamedChain::Pgn
+                    | NamedChain::PgnSepolia
+                    | NamedChain::Zora
+                    | NamedChain::ZoraGoerli
+                    | NamedChain::ZoraSepolia
+                    | NamedChain::BlastSepolia
             )
         )
     }

@@ -547,6 +547,8 @@ impl NamedChain {
             | C::Gnosis
             | C::Chiado
             | C::ZoraSepolia
+            | C::Mode
+            | C::ModeSepolia
             | C::PolygonMumbai
             | C::Polygon => true,
             _ => false,
