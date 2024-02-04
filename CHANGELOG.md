@@ -5,10 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.11](https://github.com/alloy-rs/chains/releases/tag/v0.1.11) - 2024-02-04
+
+### Bug Fixes
+
+- Remove supportsShanghai for Mode mainnet & testnet ([#34](https://github.com/alloy-rs/chains/issues/34))
+
+### Dependencies
+
+- Bump strum ([#39](https://github.com/alloy-rs/chains/issues/39))
+
+### Features
+
+- [amoy] Add amoy to chain config ([#35](https://github.com/alloy-rs/chains/issues/35))
+- Add Mode & Mode Sepolia ([#33](https://github.com/alloy-rs/chains/issues/33))
+
+### Miscellaneous Tasks
+
+- Add further op chains to is_optimism() + mark mode as supports… ([#38](https://github.com/alloy-rs/chains/issues/38))
+- Update cargo t note for spec ([#37](https://github.com/alloy-rs/chains/issues/37))
+
+### Other
+
+- Add aliases for Base, BaseSepolia and BaseGoerli ([#32](https://github.com/alloy-rs/chains/issues/32))
+
 ## [0.1.10](https://github.com/alloy-rs/chains/releases/tag/v0.1.10) - 2024-01-25
 
 ### Miscellaneous Tasks
 
+- Release 0.1.10
 - Update changelog and add cliff ([#30](https://github.com/alloy-rs/chains/issues/30))
 
 ### Other
