@@ -24,7 +24,8 @@ use num_enum::TryFromPrimitiveError;
 /// An Ethereum EIP-155 chain.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[derive(strum::IntoStaticStr)] // Into<&'static str>, AsRef<str>, fmt::Display and serde::Serialize
-#[derive(strum::EnumVariantNames)] // NamedChain::VARIANTS
+#[derive(strum::VariantNames)] // NamedChain::VARIANTS
+#[derive(strum::VariantArray)] // NamedChain::VARIANTS
 #[derive(strum::EnumString)] // FromStr, TryFrom<&str>
 #[derive(strum::EnumIter)] // NamedChain::iter
 #[derive(strum::EnumCount)] // NamedChain::COUNT
