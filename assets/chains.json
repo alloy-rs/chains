@@ -816,6 +816,18 @@
       "etherscanBaseUrl": "https://sepolia.arbiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "444444": {
+      "internalId": "SyndrSepolia",
+      "name": "syndr-sepolia",
+      "averageBlocktimeHint": 1300,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://sepolia-explorer.syndr.com/api",
+      "etherscanBaseUrl": "https://sepolia-explorer.syndr.com",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "534351": {
       "internalId": "ScrollSepolia",
       "name": "scroll-sepolia",
