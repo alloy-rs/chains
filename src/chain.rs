@@ -304,6 +304,12 @@ impl Chain {
         Self::from_named(NamedChain::BlastSepolia)
     }
 
+    /// Returns the syndr sepolia chain.
+    #[inline]
+    pub const fn syndr_sepolia() -> Self {
+        Self::from_named(NamedChain::SyndrSepolia)
+    }
+
     /// Returns the mode mainnet chain.
     #[inline]
     pub const fn mode() -> Self {

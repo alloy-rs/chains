@@ -175,6 +175,8 @@ pub enum NamedChain {
     BaseGoerli = 84531,
     #[cfg_attr(feature = "serde", serde(alias = "base-sepolia"))]
     BaseSepolia = 84532,
+    #[cfg_attr(feature = "serde", serde(alias = "syndr-sepolia"))]
+    SyndrSepolia = 444444,
 
     #[cfg_attr(feature = "serde", serde(alias = "blast-sepolia"))]
     BlastSepolia = 168587773,
@@ -351,6 +353,7 @@ impl NamedChain {
             | C::ArbitrumTestnet
             | C::ArbitrumGoerli
             | C::ArbitrumSepolia
+            | C::SyndrSepolia
             | C::ArbitrumNova => 1_300,
 
             C::Optimism
@@ -488,6 +491,7 @@ impl NamedChain {
             | C::ArbitrumGoerli
             | C::ArbitrumSepolia
             | C::ArbitrumNova
+            | C::SyndrSepolia
             | C::FilecoinMainnet
             | C::Linea
             | C::LineaTestnet
@@ -580,6 +584,7 @@ impl NamedChain {
             C::ArbitrumGoerli
             | C::ArbitrumSepolia
             | C::ArbitrumTestnet
+            | C::SyndrSepolia
             | C::AuroraTestnet
             | C::AvalancheFuji
             | C::BaseGoerli
@@ -764,6 +769,10 @@ impl NamedChain {
             }
             C::ArbitrumNova => ("https://api-nova.arbiscan.io/api", "https://nova.arbiscan.io"),
 
+            C::SyndrSepolia => {
+                ("https://sepolia-explorer.syndr.com/api", "https://sepolia-explorer.syndr.com")
+            }
+
             C::Cronos => ("https://api.cronoscan.com/api", "https://cronoscan.com"),
             C::CronosTestnet => {
                 ("https://api-testnet.cronoscan.com/api", "https://testnet.cronoscan.com")
@@ -935,6 +944,7 @@ impl NamedChain {
             | C::ArbitrumGoerli
             | C::ArbitrumSepolia
             | C::ArbitrumNova
+            | C::SyndrSepolia
             | C::Cronos
             | C::CronosTestnet
             | C::Aurora
@@ -1107,6 +1117,7 @@ mod tests {
             (BaseGoerli, &["base-goerli"]),
             (BaseSepolia, &["base-sepolia"]),
             (BlastSepolia, &["blast-sepolia"]),
+            (SyndrSepolia, &["syndr-sepolia"]),
         ];
 
         for &(chain, aliases) in ALIASES {
