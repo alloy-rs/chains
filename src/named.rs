@@ -1119,6 +1119,7 @@ mod tests {
             (BaseSepolia, &["base-sepolia"]),
             (BlastSepolia, &["blast-sepolia"]),
             (SyndrSepolia, &["syndr-sepolia"]),
+            (LineaGoerli, &["linea-goerli"]),
         ];
 
         for &(chain, aliases) in ALIASES {
