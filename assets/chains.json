@@ -685,8 +685,8 @@
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "59140": {
-      "internalId": "LineaTestnet",
-      "name": "linea-testnet",
+      "internalId": "LineaGoerli",
+      "name": "linea-goerli",
       "averageBlocktimeHint": null,
       "isLegacy": false,
       "supportsShanghai": false,
