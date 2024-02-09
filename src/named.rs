@@ -182,7 +182,8 @@ pub enum NamedChain {
     BlastSepolia = 168587773,
 
     Linea = 59144,
-    LineaTestnet = 59140,
+    #[cfg_attr(feature = "serde", serde(alias = "linea-goerli"))]
+    LineaGoerli = 59140,
 
     #[strum(to_string = "zksync")]
     #[cfg_attr(feature = "serde", serde(alias = "zksync"))]
@@ -424,7 +425,7 @@ impl NamedChain {
             | C::PolygonZkEvmTestnet
             | C::Metis
             | C::Linea
-            | C::LineaTestnet
+            | C::LineaGoerli
             | C::Mantle
             | C::MantleTestnet => return None,
         }))
@@ -494,7 +495,7 @@ impl NamedChain {
             | C::SyndrSepolia
             | C::FilecoinMainnet
             | C::Linea
-            | C::LineaTestnet
+            | C::LineaGoerli
             | C::FilecoinCalibrationTestnet
             | C::Gnosis
             | C::Chiado
@@ -599,7 +600,7 @@ impl NamedChain {
             | C::EvmosTestnet
             | C::FantomTestnet
             | C::FilecoinCalibrationTestnet
-            | C::LineaTestnet
+            | C::LineaGoerli
             | C::MantleTestnet
             | C::MoonbeamDev
             | C::OptimismGoerli
@@ -872,7 +873,7 @@ impl NamedChain {
             }
 
             C::Linea => ("https://api.lineascan.build/api", "https://lineascan.build"),
-            C::LineaTestnet => {
+            C::LineaGoerli => {
                 ("https://explorer.goerli.linea.build/api", "https://explorer.goerli.linea.build")
             }
 
@@ -1005,7 +1006,7 @@ impl NamedChain {
             | C::ZkSync
             | C::ZkSyncTestnet
             | C::FilecoinMainnet
-            | C::LineaTestnet
+            | C::LineaGoerli
             | C::FilecoinCalibrationTestnet
             | C::Viction => return None,
         };
