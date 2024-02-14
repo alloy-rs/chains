@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.12](https://github.com/alloy-rs/chains/releases/tag/v0.1.12) - 2024-02-14
+
+### Features
+
+- Add kakarot sepolia ([#43](https://github.com/alloy-rs/chains/issues/43))
+
+### Other
+
+- Add 'Linea' and 'LineaGoerli' serde kebab cases aliases ([#42](https://github.com/alloy-rs/chains/issues/42))
+- Add Syndr Sepolia L3 ([#40](https://github.com/alloy-rs/chains/issues/40))
+
 ## [0.1.11](https://github.com/alloy-rs/chains/releases/tag/v0.1.11) - 2024-02-04
 
 ### Bug Fixes
@@ -22,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Miscellaneous Tasks
 
+- Release 0.1.11
 - Add further op chains to is_optimism() + mark mode as supports… ([#38](https://github.com/alloy-rs/chains/issues/38))
 - Update cargo t note for spec ([#37](https://github.com/alloy-rs/chains/issues/37))
 
