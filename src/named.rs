@@ -214,6 +214,9 @@ pub enum NamedChain {
     Mode = 34443,
     #[cfg_attr(feature = "serde", serde(alias = "mode-sepolia"))]
     ModeSepolia = 919,
+
+    #[cfg_attr(feature = "serde", serde(alias = "kakarot-sepolia"))]
+    KakarotSepolia = 107107114116,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -427,7 +430,8 @@ impl NamedChain {
             | C::Linea
             | C::LineaGoerli
             | C::Mantle
-            | C::MantleTestnet => return None,
+            | C::MantleTestnet
+            | C::KakarotSepolia => return None,
         }))
     }
 
@@ -505,7 +509,8 @@ impl NamedChain {
             | C::Mode
             | C::ModeSepolia
             | C::Pgn
-            | C::PgnSepolia => false,
+            | C::PgnSepolia
+            | C::KakarotSepolia => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             C::Dev
@@ -615,7 +620,8 @@ impl NamedChain {
             | C::ZoraGoerli
             | C::ZoraSepolia
             | C::ModeSepolia
-            | C::PgnSepolia => true,
+            | C::PgnSepolia
+            | C::KakarotSepolia => true,
 
             // Dev chains.
             C::Dev | C::AnvilHardhat => true,
@@ -910,6 +916,9 @@ impl NamedChain {
             C::AnvilHardhat | C::Dev | C::Morden | C::MoonbeamDev | C::FilecoinMainnet => {
                 return None;
             }
+            C::KakarotSepolia => {
+                ("https://sepolia.kakarotscan.org/api", "https://sepolia.kakarotscan.org")
+            }
         })
     }
 
@@ -984,7 +993,8 @@ impl NamedChain {
             | C::Mode
             | C::ModeSepolia
             | C::Pgn
-            | C::PgnSepolia => "BLOCKSCOUT_API_KEY",
+            | C::PgnSepolia
+            | C::KakarotSepolia => "BLOCKSCOUT_API_KEY",
 
             C::Boba => "BOBASCAN_API_KEY",
 

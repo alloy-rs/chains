@@ -947,6 +947,18 @@
       "etherscanApiUrl": "https://testnet.aurorascan.dev/api",
       "etherscanBaseUrl": "https://testnet.aurorascan.dev",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "107107114116": {
+      "internalId": "KakarotSepolia",
+      "name": "kakarot-sepolia",
+      "averageBlocktimeHint": null,
+      "isLegacy": true,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://sepolia.kakarotscan.org/api",
+      "etherscanBaseUrl": "https://sepolia.kakarotscan.org",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     }
   }
 }
