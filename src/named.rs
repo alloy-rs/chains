@@ -323,6 +323,31 @@ impl alloy_rlp::Decodable for NamedChain {
 #[allow(clippy::match_like_matches_macro)]
 #[deny(unreachable_patterns, unused_variables)]
 impl NamedChain {
+    /// Returns the number of decimals for the chain's native currency.
+    pub const fn native_currency_decimals(self) -> Option<u8> {
+        use NamedChain as C;
+
+        Some(match self {
+            C::Mainnet
+            | C::Ropsten
+            | C::Rinkeby
+            | C::Goerli
+            | C::Sepolia
+            | C::Arbitrum
+            | C::ArbitrumGoerli
+            | C::Optimism
+            | C::Base
+            | C::BaseGoerli
+            | C::ArbitrumSepolia
+            | C::OptimismGoerli
+            | C::Avalanche
+            | C::AvalancheFuji => 18,
+            C::Poa => 9,
+
+            _ => return None,
+        })
+    }
+
     /// Returns the string representation of the chain.
     #[inline]
     pub fn as_str(&self) -> &'static str {
