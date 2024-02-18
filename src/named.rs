@@ -341,7 +341,22 @@ impl NamedChain {
             | C::ArbitrumSepolia
             | C::OptimismGoerli
             | C::Avalanche
-            | C::AvalancheFuji => 18,
+            | C::AvalancheFuji
+            | C::Fantom
+            | C::FantomTestnet
+            | C::Moonbeam
+            | C::MoonbeamDev
+            | C::Moonriver
+            | C::Chiado
+            | C::FilecoinMainnet
+            | C::FilecoinCalibrationTestnet
+            | C::Celo
+            | C::Aurora
+            | C::AuroraTestnet
+            | C::Canto
+            | C::CantoTestnet
+            | C::Linea
+            | C::LineaGoerli => 18,
             C::Poa => 9,
 
             _ => return None,
