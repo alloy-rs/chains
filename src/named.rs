@@ -881,7 +881,9 @@ impl NamedChain {
             }
 
             C::Fraxtal => ("https://api.fraxscan.com/api", "https://fraxscan.com"),
-            C::FraxtalTestnet => ("https://api-holesky.fraxscan.com/api", "https://holesky.fraxscan.com"),
+            C::FraxtalTestnet => {
+                ("https://api-holesky.fraxscan.com/api", "https://holesky.fraxscan.com")
+            }
 
             C::BlastSepolia => (
                 "https://api.routescan.io/v2/network/testnet/evm/168587773/etherscan",
