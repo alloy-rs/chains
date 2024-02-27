@@ -216,7 +216,7 @@ pub enum NamedChain {
     ModeSepolia = 919,
 
     #[cfg_attr(feature = "serde", serde(alias = "kakarot-sepolia"))]
-    KakarotSepolia = 107107114116,
+    KakarotSepolia = 1802203764,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
