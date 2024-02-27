@@ -948,7 +948,7 @@
       "etherscanBaseUrl": "https://testnet.aurorascan.dev",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
-    "107107114116": {
+    "1802203764": {
       "internalId": "KakarotSepolia",
       "name": "kakarot-sepolia",
       "averageBlocktimeHint": null,
