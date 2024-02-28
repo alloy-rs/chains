@@ -178,6 +178,13 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "syndr-sepolia"))]
     SyndrSepolia = 444444,
 
+    #[strum(to_string = "fraxtal")]
+    #[cfg_attr(feature = "serde", serde(alias = "fraxtal"))]
+    Fraxtal = 252,
+    #[strum(to_string = "fraxtal-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "fraxtal-testnet"))]
+    FraxtalTestnet = 2522,
+
     #[cfg_attr(feature = "serde", serde(alias = "blast-sepolia"))]
     BlastSepolia = 168587773,
 
@@ -367,6 +374,8 @@ impl NamedChain {
             | C::BaseGoerli
             | C::BaseSepolia
             | C::BlastSepolia
+            | C::Fraxtal
+            | C::FraxtalTestnet
             | C::Zora
             | C::ZoraGoerli
             | C::ZoraSepolia
@@ -484,6 +493,8 @@ impl NamedChain {
             | C::BaseGoerli
             | C::BaseSepolia
             | C::BlastSepolia
+            | C::Fraxtal
+            | C::FraxtalTestnet
             | C::Optimism
             | C::OptimismGoerli
             | C::OptimismSepolia
@@ -555,6 +566,8 @@ impl NamedChain {
             | C::BaseGoerli
             | C::BaseSepolia
             | C::BlastSepolia
+            | C::Fraxtal
+            | C::FraxtalTestnet
             | C::Gnosis
             | C::Chiado
             | C::ZoraSepolia
@@ -605,6 +618,7 @@ impl NamedChain {
             | C::EvmosTestnet
             | C::FantomTestnet
             | C::FilecoinCalibrationTestnet
+            | C::FraxtalTestnet
             | C::LineaGoerli
             | C::MantleTestnet
             | C::MoonbeamDev
@@ -656,6 +670,7 @@ impl NamedChain {
             | C::Canto
             | C::Boba
             | C::Base
+            | C::Fraxtal
             | C::Linea
             | C::ZkSync
             | C::Mantle
@@ -866,6 +881,11 @@ impl NamedChain {
                 ("https://api-sepolia.basescan.org/api", "https://sepolia.basescan.org")
             }
 
+            C::Fraxtal => ("https://api.fraxscan.com/api", "https://fraxscan.com"),
+            C::FraxtalTestnet => {
+                ("https://api-holesky.fraxscan.com/api", "https://holesky.fraxscan.com")
+            }
+
             C::BlastSepolia => (
                 "https://api.routescan.io/v2/network/testnet/evm/168587773/etherscan",
                 "https://testnet.blastscan.io",
@@ -968,6 +988,8 @@ impl NamedChain {
             | C::MantleTestnet
             | C::BaseGoerli
             | C::BaseSepolia
+            | C::Fraxtal
+            | C::FraxtalTestnet
             | C::BlastSepolia
             | C::Gnosis
             | C::Scroll
@@ -1127,6 +1149,8 @@ mod tests {
             (Base, &["base"]),
             (BaseGoerli, &["base-goerli"]),
             (BaseSepolia, &["base-sepolia"]),
+            (Fraxtal, &["fraxtal"]),
+            (FraxtalTestnet, &["fraxtal-testnet"]),
             (BlastSepolia, &["blast-sepolia"]),
             (SyndrSepolia, &["syndr-sepolia"]),
             (LineaGoerli, &["linea-goerli"]),

@@ -298,6 +298,18 @@ impl Chain {
         Self::from_named(NamedChain::Base)
     }
 
+    /// Returns the fraxtal mainnet chain.
+    #[inline]
+    pub const fn fraxtal() -> Self {
+        Self::from_named(NamedChain::Fraxtal)
+    }
+
+    /// Returns the fraxtal testnet chain.
+    #[inline]
+    pub const fn fraxtal_testnet() -> Self {
+        Self::from_named(NamedChain::FraxtalTestnet)
+    }
+
     /// Returns the blast sepolia chain.
     #[inline]
     pub const fn blast_sepolia() -> Self {
@@ -365,6 +377,8 @@ impl Chain {
                     | NamedChain::Base
                     | NamedChain::BaseGoerli
                     | NamedChain::BaseSepolia
+                    | NamedChain::Fraxtal
+                    | NamedChain::FraxtalTestnet
                     | NamedChain::Mode
                     | NamedChain::ModeSepolia
                     | NamedChain::Pgn
