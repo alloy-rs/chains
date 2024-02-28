@@ -5,11 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.13](https://github.com/alloy-rs/chains/releases/tag/v0.1.13) - 2024-02-28
+
+### Features
+
+- Add fraxtal ([#45](https://github.com/alloy-rs/chains/issues/45))
+
+### Other
+
+- Dev/modify kakarot sepolia testnet ([#46](https://github.com/alloy-rs/chains/issues/46))
+
 ## [0.1.12](https://github.com/alloy-rs/chains/releases/tag/v0.1.12) - 2024-02-14
 
 ### Features
 
 - Add kakarot sepolia ([#43](https://github.com/alloy-rs/chains/issues/43))
+
+### Miscellaneous Tasks
+
+- Release 0.1.12
 
 ### Other
 
