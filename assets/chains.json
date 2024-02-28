@@ -768,6 +768,18 @@
       "etherscanBaseUrl": "https://www.oklink.com/amoy",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
     },
+    "81457": {
+      "internalId": "Blast",
+      "name": "blast",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://api.routescan.io/v2/network/evm/81457/etherscan",
+      "etherscanBaseUrl": "https://blastscan.io",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "84531": {
       "internalId": "BaseGoerli",
       "name": "base-goerli",
