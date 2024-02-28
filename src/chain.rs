@@ -310,6 +310,12 @@ impl Chain {
         Self::from_named(NamedChain::FraxtalTestnet)
     }
 
+    /// Returns the blast chain.
+    #[inline]
+    pub const fn blast() -> Self {
+        Self::from_named(NamedChain::Blast)
+    }
+
     /// Returns the blast sepolia chain.
     #[inline]
     pub const fn blast_sepolia() -> Self {

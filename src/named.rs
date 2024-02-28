@@ -185,6 +185,7 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "fraxtal-testnet"))]
     FraxtalTestnet = 2522,
 
+    Blast = 81457,
     #[cfg_attr(feature = "serde", serde(alias = "blast-sepolia"))]
     BlastSepolia = 168587773,
 
@@ -373,6 +374,7 @@ impl NamedChain {
             | C::Base
             | C::BaseGoerli
             | C::BaseSepolia
+            | C::Blast
             | C::BlastSepolia
             | C::Fraxtal
             | C::FraxtalTestnet
@@ -492,6 +494,7 @@ impl NamedChain {
             | C::Base
             | C::BaseGoerli
             | C::BaseSepolia
+            | C::Blast
             | C::BlastSepolia
             | C::Fraxtal
             | C::FraxtalTestnet
@@ -565,6 +568,7 @@ impl NamedChain {
             | C::Base
             | C::BaseGoerli
             | C::BaseSepolia
+            | C::Blast
             | C::BlastSepolia
             | C::Fraxtal
             | C::FraxtalTestnet
@@ -645,6 +649,7 @@ impl NamedChain {
             | C::Optimism
             | C::Arbitrum
             | C::ArbitrumNova
+            | C::Blast
             | C::Cronos
             | C::Rsk
             | C::BinanceSmartChain
@@ -886,6 +891,9 @@ impl NamedChain {
                 ("https://api-holesky.fraxscan.com/api", "https://holesky.fraxscan.com")
             }
 
+            C::Blast => {
+                ("https://api.routescan.io/v2/network/evm/81457/etherscan", "https://blastscan.io")
+            }
             C::BlastSepolia => (
                 "https://api.routescan.io/v2/network/testnet/evm/168587773/etherscan",
                 "https://testnet.blastscan.io",
@@ -990,6 +998,7 @@ impl NamedChain {
             | C::BaseSepolia
             | C::Fraxtal
             | C::FraxtalTestnet
+            | C::Blast
             | C::BlastSepolia
             | C::Gnosis
             | C::Scroll
