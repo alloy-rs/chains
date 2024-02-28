@@ -5,11 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.14](https://github.com/alloy-rs/chains/releases/tag/v0.1.14) - 2024-02-28
+
+### Features
+
+- Add blast ([#47](https://github.com/alloy-rs/chains/issues/47))
+
 ## [0.1.13](https://github.com/alloy-rs/chains/releases/tag/v0.1.13) - 2024-02-28
 
 ### Features
 
 - Add fraxtal ([#45](https://github.com/alloy-rs/chains/issues/45))
+
+### Miscellaneous Tasks
+
+- Release 0.1.13
 
 ### Other
 
