@@ -670,6 +670,7 @@ impl NamedChain {
             | C::Canto
             | C::Boba
             | C::Base
+            | C::Fraxtal
             | C::Linea
             | C::ZkSync
             | C::Mantle

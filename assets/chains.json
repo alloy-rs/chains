@@ -216,6 +216,18 @@
       "etherscanBaseUrl": "https://ftmscan.com",
       "etherscanApiKeyName": "FTMSCAN_API_KEY"
     },
+    "252": {
+      "internalId": "Fraxtal",
+      "name": "fraxtal",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://api.fraxscan.com/api",
+      "etherscanBaseUrl": "https://fraxscan.com",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "280": {
       "internalId": "ZkSyncTestnet",
       "name": "zksync-testnet",
@@ -431,6 +443,18 @@
       "etherscanApiUrl": "https://api-testnet-zkevm.polygonscan.com/api",
       "etherscanBaseUrl": "https://testnet-zkevm.polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
+    },
+    "2522": {
+      "internalId": "FraxtalTestnet",
+      "name": "fraxtal-testnet",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://api-holesky.fraxscan.com/api",
+      "etherscanBaseUrl": "https://holesky.fraxscan.com",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "4002": {
       "internalId": "FantomTestnet",
@@ -959,30 +983,6 @@
       "etherscanApiUrl": "https://sepolia.kakarotscan.org/api",
       "etherscanBaseUrl": "https://sepolia.kakarotscan.org",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
-    },
-    "252": {
-      "internalId": "Fraxtal",
-      "name": "fraxtal",
-      "averageBlocktimeHint": 2000,
-      "isLegacy": false,
-      "supportsShanghai": true,
-      "isTestnet": false,
-      "nativeCurrencySymbol": "frxETH",
-      "etherscanApiUrl": "https://api.fraxscan.com/api",
-      "etherscanBaseUrl": "https://fraxscan.com",
-      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
-    },
-    "2522": {
-      "internalId": "FraxtalTestnet",
-      "name": "fraxtal-testnet",
-      "averageBlocktimeHint": 2000,
-      "isLegacy": false,
-      "supportsShanghai": true,
-      "isTestnet": true,
-      "nativeCurrencySymbol": "frxETH",
-      "etherscanApiUrl": "https://api-holesky.fraxscan.com/api",
-      "etherscanBaseUrl": "https://holesky.fraxscan.com",
-      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     }
   }
 }
