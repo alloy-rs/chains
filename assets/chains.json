@@ -72,6 +72,18 @@
       "etherscanBaseUrl": "https://optimistic.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "20": {
+      "internalId": "Elastos",
+      "name": "elastos",
+      "averageBlocktimeHint": 5000,
+      "isLegacy": true,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://esc.elastos.io/api",
+      "etherscanBaseUrl": "https://esc.elastos.io",
+      "etherscanApiKeyName": null
+    },
     "25": {
       "internalId": "Cronos",
       "name": "cronos",
