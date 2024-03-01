@@ -352,6 +352,12 @@ impl Chain {
         Self::from_named(NamedChain::ModeSepolia)
     }
 
+    /// Returns the elastos mainnet chain.
+    #[inline]
+    pub const fn elastos() -> Self {
+        Self::from_named(NamedChain::Elastos)
+    }
+
     /// Returns the dev chain.
     #[inline]
     pub const fn dev() -> Self {

@@ -223,6 +223,8 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "mode-sepolia"))]
     ModeSepolia = 919,
 
+    Elastos = 20,
+
     #[cfg_attr(feature = "serde", serde(alias = "kakarot-sepolia"))]
     KakarotSepolia = 1802203764,
 }
@@ -418,6 +420,8 @@ impl NamedChain {
 
             C::Gnosis | C::Chiado => 5_000,
 
+            C::Elastos => 5_000,
+
             C::Morden
             | C::Ropsten
             | C::Rinkeby
@@ -484,7 +488,8 @@ impl NamedChain {
             | C::Scroll
             | C::ScrollSepolia
             | C::Metis
-            | C::Viction => true,
+            | C::Viction
+            | C::Elastos => true,
 
             // Known EIP-1559 chains.
             C::Mainnet
@@ -682,7 +687,8 @@ impl NamedChain {
             | C::Zora
             | C::Pgn
             | C::Mode
-            | C::Viction => false,
+            | C::Viction
+            | C::Elastos => false,
         }
     }
 
@@ -941,6 +947,8 @@ impl NamedChain {
                 "https://sepolia.explorer.mode.network",
             ),
 
+            C::Elastos => ("https://esc.elastos.io/api", "https://esc.elastos.io"),
+
             C::AnvilHardhat | C::Dev | C::Morden | C::MoonbeamDev | C::FilecoinMainnet => {
                 return None;
             }
@@ -1049,7 +1057,8 @@ impl NamedChain {
             | C::FilecoinMainnet
             | C::LineaGoerli
             | C::FilecoinCalibrationTestnet
-            | C::Viction => return None,
+            | C::Viction
+            | C::Elastos => return None,
         };
 
         Some(api_key_name)
