@@ -788,7 +788,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api.routescan.io/v2/network/evm/81457/etherscan",
+      "etherscanApiUrl": "https://api.blastscan.io/api",
       "etherscanBaseUrl": "https://blastscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
