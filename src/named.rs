@@ -892,7 +892,7 @@ impl NamedChain {
             }
 
             C::Blast => {
-                ("https://api.routescan.io/v2/network/evm/81457/etherscan", "https://blastscan.io")
+                ("https://api.blastscan.io/api", "https://blastscan.io")
             }
             C::BlastSepolia => (
                 "https://api.routescan.io/v2/network/testnet/evm/168587773/etherscan",
