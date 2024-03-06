@@ -583,7 +583,10 @@ impl NamedChain {
             | C::Mode
             | C::ModeSepolia
             | C::PolygonMumbai
-            | C::Polygon => true,
+            | C::Polygon
+            | C::Arbitrum
+            | C::ArbitrumNova
+            | C::ArbitrumSepolia => true,
             _ => false,
         }
     }
