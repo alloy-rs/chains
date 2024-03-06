@@ -227,6 +227,10 @@ pub enum NamedChain {
 
     #[cfg_attr(feature = "serde", serde(alias = "kakarot-sepolia"))]
     KakarotSepolia = 1802203764,
+
+    Pontem = 901,
+    Lumio = 9991,
+    LumioTetsnet = 9990,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -386,7 +390,10 @@ impl NamedChain {
             | C::Mode
             | C::ModeSepolia
             | C::Pgn
-            | C::PgnSepolia => 2_000,
+            | C::PgnSepolia
+            | C::Pontem
+            | C::Lumio
+            | C::LumioTetsnet => 2_000,
 
             C::Viction => 2_000,
 
@@ -529,7 +536,10 @@ impl NamedChain {
             | C::ModeSepolia
             | C::Pgn
             | C::PgnSepolia
-            | C::KakarotSepolia => false,
+            | C::KakarotSepolia
+            | C::Pontem
+            | C::Lumio
+            | C::LumioTetsnet => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             C::Dev
@@ -647,7 +657,9 @@ impl NamedChain {
             | C::ZoraSepolia
             | C::ModeSepolia
             | C::PgnSepolia
-            | C::KakarotSepolia => true,
+            | C::KakarotSepolia
+            | C::Pontem
+            | C::LumioTetsnet => true,
 
             // Dev chains.
             C::Dev | C::AnvilHardhat => true,
@@ -691,7 +703,8 @@ impl NamedChain {
             | C::Pgn
             | C::Mode
             | C::Viction
-            | C::Elastos => false,
+            | C::Elastos
+            | C::Lumio => false,
         }
     }
 
@@ -956,6 +969,15 @@ impl NamedChain {
             C::KakarotSepolia => {
                 ("https://sepolia.kakarotscan.org/api", "https://sepolia.kakarotscan.org")
             }
+            NamedChain::Pontem => {
+                ("----", "https://lumio.io")
+            }
+            NamedChain::Lumio => {
+                ("----", "https://lumio.io")
+            }
+            NamedChain::LumioTetsnet => {
+                ("https://testnet.lumio.io/l2_rpc", "https://lumio.io")
+            }
         })
     }
 
@@ -1011,7 +1033,10 @@ impl NamedChain {
             | C::BlastSepolia
             | C::Gnosis
             | C::Scroll
-            | C::ScrollSepolia => "ETHERSCAN_API_KEY",
+            | C::ScrollSepolia
+            | C::Pontem
+            |C::Lumio
+            |C::LumioTetsnet => "ETHERSCAN_API_KEY",
 
             C::Avalanche | C::AvalancheFuji => "SNOWTRACE_API_KEY",
 

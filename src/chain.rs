@@ -399,6 +399,9 @@ impl Chain {
                     | NamedChain::ZoraGoerli
                     | NamedChain::ZoraSepolia
                     | NamedChain::BlastSepolia
+                    | NamedChain::Pontem
+                    | NamedChain::Lumio
+                    | NamedChain::LumioTetsnet
             )
         )
     }
