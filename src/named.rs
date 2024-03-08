@@ -1,6 +1,8 @@
-use alloc::string::String;
 use core::{cmp::Ordering, fmt, time::Duration};
 use num_enum::TryFromPrimitiveError;
+
+#[allow(unused_imports)]
+use alloc::string::String;
 
 // When adding a new chain:
 //   1. add new variant to the NamedChain enum;
@@ -1110,8 +1112,10 @@ impl NamedChain {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use alloc::string::ToString;
     use strum::{EnumCount, IntoEnumIterator};
+
+    #[allow(unused_imports)]
+    use alloc::string::ToString;
 
     #[test]
     #[cfg(feature = "serde")]

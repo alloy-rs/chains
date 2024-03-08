@@ -1,11 +1,13 @@
 //! Specification of Ethereum EIP-155 chains.
 
 use crate::NamedChain;
+use strum::IntoEnumIterator;
+
+#[allow(unused_imports)]
 use alloc::{
     collections::BTreeMap,
     string::{String, ToString},
 };
-use strum::IntoEnumIterator;
 
 /// Ethereum EIP-155 chains.
 #[derive(Clone, Debug)]

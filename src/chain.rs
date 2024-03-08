@@ -1,6 +1,8 @@
 use crate::NamedChain;
-use alloc::string::String;
 use core::{cmp::Ordering, fmt, str::FromStr, time::Duration};
+
+#[allow(unused_imports)]
+use alloc::string::String;
 
 #[cfg(feature = "arbitrary")]
 use proptest::{
@@ -509,6 +511,8 @@ impl Chain {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[allow(unused_imports)]
     use alloc::string::ToString;
 
     #[test]
