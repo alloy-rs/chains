@@ -229,6 +229,9 @@ pub enum NamedChain {
 
     #[cfg_attr(feature = "serde", serde(alias = "kakarot-sepolia"))]
     KakarotSepolia = 1802203764,
+
+    #[cfg_attr(feature = "serde", serde(alias = "etherlink-testnet"))]
+    EtherlinkTestnet = 128123,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -424,6 +427,8 @@ impl NamedChain {
 
             C::Elastos => 5_000,
 
+            C::EtherlinkTestnet => 5_000,
+
             C::Morden
             | C::Ropsten
             | C::Rinkeby
@@ -531,7 +536,8 @@ impl NamedChain {
             | C::ModeSepolia
             | C::Pgn
             | C::PgnSepolia
-            | C::KakarotSepolia => false,
+            | C::KakarotSepolia
+            | C::EtherlinkTestnet => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             C::Dev
@@ -588,7 +594,8 @@ impl NamedChain {
             | C::Polygon
             | C::Arbitrum
             | C::ArbitrumNova
-            | C::ArbitrumSepolia => true,
+            | C::ArbitrumSepolia
+            | C::EtherlinkTestnet => true,
             _ => false,
         }
     }
@@ -649,7 +656,8 @@ impl NamedChain {
             | C::ZoraSepolia
             | C::ModeSepolia
             | C::PgnSepolia
-            | C::KakarotSepolia => true,
+            | C::KakarotSepolia
+            | C::EtherlinkTestnet => true,
 
             // Dev chains.
             C::Dev | C::AnvilHardhat => true,
@@ -712,6 +720,8 @@ impl NamedChain {
             | C::Rinkeby => "ETH",
 
             C::BinanceSmartChain | C::BinanceSmartChainTestnet => "BNB",
+
+            C::EtherlinkTestnet => "XTZ",
 
             _ => return None,
         })
@@ -958,6 +968,10 @@ impl NamedChain {
             C::KakarotSepolia => {
                 ("https://sepolia.kakarotscan.org/api", "https://sepolia.kakarotscan.org")
             }
+            C::EtherlinkTestnet => (
+                "https://testnet-explorer.etherlink.com/api",
+                "https://testnet-explorer.etherlink.com",
+            ),
         })
     }
 
@@ -1036,7 +1050,8 @@ impl NamedChain {
             | C::ModeSepolia
             | C::Pgn
             | C::PgnSepolia
-            | C::KakarotSepolia => "BLOCKSCOUT_API_KEY",
+            | C::KakarotSepolia
+            | C::EtherlinkTestnet => "BLOCKSCOUT_API_KEY",
 
             C::Boba => "BOBASCAN_API_KEY",
 

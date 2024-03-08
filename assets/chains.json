@@ -816,6 +816,18 @@
       "etherscanBaseUrl": "https://sepolia.basescan.org",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "128123": {
+      "internalId": "EtherlinkTestnet",
+      "name": "etherlink-testnet",
+      "averageBlocktimeHint": 5000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "XTZ",
+      "etherscanApiUrl": "https://testnet-explorer.etherlink.com/api",
+      "etherscanBaseUrl": "https://testnet-explorer.etherlink.com",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "314159": {
       "internalId": "FilecoinCalibrationTestnet",
       "name": "filecoin-calibration-testnet",
