@@ -893,7 +893,7 @@
       "name": "syndr-sepolia",
       "averageBlocktimeHint": 1300,
       "isLegacy": false,
-      "supportsShanghai": false,
+      "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://sepolia-explorer.syndr.com/api",
