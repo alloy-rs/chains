@@ -824,9 +824,7 @@ impl NamedChain {
             }
             C::ArbitrumNova => ("https://api-nova.arbiscan.io/api", "https://nova.arbiscan.io"),
 
-            C::Syndr => {
-                ("https://explorer.syndr.com/api", "https://explorer.syndr.com")
-            }
+            C::Syndr => ("https://explorer.syndr.com/api", "https://explorer.syndr.com"),
             C::SyndrSepolia => {
                 ("https://sepolia-explorer.syndr.com/api", "https://sepolia-explorer.syndr.com")
             }
