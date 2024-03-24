@@ -177,6 +177,8 @@ pub enum NamedChain {
     BaseGoerli = 84531,
     #[cfg_attr(feature = "serde", serde(alias = "base-sepolia"))]
     BaseSepolia = 84532,
+    #[cfg_attr(feature = "serde", serde(alias = "syndr"))]
+    Syndr = 404,
     #[cfg_attr(feature = "serde", serde(alias = "syndr-sepolia"))]
     SyndrSepolia = 444444,
 
@@ -372,6 +374,7 @@ impl NamedChain {
             | C::ArbitrumTestnet
             | C::ArbitrumGoerli
             | C::ArbitrumSepolia
+            | C::Syndr
             | C::SyndrSepolia
             | C::ArbitrumNova => 1_300,
 
@@ -522,6 +525,7 @@ impl NamedChain {
             | C::ArbitrumGoerli
             | C::ArbitrumSepolia
             | C::ArbitrumNova
+            | C::Syndr
             | C::SyndrSepolia
             | C::FilecoinMainnet
             | C::Linea
@@ -595,6 +599,8 @@ impl NamedChain {
             | C::Arbitrum
             | C::ArbitrumNova
             | C::ArbitrumSepolia
+            | C::Syndr
+            | C::SyndrSepolia
             | C::EtherlinkTestnet => true,
             _ => false,
         }
@@ -668,6 +674,7 @@ impl NamedChain {
             | C::Arbitrum
             | C::ArbitrumNova
             | C::Blast
+            | C::Syndr
             | C::Cronos
             | C::Rsk
             | C::BinanceSmartChain
@@ -817,6 +824,7 @@ impl NamedChain {
             }
             C::ArbitrumNova => ("https://api-nova.arbiscan.io/api", "https://nova.arbiscan.io"),
 
+            C::Syndr => ("https://explorer.syndr.com/api", "https://explorer.syndr.com"),
             C::SyndrSepolia => {
                 ("https://sepolia-explorer.syndr.com/api", "https://sepolia-explorer.syndr.com")
             }
@@ -1007,6 +1015,7 @@ impl NamedChain {
             | C::ArbitrumGoerli
             | C::ArbitrumSepolia
             | C::ArbitrumNova
+            | C::Syndr
             | C::SyndrSepolia
             | C::Cronos
             | C::CronosTestnet
@@ -1190,6 +1199,7 @@ mod tests {
             (Fraxtal, &["fraxtal"]),
             (FraxtalTestnet, &["fraxtal-testnet"]),
             (BlastSepolia, &["blast-sepolia"]),
+            (Syndr, &["syndr"]),
             (SyndrSepolia, &["syndr-sepolia"]),
             (LineaGoerli, &["linea-goerli"]),
         ];

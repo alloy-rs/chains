@@ -300,6 +300,18 @@
       "etherscanBaseUrl": "https://testnet.cronoscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "404": {
+      "internalId": "Syndr",
+      "name": "syndr",
+      "averageBlocktimeHint": 1300,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://explorer.syndr.com/api",
+      "etherscanBaseUrl": "https://explorer.syndr.com",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "420": {
       "internalId": "OptimismGoerli",
       "name": "optimism-goerli",
@@ -881,7 +893,7 @@
       "name": "syndr-sepolia",
       "averageBlocktimeHint": 1300,
       "isLegacy": false,
-      "supportsShanghai": false,
+      "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://sepolia-explorer.syndr.com/api",

@@ -324,6 +324,12 @@ impl Chain {
         Self::from_named(NamedChain::BlastSepolia)
     }
 
+    /// Returns the syndr l3 mainnet chain.
+    #[inline]
+    pub const fn syndr() -> Self {
+        Self::from_named(NamedChain::Syndr)
+    }
+
     /// Returns the syndr sepolia chain.
     #[inline]
     pub const fn syndr_sepolia() -> Self {
