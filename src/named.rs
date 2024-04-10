@@ -233,6 +233,8 @@ pub enum NamedChain {
 
     #[cfg_attr(feature = "serde", serde(alias = "etherlink-testnet"))]
     EtherlinkTestnet = 128123,
+
+    Degen = 666666666,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -431,6 +433,8 @@ impl NamedChain {
 
             C::EtherlinkTestnet => 5_000,
 
+            C::Degen => 600,
+
             C::Morden
             | C::Ropsten
             | C::Rinkeby
@@ -540,7 +544,8 @@ impl NamedChain {
             | C::Pgn
             | C::PgnSepolia
             | C::KakarotSepolia
-            | C::EtherlinkTestnet => false,
+            | C::EtherlinkTestnet
+            | C::Degen => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             C::Dev
@@ -707,7 +712,8 @@ impl NamedChain {
             | C::Pgn
             | C::Mode
             | C::Viction
-            | C::Elastos => false,
+            | C::Elastos
+            | C::Degen => false,
         }
     }
 
@@ -730,6 +736,8 @@ impl NamedChain {
             C::BinanceSmartChain | C::BinanceSmartChainTestnet => "BNB",
 
             C::EtherlinkTestnet => "XTZ",
+
+            C::Degen => "DEGEN",
 
             _ => return None,
         })
@@ -978,6 +986,7 @@ impl NamedChain {
                 "https://testnet-explorer.etherlink.com/api",
                 "https://testnet-explorer.etherlink.com",
             ),
+            C::Degen => ("https://explorer.degen.tips/api", "https://explorer.degen.tips"),
         })
     }
 
@@ -1082,7 +1091,8 @@ impl NamedChain {
             | C::LineaGoerli
             | C::FilecoinCalibrationTestnet
             | C::Viction
-            | C::Elastos => return None,
+            | C::Elastos
+            | C::Degen => return None,
         };
 
         Some(api_key_name)
