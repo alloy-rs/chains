@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.16](https://github.com/alloy-rs/chains/releases/tag/v0.1.16) - 2024-04-10
+
+### Features
+
+- Update Scroll chain currency symbol and shanghai readiness ([#56](https://github.com/alloy-rs/chains/issues/56))
+- [chain] Add Etherlink Testnet ([#53](https://github.com/alloy-rs/chains/issues/53))
+- Shanghai support for arbitrum ([#51](https://github.com/alloy-rs/chains/issues/51))
+
+### Miscellaneous Tasks
+
+- Clippy
+
+### Other
+
+- Add Syndr L3 mainnet ([#54](https://github.com/alloy-rs/chains/issues/54))
+
 ## [0.1.15](https://github.com/alloy-rs/chains/releases/tag/v0.1.15) - 2024-03-04
 
 ### Bug Fixes
@@ -15,6 +31,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Features
 
 - [chain] Add elastos networks ([#48](https://github.com/alloy-rs/chains/issues/48))
+
+### Miscellaneous Tasks
+
+- Release 0.1.15
 
 ## [0.1.14](https://github.com/alloy-rs/chains/releases/tag/v0.1.14) - 2024-02-28
 
