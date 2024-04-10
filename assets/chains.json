@@ -905,9 +905,9 @@
       "name": "scroll-sepolia",
       "averageBlocktimeHint": 3000,
       "isLegacy": true,
-      "supportsShanghai": false,
+      "supportsShanghai": true,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://api-sepolia.scrollscan.com/api",
       "etherscanBaseUrl": "https://sepolia.scrollscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
@@ -917,24 +917,12 @@
       "name": "scroll",
       "averageBlocktimeHint": 3000,
       "isLegacy": true,
-      "supportsShanghai": false,
+      "supportsShanghai": true,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://api.scrollscan.com/api",
       "etherscanBaseUrl": "https://scrollscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
-    },
-    "534353": {
-      "internalId": "ScrollAlphaTestnet",
-      "name": "scroll-alpha-testnet",
-      "averageBlocktimeHint": 3000,
-      "isLegacy": false,
-      "supportsShanghai": false,
-      "isTestnet": true,
-      "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://alpha-blockscout.scroll.io/api",
-      "etherscanBaseUrl": "https://alpha-blockscout.scroll.io",
-      "etherscanApiKeyName": null
     },
     "7777777": {
       "internalId": "Zora",
