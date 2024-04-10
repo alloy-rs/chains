@@ -87,7 +87,6 @@ pub enum NamedChain {
     Sokol = 77,
 
     Scroll = 534352,
-    ScrollAlphaTestnet = 534353,
     #[cfg_attr(
         feature = "serde",
         serde(alias = "scroll_sepolia_testnet", alias = "scroll-sepolia")
@@ -424,7 +423,7 @@ impl NamedChain {
 
             C::FilecoinCalibrationTestnet | C::FilecoinMainnet => 30_000,
 
-            C::Scroll | C::ScrollSepolia | C::ScrollAlphaTestnet => 3_000,
+            C::Scroll | C::ScrollSepolia => 3_000,
 
             C::Gnosis | C::Chiado => 5_000,
 
@@ -563,8 +562,7 @@ impl NamedChain {
             | C::Aurora
             | C::AuroraTestnet
             | C::Canto
-            | C::CantoTestnet
-            | C::ScrollAlphaTestnet => false,
+            | C::CantoTestnet => false,
         }
     }
 
@@ -601,7 +599,9 @@ impl NamedChain {
             | C::ArbitrumSepolia
             | C::Syndr
             | C::SyndrSepolia
-            | C::EtherlinkTestnet => true,
+            | C::EtherlinkTestnet
+            | C::Scroll
+            | C::ScrollSepolia => true,
             _ => false,
         }
     }
@@ -655,7 +655,6 @@ impl NamedChain {
             | C::PolygonMumbai
             | C::PolygonAmoy
             | C::PolygonZkEvmTestnet
-            | C::ScrollAlphaTestnet
             | C::ScrollSepolia
             | C::ZkSyncTestnet
             | C::ZoraGoerli
@@ -724,7 +723,9 @@ impl NamedChain {
             | C::Sepolia
             | C::Morden
             | C::Ropsten
-            | C::Rinkeby => "ETH",
+            | C::Rinkeby
+            | C::Scroll
+            | C::ScrollSepolia => "ETH",
 
             C::BinanceSmartChain | C::BinanceSmartChainTestnet => "BNB",
 
@@ -845,9 +846,6 @@ impl NamedChain {
             C::Scroll => ("https://api.scrollscan.com/api", "https://scrollscan.com"),
             C::ScrollSepolia => {
                 ("https://api-sepolia.scrollscan.com/api", "https://sepolia.scrollscan.com")
-            }
-            C::ScrollAlphaTestnet => {
-                ("https://alpha-blockscout.scroll.io/api", "https://alpha-blockscout.scroll.io")
             }
 
             C::Metis => {
@@ -1065,8 +1063,7 @@ impl NamedChain {
             C::Boba => "BOBASCAN_API_KEY",
 
             // Explicitly exhaustive. See NB above.
-            C::ScrollAlphaTestnet
-            | C::Metis
+            C::Metis
             | C::Chiado
             | C::Sepolia
             | C::Rsk
