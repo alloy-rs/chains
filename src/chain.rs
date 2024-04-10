@@ -366,6 +366,12 @@ impl Chain {
         Self::from_named(NamedChain::Elastos)
     }
 
+    /// Returns the degen l3 mainnet chain.
+    #[inline]
+    pub const fn degen() -> Self {
+        Self::from_named(NamedChain::Degen)
+    }
+
     /// Returns the dev chain.
     #[inline]
     pub const fn dev() -> Self {

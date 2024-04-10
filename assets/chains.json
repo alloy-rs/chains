@@ -972,6 +972,18 @@
       "etherscanBaseUrl": "https://testnet.blastscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "666666666": {
+      "internalId": "Degen",
+      "name": "degen",
+      "averageBlocktimeHint": 600,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "DEGEN",
+      "etherscanApiUrl": "https://explorer.degen.tips/api",
+      "etherscanBaseUrl": "https://explorer.degen.tips",
+      "etherscanApiKeyName": null
+    },
     "999999999": {
       "internalId": "ZoraSepolia",
       "name": "zora-sepolia",
