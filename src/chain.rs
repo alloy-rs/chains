@@ -258,16 +258,16 @@ impl Chain {
         Self::from_named(NamedChain::Goerli)
     }
 
-    /// Returns the sepolia chain.
-    #[inline]
-    pub const fn sepolia() -> Self {
-        Self::from_named(NamedChain::Sepolia)
-    }
-
     /// Returns the holesky chain.
     #[inline]
     pub const fn holesky() -> Self {
         Self::from_named(NamedChain::Holesky)
+    }
+
+    /// Returns the sepolia chain.
+    #[inline]
+    pub const fn sepolia() -> Self {
+        Self::from_named(NamedChain::Sepolia)
     }
 
     /// Returns the optimism goerli chain.
