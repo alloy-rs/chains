@@ -270,6 +270,12 @@ impl Chain {
         Self::from_named(NamedChain::Sepolia)
     }
 
+    /// Returns the optimism mainnet chain.
+    #[inline]
+    pub const fn optimism_mainnet() -> Self {
+        Self::from_named(NamedChain::Optimism)
+    }
+
     /// Returns the optimism goerli chain.
     #[inline]
     pub const fn optimism_goerli() -> Self {
@@ -282,10 +288,10 @@ impl Chain {
         Self::from_named(NamedChain::OptimismSepolia)
     }
 
-    /// Returns the optimism mainnet chain.
+    /// Returns the base mainnet chain.
     #[inline]
-    pub const fn optimism_mainnet() -> Self {
-        Self::from_named(NamedChain::Optimism)
+    pub const fn base_mainnet() -> Self {
+        Self::from_named(NamedChain::Base)
     }
 
     /// Returns the base goerli chain.
@@ -300,10 +306,16 @@ impl Chain {
         Self::from_named(NamedChain::BaseSepolia)
     }
 
-    /// Returns the base mainnet chain.
+    /// Returns the syndr l3 mainnet chain.
     #[inline]
-    pub const fn base_mainnet() -> Self {
-        Self::from_named(NamedChain::Base)
+    pub const fn syndr() -> Self {
+        Self::from_named(NamedChain::Syndr)
+    }
+
+    /// Returns the syndr sepolia chain.
+    #[inline]
+    pub const fn syndr_sepolia() -> Self {
+        Self::from_named(NamedChain::SyndrSepolia)
     }
 
     /// Returns the fraxtal mainnet chain.
@@ -330,28 +342,16 @@ impl Chain {
         Self::from_named(NamedChain::BlastSepolia)
     }
 
-    /// Returns the syndr l3 mainnet chain.
+    /// Returns the linea mainnet chain.
     #[inline]
-    pub const fn syndr() -> Self {
-        Self::from_named(NamedChain::Syndr)
-    }
-
-    /// Returns the syndr sepolia chain.
-    #[inline]
-    pub const fn syndr_sepolia() -> Self {
-        Self::from_named(NamedChain::SyndrSepolia)
+    pub const fn linea() -> Self {
+        Self::from_named(NamedChain::Linea)
     }
 
     /// Returns the linea goerli chain.
     #[inline]
     pub const fn linea_goerli() -> Self {
         Self::from_named(NamedChain::LineaGoerli)
-    }
-
-    /// Returns the linea mainnet chain.
-    #[inline]
-    pub const fn linea() -> Self {
-        Self::from_named(NamedChain::Linea)
     }
 
     /// Returns the mode mainnet chain.
