@@ -276,6 +276,12 @@ impl Chain {
         Self::from_named(NamedChain::OptimismGoerli)
     }
 
+    /// Returns the optimism sepolia chain.
+    #[inline]
+    pub const fn optimism_sepolia() -> Self {
+        Self::from_named(NamedChain::OptimismSepolia)
+    }
+
     /// Returns the optimism mainnet chain.
     #[inline]
     pub const fn optimism_mainnet() -> Self {
