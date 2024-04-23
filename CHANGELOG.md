@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.17](https://github.com/alloy-rs/chains/releases/tag/v0.1.17) - 2024-04-23
+
+### Bug Fixes
+
+- Correct amoy endpoint ([#59](https://github.com/alloy-rs/chains/issues/59))
+
+### Features
+
+- [chain] Add method optimism_mainnet ([#58](https://github.com/alloy-rs/chains/issues/58))
+- Add degen chain ([#57](https://github.com/alloy-rs/chains/issues/57))
+
 ## [0.1.16](https://github.com/alloy-rs/chains/releases/tag/v0.1.16) - 2024-04-10
 
 ### Features
@@ -15,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Miscellaneous Tasks
 
+- Release 0.1.16
 - Clippy
 
 ### Other
