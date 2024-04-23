@@ -780,7 +780,10 @@ impl NamedChain {
             C::PolygonMumbai => {
                 ("https://api-testnet.polygonscan.com/api", "https://mumbai.polygonscan.com")
             }
-            C::PolygonAmoy => ("https://faucet.polygon.technology", "https://www.oklink.com/amoy"),
+            C::PolygonAmoy => (
+                "https://www.oklink.com/api/v5/explorer/AMOY_TESTNET/api",
+                "https://www.oklink.com/amoy",
+            ),
 
             C::PolygonZkEvm => {
                 ("https://api-zkevm.polygonscan.com/api", "https://zkevm.polygonscan.com")

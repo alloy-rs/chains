@@ -788,7 +788,7 @@
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://faucet.polygon.technology",
+      "etherscanApiUrl": "https://www.oklink.com/api/v5/explorer/AMOY_TESTNET/api",
       "etherscanBaseUrl": "https://www.oklink.com/amoy",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
     },
