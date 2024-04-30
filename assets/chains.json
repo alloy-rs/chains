@@ -968,8 +968,8 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api.routescan.io/v2/network/testnet/evm/168587773/etherscan",
-      "etherscanBaseUrl": "https://testnet.blastscan.io",
+      "etherscanApiUrl": "https://api-sepolia.blastscan.io/api",
+      "etherscanBaseUrl": "https://sepolia.blastscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "666666666": {
