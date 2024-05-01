@@ -930,10 +930,9 @@ impl NamedChain {
             }
 
             C::Blast => ("https://api.blastscan.io/api", "https://blastscan.io"),
-            C::BlastSepolia => (
-                "https://api.routescan.io/v2/network/testnet/evm/168587773/etherscan",
-                "https://testnet.blastscan.io",
-            ),
+            C::BlastSepolia => {
+                ("https://api-sepolia.blastscan.io/api", "https://sepolia.blastscan.io")
+            }
 
             C::ZkSync => {
                 ("https://zksync2-mainnet-explorer.zksync.io", "https://explorer.zksync.io")
