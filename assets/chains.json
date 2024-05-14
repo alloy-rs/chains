@@ -303,7 +303,7 @@
     "404": {
       "internalId": "Syndr",
       "name": "syndr",
-      "averageBlocktimeHint": 1300,
+      "averageBlocktimeHint": 260,
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
@@ -627,7 +627,7 @@
     "42161": {
       "internalId": "Arbitrum",
       "name": "arbitrum",
-      "averageBlocktimeHint": 1300,
+      "averageBlocktimeHint": 260,
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
@@ -639,7 +639,7 @@
     "42170": {
       "internalId": "ArbitrumNova",
       "name": "arbitrum-nova",
-      "averageBlocktimeHint": 1300,
+      "averageBlocktimeHint": 260,
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
@@ -855,7 +855,7 @@
     "421611": {
       "internalId": "ArbitrumTestnet",
       "name": "arbitrum-testnet",
-      "averageBlocktimeHint": 1300,
+      "averageBlocktimeHint": 260,
       "isLegacy": true,
       "supportsShanghai": false,
       "isTestnet": true,
@@ -867,7 +867,7 @@
     "421613": {
       "internalId": "ArbitrumGoerli",
       "name": "arbitrum-goerli",
-      "averageBlocktimeHint": 1300,
+      "averageBlocktimeHint": 260,
       "isLegacy": false,
       "supportsShanghai": false,
       "isTestnet": true,
@@ -879,7 +879,7 @@
     "421614": {
       "internalId": "ArbitrumSepolia",
       "name": "arbitrum-sepolia",
-      "averageBlocktimeHint": 1300,
+      "averageBlocktimeHint": 260,
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
@@ -891,7 +891,7 @@
     "444444": {
       "internalId": "SyndrSepolia",
       "name": "syndr-sepolia",
-      "averageBlocktimeHint": 1300,
+      "averageBlocktimeHint": 260,
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
