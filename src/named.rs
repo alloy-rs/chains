@@ -781,8 +781,8 @@ impl NamedChain {
                 ("https://api-testnet.polygonscan.com/api", "https://mumbai.polygonscan.com")
             }
             C::PolygonAmoy => (
-                "https://www.oklink.com/api/v5/explorer/AMOY_TESTNET/api",
-                "https://www.oklink.com/amoy",
+                "https://api-amoy.polygonscan.com/api",
+                "https://amoy.polygonscan.com",
             ),
 
             C::PolygonZkEvm => {
