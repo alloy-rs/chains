@@ -788,8 +788,8 @@
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://www.oklink.com/api/v5/explorer/AMOY_TESTNET/api",
-      "etherscanBaseUrl": "https://www.oklink.com/amoy",
+      "etherscanApiUrl": "https://api-amoy.polygonscan.com/api",
+      "etherscanBaseUrl": "https://amoy.polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
     },
     "81457": {
