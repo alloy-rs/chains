@@ -377,7 +377,7 @@ impl NamedChain {
             | C::ArbitrumSepolia
             | C::Syndr
             | C::SyndrSepolia
-            | C::ArbitrumNova => 1_300,
+            | C::ArbitrumNova => 260,
 
             C::Optimism
             | C::OptimismGoerli
