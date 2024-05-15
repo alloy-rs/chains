@@ -235,6 +235,19 @@ pub enum NamedChain {
     EtherlinkTestnet = 128123,
 
     Degen = 666666666,
+
+    #[strum(to_string = "opbnb-mainnet")]
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "opbnb_mainnet", alias = "opbnb-mainnet", alias = "op-bnb-mainnet")
+    )]
+    OpBNBMainnet = 204,
+    #[strum(to_string = "opbnb-testnet")]
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "opbnb_testnet", alias = "opbnb-testnet", alias = "op-bnb-testnet")
+    )]
+    OpBNBTestnet = 5611,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -460,6 +473,8 @@ impl NamedChain {
             | C::Mantle
             | C::MantleTestnet
             | C::KakarotSepolia => return None,
+
+            C::OpBNBMainnet | C::OpBNBTestnet => 1_000,
         }))
     }
 
@@ -545,7 +560,9 @@ impl NamedChain {
             | C::PgnSepolia
             | C::KakarotSepolia
             | C::EtherlinkTestnet
-            | C::Degen => false,
+            | C::Degen
+            | C::OpBNBMainnet
+            | C::OpBNBTestnet => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             C::Dev
@@ -606,7 +623,9 @@ impl NamedChain {
             | C::SyndrSepolia
             | C::EtherlinkTestnet
             | C::Scroll
-            | C::ScrollSepolia => true,
+            | C::ScrollSepolia
+            | C::OpBNBMainnet
+            | C::OpBNBTestnet => true,
             _ => false,
         }
     }
@@ -667,7 +686,8 @@ impl NamedChain {
             | C::ModeSepolia
             | C::PgnSepolia
             | C::KakarotSepolia
-            | C::EtherlinkTestnet => true,
+            | C::EtherlinkTestnet
+            | C::OpBNBTestnet => true,
 
             // Dev chains.
             C::Dev | C::AnvilHardhat => true,
@@ -713,7 +733,8 @@ impl NamedChain {
             | C::Mode
             | C::Viction
             | C::Elastos
-            | C::Degen => false,
+            | C::Degen
+            | C::OpBNBMainnet => false,
         }
     }
 
@@ -733,7 +754,10 @@ impl NamedChain {
             | C::Scroll
             | C::ScrollSepolia => "ETH",
 
-            C::BinanceSmartChain | C::BinanceSmartChainTestnet => "BNB",
+            C::BinanceSmartChain
+            | C::BinanceSmartChainTestnet
+            | C::OpBNBMainnet
+            | C::OpBNBTestnet => "BNB",
 
             C::EtherlinkTestnet => "XTZ",
 
@@ -821,6 +845,11 @@ impl NamedChain {
             C::BinanceSmartChain => ("https://api.bscscan.com/api", "https://bscscan.com"),
             C::BinanceSmartChainTestnet => {
                 ("https://api-testnet.bscscan.com/api", "https://testnet.bscscan.com")
+            }
+
+            C::OpBNBMainnet => ("https://opbnb.bscscan.com/api", "https://opbnb.bscscan.com"),
+            C::OpBNBTestnet => {
+                ("https://opbnb-testnet.bscscan.com/api", "https://opbnb-testnet.bscscan.com")
             }
 
             C::Arbitrum => ("https://api.arbiscan.io/api", "https://arbiscan.io"),
@@ -1018,6 +1047,8 @@ impl NamedChain {
             | C::OptimismSepolia
             | C::BinanceSmartChain
             | C::BinanceSmartChainTestnet
+            | C::OpBNBMainnet
+            | C::OpBNBTestnet
             | C::Arbitrum
             | C::ArbitrumTestnet
             | C::ArbitrumGoerli
