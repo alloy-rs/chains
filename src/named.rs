@@ -466,8 +466,7 @@ impl NamedChain {
             | C::MantleTestnet
             | C::KakarotSepolia => return None,
 
-            C::OpBNBMainnet
-            | C::OpBNBTestnet => 1_000,
+            C::OpBNBMainnet | C::OpBNBTestnet => 1_000,
         }))
     }
 
