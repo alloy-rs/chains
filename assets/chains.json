@@ -218,14 +218,14 @@
     },
     "204": {
       "internalId": "OpBNBMainnet",
-      "name": "op-bnb-mainnet",
+      "name": "opbnb-mainnet",
       "averageBlocktimeHint": 1000,
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "BNB",
       "etherscanApiUrl": "https://opbnb.bscscan.com/api",
-      "etherscanBaseUrl": "https://opbnb.bscscan.com/",
+      "etherscanBaseUrl": "https://opbnb.bscscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "250": {
@@ -530,14 +530,14 @@
     },
     "5611": {
       "internalId": "OpBNBTestnet",
-      "name": "op-bnb-testnet",
+      "name": "opbnb-testnet",
       "averageBlocktimeHint": 1000,
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "BNB",
       "etherscanApiUrl": "https://opbnb-testnet.bscscan.com/api",
-      "etherscanBaseUrl": "https://opbnb-testnet.bscscan.com/",
+      "etherscanBaseUrl": "https://opbnb-testnet.bscscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "7700": {

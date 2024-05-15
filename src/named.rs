@@ -236,9 +236,17 @@ pub enum NamedChain {
 
     Degen = 666666666,
 
-    #[cfg_attr(feature = "serde", serde(alias = "opbnb-mainnet"))]
+    #[strum(to_string = "opbnb-mainnet")]
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "opbnb_mainnet", alias = "opbnb-mainnet", alias = "op-bnb-mainnet")
+    )]
     OpBNBMainnet = 204,
-    #[cfg_attr(feature = "serde", serde(alias = "opbnb-testnet"))]
+    #[strum(to_string = "opbnb-testnet")]
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "opbnb_testnet", alias = "opbnb-testnet", alias = "op-bnb-testnet")
+    )]
     OpBNBTestnet = 5611,
 }
 
@@ -839,9 +847,9 @@ impl NamedChain {
                 ("https://api-testnet.bscscan.com/api", "https://testnet.bscscan.com")
             }
 
-            C::OpBNBMainnet => ("https://opbnb.bscscan.com/api", "https://opbnb.bscscan.com/"),
+            C::OpBNBMainnet => ("https://opbnb.bscscan.com/api", "https://opbnb.bscscan.com"),
             C::OpBNBTestnet => {
-                ("https://opbnb-testnet.bscscan.com/api", "https://opbnb-testnet.bscscan.com/")
+                ("https://opbnb-testnet.bscscan.com/api", "https://opbnb-testnet.bscscan.com")
             }
 
             C::Arbitrum => ("https://api.arbiscan.io/api", "https://arbiscan.io"),
