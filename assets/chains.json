@@ -1049,7 +1049,7 @@
       "name": "kakarot-sepolia",
       "averageBlocktimeHint": null,
       "isLegacy": false,
-      "supportsShanghai": false,
+      "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://sepolia.kakarotscan.org/api",
