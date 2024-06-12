@@ -625,7 +625,8 @@ impl NamedChain {
             | C::Scroll
             | C::ScrollSepolia
             | C::OpBNBMainnet
-            | C::OpBNBTestnet => true,
+            | C::OpBNBTestnet
+            | C::KakarotSepolia => true,
             _ => false,
         }
     }
