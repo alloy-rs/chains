@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.19](https://github.com/alloy-rs/chains/releases/tag/v0.1.19) - 2024-06-12
+
+### Features
+
+- [chain] Add opBNB mainnet and testnet ([#64](https://github.com/alloy-rs/chains/issues/64))
+
+### Miscellaneous Tasks
+
+- Sync cliff.toml
+
+### Other
+
+- Modify kakarot sepolia shanghai support ([#66](https://github.com/alloy-rs/chains/issues/66))
+
 ## [0.1.18](https://github.com/alloy-rs/chains/releases/tag/v0.1.18) - 2024-05-14
 
 ### Bug Fixes
@@ -12,6 +26,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update Amoy testnet endpoints ([#63](https://github.com/alloy-rs/chains/issues/63))
 - Correct Arbiturm blocktime hint  ([#62](https://github.com/alloy-rs/chains/issues/62))
 - Correct Etherscan URLs for Blast Sepolia ([#60](https://github.com/alloy-rs/chains/issues/60))
+
+### Miscellaneous Tasks
+
+- Release 0.1.18
 
 ## [0.1.17](https://github.com/alloy-rs/chains/releases/tag/v0.1.17) - 2024-04-23
 
@@ -33,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Features
 
 - Update Scroll chain currency symbol and shanghai readiness ([#56](https://github.com/alloy-rs/chains/issues/56))
+- Add Syndr L3 mainnet ([#54](https://github.com/alloy-rs/chains/issues/54))
 - [chain] Add Etherlink Testnet ([#53](https://github.com/alloy-rs/chains/issues/53))
 - Shanghai support for arbitrum ([#51](https://github.com/alloy-rs/chains/issues/51))
 
@@ -40,10 +59,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Release 0.1.16
 - Clippy
-
-### Other
-
-- Add Syndr L3 mainnet ([#54](https://github.com/alloy-rs/chains/issues/54))
 
 ## [0.1.15](https://github.com/alloy-rs/chains/releases/tag/v0.1.15) - 2024-03-04
 
@@ -89,6 +104,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Features
 
 - Add kakarot sepolia ([#43](https://github.com/alloy-rs/chains/issues/43))
+- Add Syndr Sepolia L3 ([#40](https://github.com/alloy-rs/chains/issues/40))
 
 ### Miscellaneous Tasks
 
@@ -97,7 +113,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Other
 
 - Add 'Linea' and 'LineaGoerli' serde kebab cases aliases ([#42](https://github.com/alloy-rs/chains/issues/42))
-- Add Syndr Sepolia L3 ([#40](https://github.com/alloy-rs/chains/issues/40))
 
 ## [0.1.11](https://github.com/alloy-rs/chains/releases/tag/v0.1.11) - 2024-02-04
 
@@ -126,14 +141,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.10](https://github.com/alloy-rs/chains/releases/tag/v0.1.10) - 2024-01-25
 
+### Features
+
+- Add blast sepolia ([#31](https://github.com/alloy-rs/chains/issues/31))
+
 ### Miscellaneous Tasks
 
 - Release 0.1.10
 - Update changelog and add cliff ([#30](https://github.com/alloy-rs/chains/issues/30))
-
-### Other
-
-- Add blast sepolia ([#31](https://github.com/alloy-rs/chains/issues/31))
 
 ## [0.1.9](https://github.com/alloy-rs/chains/releases/tag/v0.1.9) - 2024-01-12
 
