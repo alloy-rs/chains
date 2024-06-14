@@ -480,6 +480,18 @@
       "etherscanBaseUrl": "https://testnet-zkevm.polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
     },
+    "2020": {
+      "internalId": "Ronin",
+      "name": "ronin",
+      "averageBlocktimeHint": 3000,
+      "isLegacy": true,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "RON",
+      "etherscanApiUrl": "https://skynet-api.roninchain.com/ronin",
+      "etherscanBaseUrl": "https://app.roninchain.com",
+      "etherscanApiKeyName": null
+    },
     "2522": {
       "internalId": "FraxtalTestnet",
       "name": "fraxtal-testnet",
