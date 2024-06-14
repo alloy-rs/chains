@@ -248,6 +248,8 @@ pub enum NamedChain {
         serde(rename = "opbnb_testnet", alias = "opbnb-testnet", alias = "op-bnb-testnet")
     )]
     OpBNBTestnet = 5611,
+
+    Ronin = 2020,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -475,6 +477,8 @@ impl NamedChain {
             | C::KakarotSepolia => return None,
 
             C::OpBNBMainnet | C::OpBNBTestnet => 1_000,
+
+            C::Ronin => 3_000,
         }))
     }
 
@@ -517,7 +521,8 @@ impl NamedChain {
             | C::ScrollSepolia
             | C::Metis
             | C::Viction
-            | C::Elastos => true,
+            | C::Elastos
+            | C::Ronin => true,
 
             // Known EIP-1559 chains.
             C::Mainnet
@@ -735,7 +740,8 @@ impl NamedChain {
             | C::Viction
             | C::Elastos
             | C::Degen
-            | C::OpBNBMainnet => false,
+            | C::OpBNBMainnet
+            | C::Ronin => false,
         }
     }
 
@@ -763,6 +769,8 @@ impl NamedChain {
             C::EtherlinkTestnet => "XTZ",
 
             C::Degen => "DEGEN",
+
+            C::Ronin => "RON",
 
             _ => return None,
         })
@@ -1018,6 +1026,7 @@ impl NamedChain {
                 "https://testnet-explorer.etherlink.com",
             ),
             C::Degen => ("https://explorer.degen.tips/api", "https://explorer.degen.tips"),
+            C::Ronin => ("https://skynet-api.roninchain.com/ronin", "https://app.roninchain.com"),
         })
     }
 
@@ -1125,7 +1134,8 @@ impl NamedChain {
             | C::FilecoinCalibrationTestnet
             | C::Viction
             | C::Elastos
-            | C::Degen => return None,
+            | C::Degen
+            | C::Ronin => return None,
         };
 
         Some(api_key_name)

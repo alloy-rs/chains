@@ -396,6 +396,12 @@ impl Chain {
         Self::from_named(NamedChain::OpBNBTestnet)
     }
 
+    /// Returns the ronin mainnet chain.
+    #[inline]
+    pub const fn ronin() -> Self {
+        Self::from_named(NamedChain::Ronin)
+    }
+
     /// Returns the kind of this chain.
     #[inline]
     pub const fn kind(&self) -> &ChainKind {
