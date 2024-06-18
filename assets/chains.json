@@ -876,6 +876,30 @@
       "etherscanBaseUrl": "https://testnet-explorer.etherlink.com",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "167000": {
+      "internalId": "Taiko",
+      "name": "taiko",
+      "averageBlocktimeHint": 12000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://api.taikoscan.io/api",
+      "etherscanBaseUrl": "https://taikoscan.io",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "167009": {
+      "internalId": "TaikoHekla",
+      "name": "taiko-hekla",
+      "averageBlocktimeHint": 12000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://api-testnet.taikoscan.io/api",
+      "etherscanBaseUrl": "https://hekla.taikoscan.io",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "314159": {
       "internalId": "FilecoinCalibrationTestnet",
       "name": "filecoin-calibration-testnet",

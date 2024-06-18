@@ -402,6 +402,18 @@ impl Chain {
         Self::from_named(NamedChain::Ronin)
     }
 
+    /// Returns the taiko mainnet chain.
+    #[inline]
+    pub const fn taiko() -> Self {
+        Self::from_named(NamedChain::Taiko)
+    }
+
+    /// Returns the taiko hekla chain.
+    #[inline]
+    pub const fn taiko_hekla() -> Self {
+        Self::from_named(NamedChain::TaikoHekla)
+    }
+
     /// Returns the kind of this chain.
     #[inline]
     pub const fn kind(&self) -> &ChainKind {
