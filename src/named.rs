@@ -250,6 +250,10 @@ pub enum NamedChain {
     OpBNBTestnet = 5611,
 
     Ronin = 2020,
+
+    Taiko = 167000,
+    #[cfg_attr(feature = "serde", serde(alias = "taiko-hekla"))]
+    TaikoHekla = 167009,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -384,7 +388,7 @@ impl NamedChain {
         use NamedChain as C;
 
         Some(Duration::from_millis(match self {
-            C::Mainnet => 12_000,
+            C::Mainnet | C::Taiko | C::TaikoHekla => 12_000,
 
             C::Arbitrum
             | C::ArbitrumTestnet
@@ -567,7 +571,9 @@ impl NamedChain {
             | C::EtherlinkTestnet
             | C::Degen
             | C::OpBNBMainnet
-            | C::OpBNBTestnet => false,
+            | C::OpBNBTestnet
+            | C::Taiko
+            | C::TaikoHekla => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             C::Dev
@@ -631,7 +637,9 @@ impl NamedChain {
             | C::ScrollSepolia
             | C::OpBNBMainnet
             | C::OpBNBTestnet
-            | C::KakarotSepolia => true,
+            | C::KakarotSepolia
+            | C::Taiko
+            | C::TaikoHekla => true,
             _ => false,
         }
     }
@@ -693,7 +701,8 @@ impl NamedChain {
             | C::PgnSepolia
             | C::KakarotSepolia
             | C::EtherlinkTestnet
-            | C::OpBNBTestnet => true,
+            | C::OpBNBTestnet
+            | C::TaikoHekla => true,
 
             // Dev chains.
             C::Dev | C::AnvilHardhat => true,
@@ -741,7 +750,8 @@ impl NamedChain {
             | C::Elastos
             | C::Degen
             | C::OpBNBMainnet
-            | C::Ronin => false,
+            | C::Ronin
+            | C::Taiko => false,
         }
     }
 
@@ -759,7 +769,9 @@ impl NamedChain {
             | C::Ropsten
             | C::Rinkeby
             | C::Scroll
-            | C::ScrollSepolia => "ETH",
+            | C::ScrollSepolia
+            | C::Taiko
+            | C::TaikoHekla => "ETH",
 
             C::BinanceSmartChain
             | C::BinanceSmartChainTestnet
@@ -1027,6 +1039,8 @@ impl NamedChain {
             ),
             C::Degen => ("https://explorer.degen.tips/api", "https://explorer.degen.tips"),
             C::Ronin => ("https://skynet-api.roninchain.com/ronin", "https://app.roninchain.com"),
+            C::Taiko => ("https://api.taikoscan.io/api", "https://taikoscan.io"),
+            C::TaikoHekla => ("https://api-testnet.taikoscan.io/api", "https://hekla.taikoscan.io"),
         })
     }
 
@@ -1085,7 +1099,9 @@ impl NamedChain {
             | C::BlastSepolia
             | C::Gnosis
             | C::Scroll
-            | C::ScrollSepolia => "ETHERSCAN_API_KEY",
+            | C::ScrollSepolia
+            | C::Taiko
+            | C::TaikoHekla => "ETHERSCAN_API_KEY",
 
             C::Avalanche | C::AvalancheFuji => "SNOWTRACE_API_KEY",
 
