@@ -254,6 +254,13 @@ pub enum NamedChain {
     Taiko = 167000,
     #[cfg_attr(feature = "serde", serde(alias = "taiko-hekla"))]
     TaikoHekla = 167009,
+
+    #[strum(to_string = "autonomys-nova-testnet")]
+    #[cfg_attr(
+        feature = "serde",
+        serde(rename = "autonomys_nova_testnet", alias = "autonomys-nova-testnet")
+    )]
+    AutonomysNovaTestnet = 490000,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -480,7 +487,7 @@ impl NamedChain {
             | C::MantleTestnet
             | C::KakarotSepolia => return None,
 
-            C::OpBNBMainnet | C::OpBNBTestnet => 1_000,
+            C::OpBNBMainnet | C::OpBNBTestnet | C::AutonomysNovaTestnet => 1_000,
 
             C::Ronin => 3_000,
         }))
@@ -573,7 +580,8 @@ impl NamedChain {
             | C::OpBNBMainnet
             | C::OpBNBTestnet
             | C::Taiko
-            | C::TaikoHekla => false,
+            | C::TaikoHekla
+            | C::AutonomysNovaTestnet => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             C::Dev
@@ -639,7 +647,8 @@ impl NamedChain {
             | C::OpBNBTestnet
             | C::KakarotSepolia
             | C::Taiko
-            | C::TaikoHekla => true,
+            | C::TaikoHekla
+            | C::AutonomysNovaTestnet => true,
             _ => false,
         }
     }
@@ -702,7 +711,8 @@ impl NamedChain {
             | C::KakarotSepolia
             | C::EtherlinkTestnet
             | C::OpBNBTestnet
-            | C::TaikoHekla => true,
+            | C::TaikoHekla
+            | C::AutonomysNovaTestnet => true,
 
             // Dev chains.
             C::Dev | C::AnvilHardhat => true,
@@ -1027,7 +1037,12 @@ impl NamedChain {
 
             C::Elastos => ("https://esc.elastos.io/api", "https://esc.elastos.io"),
 
-            C::AnvilHardhat | C::Dev | C::Morden | C::MoonbeamDev | C::FilecoinMainnet => {
+            C::AnvilHardhat
+            | C::Dev
+            | C::Morden
+            | C::MoonbeamDev
+            | C::FilecoinMainnet
+            | C::AutonomysNovaTestnet => {
                 return None;
             }
             C::KakarotSepolia => {
@@ -1151,7 +1166,8 @@ impl NamedChain {
             | C::Viction
             | C::Elastos
             | C::Degen
-            | C::Ronin => return None,
+            | C::Ronin
+            | C::AutonomysNovaTestnet => return None,
         };
 
         Some(api_key_name)
@@ -1268,6 +1284,7 @@ mod tests {
             (Syndr, &["syndr"]),
             (SyndrSepolia, &["syndr-sepolia"]),
             (LineaGoerli, &["linea-goerli"]),
+            (AutonomysNovaTestnet, &["autonomys-nova-testnet"]),
         ];
 
         for &(chain, aliases) in ALIASES {
