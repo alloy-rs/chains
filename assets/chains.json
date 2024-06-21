@@ -960,6 +960,18 @@
       "etherscanBaseUrl": "https://sepolia-explorer.syndr.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "490000": {
+      "internalId": "AutonomysNovaTestnet",
+      "name": "autonomys-nova-testnet",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
+      "etherscanApiKeyName": null
+    },
     "534351": {
       "internalId": "ScrollSepolia",
       "name": "scroll-sepolia",
