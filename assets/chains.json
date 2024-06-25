@@ -223,7 +223,7 @@
       "isLegacy": true,
       "supportsShanghai": true,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "SMR",
       "etherscanApiUrl": "https://explorer.evm.shimmer.network/api",
       "etherscanBaseUrl": "https://explorer.evm.shimmer.network",
       "etherscanApiKeyName": null

@@ -648,6 +648,7 @@ impl NamedChain {
             | C::EtherlinkTestnet
             | C::Scroll
             | C::ScrollSepolia
+            | C::Shimmer
             | C::OpBNBMainnet
             | C::OpBNBTestnet
             | C::KakarotSepolia
