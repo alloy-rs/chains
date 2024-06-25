@@ -181,6 +181,8 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "syndr-sepolia"))]
     SyndrSepolia = 444444,
 
+    Shimmer = 148,
+
     #[strum(to_string = "fraxtal")]
     #[cfg_attr(feature = "serde", serde(alias = "fraxtal"))]
     Fraxtal = 252,
@@ -453,6 +455,8 @@ impl NamedChain {
 
             C::Scroll | C::ScrollSepolia => 3_000,
 
+            C::Shimmer => 5_000,
+
             C::Gnosis | C::Chiado => 5_000,
 
             C::Elastos => 5_000,
@@ -530,6 +534,7 @@ impl NamedChain {
             | C::PolygonZkEvmTestnet
             | C::Scroll
             | C::ScrollSepolia
+            | C::Shimmer
             | C::Metis
             | C::Viction
             | C::Elastos
@@ -643,6 +648,7 @@ impl NamedChain {
             | C::EtherlinkTestnet
             | C::Scroll
             | C::ScrollSepolia
+            | C::Shimmer
             | C::OpBNBMainnet
             | C::OpBNBTestnet
             | C::KakarotSepolia
@@ -703,6 +709,7 @@ impl NamedChain {
             | C::PolygonAmoy
             | C::PolygonZkEvmTestnet
             | C::ScrollSepolia
+            | C::Shimmer
             | C::ZkSyncTestnet
             | C::ZoraGoerli
             | C::ZoraSepolia
@@ -793,6 +800,8 @@ impl NamedChain {
             C::Degen => "DEGEN",
 
             C::Ronin => "RON",
+
+            C::Shimmer => "SMR",
 
             _ => return None,
         })
@@ -916,6 +925,10 @@ impl NamedChain {
             C::Scroll => ("https://api.scrollscan.com/api", "https://scrollscan.com"),
             C::ScrollSepolia => {
                 ("https://api-sepolia.scrollscan.com/api", "https://sepolia.scrollscan.com")
+            }
+
+            C::Shimmer => {
+                ("https://explorer.evm.shimmer.network/api", "https://explorer.evm.shimmer.network")
             }
 
             C::Metis => {
@@ -1148,6 +1161,7 @@ impl NamedChain {
             C::Metis
             | C::Chiado
             | C::Sepolia
+            | C::Shimmer
             | C::Rsk
             | C::Sokol
             | C::Poa
