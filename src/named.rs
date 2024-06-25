@@ -263,6 +263,10 @@ pub enum NamedChain {
         serde(rename = "autonomys_nova_testnet", alias = "autonomys-nova-testnet")
     )]
     AutonomysNovaTestnet = 490000,
+
+    Flare = 14,
+    #[cfg_attr(feature = "serde", serde(alias = "flare-coston2"))]
+    FlareCoston2 = 114,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -494,6 +498,10 @@ impl NamedChain {
             C::OpBNBMainnet | C::OpBNBTestnet | C::AutonomysNovaTestnet => 1_000,
 
             C::Ronin => 3_000,
+
+            C::Flare => 1_800,
+
+            C::FlareCoston2 => 2_500,
         }))
     }
 
@@ -586,7 +594,9 @@ impl NamedChain {
             | C::OpBNBTestnet
             | C::Taiko
             | C::TaikoHekla
-            | C::AutonomysNovaTestnet => false,
+            | C::AutonomysNovaTestnet
+            | C::Flare
+            | C::FlareCoston2 => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             C::Dev
@@ -719,7 +729,8 @@ impl NamedChain {
             | C::EtherlinkTestnet
             | C::OpBNBTestnet
             | C::TaikoHekla
-            | C::AutonomysNovaTestnet => true,
+            | C::AutonomysNovaTestnet
+            | C::FlareCoston2 => true,
 
             // Dev chains.
             C::Dev | C::AnvilHardhat => true,
@@ -768,7 +779,8 @@ impl NamedChain {
             | C::Degen
             | C::OpBNBMainnet
             | C::Ronin
-            | C::Taiko => false,
+            | C::Taiko
+            | C::Flare => false,
         }
     }
 
@@ -802,6 +814,10 @@ impl NamedChain {
             C::Ronin => "RON",
 
             C::Shimmer => "SMR",
+
+            C::Flare => "FLR",
+
+            C::FlareCoston2 => "C2FLR",
 
             _ => return None,
         })
@@ -1069,6 +1085,13 @@ impl NamedChain {
             C::Ronin => ("https://skynet-api.roninchain.com/ronin", "https://app.roninchain.com"),
             C::Taiko => ("https://api.taikoscan.io/api", "https://taikoscan.io"),
             C::TaikoHekla => ("https://api-testnet.taikoscan.io/api", "https://hekla.taikoscan.io"),
+            C::Flare => {
+                ("https://flare-explorer.flare.network/api", "https://flare-explorer.flare.network")
+            }
+            C::FlareCoston2 => (
+                "https://coston2-explorer.flare.network/api",
+                "https://coston2-explorer.flare.network",
+            ),
         })
     }
 
@@ -1153,7 +1176,10 @@ impl NamedChain {
             | C::Pgn
             | C::PgnSepolia
             | C::KakarotSepolia
-            | C::EtherlinkTestnet => "BLOCKSCOUT_API_KEY",
+            | C::EtherlinkTestnet
+            | C::Shimmer
+            | C::Flare
+            | C::FlareCoston2 => "BLOCKSCOUT_API_KEY",
 
             C::Boba => "BOBASCAN_API_KEY",
 
@@ -1161,7 +1187,6 @@ impl NamedChain {
             C::Metis
             | C::Chiado
             | C::Sepolia
-            | C::Shimmer
             | C::Rsk
             | C::Sokol
             | C::Poa

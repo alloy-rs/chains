@@ -72,6 +72,18 @@
       "etherscanBaseUrl": "https://optimistic.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "14": {
+      "internalId": "Flare",
+      "name": "flare",
+      "averageBlocktimeHint": 1800,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "FLR",
+      "etherscanApiUrl": "https://flare-explorer.flare.network/api",
+      "etherscanBaseUrl": "https://flare-explorer.flare.network",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "20": {
       "internalId": "Elastos",
       "name": "elastos",
@@ -204,6 +216,18 @@
       "etherscanBaseUrl": "https://gnosisscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "114": {
+      "internalId": "FlareCoston2",
+      "name": "flare-coston2",
+      "averageBlocktimeHint": 2500,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "C2FLR",
+      "etherscanApiUrl": "https://coston2-explorer.flare.network/api",
+      "etherscanBaseUrl": "https://coston2-explorer.flare.network",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "137": {
       "internalId": "Polygon",
       "name": "polygon",
@@ -226,7 +250,7 @@
       "nativeCurrencySymbol": "SMR",
       "etherscanApiUrl": "https://explorer.evm.shimmer.network/api",
       "etherscanBaseUrl": "https://explorer.evm.shimmer.network",
-      "etherscanApiKeyName": null
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "204": {
       "internalId": "OpBNBMainnet",
