@@ -216,6 +216,18 @@
       "etherscanBaseUrl": "https://polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
     },
+    "148": {
+      "internalId": "Shimmer",
+      "name": "shimmer",
+      "averageBlocktimeHint": 5000,
+      "isLegacy": true,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://explorer.evm.shimmer.network/api",
+      "etherscanBaseUrl": "https://explorer.evm.shimmer.network/",
+      "etherscanApiKeyName": null
+    },
     "204": {
       "internalId": "OpBNBMainnet",
       "name": "opbnb-mainnet",

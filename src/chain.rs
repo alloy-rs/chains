@@ -414,6 +414,12 @@ impl Chain {
         Self::from_named(NamedChain::TaikoHekla)
     }
 
+    /// Returns the shimmer testnet chain.
+    #[inline]
+    pub const fn shimmer() -> Self {
+        Self::from_named(NamedChain::Shimmer)
+    }
+
     /// Returns the kind of this chain.
     #[inline]
     pub const fn kind(&self) -> &ChainKind {
