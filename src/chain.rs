@@ -420,6 +420,17 @@ impl Chain {
         Self::from_named(NamedChain::Shimmer)
     }
 
+    /// Returns the flare mainnet chain.
+    #[inline]
+    pub const fn flare() -> Self {
+        Self::from_named(NamedChain::Flare)
+    }
+
+    /// Returns the flare testnet chain.
+    #[inline]
+    pub const fn flare_coston2() -> Self {
+        Self::from_named(NamedChain::FlareCoston2)
+    }
     /// Returns the kind of this chain.
     #[inline]
     pub const fn kind(&self) -> &ChainKind {
