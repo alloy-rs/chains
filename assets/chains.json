@@ -225,7 +225,7 @@
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://explorer.evm.shimmer.network/api",
-      "etherscanBaseUrl": "https://explorer.evm.shimmer.network/",
+      "etherscanBaseUrl": "https://explorer.evm.shimmer.network",
       "etherscanApiKeyName": null
     },
     "204": {

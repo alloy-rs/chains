@@ -926,9 +926,10 @@ impl NamedChain {
                 ("https://api-sepolia.scrollscan.com/api", "https://sepolia.scrollscan.com")
             }
 
-            C::Shimmer => {
-                ("https://explorer.evm.shimmer.network/api", "https://explorer.evm.shimmer.network/")
-            }
+            C::Shimmer => (
+                "https://explorer.evm.shimmer.network/api",
+                "https://explorer.evm.shimmer.network",
+            ),
 
             C::Metis => {
                 ("https://andromeda-explorer.metis.io/api", "https://andromeda-explorer.metis.io")
