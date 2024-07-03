@@ -540,8 +540,6 @@ impl NamedChain {
             | C::MantleTestnet
             | C::PolygonZkEvm
             | C::PolygonZkEvmTestnet
-            | C::Scroll
-            | C::ScrollSepolia
             | C::Shimmer
             | C::Metis
             | C::Viction
@@ -596,7 +594,9 @@ impl NamedChain {
             | C::TaikoHekla
             | C::AutonomysNovaTestnet
             | C::Flare
-            | C::FlareCoston2 => false,
+            | C::FlareCoston2
+            | C::Scroll
+            | C::ScrollSepolia => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             C::Dev
