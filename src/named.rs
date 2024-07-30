@@ -208,9 +208,9 @@ pub enum NamedChain {
     #[strum(to_string = "mantle")]
     #[cfg_attr(feature = "serde", serde(alias = "mantle"))]
     Mantle = 5000,
-    #[strum(to_string = "mantle-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "mantle-testnet"))]
-    MantleTestnet = 5001,
+    #[strum(to_string = "mantle-sepolia")]
+    #[cfg_attr(feature = "serde", serde(alias = "mantle-sepolia"))]
+    MantleSepolia = 5003,
 
     Viction = 88,
 
@@ -424,6 +424,8 @@ impl NamedChain {
             | C::Zora
             | C::ZoraGoerli
             | C::ZoraSepolia
+            | C::Mantle
+            | C::MantleSepolia
             | C::Mode
             | C::ModeSepolia
             | C::Pgn
@@ -491,8 +493,6 @@ impl NamedChain {
             | C::Metis
             | C::Linea
             | C::LineaGoerli
-            | C::Mantle
-            | C::MantleTestnet
             | C::KakarotSepolia => return None,
 
             C::OpBNBMainnet | C::OpBNBTestnet | C::AutonomysNovaTestnet => 1_000,
@@ -536,8 +536,6 @@ impl NamedChain {
             | C::Boba
             | C::ZkSync
             | C::ZkSyncTestnet
-            | C::Mantle
-            | C::MantleTestnet
             | C::PolygonZkEvm
             | C::PolygonZkEvmTestnet
             | C::Shimmer
@@ -581,6 +579,8 @@ impl NamedChain {
             | C::Zora
             | C::ZoraGoerli
             | C::ZoraSepolia
+            | C::Mantle
+            | C::MantleSepolia
             | C::Mode
             | C::ModeSepolia
             | C::Pgn
@@ -710,7 +710,7 @@ impl NamedChain {
             | C::FilecoinCalibrationTestnet
             | C::FraxtalTestnet
             | C::LineaGoerli
-            | C::MantleTestnet
+            | C::MantleSepolia
             | C::MoonbeamDev
             | C::OptimismGoerli
             | C::OptimismKovan
@@ -1035,8 +1035,8 @@ impl NamedChain {
             }
 
             C::Mantle => ("https://explorer.mantle.xyz/api", "https://explorer.mantle.xyz"),
-            C::MantleTestnet => {
-                ("https://explorer.testnet.mantle.xyz/api", "https://explorer.testnet.mantle.xyz")
+            C::MantleSepolia => {
+                ("https://explorer.sepolia.mantle.xyz/api", "https://explorer.sepolia.mantle.xyz")
             }
 
             C::Viction => ("https://www.vicscan.xyz/api", "https://www.vicscan.xyz"),
@@ -1141,7 +1141,7 @@ impl NamedChain {
             | C::Base
             | C::Linea
             | C::Mantle
-            | C::MantleTestnet
+            | C::MantleSepolia
             | C::BaseGoerli
             | C::BaseSepolia
             | C::Fraxtal
@@ -1313,7 +1313,7 @@ mod tests {
             (AvalancheFuji, &["fuji"]),
             (ZkSync, &["zksync"]),
             (Mantle, &["mantle"]),
-            (MantleTestnet, &["mantle-testnet"]),
+            (MantleSepolia, &["mantle-sepolia"]),
             (Base, &["base"]),
             (BaseGoerli, &["base-goerli"]),
             (BaseSepolia, &["base-sepolia"]),
