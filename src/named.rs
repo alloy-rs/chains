@@ -208,6 +208,9 @@ pub enum NamedChain {
     #[strum(to_string = "mantle")]
     #[cfg_attr(feature = "serde", serde(alias = "mantle"))]
     Mantle = 5000,
+    #[strum(to_string = "mantle-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "mantle-testnet"))]
+    MantleTestnet = 5001,
     #[strum(to_string = "mantle-sepolia")]
     #[cfg_attr(feature = "serde", serde(alias = "mantle-sepolia"))]
     MantleSepolia = 5003,
@@ -478,6 +481,7 @@ impl NamedChain {
             | C::Kovan
             | C::Sepolia
             | C::Holesky
+            | C::MantleTestnet
             | C::Moonbase
             | C::MoonbeamDev
             | C::OptimismKovan
@@ -539,6 +543,7 @@ impl NamedChain {
             | C::PolygonZkEvm
             | C::PolygonZkEvmTestnet
             | C::Shimmer
+            | C::MantleTestnet
             | C::Metis
             | C::Viction
             | C::Elastos
@@ -712,6 +717,7 @@ impl NamedChain {
             | C::FilecoinCalibrationTestnet
             | C::FraxtalTestnet
             | C::LineaGoerli
+            | C::MantleTestnet
             | C::MantleSepolia
             | C::MoonbeamDev
             | C::OptimismGoerli
@@ -1039,6 +1045,9 @@ impl NamedChain {
             }
 
             C::Mantle => ("https://explorer.mantle.xyz/api", "https://explorer.mantle.xyz"),
+            C::MantleTestnet => {
+                ("https://explorer.testnet.mantle.xyz/api", "https://explorer.testnet.mantle.xyz")
+            }
             C::MantleSepolia => {
                 ("https://explorer.sepolia.mantle.xyz/api", "https://explorer.sepolia.mantle.xyz")
             }
@@ -1145,6 +1154,7 @@ impl NamedChain {
             | C::Base
             | C::Linea
             | C::Mantle
+            | C::MantleTestnet
             | C::MantleSepolia
             | C::BaseGoerli
             | C::BaseSepolia
@@ -1317,6 +1327,7 @@ mod tests {
             (AvalancheFuji, &["fuji"]),
             (ZkSync, &["zksync"]),
             (Mantle, &["mantle"]),
+            (MantleTestnet, &["mantle-testnet"]),
             (MantleSepolia, &["mantle-sepolia"]),
             (Base, &["base"]),
             (BaseGoerli, &["base-goerli"]),

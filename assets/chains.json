@@ -564,6 +564,18 @@
       "etherscanBaseUrl": "https://explorer.mantle.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "5001": {
+      "internalId": "MantleTestnet",
+      "name": "mantle-testnet",
+      "averageBlocktimeHint": null,
+      "isLegacy": true,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://explorer.testnet.mantle.xyz/api",
+      "etherscanBaseUrl": "https://explorer.testnet.mantle.xyz",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "5003": {
       "internalId": "MantleSepolia",
       "name": "mantle-sepolia",
