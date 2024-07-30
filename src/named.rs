@@ -646,6 +646,8 @@ impl NamedChain {
             | C::Gnosis
             | C::Chiado
             | C::ZoraSepolia
+            | C::Mantle
+            | C::MantleSepolia
             | C::Mode
             | C::ModeSepolia
             | C::PolygonMumbai
@@ -801,6 +803,8 @@ impl NamedChain {
             | C::ScrollSepolia
             | C::Taiko
             | C::TaikoHekla => "ETH",
+
+            C::Mantle | C::MantleSepolia => "MNT",
 
             C::BinanceSmartChain
             | C::BinanceSmartChainTestnet
