@@ -671,6 +671,8 @@ impl NamedChain {
             | C::KakarotSepolia
             | C::Taiko
             | C::TaikoHekla
+            | C::Avalanche
+            | C::AvalancheFuji
             | C::AutonomysNovaTestnet => true,
             _ => false,
         }
