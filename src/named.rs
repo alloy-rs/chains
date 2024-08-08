@@ -270,6 +270,22 @@ pub enum NamedChain {
     Flare = 14,
     #[cfg_attr(feature = "serde", serde(alias = "flare-coston2"))]
     FlareCoston2 = 114,
+
+    #[strum(to_string = "mandala")]
+    #[cfg_attr(feature = "serde", serde(alias = "mandala"))]
+    Mandala = 595,
+    #[strum(to_string = "karura-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "karura-testnet"))]
+    KaruraTestnet = 596,
+    #[strum(to_string = "acala-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "acala-testnet"))]
+    AcalaTestnet = 597,
+    #[strum(to_string = "karura")]
+    #[cfg_attr(feature = "serde", serde(alias = "karura"))]
+    Karura = 686,
+    #[strum(to_string = "acala")]
+    #[cfg_attr(feature = "serde", serde(alias = "acala"))]
+    Acala = 787,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -404,7 +420,14 @@ impl NamedChain {
         use NamedChain as C;
 
         Some(Duration::from_millis(match self {
-            C::Mainnet | C::Taiko | C::TaikoHekla => 12_000,
+            C::Mainnet
+            | C::Taiko
+            | C::TaikoHekla
+            | C::Mandala
+            | C::KaruraTestnet
+            | C::AcalaTestnet
+            | C::Karura
+            | C::Acala => 12_000,
 
             C::Arbitrum
             | C::ArbitrumTestnet
@@ -547,7 +570,12 @@ impl NamedChain {
             | C::Metis
             | C::Viction
             | C::Elastos
-            | C::Ronin => true,
+            | C::Ronin
+            | C::Mandala
+            | C::KaruraTestnet
+            | C::AcalaTestnet
+            | C::Karura
+            | C::Acala => true,
 
             // Known EIP-1559 chains.
             C::Mainnet
@@ -673,7 +701,12 @@ impl NamedChain {
             | C::TaikoHekla
             | C::Avalanche
             | C::AvalancheFuji
-            | C::AutonomysNovaTestnet => true,
+            | C::AutonomysNovaTestnet
+            | C::Mandala
+            | C::KaruraTestnet
+            | C::AcalaTestnet
+            | C::Karura
+            | C::Acala => true,
             _ => false,
         }
     }
@@ -740,7 +773,10 @@ impl NamedChain {
             | C::OpBNBTestnet
             | C::TaikoHekla
             | C::AutonomysNovaTestnet
-            | C::FlareCoston2 => true,
+            | C::FlareCoston2
+            | C::Mandala
+            | C::KaruraTestnet
+            | C::AcalaTestnet => true,
 
             // Dev chains.
             C::Dev | C::AnvilHardhat => true,
@@ -790,7 +826,9 @@ impl NamedChain {
             | C::OpBNBMainnet
             | C::Ronin
             | C::Taiko
-            | C::Flare => false,
+            | C::Flare
+            | C::Karura
+            | C::Acala => false,
         }
     }
 
@@ -1107,6 +1145,24 @@ impl NamedChain {
                 "https://coston2-explorer.flare.network/api",
                 "https://coston2-explorer.flare.network",
             ),
+            C::Mandala => (
+                "https://blockscout.mandala.aca-staging.network/api",
+                "https://blockscout.mandala.aca-staging.network",
+            ),
+            C::KaruraTestnet => (
+                "https://blockscout.karura-testnet.aca-staging.network/api",
+                "https://blockscout.karura-testnet.aca-staging.network",
+            ),
+            C::AcalaTestnet => (
+                "https://blockscout.acala-testnet.aca-staging.network/api",
+                "https://blockscout.acala-testnet.aca-staging.network",
+            ),
+            C::Karura => {
+                ("https://blockscout.karura.network/api", "https://blockscout.karura.network")
+            }
+            C::Acala => {
+                ("https://blockscout.acala.network/api", "https://blockscout.acala.network")
+            }
         })
     }
 
@@ -1195,7 +1251,12 @@ impl NamedChain {
             | C::EtherlinkTestnet
             | C::Shimmer
             | C::Flare
-            | C::FlareCoston2 => "BLOCKSCOUT_API_KEY",
+            | C::FlareCoston2
+            | C::Mandala
+            | C::KaruraTestnet
+            | C::AcalaTestnet
+            | C::Karura
+            | C::Acala => "BLOCKSCOUT_API_KEY",
 
             C::Boba => "BOBASCAN_API_KEY",
 
