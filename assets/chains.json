@@ -132,6 +132,30 @@
       "etherscanBaseUrl": "https://kovan.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "44": {
+      "internalId": "Crab",
+      "name": "crab",
+      "averageBlocktimeHint": 6000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "CRAB",
+      "etherscanApiUrl": "https://crab-scan.darwinia.network/api",
+      "etherscanBaseUrl": "https://crab-scan.darwinia.network",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
+    "46": {
+      "internalId": "Darwinia",
+      "name": "darwinia",
+      "averageBlocktimeHint": 6000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "RING",
+      "etherscanApiUrl": "https://explorer.darwinia.network/api",
+      "etherscanBaseUrl": "https://explorer.darwinia.network",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "56": {
       "internalId": "BinanceSmartChain",
       "name": "bsc",
@@ -382,6 +406,18 @@
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://explorer.publicgoods.network/api",
       "etherscanBaseUrl": "https://explorer.publicgoods.network",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
+    "701": {
+      "internalId": "Koi",
+      "name": "koi",
+      "averageBlocktimeHint": 6000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "KRING",
+      "etherscanApiUrl": "https://koi-scan.darwinia.network/api",
+      "etherscanBaseUrl": "https://koi-scan.darwinia.network",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "740": {
