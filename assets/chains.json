@@ -293,12 +293,12 @@
       "name": "zksync-testnet",
       "averageBlocktimeHint": null,
       "isLegacy": true,
-      "supportsShanghai": true,
+      "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api-sepolia-era.zksync.network/api",
       "etherscanBaseUrl": "https://sepolia-era.zksync.network",
-      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+      "etherscanApiKeyName": null
     },
     "288": {
       "internalId": "Boba",
@@ -329,12 +329,12 @@
       "name": "zksync",
       "averageBlocktimeHint": null,
       "isLegacy": true,
-      "supportsShanghai": true,
+      "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api-era.zksync.network/api",
       "etherscanBaseUrl": "https://era.zksync.network",
-      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+      "etherscanApiKeyName": null
     },
     "338": {
       "internalId": "CronosTestnet",
