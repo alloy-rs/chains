@@ -1073,10 +1073,10 @@ impl NamedChain {
             }
 
             C::ZkSync => {
-                ("https://zksync2-mainnet-explorer.zksync.io", "https://explorer.zksync.io")
+                ("https://api-era.zksync.network/api", "https://era.zksync.network")
             }
             C::ZkSyncTestnet => {
-                ("https://zksync2-testnet-explorer.zksync.dev", "https://goerli.explorer.zksync.io")
+                ("https://api-sepolia-era.zksync.network/api", "https://sepolia-era.zksync.network")
             }
 
             C::Linea => ("https://api.lineascan.build/api", "https://lineascan.build"),
