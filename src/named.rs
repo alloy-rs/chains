@@ -271,21 +271,22 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "flare-coston2"))]
     FlareCoston2 = 114,
 
-    #[strum(to_string = "mandala")]
-    #[cfg_attr(feature = "serde", serde(alias = "mandala"))]
-    Mandala = 595,
-    #[strum(to_string = "karura-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "karura-testnet"))]
-    KaruraTestnet = 596,
-    #[strum(to_string = "acala-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "acala-testnet"))]
-    AcalaTestnet = 597,
-    #[strum(to_string = "karura")]
-    #[cfg_attr(feature = "serde", serde(alias = "karura"))]
-    Karura = 686,
     #[strum(to_string = "acala")]
     #[cfg_attr(feature = "serde", serde(alias = "acala"))]
     Acala = 787,
+    #[strum(to_string = "acala-mandala-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "acala-mandala-testnet"))]
+    AcalaMandalaTestnet = 595,
+    #[strum(to_string = "acala-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "acala-testnet"))]
+    AcalaTestnet = 597,
+
+    #[strum(to_string = "karura")]
+    #[cfg_attr(feature = "serde", serde(alias = "karura"))]
+    Karura = 686,
+    #[strum(to_string = "karura-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "karura-testnet"))]
+    KaruraTestnet = 596,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -420,14 +421,7 @@ impl NamedChain {
         use NamedChain as C;
 
         Some(Duration::from_millis(match self {
-            C::Mainnet
-            | C::Taiko
-            | C::TaikoHekla
-            | C::Mandala
-            | C::KaruraTestnet
-            | C::AcalaTestnet
-            | C::Karura
-            | C::Acala => 12_000,
+            C::Mainnet | C::Taiko | C::TaikoHekla => 12_000,
 
             C::Arbitrum
             | C::ArbitrumTestnet
@@ -461,7 +455,13 @@ impl NamedChain {
 
             C::Polygon | C::PolygonMumbai | C::PolygonAmoy => 2_100,
 
-            C::Moonbeam | C::Moonriver => 12_500,
+            C::Acala
+            | C::AcalaMandalaTestnet
+            | C::AcalaTestnet
+            | C::Karura
+            | C::KaruraTestnet
+            | C::Moonbeamq
+            | C::Moonriver => 12_500,
 
             C::BinanceSmartChain | C::BinanceSmartChainTestnet => 3_000,
 
@@ -547,35 +547,35 @@ impl NamedChain {
 
         match self {
             // Known legacy chains / non EIP-1559 compliant.
-            C::OptimismKovan
-            | C::Fantom
-            | C::FantomTestnet
+            C::Acala
+            | C::AcalaTestnet
+            | C::ArbitrumTestnet
             | C::BinanceSmartChain
             | C::BinanceSmartChainTestnet
-            | C::ArbitrumTestnet
-            | C::Rsk
-            | C::Oasis
-            | C::Emerald
-            | C::EmeraldTestnet
+            | C::Boba
             | C::Celo
             | C::CeloAlfajores
             | C::CeloBaklava
-            | C::Boba
-            | C::ZkSync
-            | C::ZkSyncTestnet
-            | C::PolygonZkEvm
-            | C::PolygonZkEvmTestnet
-            | C::Shimmer
+            | C::Elastos
+            | C::Emerald
+            | C::EmeraldTestnet
+            | C::Fantom
+            | C::FantomTestnet
+            | C::Karura
+            | C::KaruraTestnet
+            | C::Mandala
             | C::MantleTestnet
             | C::Metis
-            | C::Viction
-            | C::Elastos
+            | C::Oasis
+            | C::OptimismKovan
+            | C::PolygonZkEvm
+            | C::PolygonZkEvmTestnet
             | C::Ronin
-            | C::Mandala
-            | C::KaruraTestnet
-            | C::AcalaTestnet
-            | C::Karura
-            | C::Acala => true,
+            | C::Rsk
+            | C::Shimmer
+            | C::Viction
+            | C::ZkSync
+            | C::ZkSyncTestnet => true,
 
             // Known EIP-1559 chains.
             C::Mainnet
@@ -1145,13 +1145,12 @@ impl NamedChain {
                 "https://coston2-explorer.flare.network/api",
                 "https://coston2-explorer.flare.network",
             ),
-            C::Mandala => (
+            C::Acala => {
+                ("https://blockscout.acala.network/api", "https://blockscout.acala.network")
+            }
+            C::AcalaMandalaTestnet => (
                 "https://blockscout.mandala.aca-staging.network/api",
                 "https://blockscout.mandala.aca-staging.network",
-            ),
-            C::KaruraTestnet => (
-                "https://blockscout.karura-testnet.aca-staging.network/api",
-                "https://blockscout.karura-testnet.aca-staging.network",
             ),
             C::AcalaTestnet => (
                 "https://blockscout.acala-testnet.aca-staging.network/api",
@@ -1160,9 +1159,10 @@ impl NamedChain {
             C::Karura => {
                 ("https://blockscout.karura.network/api", "https://blockscout.karura.network")
             }
-            C::Acala => {
-                ("https://blockscout.acala.network/api", "https://blockscout.acala.network")
-            }
+            C::KaruraTestnet => (
+                "https://blockscout.karura-testnet.aca-staging.network/api",
+                "https://blockscout.karura-testnet.aca-staging.network",
+            ),
         })
     }
 
