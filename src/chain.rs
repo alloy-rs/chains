@@ -447,7 +447,7 @@ impl Chain {
     /// Returns the koi testnet chain.
     #[inline]
     pub const fn koi() -> Self {
-        Self::from_named(NamedChain::koi)
+        Self::from_named(NamedChain::Koi)
     }
 
     /// Returns the kind of this chain.
