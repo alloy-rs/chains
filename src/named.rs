@@ -612,9 +612,9 @@ impl NamedChain {
             | C::FlareCoston2
             | C::Scroll
             | C::ScrollSepolia
-			| C::Darwinia
-			| C::Crab
-			| C::Koi => false,
+            | C::Darwinia
+            | C::Crab
+            | C::Koi => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             C::Dev
@@ -687,9 +687,9 @@ impl NamedChain {
             | C::Avalanche
             | C::AvalancheFuji
             | C::AutonomysNovaTestnet
-			| C::Darwinia
-			| C::Crab
-			| C::Koi => true,
+            | C::Darwinia
+            | C::Crab
+            | C::Koi => true,
             _ => false,
         }
     }
@@ -757,7 +757,7 @@ impl NamedChain {
             | C::TaikoHekla
             | C::AutonomysNovaTestnet
             | C::FlareCoston2
-			| C::Koi => true,
+            | C::Koi => true,
 
             // Dev chains.
             C::Dev | C::AnvilHardhat => true,
@@ -808,8 +808,8 @@ impl NamedChain {
             | C::Ronin
             | C::Taiko
             | C::Flare
-			| C::Darwinia
-			| C::Crab => false,
+            | C::Darwinia
+            | C::Crab => false,
         }
     }
 
@@ -850,11 +850,11 @@ impl NamedChain {
 
             C::FlareCoston2 => "C2FLR",
 
-			C::Darwinia => "RING",
+            C::Darwinia => "RING",
 
-			C::Crab => "CRAB",
+            C::Crab => "CRAB",
 
-			C::Koi => "KRING",
+            C::Koi => "KRING",
 
             _ => return None,
         })
@@ -1133,9 +1133,15 @@ impl NamedChain {
                 "https://coston2-explorer.flare.network",
             ),
 
-			C::Darwinia => ("https://explorer.darwinia.network/api", "https://explorer.darwinia.network"),
-			C::Crab => ("https://crab-scan.darwinia.network/api", "https://crab-scan.darwinia.network"),
-			C::Koi => ("https://crab-scan.darwinia.network/api", "https://crab-scan.darwinia.network"),
+            C::Darwinia => {
+                ("https://explorer.darwinia.network/api", "https://explorer.darwinia.network")
+            }
+            C::Crab => {
+                ("https://crab-scan.darwinia.network/api", "https://crab-scan.darwinia.network")
+            }
+            C::Koi => {
+                ("https://crab-scan.darwinia.network/api", "https://crab-scan.darwinia.network")
+            }
         })
     }
 
@@ -1225,9 +1231,9 @@ impl NamedChain {
             | C::Shimmer
             | C::Flare
             | C::FlareCoston2
-			| C::Darwinia
-			| C::Crab
-			| C::Koi => "BLOCKSCOUT_API_KEY",
+            | C::Darwinia
+            | C::Crab
+            | C::Koi => "BLOCKSCOUT_API_KEY",
 
             C::Boba => "BOBASCAN_API_KEY",
 
