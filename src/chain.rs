@@ -431,6 +431,25 @@ impl Chain {
     pub const fn flare_coston2() -> Self {
         Self::from_named(NamedChain::FlareCoston2)
     }
+
+    /// Returns the darwinia mainnet chain.
+    #[inline]
+    pub const fn darwinia() -> Self {
+        Self::from_named(NamedChain::Darwinia)
+    }
+
+    /// Returns the crab mainnet chain.
+    #[inline]
+    pub const fn crab() -> Self {
+        Self::from_named(NamedChain::Crab)
+    }
+
+    /// Returns the koi testnet chain.
+    #[inline]
+    pub const fn koi() -> Self {
+        Self::from_named(NamedChain::koi)
+    }
+
     /// Returns the kind of this chain.
     #[inline]
     pub const fn kind(&self) -> &ChainKind {

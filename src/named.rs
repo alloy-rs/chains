@@ -73,6 +73,16 @@ pub enum NamedChain {
 
     Rsk = 30,
 
+    #[strum(to_string = "crab")]
+    #[cfg_attr(feature = "serde", serde(alias = "crab"))]
+    Crab = 44,
+    #[strum(to_string = "darwinia")]
+    #[cfg_attr(feature = "serde", serde(alias = "darwinia"))]
+    Darwinia = 46,
+    #[strum(to_string = "koi")]
+    #[cfg_attr(feature = "serde", serde(alias = "koi"))]
+    Koi = 701,
+
     #[strum(to_string = "bsc", serialize = "binance-smart-chain")]
     #[cfg_attr(feature = "serde", serde(alias = "bsc", alias = "binance-smart-chain"))]
     BinanceSmartChain = 56,
@@ -454,7 +464,7 @@ impl NamedChain {
 
             C::Oasis => 5_500,
 
-            C::Emerald => 6_000,
+            C::Emerald | C::Darwinia | C::Crab | C::Koi => 6_000,
 
             C::Dev | C::AnvilHardhat => 200,
 
@@ -601,7 +611,10 @@ impl NamedChain {
             | C::Flare
             | C::FlareCoston2
             | C::Scroll
-            | C::ScrollSepolia => false,
+            | C::ScrollSepolia
+			| C::Darwinia
+			| C::Crab
+			| C::Koi => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             C::Dev
@@ -673,7 +686,10 @@ impl NamedChain {
             | C::TaikoHekla
             | C::Avalanche
             | C::AvalancheFuji
-            | C::AutonomysNovaTestnet => true,
+            | C::AutonomysNovaTestnet
+			| C::Darwinia
+			| C::Crab
+			| C::Koi => true,
             _ => false,
         }
     }
@@ -740,7 +756,8 @@ impl NamedChain {
             | C::OpBNBTestnet
             | C::TaikoHekla
             | C::AutonomysNovaTestnet
-            | C::FlareCoston2 => true,
+            | C::FlareCoston2
+			| C::Koi => true,
 
             // Dev chains.
             C::Dev | C::AnvilHardhat => true,
@@ -790,7 +807,9 @@ impl NamedChain {
             | C::OpBNBMainnet
             | C::Ronin
             | C::Taiko
-            | C::Flare => false,
+            | C::Flare
+			| C::Darwinia
+			| C::Crab => false,
         }
     }
 
@@ -830,6 +849,12 @@ impl NamedChain {
             C::Flare => "FLR",
 
             C::FlareCoston2 => "C2FLR",
+
+			C::Darwinia => "RING",
+
+			C::Crab => "CRAB",
+
+			C::Koi => "KRING",
 
             _ => return None,
         })
@@ -1107,6 +1132,10 @@ impl NamedChain {
                 "https://coston2-explorer.flare.network/api",
                 "https://coston2-explorer.flare.network",
             ),
+
+			C::Darwinia => ("https://explorer.darwinia.network/api", "https://explorer.darwinia.network"),
+			C::Crab => ("https://crab-scan.darwinia.network/api", "https://crab-scan.darwinia.network"),
+			C::Koi => ("https://crab-scan.darwinia.network/api", "https://crab-scan.darwinia.network"),
         })
     }
 
@@ -1195,7 +1224,10 @@ impl NamedChain {
             | C::EtherlinkTestnet
             | C::Shimmer
             | C::Flare
-            | C::FlareCoston2 => "BLOCKSCOUT_API_KEY",
+            | C::FlareCoston2
+			| C::Darwinia
+			| C::Crab
+			| C::Koi => "BLOCKSCOUT_API_KEY",
 
             C::Boba => "BOBASCAN_API_KEY",
 
