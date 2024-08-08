@@ -385,9 +385,9 @@
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "595": {
-      "internalId": "Mandala",
-      "name": "mandala",
-      "averageBlocktimeHint": 12000,
+      "internalId": "AcalaMandalaTestnet",
+      "name": "acala-mandala-testnet",
+      "averageBlocktimeHint": 12500,
       "isLegacy": true,
       "supportsShanghai": true,
       "isTestnet": true,
@@ -399,7 +399,7 @@
     "596": {
       "internalId": "KaruraTestnet",
       "name": "karura-testnet",
-      "averageBlocktimeHint": 12000,
+      "averageBlocktimeHint": 12500,
       "isLegacy": true,
       "supportsShanghai": true,
       "isTestnet": true,
@@ -411,7 +411,7 @@
     "597": {
       "internalId": "AcalaTestnet",
       "name": "acala-testnet",
-      "averageBlocktimeHint": 12000,
+      "averageBlocktimeHint": 12500,
       "isLegacy": true,
       "supportsShanghai": true,
       "isTestnet": true,
@@ -423,7 +423,7 @@
     "686": {
       "internalId": "Karura",
       "name": "karura",
-      "averageBlocktimeHint": 12000,
+      "averageBlocktimeHint": 12500,
       "isLegacy": true,
       "supportsShanghai": true,
       "isTestnet": false,
@@ -447,7 +447,7 @@
     "787": {
       "internalId": "Acala",
       "name": "acala",
-      "averageBlocktimeHint": 12000,
+      "averageBlocktimeHint": 12500,
       "isLegacy": true,
       "supportsShanghai": true,
       "isTestnet": false,

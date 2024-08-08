@@ -460,7 +460,7 @@ impl NamedChain {
             | C::AcalaTestnet
             | C::Karura
             | C::KaruraTestnet
-            | C::Moonbeamq
+            | C::Moonbeam
             | C::Moonriver => 12_500,
 
             C::BinanceSmartChain | C::BinanceSmartChainTestnet => 3_000,
@@ -548,6 +548,7 @@ impl NamedChain {
         match self {
             // Known legacy chains / non EIP-1559 compliant.
             C::Acala
+            | C::AcalaMandalaTestnet
             | C::AcalaTestnet
             | C::ArbitrumTestnet
             | C::BinanceSmartChain
@@ -563,7 +564,6 @@ impl NamedChain {
             | C::FantomTestnet
             | C::Karura
             | C::KaruraTestnet
-            | C::Mandala
             | C::MantleTestnet
             | C::Metis
             | C::Oasis
@@ -702,11 +702,11 @@ impl NamedChain {
             | C::Avalanche
             | C::AvalancheFuji
             | C::AutonomysNovaTestnet
-            | C::Mandala
-            | C::KaruraTestnet
+            | C::Acala
+            | C::AcalaMandalaTestnet
             | C::AcalaTestnet
             | C::Karura
-            | C::Acala => true,
+            | C::KaruraTestnet => true,
             _ => false,
         }
     }
@@ -774,9 +774,9 @@ impl NamedChain {
             | C::TaikoHekla
             | C::AutonomysNovaTestnet
             | C::FlareCoston2
-            | C::Mandala
-            | C::KaruraTestnet
-            | C::AcalaTestnet => true,
+            | C::AcalaMandalaTestnet
+            | C::AcalaTestnet
+            | C::KaruraTestnet => true,
 
             // Dev chains.
             C::Dev | C::AnvilHardhat => true,
@@ -827,8 +827,8 @@ impl NamedChain {
             | C::Ronin
             | C::Taiko
             | C::Flare
-            | C::Karura
-            | C::Acala => false,
+            | C::Acala
+            | C::Karura => false,
         }
     }
 
@@ -1238,25 +1238,25 @@ impl NamedChain {
 
             C::Moonbeam | C::Moonbase | C::MoonbeamDev | C::Moonriver => "MOONSCAN_API_KEY",
 
-            C::Canto
+            C::Acala
+            | C::AcalaMandalaTestnet
+            | C::AcalaTestnet
+            | C::Canto
             | C::CantoTestnet
-            | C::Zora
-            | C::ZoraGoerli
-            | C::ZoraSepolia
+            | C::EtherlinkTestnet
+            | C::Flare
+            | C::FlareCoston2
+            | C::KakarotSepolia
+            | C::Karura
+            | C::KaruraTestnet
             | C::Mode
             | C::ModeSepolia
             | C::Pgn
             | C::PgnSepolia
-            | C::KakarotSepolia
-            | C::EtherlinkTestnet
             | C::Shimmer
-            | C::Flare
-            | C::FlareCoston2
-            | C::Mandala
-            | C::KaruraTestnet
-            | C::AcalaTestnet
-            | C::Karura
-            | C::Acala => "BLOCKSCOUT_API_KEY",
+            | C::Zora
+            | C::ZoraGoerli
+            | C::ZoraSepolia => "BLOCKSCOUT_API_KEY",
 
             C::Boba => "BOBASCAN_API_KEY",
 
