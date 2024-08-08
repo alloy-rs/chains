@@ -1140,7 +1140,7 @@ impl NamedChain {
                 ("https://crab-scan.darwinia.network/api", "https://crab-scan.darwinia.network")
             }
             C::Koi => {
-                ("https://crab-scan.darwinia.network/api", "https://crab-scan.darwinia.network")
+                ("https://koi-scan.darwinia.network/api", "https://koi-scan.darwinia.network")
             }
         })
     }
