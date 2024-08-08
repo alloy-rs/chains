@@ -296,8 +296,8 @@
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://zksync2-testnet-explorer.zksync.dev",
-      "etherscanBaseUrl": "https://goerli.explorer.zksync.io",
+      "etherscanApiUrl": "https://api-sepolia-era.zksync.network/api",
+      "etherscanBaseUrl": "https://sepolia-era.zksync.network",
       "etherscanApiKeyName": null
     },
     "288": {
@@ -332,8 +332,8 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://zksync2-mainnet-explorer.zksync.io",
-      "etherscanBaseUrl": "https://explorer.zksync.io",
+      "etherscanApiUrl": "https://api-era.zksync.network/api",
+      "etherscanBaseUrl": "https://era.zksync.network",
       "etherscanApiKeyName": null
     },
     "338": {
