@@ -1072,9 +1072,7 @@ impl NamedChain {
                 ("https://api-sepolia.blastscan.io/api", "https://sepolia.blastscan.io")
             }
 
-            C::ZkSync => {
-                ("https://api-era.zksync.network/api", "https://era.zksync.network")
-            }
+            C::ZkSync => ("https://api-era.zksync.network/api", "https://era.zksync.network"),
             C::ZkSyncTestnet => {
                 ("https://api-sepolia-era.zksync.network/api", "https://sepolia-era.zksync.network")
             }
