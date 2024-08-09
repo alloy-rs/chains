@@ -720,9 +720,7 @@ impl NamedChain {
             | C::AcalaTestnet
             | C::Karura
             | C::KaruraTestnet => true,
-            | C::Darwinia
-            | C::Crab
-            | C::Koi => true,
+            C::Darwinia | C::Crab | C::Koi => true,
             _ => false,
         }
     }
