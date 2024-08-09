@@ -280,6 +280,23 @@ pub enum NamedChain {
     Flare = 14,
     #[cfg_attr(feature = "serde", serde(alias = "flare-coston2"))]
     FlareCoston2 = 114,
+
+    #[strum(to_string = "acala")]
+    #[cfg_attr(feature = "serde", serde(alias = "acala"))]
+    Acala = 787,
+    #[strum(to_string = "acala-mandala-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "acala-mandala-testnet"))]
+    AcalaMandalaTestnet = 595,
+    #[strum(to_string = "acala-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "acala-testnet"))]
+    AcalaTestnet = 597,
+
+    #[strum(to_string = "karura")]
+    #[cfg_attr(feature = "serde", serde(alias = "karura"))]
+    Karura = 686,
+    #[strum(to_string = "karura-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "karura-testnet"))]
+    KaruraTestnet = 596,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -448,7 +465,13 @@ impl NamedChain {
 
             C::Polygon | C::PolygonMumbai | C::PolygonAmoy => 2_100,
 
-            C::Moonbeam | C::Moonriver => 12_500,
+            C::Acala
+            | C::AcalaMandalaTestnet
+            | C::AcalaTestnet
+            | C::Karura
+            | C::KaruraTestnet
+            | C::Moonbeam
+            | C::Moonriver => 12_500,
 
             C::BinanceSmartChain | C::BinanceSmartChainTestnet => 3_000,
 
@@ -534,30 +557,35 @@ impl NamedChain {
 
         match self {
             // Known legacy chains / non EIP-1559 compliant.
-            C::OptimismKovan
-            | C::Fantom
-            | C::FantomTestnet
+            C::Acala
+            | C::AcalaMandalaTestnet
+            | C::AcalaTestnet
+            | C::ArbitrumTestnet
             | C::BinanceSmartChain
             | C::BinanceSmartChainTestnet
-            | C::ArbitrumTestnet
-            | C::Rsk
-            | C::Oasis
-            | C::Emerald
-            | C::EmeraldTestnet
+            | C::Boba
             | C::Celo
             | C::CeloAlfajores
             | C::CeloBaklava
-            | C::Boba
-            | C::ZkSync
-            | C::ZkSyncTestnet
-            | C::PolygonZkEvm
-            | C::PolygonZkEvmTestnet
-            | C::Shimmer
+            | C::Elastos
+            | C::Emerald
+            | C::EmeraldTestnet
+            | C::Fantom
+            | C::FantomTestnet
+            | C::Karura
+            | C::KaruraTestnet
             | C::MantleTestnet
             | C::Metis
+            | C::Oasis
+            | C::OptimismKovan
+            | C::PolygonZkEvm
+            | C::PolygonZkEvmTestnet
+            | C::Ronin
+            | C::Rsk
+            | C::Shimmer
             | C::Viction
-            | C::Elastos
-            | C::Ronin => true,
+            | C::ZkSync
+            | C::ZkSyncTestnet => true,
 
             // Known EIP-1559 chains.
             C::Mainnet
@@ -687,6 +715,11 @@ impl NamedChain {
             | C::Avalanche
             | C::AvalancheFuji
             | C::AutonomysNovaTestnet
+            | C::Acala
+            | C::AcalaMandalaTestnet
+            | C::AcalaTestnet
+            | C::Karura
+            | C::KaruraTestnet => true,
             | C::Darwinia
             | C::Crab
             | C::Koi => true,
@@ -757,6 +790,9 @@ impl NamedChain {
             | C::TaikoHekla
             | C::AutonomysNovaTestnet
             | C::FlareCoston2
+            | C::AcalaMandalaTestnet
+            | C::AcalaTestnet
+            | C::KaruraTestnet
             | C::Koi => true,
 
             // Dev chains.
@@ -808,6 +844,8 @@ impl NamedChain {
             | C::Ronin
             | C::Taiko
             | C::Flare
+            | C::Acala
+            | C::Karura
             | C::Darwinia
             | C::Crab => false,
         }
@@ -1059,11 +1097,9 @@ impl NamedChain {
                 ("https://api-sepolia.blastscan.io/api", "https://sepolia.blastscan.io")
             }
 
-            C::ZkSync => {
-                ("https://zksync2-mainnet-explorer.zksync.io", "https://explorer.zksync.io")
-            }
+            C::ZkSync => ("https://api-era.zksync.network/api", "https://era.zksync.network"),
             C::ZkSyncTestnet => {
-                ("https://zksync2-testnet-explorer.zksync.dev", "https://goerli.explorer.zksync.io")
+                ("https://api-sepolia-era.zksync.network/api", "https://sepolia-era.zksync.network")
             }
 
             C::Linea => ("https://api.lineascan.build/api", "https://lineascan.build"),
@@ -1131,6 +1167,24 @@ impl NamedChain {
             C::FlareCoston2 => (
                 "https://coston2-explorer.flare.network/api",
                 "https://coston2-explorer.flare.network",
+            ),
+            C::Acala => {
+                ("https://blockscout.acala.network/api", "https://blockscout.acala.network")
+            }
+            C::AcalaMandalaTestnet => (
+                "https://blockscout.mandala.aca-staging.network/api",
+                "https://blockscout.mandala.aca-staging.network",
+            ),
+            C::AcalaTestnet => (
+                "https://blockscout.acala-testnet.aca-staging.network/api",
+                "https://blockscout.acala-testnet.aca-staging.network",
+            ),
+            C::Karura => {
+                ("https://blockscout.karura.network/api", "https://blockscout.karura.network")
+            }
+            C::KaruraTestnet => (
+                "https://blockscout.karura-testnet.aca-staging.network/api",
+                "https://blockscout.karura-testnet.aca-staging.network",
             ),
 
             C::Darwinia => {
@@ -1217,20 +1271,25 @@ impl NamedChain {
 
             C::Moonbeam | C::Moonbase | C::MoonbeamDev | C::Moonriver => "MOONSCAN_API_KEY",
 
-            C::Canto
+            C::Acala
+            | C::AcalaMandalaTestnet
+            | C::AcalaTestnet
+            | C::Canto
             | C::CantoTestnet
-            | C::Zora
-            | C::ZoraGoerli
-            | C::ZoraSepolia
+            | C::EtherlinkTestnet
+            | C::Flare
+            | C::FlareCoston2
+            | C::KakarotSepolia
+            | C::Karura
+            | C::KaruraTestnet
             | C::Mode
             | C::ModeSepolia
             | C::Pgn
             | C::PgnSepolia
-            | C::KakarotSepolia
-            | C::EtherlinkTestnet
             | C::Shimmer
-            | C::Flare
-            | C::FlareCoston2
+            | C::Zora
+            | C::ZoraGoerli
+            | C::ZoraSepolia
             | C::Darwinia
             | C::Crab
             | C::Koi => "BLOCKSCOUT_API_KEY",

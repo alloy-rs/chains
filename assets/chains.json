@@ -320,8 +320,8 @@
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://zksync2-testnet-explorer.zksync.dev",
-      "etherscanBaseUrl": "https://goerli.explorer.zksync.io",
+      "etherscanApiUrl": "https://api-sepolia-era.zksync.network/api",
+      "etherscanBaseUrl": "https://sepolia-era.zksync.network",
       "etherscanApiKeyName": null
     },
     "288": {
@@ -356,8 +356,8 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://zksync2-mainnet-explorer.zksync.io",
-      "etherscanBaseUrl": "https://explorer.zksync.io",
+      "etherscanApiUrl": "https://api-era.zksync.network/api",
+      "etherscanBaseUrl": "https://era.zksync.network",
       "etherscanApiKeyName": null
     },
     "338": {
@@ -408,6 +408,54 @@
       "etherscanBaseUrl": "https://explorer.publicgoods.network",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "595": {
+      "internalId": "AcalaMandalaTestnet",
+      "name": "acala-mandala-testnet",
+      "averageBlocktimeHint": 12500,
+      "isLegacy": true,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://blockscout.mandala.aca-staging.network/api",
+      "etherscanBaseUrl": "https://blockscout.mandala.aca-staging.network",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
+    "596": {
+      "internalId": "KaruraTestnet",
+      "name": "karura-testnet",
+      "averageBlocktimeHint": 12500,
+      "isLegacy": true,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://blockscout.karura-testnet.aca-staging.network/api",
+      "etherscanBaseUrl": "https://blockscout.karura-testnet.aca-staging.network",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
+    "597": {
+      "internalId": "AcalaTestnet",
+      "name": "acala-testnet",
+      "averageBlocktimeHint": 12500,
+      "isLegacy": true,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://blockscout.acala-testnet.aca-staging.network/api",
+      "etherscanBaseUrl": "https://blockscout.acala-testnet.aca-staging.network",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
+    "686": {
+      "internalId": "Karura",
+      "name": "karura",
+      "averageBlocktimeHint": 12500,
+      "isLegacy": true,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://blockscout.karura.network/api",
+      "etherscanBaseUrl": "https://blockscout.karura.network",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "701": {
       "internalId": "Koi",
       "name": "koi",
@@ -430,6 +478,18 @@
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://testnet-explorer.canto.neobase.one/api",
       "etherscanBaseUrl": "https://testnet-explorer.canto.neobase.one",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
+    "787": {
+      "internalId": "Acala",
+      "name": "acala",
+      "averageBlocktimeHint": 12500,
+      "isLegacy": true,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://blockscout.acala.network/api",
+      "etherscanBaseUrl": "https://blockscout.acala.network",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "919": {
