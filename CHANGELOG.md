@@ -5,7 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.27](https://github.com/alloy-rs/chains/releases/tag/v0.1.27) - 2024-08-09
+
+### Bug Fixes
+
+- Zksync etherscan api url ([#78](https://github.com/alloy-rs/chains/issues/78))
+
+### Features
+
+- Add darwinia crab koi ([#77](https://github.com/alloy-rs/chains/issues/77))
+
+### Styling
+
+- Fix fmt ([#79](https://github.com/alloy-rs/chains/issues/79))
+
 ## [0.1.26](https://github.com/alloy-rs/chains/releases/tag/v0.1.26) - 2024-08-08
+
+### Miscellaneous Tasks
+
+- Release 0.1.26
 
 ### Other
 
