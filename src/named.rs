@@ -105,6 +105,11 @@ pub enum NamedChain {
 
     Metis = 1088,
 
+    #[cfg_attr(feature = "serde", serde(alias = "conflux-espace-testnet"))]
+    CfxTestnet = 71,
+    #[cfg_attr(feature = "serde", serde(alias = "conflux-espace"))]
+    Cfx = 1030,
+
     #[strum(to_string = "xdai", serialize = "gnosis", serialize = "gnosis-chain")]
     #[cfg_attr(feature = "serde", serde(alias = "xdai", alias = "gnosis", alias = "gnosis-chain"))]
     Gnosis = 100,
@@ -507,6 +512,8 @@ impl NamedChain {
 
             C::Degen => 600,
 
+            C::Cfx | C::CfxTestnet => 500,
+
             C::Morden
             | C::Ropsten
             | C::Rinkeby
@@ -641,6 +648,8 @@ impl NamedChain {
             | C::Scroll
             | C::ScrollSepolia
             | C::Darwinia
+            | C::Cfx
+            | C::CfxTestnet
             | C::Crab
             | C::Koi => false,
 
@@ -722,6 +731,8 @@ impl NamedChain {
             | C::KaruraTestnet
             | C::Darwinia
             | C::Crab
+            | C::Cfx
+            | C::CfxTestnet
             | C::Koi => true,
             _ => false,
         }
@@ -793,6 +804,7 @@ impl NamedChain {
             | C::AcalaMandalaTestnet
             | C::AcalaTestnet
             | C::KaruraTestnet
+            | C::CfxTestnet
             | C::Koi => true,
 
             // Dev chains.
@@ -847,6 +859,7 @@ impl NamedChain {
             | C::Acala
             | C::Karura
             | C::Darwinia
+            | C::Cfx
             | C::Crab => false,
         }
     }
@@ -893,6 +906,8 @@ impl NamedChain {
             C::Crab => "CRAB",
 
             C::Koi => "KRING",
+
+            C::Cfx | C::CfxTestnet => "CFX",
 
             _ => return None,
         })
@@ -1196,6 +1211,12 @@ impl NamedChain {
             C::Koi => {
                 ("https://koi-scan.darwinia.network/api", "https://koi-scan.darwinia.network")
             }
+            C::Cfx => {
+                ("https://evmapi.confluxscan.net/api", "https://evm.confluxscan.io")
+            }
+            C::CfxTestnet => {
+                ("https://evmapi-testnet.confluxscan.net/api", "https://evmtestnet.confluxscan.io")
+            }
         })
     }
 
@@ -1319,6 +1340,8 @@ impl NamedChain {
             | C::Elastos
             | C::Degen
             | C::Ronin
+            | C::Cfx
+            | C::CfxTestnet
             | C::AutonomysNovaTestnet => return None,
         };
 

@@ -18,6 +18,10 @@ released at least six months ago. The current MSRV is 1.70.0.
 Note that the MSRV is not increased automatically, and only as part of a minor
 release.
 
+## How to add a new chain
+
+Check `src/named.rs`'s comment for the guidelines on how to add a new chain.
+
 ## Note on `no_std`
 
 All crates in this workspace should support `no_std` environments, with the
