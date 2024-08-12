@@ -888,6 +888,18 @@
       "etherscanBaseUrl": "https://explorer.emerald.oasis.dev",
       "etherscanApiKeyName": null
     },
+    "42793": {
+      "internalId": "Etherlink",
+      "name": "etherlink",
+      "averageBlocktimeHint": 5000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "XTZ",
+      "etherscanApiUrl": "https://explorer.etherlink.com/api",
+      "etherscanBaseUrl": "https://explorer.etherlink.com",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "43113": {
       "internalId": "AvalancheFuji",
       "name": "fuji",

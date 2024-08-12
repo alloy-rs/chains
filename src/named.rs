@@ -251,6 +251,9 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "kakarot-sepolia"))]
     KakarotSepolia = 1802203764,
 
+    #[cfg_attr(feature = "serde", serde(alias = "etherlink"))]
+    Etherlink = 42793,
+
     #[cfg_attr(feature = "serde", serde(alias = "etherlink-testnet"))]
     EtherlinkTestnet = 128123,
 
@@ -508,6 +511,8 @@ impl NamedChain {
 
             C::Elastos => 5_000,
 
+            C::Etherlink => 5_000,
+
             C::EtherlinkTestnet => 5_000,
 
             C::Degen => 600,
@@ -636,6 +641,7 @@ impl NamedChain {
             | C::Pgn
             | C::PgnSepolia
             | C::KakarotSepolia
+            | C::Etherlink
             | C::EtherlinkTestnet
             | C::Degen
             | C::OpBNBMainnet
@@ -712,6 +718,7 @@ impl NamedChain {
             | C::ArbitrumSepolia
             | C::Syndr
             | C::SyndrSepolia
+            | C::Etherlink
             | C::EtherlinkTestnet
             | C::Scroll
             | C::ScrollSepolia
@@ -860,7 +867,9 @@ impl NamedChain {
             | C::Karura
             | C::Darwinia
             | C::Cfx
-            | C::Crab => false,
+            | C::Crab
+            | C::Crab
+            | C::Etherlink => false,
         }
     }
 
@@ -889,7 +898,7 @@ impl NamedChain {
             | C::OpBNBMainnet
             | C::OpBNBTestnet => "BNB",
 
-            C::EtherlinkTestnet => "XTZ",
+            C::Etherlink | C::EtherlinkTestnet => "XTZ",
 
             C::Degen => "DEGEN",
 
@@ -1168,6 +1177,9 @@ impl NamedChain {
             C::KakarotSepolia => {
                 ("https://sepolia.kakarotscan.org/api", "https://sepolia.kakarotscan.org")
             }
+            C::Etherlink => {
+                ("https://explorer.etherlink.com/api", "https://explorer.etherlink.com")
+            }
             C::EtherlinkTestnet => (
                 "https://testnet-explorer.etherlink.com/api",
                 "https://testnet-explorer.etherlink.com",
@@ -1297,6 +1309,7 @@ impl NamedChain {
             | C::AcalaTestnet
             | C::Canto
             | C::CantoTestnet
+            | C::Etherlink
             | C::EtherlinkTestnet
             | C::Flare
             | C::FlareCoston2
