@@ -868,7 +868,6 @@ impl NamedChain {
             | C::Darwinia
             | C::Cfx
             | C::Crab
-            | C::Crab
             | C::Etherlink => false,
         }
     }
