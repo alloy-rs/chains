@@ -1188,6 +1188,18 @@
       "etherscanBaseUrl": "https://sepolia-optimism.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "41144114": {
+      "internalId": "Alphanet",
+      "name": "alphanet",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
+      "etherscanApiKeyName": null
+    },
     "168587773": {
       "internalId": "BlastSepolia",
       "name": "blast-sepolia",
