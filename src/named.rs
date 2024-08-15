@@ -50,6 +50,8 @@ pub enum NamedChain {
     Holesky = 17000,
     Sepolia = 11155111,
 
+    Alphanet = 41144114,
+
     Optimism = 10,
     #[cfg_attr(feature = "serde", serde(alias = "optimism-kovan"))]
     OptimismKovan = 69,
@@ -464,6 +466,8 @@ impl NamedChain {
             | C::Pgn
             | C::PgnSepolia => 2_000,
 
+            C::Alphanet => 1_000,
+
             C::Viction => 2_000,
 
             C::Polygon | C::PolygonMumbai | C::PolygonAmoy => 2_100,
@@ -597,6 +601,7 @@ impl NamedChain {
             | C::Goerli
             | C::Sepolia
             | C::Holesky
+            | C::Alphanet
             | C::Base
             | C::BaseGoerli
             | C::BaseSepolia
@@ -761,6 +766,7 @@ impl NamedChain {
             | C::SyndrSepolia
             | C::AuroraTestnet
             | C::AvalancheFuji
+            | C::Alphanet
             | C::BaseGoerli
             | C::BaseSepolia
             | C::BlastSepolia
@@ -1151,6 +1157,7 @@ impl NamedChain {
             C::Elastos => ("https://esc.elastos.io/api", "https://esc.elastos.io"),
 
             C::AnvilHardhat
+            | C::Alphanet
             | C::Dev
             | C::Morden
             | C::MoonbeamDev
@@ -1311,6 +1318,7 @@ impl NamedChain {
             // Explicitly exhaustive. See NB above.
             C::Metis
             | C::Chiado
+            | C::Alphanet
             | C::Sepolia
             | C::Rsk
             | C::Sokol
