@@ -1,7 +1,7 @@
 [package]
 name = "alloy-chains"
 description = "Canonical type definitions for EIP-155 chains"
-version = "0.1.27"
+version = "0.1.28"
 edition = "2021"
 rust-version = "1.70"
 authors = ["Alloy Contributors"]
