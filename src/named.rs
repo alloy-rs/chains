@@ -690,6 +690,7 @@ impl NamedChain {
             | C::Goerli
             | C::Sepolia
             | C::Holesky
+            | C::AnvilHardhat
             | C::Optimism
             | C::OptimismGoerli
             | C::OptimismSepolia
