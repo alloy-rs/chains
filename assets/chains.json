@@ -384,6 +384,18 @@
       "etherscanBaseUrl": "https://testnet.cronoscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "369": {
+      "internalId": "Pulsechain",
+      "name": "pulsechain",
+      "averageBlocktimeHint": 10000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "PLS",
+      "etherscanApiUrl": "https://api.scan.pulsechain.com",
+      "etherscanBaseUrl": "https://scan.pulsechain.com",
+      "etherscanApiKeyName": null
+    },
     "404": {
       "internalId": "Syndr",
       "name": "syndr",
@@ -515,6 +527,18 @@
       "etherscanApiUrl": "https://sepolia.explorer.mode.network/api",
       "etherscanBaseUrl": "https://sepolia.explorer.mode.network",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
+    "943": {
+      "internalId": "PulsechainTestnet",
+      "name": "pulsechain-testnet",
+      "averageBlocktimeHint": 10101,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "PLS",
+      "etherscanApiUrl": "https://api.scan.v4.testnet.pulsechain.com",
+      "etherscanBaseUrl": "https://scan.v4.testnet.pulsechain.com",
+      "etherscanApiKeyName": null
     },
     "999": {
       "internalId": "ZoraGoerli",
