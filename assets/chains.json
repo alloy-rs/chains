@@ -785,7 +785,7 @@
       "name": "anvil-hardhat",
       "averageBlocktimeHint": 200,
       "isLegacy": false,
-      "supportsShanghai": false,
+      "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": null,
