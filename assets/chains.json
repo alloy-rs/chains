@@ -1200,6 +1200,18 @@
       "etherscanBaseUrl": "https://scrollscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "660279": {
+      "internalId": "Xai",
+      "name": "xai",
+      "averageBlocktimeHint": 260,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "XAI",
+      "etherscanApiUrl": "https://xaiscan.io/api",
+      "etherscanBaseUrl": "https://xaiscan.io",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "7777777": {
       "internalId": "Zora",
       "name": "zora",
@@ -1319,6 +1331,18 @@
       "etherscanApiUrl": "https://sepolia.kakarotscan.org/api",
       "etherscanBaseUrl": "https://sepolia.kakarotscan.org",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
+    "37714555429": {
+      "internalId": "XaiSepolia",
+      "name": "xai-sepolia",
+      "averageBlocktimeHint": 260,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "XAI",
+      "etherscanApiUrl": "https://sepolia.xaiscan.io/api",
+      "etherscanBaseUrl": "https://sepolia.xaiscan.io",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     }
   }
 }

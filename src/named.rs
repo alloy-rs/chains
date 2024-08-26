@@ -233,6 +233,13 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "mantle-sepolia"))]
     MantleSepolia = 5003,
 
+    #[strum(to_string = "xai")]
+    #[cfg_attr(feature = "serde", serde(alias = "xai"))]
+    Xai = 660279,
+    #[strum(to_string = "xai-sepolia")]
+    #[cfg_attr(feature = "serde", serde(alias = "xai-sepolia"))]
+    XaiSepolia = 37714555429,
+
     Viction = 88,
 
     Zora = 7777777,
@@ -454,6 +461,8 @@ impl NamedChain {
             | C::ArbitrumTestnet
             | C::ArbitrumGoerli
             | C::ArbitrumSepolia
+            | C::Xai
+            | C::XaiSepolia
             | C::Syndr
             | C::SyndrSepolia
             | C::ArbitrumNova => 260,
@@ -638,6 +647,8 @@ impl NamedChain {
             | C::ArbitrumGoerli
             | C::ArbitrumSepolia
             | C::ArbitrumNova
+            | C::Xai
+            | C::XaiSepolia
             | C::Syndr
             | C::SyndrSepolia
             | C::FilecoinMainnet
@@ -734,6 +745,8 @@ impl NamedChain {
             | C::Arbitrum
             | C::ArbitrumNova
             | C::ArbitrumSepolia
+            | C::Xai
+            | C::XaiSepolia
             | C::Syndr
             | C::SyndrSepolia
             | C::Etherlink
@@ -834,6 +847,7 @@ impl NamedChain {
             | C::KaruraTestnet
             | C::CfxTestnet
             | C::PulsechainTestnet
+            | C::XaiSepolia
             | C::Koi => true,
 
             // Dev chains.
@@ -875,6 +889,7 @@ impl NamedChain {
             | C::Linea
             | C::ZkSync
             | C::Mantle
+            | C::Xai
             | C::Zora
             | C::Pgn
             | C::Mode
@@ -914,6 +929,8 @@ impl NamedChain {
             | C::TaikoHekla => "ETH",
 
             C::Mantle | C::MantleSepolia => "MNT",
+
+            C::Xai | C::XaiSepolia => "XAI",
 
             C::BinanceSmartChain
             | C::BinanceSmartChainTestnet
@@ -1041,6 +1058,9 @@ impl NamedChain {
                 ("https://api-sepolia.arbiscan.io/api", "https://sepolia.arbiscan.io")
             }
             C::ArbitrumNova => ("https://api-nova.arbiscan.io/api", "https://nova.arbiscan.io"),
+
+            C::XaiSepolia => ("https://sepolia.xaiscan.io/api", "https://sepolia.xaiscan.io"),
+            C::Xai => ("https://xaiscan.io/api", "https://xaiscan.io"),
 
             C::Syndr => ("https://explorer.syndr.com/api", "https://explorer.syndr.com"),
             C::SyndrSepolia => {
@@ -1307,6 +1327,8 @@ impl NamedChain {
             | C::Mantle
             | C::MantleTestnet
             | C::MantleSepolia
+            | C::Xai
+            | C::XaiSepolia
             | C::BaseGoerli
             | C::BaseSepolia
             | C::Fraxtal
@@ -1494,6 +1516,8 @@ mod tests {
             (Mantle, &["mantle"]),
             (MantleTestnet, &["mantle-testnet"]),
             (MantleSepolia, &["mantle-sepolia"]),
+            (Xai, &["xai"]),
+            (XaiSepolia, &["xai-sepolia"]),
             (Base, &["base"]),
             (BaseGoerli, &["base-goerli"]),
             (BaseSepolia, &["base-sepolia"]),
