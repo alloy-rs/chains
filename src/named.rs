@@ -1222,9 +1222,7 @@ impl NamedChain {
             C::Koi => {
                 ("https://koi-scan.darwinia.network/api", "https://koi-scan.darwinia.network")
             }
-            C::Cfx => {
-                ("https://evmapi.confluxscan.net/api", "https://evm.confluxscan.io")
-            }
+            C::Cfx => ("https://evmapi.confluxscan.net/api", "https://evm.confluxscan.io"),
             C::CfxTestnet => {
                 ("https://evmapi-testnet.confluxscan.net/api", "https://evmtestnet.confluxscan.io")
             }
