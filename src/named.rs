@@ -308,6 +308,12 @@ pub enum NamedChain {
     #[strum(to_string = "karura-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "karura-testnet"))]
     KaruraTestnet = 596,
+    #[strum(to_string = "pulsechain")]
+    #[cfg_attr(feature = "serde", serde(alias = "pulsechain"))]
+    Pulsechain = 369,
+    #[strum(to_string = "pulsechain-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "pulsechain-testnet"))]
+    PulsechainTestnet = 943,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -556,6 +562,9 @@ impl NamedChain {
             C::Flare => 1_800,
 
             C::FlareCoston2 => 2_500,
+
+            C::Pulsechain => 10000,
+            C::PulsechainTestnet => 10101,
         }))
     }
 
@@ -663,6 +672,8 @@ impl NamedChain {
             | C::Cfx
             | C::CfxTestnet
             | C::Crab
+            | C::Pulsechain
+            | C::PulsechainTestnet
             | C::Koi => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
@@ -747,6 +758,8 @@ impl NamedChain {
             | C::Crab
             | C::Cfx
             | C::CfxTestnet
+            | C::Pulsechain
+            | C::PulsechainTestnet
             | C::Koi => true,
             _ => false,
         }
@@ -820,6 +833,7 @@ impl NamedChain {
             | C::AcalaTestnet
             | C::KaruraTestnet
             | C::CfxTestnet
+            | C::PulsechainTestnet
             | C::Koi => true,
 
             // Dev chains.
@@ -876,6 +890,7 @@ impl NamedChain {
             | C::Darwinia
             | C::Cfx
             | C::Crab
+            | C::Pulsechain
             | C::Etherlink => false,
         }
     }
@@ -924,6 +939,7 @@ impl NamedChain {
             C::Koi => "KRING",
 
             C::Cfx | C::CfxTestnet => "CFX",
+            C::Pulsechain | C::PulsechainTestnet => "PLS",
 
             _ => return None,
         })
@@ -1235,6 +1251,11 @@ impl NamedChain {
             C::CfxTestnet => {
                 ("https://evmapi-testnet.confluxscan.net/api", "https://evmtestnet.confluxscan.io")
             }
+            C::Pulsechain => ("https://api.scan.pulsechain.com", "https://scan.pulsechain.com"),
+            C::PulsechainTestnet => (
+                "https://api.scan.v4.testnet.pulsechain.com",
+                "https://scan.v4.testnet.pulsechain.com",
+            ),
         })
     }
 
@@ -1362,6 +1383,8 @@ impl NamedChain {
             | C::Ronin
             | C::Cfx
             | C::CfxTestnet
+            | C::Pulsechain
+            | C::PulsechainTestnet
             | C::AutonomysNovaTestnet => return None,
         };
 
