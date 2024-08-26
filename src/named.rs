@@ -38,6 +38,7 @@ use alloc::string::String;
 #[cfg_attr(feature = "serde", serde(rename_all = "snake_case"))]
 #[repr(u64)]
 #[allow(missing_docs)]
+#[non_exhaustive]
 pub enum NamedChain {
     #[strum(to_string = "mainnet", serialize = "ethlive")]
     #[cfg_attr(feature = "serde", serde(alias = "ethlive"))]
