@@ -180,6 +180,18 @@
       "etherscanBaseUrl": "https://kovan-optimistic.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "71": {
+      "internalId": "CfxTestnet",
+      "name": "cfx-testnet",
+      "averageBlocktimeHint": 500,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "CFX",
+      "etherscanApiUrl": "https://evmapi-testnet.confluxscan.net/api",
+      "etherscanBaseUrl": "https://evmtestnet.confluxscan.io",
+      "etherscanApiKeyName": null
+    },
     "77": {
       "internalId": "Sokol",
       "name": "sokol",
@@ -515,6 +527,18 @@
       "etherscanApiUrl": "https://testnet.explorer.zora.energy/api",
       "etherscanBaseUrl": "https://testnet.explorer.zora.energy",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
+    "1030": {
+      "internalId": "Cfx",
+      "name": "cfx",
+      "averageBlocktimeHint": 500,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "CFX",
+      "etherscanApiUrl": "https://evmapi.confluxscan.net/api",
+      "etherscanBaseUrl": "https://evm.confluxscan.io",
+      "etherscanApiKeyName": null
     },
     "1088": {
       "internalId": "Metis",
