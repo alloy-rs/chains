@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.29](https://github.com/alloy-rs/chains/releases/tag/v0.1.29) - 2024-08-27
+
+### Features
+
+- Add xai and xai-sepolia ([#85](https://github.com/alloy-rs/chains/issues/85))
+- Add pulsechain ([#84](https://github.com/alloy-rs/chains/issues/84))
+
 ## [0.1.28](https://github.com/alloy-rs/chains/releases/tag/v0.1.28) - 2024-08-26
 
 ### Bug Fixes
@@ -16,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add non_exhaustive
 - Add alphanet ([#82](https://github.com/alloy-rs/chains/issues/82))
 - [Chains] Add Etherlink mainnet ([#81](https://github.com/alloy-rs/chains/issues/81))
+
+### Miscellaneous Tasks
+
+- Release 0.1.28
 
 ### Other
 
