@@ -1076,8 +1076,12 @@ impl NamedChain {
             }
             C::ArbitrumNova => ("https://api-nova.arbiscan.io/api", "https://nova.arbiscan.io"),
 
-            C::GravityAlphaMainnet => ("https://explorer.gravity.xyz/api", "https://explorer.gravity.xyz"),
-            C::GravityAlphaTestnetSepolia  => ("https://explorer-sepolia.gravity.xyz/api", "https://explorer-sepolia.gravity.xyz"),
+            C::GravityAlphaMainnet => {
+                ("https://explorer.gravity.xyz/api", "https://explorer.gravity.xyz")
+            }
+            C::GravityAlphaTestnetSepolia => {
+                ("https://explorer-sepolia.gravity.xyz/api", "https://explorer-sepolia.gravity.xyz")
+            }
 
             C::XaiSepolia => ("https://sepolia.xaiscan.io/api", "https://sepolia.xaiscan.io"),
             C::Xai => ("https://xaiscan.io/api", "https://xaiscan.io"),
