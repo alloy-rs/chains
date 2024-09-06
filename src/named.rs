@@ -159,6 +159,13 @@ pub enum NamedChain {
     )]
     AnvilHardhat = 31337,
 
+    #[strum(to_string = "gravity-alpha-mainnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "gravity-alpha-mainnet"))]
+    GravityAlphaMainnet = 1625,
+    #[strum(to_string = "gravity-alpha-testnet-sepolia")]
+    #[cfg_attr(feature = "serde", serde(alias = "gravity-alpha-testnet-sepolia"))]
+    GravityAlphaTestnetSepolia = 13505,
+
     Evmos = 9001,
     EvmosTestnet = 9000,
 
@@ -461,6 +468,8 @@ impl NamedChain {
             | C::ArbitrumTestnet
             | C::ArbitrumGoerli
             | C::ArbitrumSepolia
+            | C::GravityAlphaMainnet
+            | C::GravityAlphaTestnetSepolia
             | C::Xai
             | C::XaiSepolia
             | C::Syndr
@@ -647,6 +656,8 @@ impl NamedChain {
             | C::ArbitrumGoerli
             | C::ArbitrumSepolia
             | C::ArbitrumNova
+            | C::GravityAlphaMainnet
+            | C::GravityAlphaTestnetSepolia
             | C::Xai
             | C::XaiSepolia
             | C::Syndr
@@ -745,6 +756,8 @@ impl NamedChain {
             | C::Arbitrum
             | C::ArbitrumNova
             | C::ArbitrumSepolia
+            | C::GravityAlphaMainnet
+            | C::GravityAlphaTestnetSepolia
             | C::Xai
             | C::XaiSepolia
             | C::Syndr
@@ -847,6 +860,7 @@ impl NamedChain {
             | C::KaruraTestnet
             | C::CfxTestnet
             | C::PulsechainTestnet
+            | C::GravityAlphaTestnetSepolia
             | C::XaiSepolia
             | C::Koi => true,
 
@@ -889,6 +903,7 @@ impl NamedChain {
             | C::Linea
             | C::ZkSync
             | C::Mantle
+            | C::GravityAlphaMainnet
             | C::Xai
             | C::Zora
             | C::Pgn
@@ -929,6 +944,8 @@ impl NamedChain {
             | C::TaikoHekla => "ETH",
 
             C::Mantle | C::MantleSepolia => "MNT",
+
+            C::GravityAlphaMainnet | C::GravityAlphaTestnetSepolia => "G",
 
             C::Xai | C::XaiSepolia => "XAI",
 
@@ -1058,6 +1075,9 @@ impl NamedChain {
                 ("https://api-sepolia.arbiscan.io/api", "https://sepolia.arbiscan.io")
             }
             C::ArbitrumNova => ("https://api-nova.arbiscan.io/api", "https://nova.arbiscan.io"),
+
+            C::GravityAlphaMainnet => ("https://explorer.gravity.xyz/api", "https://explorer.gravity.xyz"),
+            C::GravityAlphaTestnetSepolia  => ("https://explorer-sepolia.gravity.xyz/api", "https://explorer-sepolia.gravity.xyz"),
 
             C::XaiSepolia => ("https://sepolia.xaiscan.io/api", "https://sepolia.xaiscan.io"),
             C::Xai => ("https://xaiscan.io/api", "https://xaiscan.io"),
@@ -1394,6 +1414,8 @@ impl NamedChain {
             | C::EvmosTestnet
             | C::AnvilHardhat
             | C::Dev
+            | C::GravityAlphaMainnet
+            | C::GravityAlphaTestnetSepolia
             | C::ZkSync
             | C::ZkSyncTestnet
             | C::FilecoinMainnet
@@ -1516,6 +1538,8 @@ mod tests {
             (Mantle, &["mantle"]),
             (MantleTestnet, &["mantle-testnet"]),
             (MantleSepolia, &["mantle-sepolia"]),
+            (GravityAlphaMainnet, &["gravity-alpha-mainnet"]),
+            (GravityAlphaTestnetSepolia, &["gravity-alpha-testnet-sepolia"]),
             (Xai, &["xai"]),
             (XaiSepolia, &["xai-sepolia"]),
             (Base, &["base"]),

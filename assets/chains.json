@@ -660,6 +660,18 @@
       "etherscanBaseUrl": "https://testnet-zkevm.polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
     },
+    "1625": {
+      "internalId": "GravityAlphaMainnet",
+      "name": "gravity-alpha-mainnet",
+      "averageBlocktimeHint": 260,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "G",
+      "etherscanApiUrl": "https://explorer.gravity.xyz/api",
+      "etherscanBaseUrl": "https://explorer.gravity.xyz",
+      "etherscanApiKeyName": null
+    },
     "2020": {
       "internalId": "Ronin",
       "name": "ronin",
@@ -802,6 +814,18 @@
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://blockscout.chiadochain.net/api",
       "etherscanBaseUrl": "https://blockscout.chiadochain.net",
+      "etherscanApiKeyName": null
+    },
+    "13505": {
+      "internalId": "GravityAlphaTestnetSepolia",
+      "name": "gravity-alpha-testnet-sepolia",
+      "averageBlocktimeHint": 260,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "G",
+      "etherscanApiUrl": "https://explorer-sepolia.gravity.xyz/api",
+      "etherscanBaseUrl": "https://explorer-sepolia.gravity.xyz",
       "etherscanApiKeyName": null
     },
     "17000": {
