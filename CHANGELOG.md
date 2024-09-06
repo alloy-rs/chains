@@ -5,12 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.30](https://github.com/alloy-rs/chains/releases/tag/v0.1.30) - 2024-09-06
+
+### Features
+
+- Add gravity alpha mainnet and sepolia testnet ([#86](https://github.com/alloy-rs/chains/issues/86))
+
+### Miscellaneous Tasks
+
+- Rustmft
+
 ## [0.1.29](https://github.com/alloy-rs/chains/releases/tag/v0.1.29) - 2024-08-27
 
 ### Features
 
 - Add xai and xai-sepolia ([#85](https://github.com/alloy-rs/chains/issues/85))
 - Add pulsechain ([#84](https://github.com/alloy-rs/chains/issues/84))
+
+### Miscellaneous Tasks
+
+- Release 0.1.29
 
 ## [0.1.28](https://github.com/alloy-rs/chains/releases/tag/v0.1.28) - 2024-08-26
 
