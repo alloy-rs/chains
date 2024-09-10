@@ -384,6 +384,18 @@ impl Chain {
         Self::from_named(NamedChain::Dev)
     }
 
+    /// Returns the bsc mainnet chain.
+    #[inline]
+    pub const fn bsc_mainnet() -> Self {
+        Self::from_named(NamedChain::BNBSmartChain)
+    }
+
+    /// Returns the bsc testnet chain.
+    #[inline]
+    pub const fn bsc_testnet() -> Self {
+        Self::from_named(NamedChain::BNBSmartChainTestnet)
+    }
+
     /// Returns the opbnb mainnet chain.
     #[inline]
     pub const fn opbnb_mainnet() -> Self {
