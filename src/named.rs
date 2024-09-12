@@ -328,6 +328,14 @@ pub enum NamedChain {
     #[strum(to_string = "pulsechain-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "pulsechain-testnet"))]
     PulsechainTestnet = 943,
+
+    #[strum(to_string = "immutable")]
+    #[cfg_attr(feature = "serde", serde(alias = "immutable"))]
+    Immutable = 13371,
+    #[strum(to_string = "immutable-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "immutable-testnet"))]
+    ImmutableTestnet = 13473,
+
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -583,6 +591,8 @@ impl NamedChain {
 
             C::Pulsechain => 10000,
             C::PulsechainTestnet => 10101,
+
+            C::Immutable | C::ImmutableTestnet => 2_000,
         }))
     }
 
@@ -696,7 +706,9 @@ impl NamedChain {
             | C::Crab
             | C::Pulsechain
             | C::PulsechainTestnet
-            | C::Koi => false,
+            | C::Koi
+            | C::Immutable
+            | C::ImmutableTestnet => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             C::Dev
@@ -786,7 +798,9 @@ impl NamedChain {
             | C::CfxTestnet
             | C::Pulsechain
             | C::PulsechainTestnet
-            | C::Koi => true,
+            | C::Koi
+            | C::Immutable
+            | C::ImmutableTestnet => true,
             _ => false,
         }
     }
@@ -862,7 +876,8 @@ impl NamedChain {
             | C::PulsechainTestnet
             | C::GravityAlphaTestnetSepolia
             | C::XaiSepolia
-            | C::Koi => true,
+            | C::Koi
+            | C::ImmutableTestnet => true,
 
             // Dev chains.
             C::Dev | C::AnvilHardhat => true,
@@ -921,7 +936,8 @@ impl NamedChain {
             | C::Cfx
             | C::Crab
             | C::Pulsechain
-            | C::Etherlink => false,
+            | C::Etherlink
+            | C::Immutable => false,
         }
     }
 
@@ -974,6 +990,9 @@ impl NamedChain {
 
             C::Cfx | C::CfxTestnet => "CFX",
             C::Pulsechain | C::PulsechainTestnet => "PLS",
+
+            C::Immutable => "IMX",
+            C::ImmutableTestnet => "tIMX",
 
             _ => return None,
         })
@@ -1300,6 +1319,12 @@ impl NamedChain {
                 "https://api.scan.v4.testnet.pulsechain.com",
                 "https://scan.v4.testnet.pulsechain.com",
             ),
+
+            C::Immutable => ("https://explorer.immutable.com/api", "https://explorer.immutable.com"),
+            C::ImmutableTestnet => (
+                "https://explorer.testnet.immutable.com/api",
+                "https://explorer.testnet.immutable.com",
+            ),
         })
     }
 
@@ -1399,7 +1424,9 @@ impl NamedChain {
             | C::ZoraSepolia
             | C::Darwinia
             | C::Crab
-            | C::Koi => "BLOCKSCOUT_API_KEY",
+            | C::Koi
+            | C::Immutable
+            | C::ImmutableTestnet => "BLOCKSCOUT_API_KEY",
 
             C::Boba => "BOBASCAN_API_KEY",
 
@@ -1556,6 +1583,7 @@ mod tests {
             (SyndrSepolia, &["syndr-sepolia"]),
             (LineaGoerli, &["linea-goerli"]),
             (AutonomysNovaTestnet, &["autonomys-nova-testnet"]),
+            (ImmutableTestnet, &["immutable-testnet"]),
         ];
 
         for &(chain, aliases) in ALIASES {
