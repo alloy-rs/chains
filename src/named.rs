@@ -1584,6 +1584,7 @@ mod tests {
             (SyndrSepolia, &["syndr-sepolia"]),
             (LineaGoerli, &["linea-goerli"]),
             (AutonomysNovaTestnet, &["autonomys-nova-testnet"]),
+            (Immutable, &["immutable"]),
             (ImmutableTestnet, &["immutable-testnet"]),
         ];
 
