@@ -5,11 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.1.31](https://github.com/alloy-rs/chains/releases/tag/v0.1.31) - 2024-09-13
 
-### Features
+### Other
 
-- Add immutable mainnet and testnet ([#88](https://github.com/alloy-rs/chains/issues/88))
+- Immutable zkEVM and Immutable zkEVM testnet ([#88](https://github.com/alloy-rs/chains/issues/88))
 
 ## [0.1.30](https://github.com/alloy-rs/chains/releases/tag/v0.1.30) - 2024-09-06
 
@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Miscellaneous Tasks
 
+- Release 0.1.30
 - Rustmft
 
 ## [0.1.29](https://github.com/alloy-rs/chains/releases/tag/v0.1.29) - 2024-08-27
