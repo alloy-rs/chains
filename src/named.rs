@@ -335,7 +335,6 @@ pub enum NamedChain {
     #[strum(to_string = "immutable-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "immutable-testnet"))]
     ImmutableTestnet = 13473,
-
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -1320,7 +1319,9 @@ impl NamedChain {
                 "https://scan.v4.testnet.pulsechain.com",
             ),
 
-            C::Immutable => ("https://explorer.immutable.com/api", "https://explorer.immutable.com"),
+            C::Immutable => {
+                ("https://explorer.immutable.com/api", "https://explorer.immutable.com")
+            }
             C::ImmutableTestnet => (
                 "https://explorer.testnet.immutable.com/api",
                 "https://explorer.testnet.immutable.com",

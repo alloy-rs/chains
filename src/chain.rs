@@ -452,14 +452,14 @@ impl Chain {
 
     /// Returns the Immutable zkEVM mainnet chain.
     #[inline]
-        pub const fn immutable() -> Self {
-            Self::from_named(NamedChain::Immutable)
+    pub const fn immutable() -> Self {
+        Self::from_named(NamedChain::Immutable)
     }
-    
+
     /// Returns the Immutable zkEVM testnet chain.
     #[inline]
-        pub const fn immutable_testnet() -> Self {
-            Self::from_named(NamedChain::ImmutableTestnet)
+    pub const fn immutable_testnet() -> Self {
+        Self::from_named(NamedChain::ImmutableTestnet)
     }
 
     /// Returns the kind of this chain.
