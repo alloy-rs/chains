@@ -816,6 +816,30 @@
       "etherscanBaseUrl": "https://blockscout.chiadochain.net",
       "etherscanApiKeyName": null
     },
+    "13371": {
+      "internalId": "Immutable",
+      "name": "immutable",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "IMX",
+      "etherscanApiUrl": "https://explorer.immutable.com/api",
+      "etherscanBaseUrl": "https://explorer.immutable.com",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
+    "13473": {
+      "internalId": "ImmutableTestnet",
+      "name": "immutable-testnet",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "tIMX",
+      "etherscanApiUrl": "https://explorer.testnet.immutable.com/api",
+      "etherscanBaseUrl": "https://explorer.testnet.immutable.com",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "13505": {
       "internalId": "GravityAlphaTestnetSepolia",
       "name": "gravity-alpha-testnet-sepolia",
