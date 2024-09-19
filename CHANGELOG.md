@@ -5,7 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.32](https://github.com/alloy-rs/chains/releases/tag/v0.1.32) - 2024-09-19
+
+### Features
+
+- Add is_ethereum ([#90](https://github.com/alloy-rs/chains/issues/90))
+
+### Miscellaneous Tasks
+
+- Move is_* helpers to `NamedChain` ([#91](https://github.com/alloy-rs/chains/issues/91))
+- Import enum with glob instead of as C ([#89](https://github.com/alloy-rs/chains/issues/89))
+
 ## [0.1.31](https://github.com/alloy-rs/chains/releases/tag/v0.1.31) - 2024-09-13
+
+### Miscellaneous Tasks
+
+- Release 0.1.31
 
 ### Other
 
