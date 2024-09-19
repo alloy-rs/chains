@@ -448,45 +448,37 @@ impl NamedChain {
     }
 
     /// Returns `true` if this chain is Ethereum or an Ethereum testnet.
-    #[inline]
     pub const fn is_ethereum(&self) -> bool {
-        matches!(
-            self,
-            NamedChain::Mainnet
-                | NamedChain::Morden
-                | NamedChain::Ropsten
-                | NamedChain::Rinkeby
-                | NamedChain::Goerli
-                | NamedChain::Kovan
-                | NamedChain::Holesky
-                | NamedChain::Sepolia
-        )
+        use NamedChain::*;
+
+        matches!(self, Mainnet | Morden | Ropsten | Rinkeby | Goerli | Kovan | Holesky | Sepolia)
     }
 
     /// Returns true if the chain contains Optimism configuration.
-    #[inline]
     pub const fn is_optimism(self) -> bool {
+        use NamedChain::*;
+
         matches!(
             self,
-            NamedChain::Optimism
-                | NamedChain::OptimismGoerli
-                | NamedChain::OptimismKovan
-                | NamedChain::OptimismSepolia
-                | NamedChain::Base
-                | NamedChain::BaseGoerli
-                | NamedChain::BaseSepolia
-                | NamedChain::Fraxtal
-                | NamedChain::FraxtalTestnet
-                | NamedChain::Mode
-                | NamedChain::ModeSepolia
-                | NamedChain::Pgn
-                | NamedChain::PgnSepolia
-                | NamedChain::Zora
-                | NamedChain::ZoraGoerli
-                | NamedChain::ZoraSepolia
-                | NamedChain::BlastSepolia
-                | NamedChain::OpBNBMainnet
-                | NamedChain::OpBNBTestnet
+            Optimism
+                | OptimismGoerli
+                | OptimismKovan
+                | OptimismSepolia
+                | Base
+                | BaseGoerli
+                | BaseSepolia
+                | Fraxtal
+                | FraxtalTestnet
+                | Mode
+                | ModeSepolia
+                | Pgn
+                | PgnSepolia
+                | Zora
+                | ZoraGoerli
+                | ZoraSepolia
+                | BlastSepolia
+                | OpBNBMainnet
+                | OpBNBTestnet
         )
     }
 
@@ -577,11 +569,6 @@ impl NamedChain {
 
             Cfx | CfxTestnet => 500,
 
-            Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
-            | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
-            | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm | PolygonZkEvmTestnet | Metis
-            | Linea | LineaGoerli | KakarotSepolia => return None,
-
             OpBNBMainnet | OpBNBTestnet | AutonomysNovaTestnet => 1_000,
 
             Ronin => 3_000,
@@ -594,6 +581,11 @@ impl NamedChain {
             PulsechainTestnet => 10101,
 
             Immutable | ImmutableTestnet => 2_000,
+
+            Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
+            | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
+            | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm | PolygonZkEvmTestnet | Metis
+            | Linea | LineaGoerli | KakarotSepolia => return None,
         }))
     }
 
@@ -724,69 +716,69 @@ impl NamedChain {
     pub const fn supports_shanghai(self) -> bool {
         use NamedChain::*;
 
-        match self {
+        matches!(
+            self,
             Mainnet
-            | Goerli
-            | Sepolia
-            | Holesky
-            | AnvilHardhat
-            | Optimism
-            | OptimismGoerli
-            | OptimismSepolia
-            | Base
-            | BaseGoerli
-            | BaseSepolia
-            | Blast
-            | BlastSepolia
-            | Fraxtal
-            | FraxtalTestnet
-            | Gnosis
-            | Chiado
-            | ZoraSepolia
-            | Mantle
-            | MantleSepolia
-            | Mode
-            | ModeSepolia
-            | PolygonMumbai
-            | Polygon
-            | Arbitrum
-            | ArbitrumNova
-            | ArbitrumSepolia
-            | GravityAlphaMainnet
-            | GravityAlphaTestnetSepolia
-            | Xai
-            | XaiSepolia
-            | Syndr
-            | SyndrSepolia
-            | Etherlink
-            | EtherlinkTestnet
-            | Scroll
-            | ScrollSepolia
-            | Shimmer
-            | OpBNBMainnet
-            | OpBNBTestnet
-            | KakarotSepolia
-            | Taiko
-            | TaikoHekla
-            | Avalanche
-            | AvalancheFuji
-            | AutonomysNovaTestnet
-            | Acala
-            | AcalaMandalaTestnet
-            | AcalaTestnet
-            | Karura
-            | KaruraTestnet
-            | Darwinia
-            | Crab
-            | Cfx
-            | CfxTestnet
-            | Pulsechain
-            | PulsechainTestnet
-            | Koi
-            | Immutable
-            | ImmutableTestnet => true,
-            _ => false,
-        }
+                | Goerli
+                | Sepolia
+                | Holesky
+                | AnvilHardhat
+                | Optimism
+                | OptimismGoerli
+                | OptimismSepolia
+                | Base
+                | BaseGoerli
+                | BaseSepolia
+                | Blast
+                | BlastSepolia
+                | Fraxtal
+                | FraxtalTestnet
+                | Gnosis
+                | Chiado
+                | ZoraSepolia
+                | Mantle
+                | MantleSepolia
+                | Mode
+                | ModeSepolia
+                | PolygonMumbai
+                | Polygon
+                | Arbitrum
+                | ArbitrumNova
+                | ArbitrumSepolia
+                | GravityAlphaMainnet
+                | GravityAlphaTestnetSepolia
+                | Xai
+                | XaiSepolia
+                | Syndr
+                | SyndrSepolia
+                | Etherlink
+                | EtherlinkTestnet
+                | Scroll
+                | ScrollSepolia
+                | Shimmer
+                | OpBNBMainnet
+                | OpBNBTestnet
+                | KakarotSepolia
+                | Taiko
+                | TaikoHekla
+                | Avalanche
+                | AvalancheFuji
+                | AutonomysNovaTestnet
+                | Acala
+                | AcalaMandalaTestnet
+                | AcalaTestnet
+                | Karura
+                | KaruraTestnet
+                | Darwinia
+                | Crab
+                | Cfx
+                | CfxTestnet
+                | Pulsechain
+                | PulsechainTestnet
+                | Koi
+                | Immutable
+                | ImmutableTestnet
+        )
     }
 
     #[doc(hidden)]
