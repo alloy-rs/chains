@@ -474,6 +474,24 @@ impl Chain {
         self.0
     }
 
+    /// Returns `true` if this chain is Ethereum or an Ethereum testnet.
+    #[inline]
+    pub const fn is_ethereum(&self) -> bool {
+        matches!(
+            self.kind(),
+            ChainKind::Named(
+                NamedChain::Mainnet
+                    | NamedChain::Morden
+                    | NamedChain::Ropsten
+                    | NamedChain::Rinkeby
+                    | NamedChain::Goerli
+                    | NamedChain::Kovan
+                    | NamedChain::Holesky
+                    | NamedChain::Sepolia
+            )
+        )
+    }
+
     /// Returns true if the chain contains Optimism configuration.
     #[inline]
     pub const fn is_optimism(self) -> bool {
