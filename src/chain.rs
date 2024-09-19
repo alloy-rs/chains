@@ -477,48 +477,13 @@ impl Chain {
     /// Returns `true` if this chain is Ethereum or an Ethereum testnet.
     #[inline]
     pub const fn is_ethereum(&self) -> bool {
-        matches!(
-            self.kind(),
-            ChainKind::Named(
-                NamedChain::Mainnet
-                    | NamedChain::Morden
-                    | NamedChain::Ropsten
-                    | NamedChain::Rinkeby
-                    | NamedChain::Goerli
-                    | NamedChain::Kovan
-                    | NamedChain::Holesky
-                    | NamedChain::Sepolia
-            )
-        )
+        matches!(self.named(), Some(named) if named.is_ethereum())
     }
 
     /// Returns true if the chain contains Optimism configuration.
     #[inline]
     pub const fn is_optimism(self) -> bool {
-        matches!(
-            self.kind(),
-            ChainKind::Named(
-                NamedChain::Optimism
-                    | NamedChain::OptimismGoerli
-                    | NamedChain::OptimismKovan
-                    | NamedChain::OptimismSepolia
-                    | NamedChain::Base
-                    | NamedChain::BaseGoerli
-                    | NamedChain::BaseSepolia
-                    | NamedChain::Fraxtal
-                    | NamedChain::FraxtalTestnet
-                    | NamedChain::Mode
-                    | NamedChain::ModeSepolia
-                    | NamedChain::Pgn
-                    | NamedChain::PgnSepolia
-                    | NamedChain::Zora
-                    | NamedChain::ZoraGoerli
-                    | NamedChain::ZoraSepolia
-                    | NamedChain::BlastSepolia
-                    | NamedChain::OpBNBMainnet
-                    | NamedChain::OpBNBTestnet
-            )
-        )
+        matches!(self.named(), Some(named) if named.is_optimism())
     }
 
     /// Attempts to convert the chain into a named chain.
