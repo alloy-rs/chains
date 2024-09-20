@@ -86,15 +86,26 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "koi"))]
     Koi = 701,
 
-    #[strum(to_string = "bsc", serialize = "bnb-smart-chain")]
-    #[cfg_attr(feature = "serde", serde(alias = "bsc", alias = "bnb-smart-chain"))]
-    BNBSmartChain = 56,
-    #[strum(to_string = "bsc-testnet", serialize = "bnb-smart-chain-testnet")]
+    /// Note the correct name for BSC should be `BNB Smart Chain` due to the rebranding: <https://www.bnbchain.org/en/blog/bsc-is-now-bnb-chain-the-infrastructure-for-the-metafi-universe>
+    /// We keep `Binance Smart Chain` for backward compatibility, and the enum could be renamed in
+    /// the future release.
+    #[strum(to_string = "bsc", serialize = "binance-smart-chain")]
     #[cfg_attr(
         feature = "serde",
-        serde(alias = "bsc_testnet", alias = "bsc-testnet", alias = "bnb-smart-chain-testnet")
+        serde(alias = "bsc", alias = "bnb-smart-chain", alias = "binance-smart-chain")
     )]
-    BNBSmartChainTestnet = 97,
+    BinanceSmartChain = 56,
+    #[strum(to_string = "bsc-testnet", serialize = "binance-smart-chain-testnet")]
+    #[cfg_attr(
+        feature = "serde",
+        serde(
+            alias = "bsc_testnet",
+            alias = "bsc-testnet",
+            alias = "bnb-smart-chain-testnet",
+            alias = "binance-smart-chain-testnet"
+        )
+    )]
+    BinanceSmartChainTestnet = 97,
 
     Poa = 99,
     Sokol = 77,
@@ -531,7 +542,7 @@ impl NamedChain {
             Acala | AcalaMandalaTestnet | AcalaTestnet | Karura | KaruraTestnet | Moonbeam
             | Moonriver => 12_500,
 
-            BNBSmartChain | BNBSmartChainTestnet => 3_000,
+            BinanceSmartChain | BinanceSmartChainTestnet => 3_000,
 
             Avalanche | AvalancheFuji => 2_000,
 
@@ -608,8 +619,8 @@ impl NamedChain {
             | AcalaMandalaTestnet
             | AcalaTestnet
             | ArbitrumTestnet
-            | BNBSmartChain
-            | BNBSmartChainTestnet
+            | BinanceSmartChain
+            | BinanceSmartChainTestnet
             | Boba
             | Celo
             | CeloAlfajores
@@ -806,7 +817,7 @@ impl NamedChain {
             | BaseGoerli
             | BaseSepolia
             | BlastSepolia
-            | BNBSmartChainTestnet
+            | BinanceSmartChainTestnet
             | CantoTestnet
             | CronosTestnet
             | CeloAlfajores
@@ -854,7 +865,7 @@ impl NamedChain {
 
             // Mainnets.
             Mainnet | Optimism | Arbitrum | ArbitrumNova | Blast | Syndr | Cronos | Rsk
-            | BNBSmartChain | Poa | Sokol | Scroll | Metis | Gnosis | Polygon
+            | BinanceSmartChain | Poa | Sokol | Scroll | Metis | Gnosis | Polygon
             | PolygonZkEvm | Fantom | Moonbeam | Moonriver | Moonbase | Evmos | Chiado | Oasis
             | Emerald | FilecoinMainnet | Avalanche | Celo | Aurora | Canto | Boba | Base
             | Fraxtal | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn | Mode
@@ -877,7 +888,7 @@ impl NamedChain {
 
             Xai | XaiSepolia => "XAI",
 
-            BNBSmartChain | BNBSmartChainTestnet | OpBNBMainnet | OpBNBTestnet => "BNB",
+            BinanceSmartChain | BinanceSmartChainTestnet | OpBNBMainnet | OpBNBTestnet => "BNB",
 
             Etherlink | EtherlinkTestnet => "XTZ",
 
@@ -978,8 +989,8 @@ impl NamedChain {
             Fantom => ("https://api.ftmscan.com/api", "https://ftmscan.com"),
             FantomTestnet => ("https://api-testnet.ftmscan.com/api", "https://testnet.ftmscan.com"),
 
-            BNBSmartChain => ("https://api.bscscan.com/api", "https://bscscan.com"),
-            BNBSmartChainTestnet => {
+            BinanceSmartChain => ("https://api.bscscan.com/api", "https://bscscan.com"),
+            BinanceSmartChainTestnet => {
                 ("https://api-testnet.bscscan.com/api", "https://testnet.bscscan.com")
             }
 
@@ -1235,8 +1246,8 @@ impl NamedChain {
             | OptimismGoerli
             | OptimismKovan
             | OptimismSepolia
-            | BNBSmartChain
-            | BNBSmartChainTestnet
+            | BinanceSmartChain
+            | BinanceSmartChainTestnet
             | OpBNBMainnet
             | OpBNBTestnet
             | Arbitrum
@@ -1416,8 +1427,11 @@ mod tests {
         // kebab-case
         const ALIASES: &[(NamedChain, &[&str])] = &[
             (Mainnet, &["ethlive"]),
-            (BNBSmartChain, &["bsc", "bnb-smart-chain"]),
-            (BNBSmartChainTestnet, &["bsc-testnet", "bnb-smart-chain-testnet"]),
+            (BinanceSmartChain, &["bsc", "bnb-smart-chain", "binance-smart-chain"]),
+            (
+                BinanceSmartChainTestnet,
+                &["bsc-testnet", "bnb-smart-chain-testnet", "binance-smart-chain-testnet"],
+            ),
             (Gnosis, &["gnosis", "gnosis-chain"]),
             (PolygonMumbai, &["mumbai"]),
             (PolygonZkEvm, &["zkevm", "polygon-zkevm"]),

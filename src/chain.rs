@@ -387,13 +387,13 @@ impl Chain {
     /// Returns the bsc mainnet chain.
     #[inline]
     pub const fn bsc_mainnet() -> Self {
-        Self::from_named(NamedChain::BNBSmartChain)
+        Self::from_named(NamedChain::BinanceSmartChain)
     }
 
     /// Returns the bsc testnet chain.
     #[inline]
     pub const fn bsc_testnet() -> Self {
-        Self::from_named(NamedChain::BNBSmartChainTestnet)
+        Self::from_named(NamedChain::BinanceSmartChainTestnet)
     }
 
     /// Returns the opbnb mainnet chain.
