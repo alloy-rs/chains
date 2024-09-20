@@ -243,7 +243,7 @@ pub enum NamedChain {
     ZkSync = 324,
     #[strum(to_string = "zksync-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "zksync_testnet", alias = "zksync-testnet"))]
-    ZkSyncTestnet = 280,
+    ZkSyncTestnet = 300,
 
     #[strum(to_string = "mantle")]
     #[cfg_attr(feature = "serde", serde(alias = "mantle"))]
