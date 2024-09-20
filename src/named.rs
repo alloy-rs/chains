@@ -89,13 +89,17 @@ pub enum NamedChain {
     /// Note the correct name for BSC should be `BNB Smart Chain` due to the rebranding: <https://www.bnbchain.org/en/blog/bsc-is-now-bnb-chain-the-infrastructure-for-the-metafi-universe>
     /// We keep `Binance Smart Chain` for backward compatibility, and the enum could be renamed in
     /// the future release.
-    #[strum(to_string = "bsc", serialize = "binance-smart-chain")]
+    #[strum(to_string = "bsc", serialize = "binance-smart-chain", serialize = "bnb-smart-chain")]
     #[cfg_attr(
         feature = "serde",
         serde(alias = "bsc", alias = "bnb-smart-chain", alias = "binance-smart-chain")
     )]
     BinanceSmartChain = 56,
-    #[strum(to_string = "bsc-testnet", serialize = "binance-smart-chain-testnet")]
+    #[strum(
+        to_string = "bsc-testnet",
+        serialize = "binance-smart-chain-testnet",
+        serialize = "bnb-smart-chain-testnet"
+    )]
     #[cfg_attr(
         feature = "serde",
         serde(
@@ -1462,7 +1466,7 @@ mod tests {
 
         for &(chain, aliases) in ALIASES {
             for &alias in aliases {
-                let named = alias.parse::<NamedChain>().unwrap();
+                let named = alias.parse::<NamedChain>().expect(alias);
                 assert_eq!(named, chain);
 
                 #[cfg(feature = "serde")]
