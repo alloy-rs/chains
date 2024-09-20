@@ -324,18 +324,6 @@
       "etherscanBaseUrl": "https://fraxscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
-    "280": {
-      "internalId": "ZkSyncTestnet",
-      "name": "zksync-testnet",
-      "averageBlocktimeHint": null,
-      "isLegacy": true,
-      "supportsShanghai": false,
-      "isTestnet": true,
-      "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api-sepolia-era.zksync.network/api",
-      "etherscanBaseUrl": "https://sepolia-era.zksync.network",
-      "etherscanApiKeyName": null
-    },
     "288": {
       "internalId": "Boba",
       "name": "boba",
@@ -347,6 +335,18 @@
       "etherscanApiUrl": "https://api.bobascan.com/api",
       "etherscanBaseUrl": "https://bobascan.com",
       "etherscanApiKeyName": "BOBASCAN_API_KEY"
+    },
+    "300": {
+      "internalId": "ZkSyncTestnet",
+      "name": "zksync-testnet",
+      "averageBlocktimeHint": null,
+      "isLegacy": true,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://api-sepolia-era.zksync.network/api",
+      "etherscanBaseUrl": "https://sepolia-era.zksync.network",
+      "etherscanApiKeyName": null
     },
     "314": {
       "internalId": "FilecoinMainnet",
