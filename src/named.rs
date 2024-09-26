@@ -1049,7 +1049,7 @@ impl NamedChain {
             }
 
             Metis => {
-                ("https://andromeda-explorer.metis.io/api", "https://andromeda-explorer.metis.io")
+                ("https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan", "https://explorer.metis.io/")
             }
 
             Chiado => {
