@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.34](https://github.com/alloy-rs/chains/releases/tag/v0.1.34) - 2024-09-26
+
+### Bug Fixes
+
+- Update explorer ([#93](https://github.com/alloy-rs/chains/issues/93))
+
 ## [0.1.33](https://github.com/alloy-rs/chains/releases/tag/v0.1.33) - 2024-09-20
 
 ### Bug Fixes
@@ -13,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Miscellaneous Tasks
 
+- Release 0.1.33
 - Correct bnb smart chain name ([#87](https://github.com/alloy-rs/chains/issues/87))
 - Touch up formatting
 
