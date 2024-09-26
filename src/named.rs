@@ -1048,9 +1048,10 @@ impl NamedChain {
                 ("https://explorer.evm.shimmer.network/api", "https://explorer.evm.shimmer.network")
             }
 
-            Metis => {
-                ("https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan", "https://explorer.metis.io/")
-            }
+            Metis => (
+                "https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan",
+                "https://explorer.metis.io",
+            ),
 
             Chiado => {
                 ("https://blockscout.chiadochain.net/api", "https://blockscout.chiadochain.net")
