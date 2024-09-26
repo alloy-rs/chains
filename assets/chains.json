@@ -572,8 +572,8 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://andromeda-explorer.metis.io/api",
-      "etherscanBaseUrl": "https://andromeda-explorer.metis.io",
+      "etherscanApiUrl": "https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan",
+      "etherscanBaseUrl": "https://explorer.metis.io",
       "etherscanApiKeyName": null
     },
     "1101": {
