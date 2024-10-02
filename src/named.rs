@@ -280,8 +280,8 @@ pub enum NamedChain {
 
     Elastos = 20,
 
-    #[cfg_attr(feature = "serde", serde(alias = "kakarot-sepolia"))]
-    KakarotSepolia = 1802203764,
+    #[cfg_attr(feature = "serde", serde(alias = "kakarot-starknet-sepolia"))]
+    KakarotStarknetSepolia = 5424235787602241,
 
     #[cfg_attr(feature = "serde", serde(alias = "etherlink"))]
     Etherlink = 42793,
@@ -600,7 +600,7 @@ impl NamedChain {
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
             | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
             | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm | PolygonZkEvmTestnet | Metis
-            | Linea | LineaGoerli | KakarotSepolia => return None,
+            | Linea | LineaGoerli | KakarotStarknetSepolia => return None,
         }))
     }
 
@@ -695,7 +695,7 @@ impl NamedChain {
             | ModeSepolia
             | Pgn
             | PgnSepolia
-            | KakarotSepolia
+            | KakarotStarknetSepolia
             | Etherlink
             | EtherlinkTestnet
             | Degen
@@ -773,7 +773,7 @@ impl NamedChain {
                 | Shimmer
                 | OpBNBMainnet
                 | OpBNBTestnet
-                | KakarotSepolia
+                | KakarotStarknetSepolia
                 | Taiko
                 | TaikoHekla
                 | Avalanche
@@ -848,7 +848,7 @@ impl NamedChain {
             | ZoraSepolia
             | ModeSepolia
             | PgnSepolia
-            | KakarotSepolia
+            | KakarotStarknetSepolia
             | EtherlinkTestnet
             | OpBNBTestnet
             | TaikoHekla
@@ -1165,7 +1165,7 @@ impl NamedChain {
             | AutonomysNovaTestnet => {
                 return None;
             }
-            KakarotSepolia => {
+            KakarotStarknetSepolia => {
                 ("https://sepolia.kakarotscan.org/api", "https://sepolia.kakarotscan.org")
             }
             Etherlink => ("https://explorer.etherlink.com/api", "https://explorer.etherlink.com"),
@@ -1299,7 +1299,7 @@ impl NamedChain {
             Moonbeam | Moonbase | MoonbeamDev | Moonriver => "MOONSCAN_API_KEY",
 
             Acala | AcalaMandalaTestnet | AcalaTestnet | Canto | CantoTestnet | Etherlink
-            | EtherlinkTestnet | Flare | FlareCoston2 | KakarotSepolia | Karura | KaruraTestnet
+            | EtherlinkTestnet | Flare | FlareCoston2 | KakarotStarknetSepolia | Karura | KaruraTestnet
             | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora | ZoraGoerli | ZoraSepolia
             | Darwinia | Crab | Koi | Immutable | ImmutableTestnet => "BLOCKSCOUT_API_KEY",
 
