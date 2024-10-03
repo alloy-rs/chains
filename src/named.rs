@@ -280,7 +280,10 @@ pub enum NamedChain {
 
     Elastos = 20,
 
-    #[cfg_attr(feature = "serde", serde(alias = "kakarot-sepolia", alias = "kakarot-starknet-sepolia"))]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "kakarot-sepolia", alias = "kakarot-starknet-sepolia")
+    )]
     KakarotSepolia = 5424235787602241,
 
     #[cfg_attr(feature = "serde", serde(alias = "etherlink"))]
