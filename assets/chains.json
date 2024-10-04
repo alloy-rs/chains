@@ -672,6 +672,18 @@
       "etherscanBaseUrl": "https://explorer.gravity.xyz",
       "etherscanApiKeyName": null
     },
+    "1946": {
+      "internalId": "SoneiumMinatoTestnet",
+      "name": "soneium-minato-testnet",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://explorer-testnet.soneium.org/api",
+      "etherscanBaseUrl": "https://explorer-testnet.soneium.org",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "2020": {
       "internalId": "Ronin",
       "name": "ronin",
