@@ -124,7 +124,7 @@ impl<'de> serde::Deserialize<'de> for Chain {
     fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         struct ChainVisitor;
 
-        impl<'de> serde::de::Visitor<'de> for ChainVisitor {
+        impl serde::de::Visitor<'_> for ChainVisitor {
             type Value = Chain;
 
             fn expecting(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
