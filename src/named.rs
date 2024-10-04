@@ -353,6 +353,10 @@ pub enum NamedChain {
     #[strum(to_string = "immutable-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "immutable-testnet"))]
     ImmutableTestnet = 13473,
+
+    #[strum(to_string = "soneium-minato-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "soneium-minato-testnet"))]
+    SoneiumMinatoTestnet = 1946,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -497,6 +501,7 @@ impl NamedChain {
                 | BlastSepolia
                 | OpBNBMainnet
                 | OpBNBTestnet
+                | SoneiumMinatoTestnet
         )
     }
 
@@ -538,7 +543,8 @@ impl NamedChain {
 
             Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia
             | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli | ZoraSepolia
-            | Mantle | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia => 2_000,
+            | Mantle | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia
+            | SoneiumMinatoTestnet => 2_000,
 
             Alphanet => 1_000,
 
@@ -719,7 +725,8 @@ impl NamedChain {
             | PulsechainTestnet
             | Koi
             | Immutable
-            | ImmutableTestnet => false,
+            | ImmutableTestnet
+            | SoneiumMinatoTestnet => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
@@ -796,6 +803,7 @@ impl NamedChain {
                 | Koi
                 | Immutable
                 | ImmutableTestnet
+                | SoneiumMinatoTestnet
         )
     }
 
@@ -865,7 +873,8 @@ impl NamedChain {
             | GravityAlphaTestnetSepolia
             | XaiSepolia
             | Koi
-            | ImmutableTestnet => true,
+            | ImmutableTestnet
+            | SoneiumMinatoTestnet => true,
 
             // Dev chains.
             Dev | AnvilHardhat => true,
@@ -1226,6 +1235,9 @@ impl NamedChain {
                 "https://explorer.testnet.immutable.com/api",
                 "https://explorer.testnet.immutable.com",
             ),
+            SoneiumMinatoTestnet => {
+                ("https://explorer-testnet.soneium.org/api", "https://explorer-testnet.soneium.org")
+            }
         })
     }
 
@@ -1304,7 +1316,9 @@ impl NamedChain {
             Acala | AcalaMandalaTestnet | AcalaTestnet | Canto | CantoTestnet | Etherlink
             | EtherlinkTestnet | Flare | FlareCoston2 | KakarotSepolia | Karura | KaruraTestnet
             | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora | ZoraGoerli | ZoraSepolia
-            | Darwinia | Crab | Koi | Immutable | ImmutableTestnet => "BLOCKSCOUT_API_KEY",
+            | Darwinia | Crab | Koi | Immutable | ImmutableTestnet | SoneiumMinatoTestnet => {
+                "BLOCKSCOUT_API_KEY"
+            }
 
             Boba => "BOBASCAN_API_KEY",
 
@@ -1466,6 +1480,7 @@ mod tests {
             (AutonomysNovaTestnet, &["autonomys-nova-testnet"]),
             (Immutable, &["immutable"]),
             (ImmutableTestnet, &["immutable-testnet"]),
+            (SoneiumMinatoTestnet, &["soneium-minato-testnet"]),
         ];
 
         for &(chain, aliases) in ALIASES {
