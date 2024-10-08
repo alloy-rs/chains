@@ -1,3 +1,4 @@
+use alloy_primitives::{address, Address};
 use core::{cmp::Ordering, fmt, time::Duration};
 use num_enum::TryFromPrimitiveError;
 
@@ -1397,6 +1398,46 @@ impl NamedChain {
         } else {
             None
         }
+    }
+
+    /// Returns the address of the most popular wrapped native token address for this chain, if it
+    /// exists.
+    ///
+    /// Example:
+    ///
+    /// ```
+    /// use alloy_chains::NamedChain;
+    /// use alloy_primitives::address;
+    ///
+    /// let chain = NamedChain::Mainnet;
+    /// assert_eq!(
+    ///     chain.wrapped_native_token(),
+    ///     Some(address!("C02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"))
+    /// );
+    /// ```
+    pub fn wrapped_native_token(self) -> Option<Address> {
+        use NamedChain::*;
+
+        let addr = match self {
+            Mainnet => address!("C02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"),
+            Optimism => address!("4200000000000000000000000000000000000006"),
+            BinanceSmartChain => address!("bb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c"),
+            OpBNBMainnet => address!("4200000000000000000000000000000000000006"),
+            Arbitrum => address!("82af49447d8a07e3bd95bd0d56f35241523fbab1"),
+            Base => address!("4200000000000000000000000000000000000006"),
+            Linea => address!("e5d7c2a44ffddf6b295a15c148167daaaf5cf34f"),
+            Mantle => address!("deaddeaddeaddeaddeaddeaddeaddeaddead1111"),
+            Blast => address!("4300000000000000000000000000000000000004"),
+            Gnosis => address!("e91d153e0b41518a2ce8dd3d7944fa863463a97d"),
+            Scroll => address!("5300000000000000000000000000000000000004"),
+            Taiko => address!("a51894664a773981c6c112c43ce576f315d5b1b6"),
+            Avalanche => address!("b31f66aa3c1e785363f0875a1b74e27b85fd66c7"),
+            Polygon => address!("0d500b1d8e8ef31e21c99d1db9a6444d3adf1270"),
+            Fantom => address!("21be370d5312f44cb42ce377bc9b8a0cef1a4c83"),
+            _ => return None,
+        };
+
+        Some(addr)
     }
 }
 
