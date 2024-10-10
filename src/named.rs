@@ -246,51 +246,31 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "zksync_testnet", alias = "zksync-testnet"))]
     ZkSyncTestnet = 300,
 
-    #[strum(to_string = "mantle")]
-    #[cfg_attr(feature = "serde", serde(alias = "mantle"))]
     Mantle = 5000,
-    #[strum(to_string = "mantle-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "mantle-testnet"))]
     MantleTestnet = 5001,
-    #[strum(to_string = "mantle-sepolia")]
-    #[cfg_attr(feature = "serde", serde(alias = "mantle-sepolia"))]
     MantleSepolia = 5003,
 
-    #[strum(to_string = "xai")]
-    #[cfg_attr(feature = "serde", serde(alias = "xai"))]
     Xai = 660279,
-    #[strum(to_string = "xai-sepolia")]
-    #[cfg_attr(feature = "serde", serde(alias = "xai-sepolia"))]
     XaiSepolia = 37714555429,
 
     Viction = 88,
 
     Zora = 7777777,
-    #[cfg_attr(feature = "serde", serde(alias = "zora-goerli"))]
     ZoraGoerli = 999,
-    #[cfg_attr(feature = "serde", serde(alias = "zora-sepolia"))]
     ZoraSepolia = 999999999,
 
     Pgn = 424,
-    #[cfg_attr(feature = "serde", serde(alias = "pgn-sepolia"))]
     PgnSepolia = 58008,
 
     Mode = 34443,
-    #[cfg_attr(feature = "serde", serde(alias = "mode-sepolia"))]
     ModeSepolia = 919,
 
     Elastos = 20,
 
-    #[cfg_attr(
-        feature = "serde",
-        serde(alias = "kakarot-sepolia", alias = "kakarot-starknet-sepolia")
-    )]
     KakarotSepolia = 920637907288165,
 
-    #[cfg_attr(feature = "serde", serde(alias = "etherlink"))]
     Etherlink = 42793,
 
-    #[cfg_attr(feature = "serde", serde(alias = "etherlink-testnet"))]
     EtherlinkTestnet = 128123,
 
     Degen = 666666666,
@@ -311,52 +291,25 @@ pub enum NamedChain {
     Ronin = 2020,
 
     Taiko = 167000,
-    #[cfg_attr(feature = "serde", serde(alias = "taiko-hekla"))]
     TaikoHekla = 167009,
 
-    #[strum(to_string = "autonomys-nova-testnet")]
-    #[cfg_attr(
-        feature = "serde",
-        serde(rename = "autonomys_nova_testnet", alias = "autonomys-nova-testnet")
-    )]
     AutonomysNovaTestnet = 490000,
 
     Flare = 14,
-    #[cfg_attr(feature = "serde", serde(alias = "flare-coston2"))]
     FlareCoston2 = 114,
 
-    #[strum(to_string = "acala")]
-    #[cfg_attr(feature = "serde", serde(alias = "acala"))]
     Acala = 787,
-    #[strum(to_string = "acala-mandala-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "acala-mandala-testnet"))]
     AcalaMandalaTestnet = 595,
-    #[strum(to_string = "acala-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "acala-testnet"))]
     AcalaTestnet = 597,
 
-    #[strum(to_string = "karura")]
-    #[cfg_attr(feature = "serde", serde(alias = "karura"))]
     Karura = 686,
-    #[strum(to_string = "karura-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "karura-testnet"))]
     KaruraTestnet = 596,
-    #[strum(to_string = "pulsechain")]
-    #[cfg_attr(feature = "serde", serde(alias = "pulsechain"))]
     Pulsechain = 369,
-    #[strum(to_string = "pulsechain-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "pulsechain-testnet"))]
     PulsechainTestnet = 943,
 
-    #[strum(to_string = "immutable")]
-    #[cfg_attr(feature = "serde", serde(alias = "immutable"))]
     Immutable = 13371,
-    #[strum(to_string = "immutable-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "immutable-testnet"))]
     ImmutableTestnet = 13473,
 
-    #[strum(to_string = "soneium-minato-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "soneium-minato-testnet"))]
     SoneiumMinatoTestnet = 1946,
 }
 
