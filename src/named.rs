@@ -285,7 +285,7 @@ pub enum NamedChain {
         feature = "serde",
         serde(alias = "kakarot-sepolia", alias = "kakarot-starknet-sepolia")
     )]
-    KakarotSepolia = 5424235787602241,
+    KakarotSepolia = 920637907288165,
 
     #[cfg_attr(feature = "serde", serde(alias = "etherlink"))]
     Etherlink = 42793,
