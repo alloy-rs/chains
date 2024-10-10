@@ -1415,7 +1415,7 @@ impl NamedChain {
     ///     Some(address!("C02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"))
     /// );
     /// ```
-    pub fn wrapped_native_token(self) -> Option<Address> {
+    pub const fn wrapped_native_token(self) -> Option<Address> {
         use NamedChain::*;
 
         let addr = match self {
