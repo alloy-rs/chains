@@ -52,7 +52,8 @@ pub enum NamedChain {
     Holesky = 17000,
     Sepolia = 11155111,
 
-    Alphanet = 41144114,
+    #[cfg_attr(feature = "serde", serde(alias = "odyssey"))]
+    Odyssey = 911867,
 
     Optimism = 10,
     #[cfg_attr(feature = "serde", serde(alias = "optimism-kovan"))]
@@ -456,6 +457,7 @@ impl NamedChain {
                 | OpBNBMainnet
                 | OpBNBTestnet
                 | SoneiumMinatoTestnet
+                | Odyssey
         )
     }
 
@@ -500,7 +502,7 @@ impl NamedChain {
             | Mantle | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia
             | SoneiumMinatoTestnet => 2_000,
 
-            Alphanet => 1_000,
+            Odyssey => 1_000,
 
             Viction => 2_000,
 
@@ -617,7 +619,7 @@ impl NamedChain {
             | Goerli
             | Sepolia
             | Holesky
-            | Alphanet
+            | Odyssey
             | Base
             | BaseGoerli
             | BaseSepolia
@@ -705,6 +707,7 @@ impl NamedChain {
                 | Optimism
                 | OptimismGoerli
                 | OptimismSepolia
+                | Odyssey
                 | Base
                 | BaseGoerli
                 | BaseSepolia
@@ -782,7 +785,7 @@ impl NamedChain {
             | SyndrSepolia
             | AuroraTestnet
             | AvalancheFuji
-            | Alphanet
+            | Odyssey
             | BaseGoerli
             | BaseSepolia
             | BlastSepolia
@@ -1127,8 +1130,7 @@ impl NamedChain {
 
             Elastos => ("https://esc.elastos.io/api", "https://esc.elastos.io"),
 
-            AnvilHardhat | Alphanet | Dev | Morden | MoonbeamDev | FilecoinMainnet
-            | AutonomysNovaTestnet => {
+            AnvilHardhat | Dev | Morden | MoonbeamDev | FilecoinMainnet | AutonomysNovaTestnet => {
                 return None;
             }
             KakarotSepolia => {
@@ -1191,6 +1193,9 @@ impl NamedChain {
             ),
             SoneiumMinatoTestnet => {
                 ("https://explorer-testnet.soneium.org/api", "https://explorer-testnet.soneium.org")
+            }
+            Odyssey => {
+                ("https://odyssey-explorer.ithaca.xyz/api", "https://odyssey-explorer.ithaca.xyz")
             }
         })
     }
@@ -1279,7 +1284,7 @@ impl NamedChain {
             // Explicitly exhaustive. See NB above.
             Metis
             | Chiado
-            | Alphanet
+            | Odyssey
             | Sepolia
             | Rsk
             | Sokol
