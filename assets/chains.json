@@ -1280,8 +1280,8 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
+      "etherscanApiUrl": "https://odyssey-explorer.ithaca.xyz/api",
+      "etherscanBaseUrl": "https://odyssey-explorer.ithaca.xyz",
       "etherscanApiKeyName": null
     },
     "7777777": {

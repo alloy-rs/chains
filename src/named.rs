@@ -1130,8 +1130,7 @@ impl NamedChain {
 
             Elastos => ("https://esc.elastos.io/api", "https://esc.elastos.io"),
 
-            AnvilHardhat | Odyssey | Dev | Morden | MoonbeamDev | FilecoinMainnet
-            | AutonomysNovaTestnet => {
+            AnvilHardhat | Dev | Morden | MoonbeamDev | FilecoinMainnet | AutonomysNovaTestnet => {
                 return None;
             }
             KakarotSepolia => {
@@ -1194,6 +1193,9 @@ impl NamedChain {
             ),
             SoneiumMinatoTestnet => {
                 ("https://explorer-testnet.soneium.org/api", "https://explorer-testnet.soneium.org")
+            }
+            Odyssey => {
+                ("https://odyssey-explorer.ithaca.xyz/api", "https://odyssey-explorer.ithaca.xyz")
             }
         })
     }
