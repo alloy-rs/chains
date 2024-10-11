@@ -1272,6 +1272,18 @@
       "etherscanBaseUrl": "https://xaiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "911867": {
+      "internalId": "Odyssey",
+      "name": "odyssey",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
+      "etherscanApiKeyName": null
+    },
     "7777777": {
       "internalId": "Zora",
       "name": "zora",
@@ -1307,18 +1319,6 @@
       "etherscanApiUrl": "https://api-sepolia-optimistic.etherscan.io/api",
       "etherscanBaseUrl": "https://sepolia-optimism.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
-    },
-    "41144114": {
-      "internalId": "Alphanet",
-      "name": "alphanet",
-      "averageBlocktimeHint": 1000,
-      "isLegacy": false,
-      "supportsShanghai": false,
-      "isTestnet": true,
-      "nativeCurrencySymbol": null,
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
-      "etherscanApiKeyName": null
     },
     "168587773": {
       "internalId": "BlastSepolia",
