@@ -354,6 +354,12 @@ impl Chain {
         Self::from_named(NamedChain::LineaGoerli)
     }
 
+    /// Returns the linea sepolia chain.
+    #[inline]
+    pub const fn linea_sepolia() -> Self {
+        Self::from_named(NamedChain::LineaSepolia)
+    }
+
     /// Returns the mode mainnet chain.
     #[inline]
     pub const fn mode() -> Self {
