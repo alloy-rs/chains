@@ -1044,6 +1044,18 @@
       "etherscanBaseUrl": "https://explorer.goerli.linea.build",
       "etherscanApiKeyName": null
     },
+    "59141": {
+      "internalId": "LineaSepolia",
+      "name": "linea-sepolia",
+      "averageBlocktimeHint": null,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://api-sepolia.lineascan.build/api",
+      "etherscanBaseUrl": "https://sepolia.lineascan.build",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "59144": {
       "internalId": "Linea",
       "name": "linea",

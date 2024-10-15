@@ -239,6 +239,8 @@ pub enum NamedChain {
     Linea = 59144,
     #[cfg_attr(feature = "serde", serde(alias = "linea-goerli"))]
     LineaGoerli = 59140,
+    #[cfg_attr(feature = "serde", serde(alias = "linea-sepolia"))]
+    LineaSepolia = 59141,
 
     #[strum(to_string = "zksync")]
     #[cfg_attr(feature = "serde", serde(alias = "zksync"))]
@@ -612,7 +614,7 @@ impl NamedChain {
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
             | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
             | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm | PolygonZkEvmTestnet | Metis
-            | Linea | LineaGoerli | KakarotSepolia => return None,
+            | Linea | LineaGoerli | LineaSepolia | KakarotSepolia => return None,
         }))
     }
 
@@ -695,6 +697,7 @@ impl NamedChain {
             | FilecoinMainnet
             | Linea
             | LineaGoerli
+            | LineaSepolia
             | FilecoinCalibrationTestnet
             | Gnosis
             | Chiado
@@ -847,6 +850,7 @@ impl NamedChain {
             | FilecoinCalibrationTestnet
             | FraxtalTestnet
             | LineaGoerli
+            | LineaSepolia
             | MantleTestnet
             | MantleSepolia
             | MoonbeamDev
@@ -1141,6 +1145,9 @@ impl NamedChain {
             LineaGoerli => {
                 ("https://explorer.goerli.linea.build/api", "https://explorer.goerli.linea.build")
             }
+            LineaSepolia => {
+                ("https://api-sepolia.lineascan.build/api", "https://sepolia.lineascan.build")
+            }
 
             Mantle => ("https://explorer.mantle.xyz/api", "https://explorer.mantle.xyz"),
             MantleTestnet => {
@@ -1292,6 +1299,7 @@ impl NamedChain {
             | CeloBaklava
             | Base
             | Linea
+            | LineaSepolia
             | Mantle
             | MantleTestnet
             | MantleSepolia
@@ -1523,6 +1531,7 @@ mod tests {
             (Syndr, &["syndr"]),
             (SyndrSepolia, &["syndr-sepolia"]),
             (LineaGoerli, &["linea-goerli"]),
+            (LineaSepolia, &["linea-sepolia"]),
             (AutonomysNovaTestnet, &["autonomys-nova-testnet"]),
             (Immutable, &["immutable"]),
             (ImmutableTestnet, &["immutable-testnet"]),
