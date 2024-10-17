@@ -432,6 +432,18 @@
       "etherscanBaseUrl": "https://explorer.publicgoods.network",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "480": {
+      "internalId": "World",
+      "name": "world",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "WRLD",
+      "etherscanApiUrl": "https://worldchain-mainnet.explorer.alchemy.com/api",
+      "etherscanBaseUrl": "https://worldchain-mainnet.explorer.alchemy.com",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "595": {
       "internalId": "AcalaMandalaTestnet",
       "name": "acala-mandala-testnet",
@@ -719,6 +731,18 @@
       "etherscanApiUrl": "https://api-testnet.ftmscan.com/api",
       "etherscanBaseUrl": "https://testnet.ftmscan.com",
       "etherscanApiKeyName": "FTMSCAN_API_KEY"
+    },
+    "4801": {
+      "internalId": "WorldSepolia",
+      "name": "world-sepolia",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "WRLD",
+      "etherscanApiUrl": "https://worldchain-sepolia.explorer.alchemy.com/api",
+      "etherscanBaseUrl": "https://worldchain-sepolia.explorer.alchemy.com",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "5000": {
       "internalId": "Mantle",
