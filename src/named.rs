@@ -4,7 +4,6 @@ use num_enum::TryFromPrimitiveError;
 
 #[allow(unused_imports)]
 use alloc::string::String;
-
 // When adding a new chain:
 //   1. add new variant to the NamedChain enum;
 //   2. add extra information in the last `impl` block (explorer URLs, block time) when applicable;
@@ -361,6 +360,12 @@ pub enum NamedChain {
     #[strum(to_string = "soneium-minato-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "soneium-minato-testnet"))]
     SoneiumMinatoTestnet = 1946,
+
+    #[cfg_attr(feature = "serde", serde(alias = "worldchain"))]
+    World = 480,
+    #[strum(to_string = "world-sepolia")]
+    #[cfg_attr(feature = "serde", serde(alias = "worldchain-sepolia", alias = "world-sepolia"))]
+    WorldSepolia = 4801,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -507,6 +512,8 @@ impl NamedChain {
                 | OpBNBTestnet
                 | SoneiumMinatoTestnet
                 | Odyssey
+                | World
+                | WorldSepolia
         )
     }
 
@@ -610,6 +617,8 @@ impl NamedChain {
             PulsechainTestnet => 10101,
 
             Immutable | ImmutableTestnet => 2_000,
+
+            World | WorldSepolia => 2_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
             | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
@@ -732,7 +741,9 @@ impl NamedChain {
             | Koi
             | Immutable
             | ImmutableTestnet
-            | SoneiumMinatoTestnet => false,
+            | SoneiumMinatoTestnet
+            | World
+            | WorldSepolia => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
@@ -811,6 +822,8 @@ impl NamedChain {
                 | Immutable
                 | ImmutableTestnet
                 | SoneiumMinatoTestnet
+                | World
+                | WorldSepolia
         )
     }
 
@@ -882,7 +895,8 @@ impl NamedChain {
             | XaiSepolia
             | Koi
             | ImmutableTestnet
-            | SoneiumMinatoTestnet => true,
+            | SoneiumMinatoTestnet
+            | WorldSepolia => true,
 
             // Dev chains.
             Dev | AnvilHardhat => true,
@@ -894,7 +908,7 @@ impl NamedChain {
             | Emerald | FilecoinMainnet | Avalanche | Celo | Aurora | Canto | Boba | Base
             | Fraxtal | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn | Mode
             | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
-            | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable => false,
+            | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World => false,
         }
     }
 
@@ -937,6 +951,8 @@ impl NamedChain {
 
             Immutable => "IMX",
             ImmutableTestnet => "tIMX",
+
+            World | WorldSepolia => "WRLD",
 
             _ => return None,
         })
@@ -1251,6 +1267,14 @@ impl NamedChain {
             Odyssey => {
                 ("https://odyssey-explorer.ithaca.xyz/api", "https://odyssey-explorer.ithaca.xyz")
             }
+            World => (
+                "https://worldchain-mainnet.explorer.alchemy.com/api",
+                "https://worldchain-mainnet.explorer.alchemy.com",
+            ),
+            WorldSepolia => (
+                "https://worldchain-sepolia.explorer.alchemy.com/api",
+                "https://worldchain-sepolia.explorer.alchemy.com",
+            ),
         })
     }
 
@@ -1330,9 +1354,8 @@ impl NamedChain {
             Acala | AcalaMandalaTestnet | AcalaTestnet | Canto | CantoTestnet | Etherlink
             | EtherlinkTestnet | Flare | FlareCoston2 | KakarotSepolia | Karura | KaruraTestnet
             | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora | ZoraGoerli | ZoraSepolia
-            | Darwinia | Crab | Koi | Immutable | ImmutableTestnet | SoneiumMinatoTestnet => {
-                "BLOCKSCOUT_API_KEY"
-            }
+            | Darwinia | Crab | Koi | Immutable | ImmutableTestnet | SoneiumMinatoTestnet
+            | World | WorldSepolia => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
