@@ -5,11 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.40](https://github.com/alloy-rs/chains/releases/tag/v0.1.40) - 2024-10-19
+
+### Features
+
+- Add iotex ([#102](https://github.com/alloy-rs/chains/issues/102))
+- Add world ([#101](https://github.com/alloy-rs/chains/issues/101))
+
 ## [0.1.39](https://github.com/alloy-rs/chains/releases/tag/v0.1.39) - 2024-10-17
 
 ### Features
 
 - Add Linea Sepolia ([#100](https://github.com/alloy-rs/chains/issues/100))
+
+### Miscellaneous Tasks
+
+- Release 0.1.39
 
 ## [0.1.38](https://github.com/alloy-rs/chains/releases/tag/v0.1.38) - 2024-10-11
 
