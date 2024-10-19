@@ -366,6 +366,7 @@ pub enum NamedChain {
     #[strum(to_string = "world-sepolia")]
     #[cfg_attr(feature = "serde", serde(alias = "worldchain-sepolia", alias = "world-sepolia"))]
     WorldSepolia = 4801,
+    Iotex = 4689,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -620,6 +621,8 @@ impl NamedChain {
 
             World | WorldSepolia => 2_000,
 
+            Iotex => 5_000,
+
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
             | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
             | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm | PolygonZkEvmTestnet | Metis
@@ -748,7 +751,7 @@ impl NamedChain {
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
-            | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet => false,
+            | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex => false,
         }
     }
 
@@ -824,6 +827,7 @@ impl NamedChain {
                 | SoneiumMinatoTestnet
                 | World
                 | WorldSepolia
+                | Iotex
         )
     }
 
@@ -908,7 +912,7 @@ impl NamedChain {
             | Emerald | FilecoinMainnet | Avalanche | Celo | Aurora | Canto | Boba | Base
             | Fraxtal | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn | Mode
             | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
-            | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World => false,
+            | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex => false,
         }
     }
 
@@ -953,6 +957,8 @@ impl NamedChain {
             ImmutableTestnet => "tIMX",
 
             World | WorldSepolia => "WRLD",
+
+            Iotex => "IOTX",
 
             _ => return None,
         })
@@ -1200,7 +1206,8 @@ impl NamedChain {
 
             Elastos => ("https://esc.elastos.io/api", "https://esc.elastos.io"),
 
-            AnvilHardhat | Dev | Morden | MoonbeamDev | FilecoinMainnet | AutonomysNovaTestnet => {
+            AnvilHardhat | Dev | Morden | MoonbeamDev | FilecoinMainnet | AutonomysNovaTestnet
+            | Iotex => {
                 return None;
             }
             KakarotSepolia => {
@@ -1389,7 +1396,8 @@ impl NamedChain {
             | CfxTestnet
             | Pulsechain
             | PulsechainTestnet
-            | AutonomysNovaTestnet => return None,
+            | AutonomysNovaTestnet
+            | Iotex => return None,
         };
 
         Some(api_key_name)
@@ -1470,6 +1478,7 @@ impl NamedChain {
             Avalanche => address!("b31f66aa3c1e785363f0875a1b74e27b85fd66c7"),
             Polygon => address!("0d500b1d8e8ef31e21c99d1db9a6444d3adf1270"),
             Fantom => address!("21be370d5312f44cb42ce377bc9b8a0cef1a4c83"),
+            Iotex => address!("a00744882684c3e4747faefd68d283ea44099d03"),
             _ => return None,
         };
 

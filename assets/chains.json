@@ -732,6 +732,18 @@
       "etherscanBaseUrl": "https://testnet.ftmscan.com",
       "etherscanApiKeyName": "FTMSCAN_API_KEY"
     },
+    "4689": {
+      "internalId": "Iotex",
+      "name": "iotex",
+      "averageBlocktimeHint": 5000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "IOTX",
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
+      "etherscanApiKeyName": null
+    },
     "4801": {
       "internalId": "WorldSepolia",
       "name": "world-sepolia",
