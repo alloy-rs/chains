@@ -504,6 +504,12 @@ impl Chain {
         matches!(self.named(), Some(named) if named.is_optimism())
     }
 
+    /// Returns true if the chain contains Arbitrum configuration.
+    #[inline]
+    pub const fn is_arbitrum(self) -> bool {
+        matches!(self.named(), Some(named) if named.is_arbitrum())
+    }
+
     /// Attempts to convert the chain into a named chain.
     #[inline]
     pub const fn named(self) -> Option<NamedChain> {
