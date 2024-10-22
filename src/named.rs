@@ -518,6 +518,13 @@ impl NamedChain {
         )
     }
 
+    /// Returns true if the chain contains Arbitrum configuration.
+    pub const fn is_arbitrum(self) -> bool {
+        use NamedChain::*;
+
+        matches!(self, Arbitrum | ArbitrumTestnet | ArbitrumGoerli | ArbitrumSepolia | ArbitrumNova)
+    }
+
     /// Returns the chain's average blocktime, if applicable.
     ///
     /// It can be beneficial to know the average blocktime to adjust the polling of an HTTP provider
