@@ -648,6 +648,18 @@
       "etherscanBaseUrl": "https://moonbase.moonscan.io",
       "etherscanApiKeyName": "MOONSCAN_API_KEY"
     },
+    "1301": {
+      "internalId": "UnichainSepolia",
+      "name": "unichain-sepolia",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://sepolia.uniscan.xyz",
+      "etherscanBaseUrl": "https://api-sepolia.uniscan.xyz/api",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "1337": {
       "internalId": "Dev",
       "name": "dev",

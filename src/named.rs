@@ -367,6 +367,10 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "worldchain-sepolia", alias = "world-sepolia"))]
     WorldSepolia = 4801,
     Iotex = 4689,
+
+    #[strum(to_string = "unichain-sepolia")]
+    #[cfg_attr(feature = "serde", serde(alias = "unichain-sepolia"))]
+    UnichainSepolia = 1301,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -515,6 +519,7 @@ impl NamedChain {
                 | Odyssey
                 | World
                 | WorldSepolia
+                | UnichainSepolia
         )
     }
 
@@ -622,6 +627,8 @@ impl NamedChain {
             World | WorldSepolia => 2_000,
 
             Iotex => 5_000,
+
+            UnichainSepolia => 1_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
             | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
@@ -746,7 +753,8 @@ impl NamedChain {
             | ImmutableTestnet
             | SoneiumMinatoTestnet
             | World
-            | WorldSepolia => false,
+            | WorldSepolia
+            | UnichainSepolia => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
@@ -828,6 +836,7 @@ impl NamedChain {
                 | World
                 | WorldSepolia
                 | Iotex
+                | UnichainSepolia
         )
     }
 
@@ -900,7 +909,8 @@ impl NamedChain {
             | Koi
             | ImmutableTestnet
             | SoneiumMinatoTestnet
-            | WorldSepolia => true,
+            | WorldSepolia
+            | UnichainSepolia => true,
 
             // Dev chains.
             Dev | AnvilHardhat => true,
@@ -922,7 +932,7 @@ impl NamedChain {
 
         Some(match self {
             Mainnet | Goerli | Holesky | Kovan | Sepolia | Morden | Ropsten | Rinkeby | Scroll
-            | ScrollSepolia | Taiko | TaikoHekla => "ETH",
+            | ScrollSepolia | Taiko | TaikoHekla | UnichainSepolia => "ETH",
 
             Mantle | MantleSepolia => "MNT",
 
@@ -1282,6 +1292,9 @@ impl NamedChain {
                 "https://worldchain-sepolia.explorer.alchemy.com/api",
                 "https://worldchain-sepolia.explorer.alchemy.com",
             ),
+            UnichainSepolia => {
+                ("https://sepolia.uniscan.xyz", "https://api-sepolia.uniscan.xyz/api")
+            }
         })
     }
 
@@ -1346,7 +1359,8 @@ impl NamedChain {
             | Scroll
             | ScrollSepolia
             | Taiko
-            | TaikoHekla => "ETHERSCAN_API_KEY",
+            | TaikoHekla
+            | UnichainSepolia => "ETHERSCAN_API_KEY",
 
             Avalanche | AvalancheFuji => "SNOWTRACE_API_KEY",
 
