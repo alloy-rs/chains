@@ -600,6 +600,18 @@
       "etherscanBaseUrl": "https://zkevm.polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
     },
+    "1116": {
+      "internalId": "Core",
+      "name": "core",
+      "averageBlocktimeHint": 3000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "CORE",
+      "etherscanApiUrl": "https://scan.coredao.org",
+      "etherscanBaseUrl": "https://openapi.coredao.org/api",
+      "etherscanApiKeyName": "CORESCAN_API_KEY"
+    },
     "1281": {
       "internalId": "MoonbeamDev",
       "name": "moonbeam-dev",
@@ -743,6 +755,18 @@
       "etherscanApiUrl": "https://api-testnet.ftmscan.com/api",
       "etherscanBaseUrl": "https://testnet.ftmscan.com",
       "etherscanApiKeyName": "FTMSCAN_API_KEY"
+    },
+    "4200": {
+      "internalId": "Merlin",
+      "name": "merlin",
+      "averageBlocktimeHint": 3000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "BTC",
+      "etherscanApiUrl": "https://scan.merlinchain.io",
+      "etherscanBaseUrl": "https://scan.merlinchain.io/api",
+      "etherscanApiKeyName": "MERLINSCAN_API_KEY"
     },
     "4689": {
       "internalId": "Iotex",
@@ -1223,6 +1247,18 @@
       "etherscanApiUrl": "https://api-testnet.taikoscan.io/api",
       "etherscanBaseUrl": "https://hekla.taikoscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "200901": {
+      "internalId": "Bitlayer",
+      "name": "bitlayer",
+      "averageBlocktimeHint": 3000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "BTC",
+      "etherscanApiUrl": "https://www.btrscan.com",
+      "etherscanBaseUrl": "https://api.btrscan.com/scan/api",
+      "etherscanApiKeyName": "BITLAYERSCAN_API_KEY"
     },
     "314159": {
       "internalId": "FilecoinCalibrationTestnet",

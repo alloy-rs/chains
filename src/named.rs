@@ -367,6 +367,9 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "worldchain-sepolia", alias = "world-sepolia"))]
     WorldSepolia = 4801,
     Iotex = 4689,
+    Core = 1116,
+    Merlin = 4200,
+    Bitlayer = 200901,
 
     #[strum(to_string = "unichain-sepolia")]
     #[cfg_attr(feature = "serde", serde(alias = "unichain-sepolia"))]
@@ -634,6 +637,9 @@ impl NamedChain {
             World | WorldSepolia => 2_000,
 
             Iotex => 5_000,
+            Core => 3_000,
+            Merlin => 3_000,
+            Bitlayer => 3_000,
 
             UnichainSepolia => 1_000,
 
@@ -766,7 +772,8 @@ impl NamedChain {
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
-            | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex => false,
+            | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
+            | Merlin | Bitlayer => false,
         }
     }
 
@@ -929,7 +936,8 @@ impl NamedChain {
             | Emerald | FilecoinMainnet | Avalanche | Celo | Aurora | Canto | Boba | Base
             | Fraxtal | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn | Mode
             | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
-            | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex => false,
+            | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex | Core
+            | Merlin | Bitlayer => false,
         }
     }
 
@@ -976,6 +984,9 @@ impl NamedChain {
             World | WorldSepolia => "WRLD",
 
             Iotex => "IOTX",
+            Core => "CORE",
+            Merlin => "BTC",
+            Bitlayer => "BTC",
 
             _ => return None,
         })
@@ -1302,6 +1313,9 @@ impl NamedChain {
             UnichainSepolia => {
                 ("https://sepolia.uniscan.xyz", "https://api-sepolia.uniscan.xyz/api")
             }
+            Core => ("https://scan.coredao.org", "https://openapi.coredao.org/api"),
+            Merlin => ("https://scan.merlinchain.io", "https://scan.merlinchain.io/api"),
+            Bitlayer => ("https://www.btrscan.com", "https://api.btrscan.com/scan/api"),
         })
     }
 
@@ -1386,6 +1400,10 @@ impl NamedChain {
             | World | WorldSepolia => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
+
+            Core => "CORESCAN_API_KEY",
+            Merlin => "MERLINSCAN_API_KEY",
+            Bitlayer => "BITLAYERSCAN_API_KEY",
 
             // Explicitly exhaustive. See NB above.
             Metis
@@ -1500,6 +1518,9 @@ impl NamedChain {
             Polygon => address!("0d500b1d8e8ef31e21c99d1db9a6444d3adf1270"),
             Fantom => address!("21be370d5312f44cb42ce377bc9b8a0cef1a4c83"),
             Iotex => address!("a00744882684c3e4747faefd68d283ea44099d03"),
+            Core => address!("40375C92d9FAf44d2f9db9Bd9ba41a3317a2404f"),
+            Merlin => address!("F6D226f9Dc15d9bB51182815b320D3fBE324e1bA"),
+            Bitlayer => address!("ff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f"),
             _ => return None,
         };
 
