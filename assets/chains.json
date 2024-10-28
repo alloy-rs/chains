@@ -1368,6 +1368,18 @@
       "etherscanBaseUrl": "https://xaiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "763373": {
+      "internalId": "InkSepolia",
+      "name": "ink-sepolia",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://explorer-sepolia.inkonchain.com/api",
+      "etherscanBaseUrl": "https://explorer-sepolia.inkonchain.com/",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "911867": {
       "internalId": "Odyssey",
       "name": "odyssey",

@@ -480,6 +480,12 @@ impl Chain {
         Self::from_named(NamedChain::ImmutableTestnet)
     }
 
+    /// Returns the koi testnet chain.
+    #[inline]
+    pub const fn ink_sepolia() -> Self {
+        Self::from_named(NamedChain::InkSepolia)
+    }
+
     /// Returns the kind of this chain.
     #[inline]
     pub const fn kind(&self) -> &ChainKind {

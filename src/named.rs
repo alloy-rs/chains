@@ -224,6 +224,13 @@ pub enum NamedChain {
 
     Shimmer = 148,
 
+
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "ink_sepolia_testnet", alias = "ink-sepolia")
+    )]
+    InkSepolia = 763373,
+
     #[strum(to_string = "fraxtal")]
     #[cfg_attr(feature = "serde", serde(alias = "fraxtal"))]
     Fraxtal = 252,
@@ -508,6 +515,7 @@ impl NamedChain {
                 | BaseSepolia
                 | Fraxtal
                 | FraxtalTestnet
+                | InkSepolia
                 | Mode
                 | ModeSepolia
                 | Pgn
@@ -569,7 +577,7 @@ impl NamedChain {
             | SyndrSepolia
             | ArbitrumNova => 260,
 
-            Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia
+            Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia | InkSepolia
             | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli | ZoraSepolia
             | Mantle | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia
             | SoneiumMinatoTestnet => 2_000,
@@ -736,6 +744,7 @@ impl NamedChain {
             | Zora
             | ZoraGoerli
             | ZoraSepolia
+            | InkSepolia
             | Mantle
             | MantleSepolia
             | Mode
@@ -891,6 +900,7 @@ impl NamedChain {
             | FraxtalTestnet
             | LineaGoerli
             | LineaSepolia
+            | InkSepolia
             | MantleTestnet
             | MantleSepolia
             | MoonbeamDev
@@ -1112,6 +1122,10 @@ impl NamedChain {
             Scroll => ("https://api.scrollscan.com/api", "https://scrollscan.com"),
             ScrollSepolia => {
                 ("https://api-sepolia.scrollscan.com/api", "https://sepolia.scrollscan.com")
+            }
+
+            InkSepolia => {
+                ("https://explorer-sepolia.inkonchain.com/api", "https://explorer-sepolia.inkonchain.com")
             }
 
             Shimmer => {
@@ -1397,7 +1411,7 @@ impl NamedChain {
             | EtherlinkTestnet | Flare | FlareCoston2 | KakarotSepolia | Karura | KaruraTestnet
             | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora | ZoraGoerli | ZoraSepolia
             | Darwinia | Crab | Koi | Immutable | ImmutableTestnet | SoneiumMinatoTestnet
-            | World | WorldSepolia => "BLOCKSCOUT_API_KEY",
+            | World | WorldSepolia | InkSepolia => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
