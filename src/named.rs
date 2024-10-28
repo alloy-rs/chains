@@ -374,6 +374,13 @@ pub enum NamedChain {
     #[strum(to_string = "unichain-sepolia")]
     #[cfg_attr(feature = "serde", serde(alias = "unichain-sepolia"))]
     UnichainSepolia = 1301,
+
+    #[strum(to_string = "apechain")]
+    #[cfg_attr(feature = "serde", serde(alias = "apechain"))]
+    ApeChain = 33139,
+    #[strum(to_string = "curtis", serialize = "apechain-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "apechain-testnet", alias = "curtis"))]
+    Curtis = 33111,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -567,7 +574,9 @@ impl NamedChain {
             | XaiSepolia
             | Syndr
             | SyndrSepolia
-            | ArbitrumNova => 260,
+            | ArbitrumNova
+            | ApeChain
+            | Curtis => 260,
 
             Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia
             | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli | ZoraSepolia
@@ -767,7 +776,9 @@ impl NamedChain {
             | SoneiumMinatoTestnet
             | World
             | WorldSepolia
-            | UnichainSepolia => false,
+            | UnichainSepolia
+            | ApeChain
+            | Curtis => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
@@ -851,6 +862,8 @@ impl NamedChain {
                 | WorldSepolia
                 | Iotex
                 | UnichainSepolia
+                | ApeChain
+                | Curtis
         )
     }
 
@@ -924,7 +937,8 @@ impl NamedChain {
             | ImmutableTestnet
             | SoneiumMinatoTestnet
             | WorldSepolia
-            | UnichainSepolia => true,
+            | UnichainSepolia
+            | Curtis => true,
 
             // Dev chains.
             Dev | AnvilHardhat => true,
@@ -937,7 +951,7 @@ impl NamedChain {
             | Fraxtal | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn | Mode
             | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
             | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex | Core
-            | Merlin | Bitlayer => false,
+            | Merlin | Bitlayer | ApeChain => false,
         }
     }
 
@@ -987,6 +1001,8 @@ impl NamedChain {
             Core => "CORE",
             Merlin => "BTC",
             Bitlayer => "BTC",
+
+            ApeChain | Curtis => "APE",
 
             _ => return None,
         })
@@ -1316,6 +1332,9 @@ impl NamedChain {
             Core => ("https://scan.coredao.org", "https://openapi.coredao.org/api"),
             Merlin => ("https://scan.merlinchain.io", "https://scan.merlinchain.io/api"),
             Bitlayer => ("https://www.btrscan.com", "https://api.btrscan.com/scan/api"),
+
+            ApeChain => ("https://api.apescan.io/api", "https://apescan.io"),
+            Curtis => ("https://curtis.explorer.caldera.xyz/api/v2", "https://curtis.apescan.io"),
         })
     }
 
@@ -1381,7 +1400,8 @@ impl NamedChain {
             | ScrollSepolia
             | Taiko
             | TaikoHekla
-            | UnichainSepolia => "ETHERSCAN_API_KEY",
+            | UnichainSepolia
+            | ApeChain => "ETHERSCAN_API_KEY",
 
             Avalanche | AvalancheFuji => "SNOWTRACE_API_KEY",
 
@@ -1397,7 +1417,7 @@ impl NamedChain {
             | EtherlinkTestnet | Flare | FlareCoston2 | KakarotSepolia | Karura | KaruraTestnet
             | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora | ZoraGoerli | ZoraSepolia
             | Darwinia | Crab | Koi | Immutable | ImmutableTestnet | SoneiumMinatoTestnet
-            | World | WorldSepolia => "BLOCKSCOUT_API_KEY",
+            | World | WorldSepolia | Curtis => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
@@ -1521,6 +1541,7 @@ impl NamedChain {
             Core => address!("40375C92d9FAf44d2f9db9Bd9ba41a3317a2404f"),
             Merlin => address!("F6D226f9Dc15d9bB51182815b320D3fBE324e1bA"),
             Bitlayer => address!("ff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f"),
+            ApeChain => address!("48b62137EdfA95a428D35C09E44256a739F6B557"),
             _ => return None,
         };
 
@@ -1610,6 +1631,8 @@ mod tests {
             (Immutable, &["immutable"]),
             (ImmutableTestnet, &["immutable-testnet"]),
             (SoneiumMinatoTestnet, &["soneium-minato-testnet"]),
+            (ApeChain, &["apechain"]),
+            (Curtis, &["apechain-testnet", "curtis"]),
         ];
 
         for &(chain, aliases) in ALIASES {
