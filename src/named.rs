@@ -224,6 +224,9 @@ pub enum NamedChain {
 
     Shimmer = 148,
 
+    #[cfg_attr(feature = "serde", serde(alias = "ink_sepolia_testnet", alias = "ink-sepolia"))]
+    InkSepolia = 763373,
+
     #[strum(to_string = "fraxtal")]
     #[cfg_attr(feature = "serde", serde(alias = "fraxtal"))]
     Fraxtal = 252,
@@ -515,6 +518,7 @@ impl NamedChain {
                 | BaseSepolia
                 | Fraxtal
                 | FraxtalTestnet
+                | InkSepolia
                 | Mode
                 | ModeSepolia
                 | Pgn
@@ -579,8 +583,8 @@ impl NamedChain {
             | Curtis => 260,
 
             Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia
-            | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli | ZoraSepolia
-            | Mantle | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia
+            | InkSepolia | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli
+            | ZoraSepolia | Mantle | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia
             | SoneiumMinatoTestnet => 2_000,
 
             Odyssey => 1_000,
@@ -745,6 +749,7 @@ impl NamedChain {
             | Zora
             | ZoraGoerli
             | ZoraSepolia
+            | InkSepolia
             | Mantle
             | MantleSepolia
             | Mode
@@ -904,6 +909,7 @@ impl NamedChain {
             | FraxtalTestnet
             | LineaGoerli
             | LineaSepolia
+            | InkSepolia
             | MantleTestnet
             | MantleSepolia
             | MoonbeamDev
@@ -1129,6 +1135,11 @@ impl NamedChain {
             ScrollSepolia => {
                 ("https://api-sepolia.scrollscan.com/api", "https://sepolia.scrollscan.com")
             }
+
+            InkSepolia => (
+                "https://explorer-sepolia.inkonchain.com/api",
+                "https://explorer-sepolia.inkonchain.com",
+            ),
 
             Shimmer => {
                 ("https://explorer.evm.shimmer.network/api", "https://explorer.evm.shimmer.network")
@@ -1417,7 +1428,7 @@ impl NamedChain {
             | EtherlinkTestnet | Flare | FlareCoston2 | KakarotSepolia | Karura | KaruraTestnet
             | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora | ZoraGoerli | ZoraSepolia
             | Darwinia | Crab | Koi | Immutable | ImmutableTestnet | SoneiumMinatoTestnet
-            | World | WorldSepolia | Curtis => "BLOCKSCOUT_API_KEY",
+            | World | WorldSepolia | Curtis | InkSepolia => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
