@@ -972,6 +972,30 @@
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": null
     },
+    "33111": {
+      "internalId": "Curtis",
+      "name": "curtis",
+      "averageBlocktimeHint": 260,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "APE",
+      "etherscanApiUrl": "https://curtis.explorer.caldera.xyz/api/v2",
+      "etherscanBaseUrl": "https://curtis.apescan.io",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
+    "33139": {
+      "internalId": "ApeChain",
+      "name": "apechain",
+      "averageBlocktimeHint": 260,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "APE",
+      "etherscanApiUrl": "https://api.apescan.io/api",
+      "etherscanBaseUrl": "https://apescan.io",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "34443": {
       "internalId": "Mode",
       "name": "mode",
