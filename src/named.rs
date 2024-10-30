@@ -141,7 +141,7 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "arbitrum-nova"))]
     ArbitrumNova = 42170,
 
-    #[strum(serialize = "cro", "cronos")]
+    #[strum(serialize = "cro", serialize = "cronos")]
     #[cfg_attr(feature = "serde", serde(alias = "cronos", alias = "cro", alias = "cro_chain"))]
     Cronos = 25,
     CronosTestnet = 338,
