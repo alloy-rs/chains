@@ -41,8 +41,19 @@ use alloc::string::String;
 #[non_exhaustive]
 pub enum NamedChain {
     #[strum(to_string = "mainnet", serialize = "ethlive")]
-    #[cfg_attr(feature = "serde", serde(alias = "ethlive"))]
+    #[cfg_attr(
+        feature = "serde",
+        serde(
+            alias = "ethlive",
+            alias = "eth",
+            alias = "ethereum",
+            alias = "erc20",
+            alias = "erc-20",
+            alias = "ethereum(erc20)"
+        )
+    )]
     Mainnet = 1,
+
     Morden = 2,
     Ropsten = 3,
     Rinkeby = 4,
@@ -54,6 +65,18 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "odyssey"))]
     Odyssey = 911867,
 
+    #[cfg_attr(
+        feature = "serde",
+        serde(
+            alias = "op",
+            alias = "optimism",
+            alias = "opeth",
+            alias = "optimism(op)",
+            alias = "optimism(op-bridged)",
+            alias = "optimism (v2)",
+            alias = "optimism (bridged)"
+        )
+    )]
     Optimism = 10,
     #[cfg_attr(feature = "serde", serde(alias = "optimism-kovan"))]
     OptimismKovan = 69,
@@ -62,8 +85,23 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "optimism-sepolia"))]
     OptimismSepolia = 11155420,
 
-    #[cfg_attr(feature = "serde", serde(alias = "arbitrum_one", alias = "arbitrum-one"))]
+    #[cfg_attr(
+        feature = "serde",
+        serde(
+            alias = "arbitrum_one",
+            alias = "arbitrum-one",
+            alias = "arb",
+            alias = "arbitrum",
+            alias = "arbi",
+            alias = "arbi(bridged)",
+            alias = "arbevm",
+            alias = "arbitrum one",
+            alias = "arbitrum one(arb)",
+            alias = "arbitrum one(arb-bridged)"
+        )
+    )]
     Arbitrum = 42161,
+
     ArbitrumTestnet = 421611,
     #[cfg_attr(feature = "serde", serde(alias = "arbitrum-goerli"))]
     ArbitrumGoerli = 421613,
@@ -72,6 +110,7 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "arbitrum-nova"))]
     ArbitrumNova = 42170,
 
+    #[cfg_attr(feature = "serde", serde(alias = "cronos", alias = "cro", alias = "cro_chain"))]
     Cronos = 25,
     CronosTestnet = 338,
 
@@ -93,9 +132,20 @@ pub enum NamedChain {
     #[strum(to_string = "bsc", serialize = "binance-smart-chain", serialize = "bnb-smart-chain")]
     #[cfg_attr(
         feature = "serde",
-        serde(alias = "bsc", alias = "bnb-smart-chain", alias = "binance-smart-chain")
+        serde(
+            alias = "bsc",
+            alias = "bnb-smart-chain",
+            alias = "binance-smart-chain",
+            alias = "bnb",
+            alias = "bep20",
+            alias = "bep",
+            alias = "bep-20",
+            alias = "bnb smart chain(bep20)",
+            alias = "bsc_bnb"
+        )
     )]
     BinanceSmartChain = 56,
+
     #[strum(
         to_string = "bsc-testnet",
         serialize = "binance-smart-chain-testnet",
@@ -126,14 +176,28 @@ pub enum NamedChain {
 
     #[cfg_attr(feature = "serde", serde(alias = "conflux-espace-testnet"))]
     CfxTestnet = 71,
-    #[cfg_attr(feature = "serde", serde(alias = "conflux-espace"))]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "conflux-espace", alias = "conflux", alias = "cfxevm", alias = "cfx")
+    )]
     Cfx = 1030,
 
     #[strum(to_string = "xdai", serialize = "gnosis", serialize = "gnosis-chain")]
     #[cfg_attr(feature = "serde", serde(alias = "xdai", alias = "gnosis", alias = "gnosis-chain"))]
     Gnosis = 100,
 
+    #[cfg_attr(
+        feature = "serde",
+        serde(
+            alias = "polygon",
+            alias = "matic",
+            alias = "polygon(bridged)",
+            alias = "polygon(matic)",
+            alias = "polygon(matic-bridged)"
+        )
+    )]
     Polygon = 137,
+
     #[strum(to_string = "mumbai", serialize = "polygon-mumbai")]
     #[cfg_attr(feature = "serde", serde(alias = "mumbai", alias = "polygon-mumbai"))]
     PolygonMumbai = 80001,
@@ -157,9 +221,11 @@ pub enum NamedChain {
     )]
     PolygonZkEvmTestnet = 1442,
 
+    #[cfg_attr(feature = "serde", serde(alias = "ftm", alias = "fantom(ftm)", alias = "fantom"))]
     Fantom = 250,
     FantomTestnet = 4002,
 
+    #[cfg_attr(feature = "serde", serde(alias = "moonbeam", alias = "glmr"))]
     Moonbeam = 1284,
     MoonbeamDev = 1281,
 
@@ -192,14 +258,29 @@ pub enum NamedChain {
     Emerald = 42262,
     EmeraldTestnet = 42261,
 
+    #[cfg_attr(feature = "serde", serde(alias = "filecoin", alias = "fil"))]
     FilecoinMainnet = 314,
-    FilecoinCalibrationTestnet = 314159,
 
+    FilecoinCalibrationTestnet = 314159,
+    #[cfg_attr(
+        feature = "serde",
+        serde(
+            alias = "avax-c",
+            alias = "avalanche",
+            alias = "avax_c",
+            alias = "avaxcchain",
+            alias = "avax c-chain",
+            alias = "avalanche c chain(avax cchain)",
+            alias = "avax_cchain",
+            alias = "avaxc"
+        )
+    )]
     Avalanche = 43114,
     #[strum(to_string = "fuji", serialize = "avalanche-fuji")]
     #[cfg_attr(feature = "serde", serde(alias = "fuji"))]
     AvalancheFuji = 43113,
 
+    #[cfg_attr(feature = "serde", serde(alias = "celo"))]
     Celo = 42220,
     CeloAlfajores = 44787,
     CeloBaklava = 62320,
@@ -212,7 +293,9 @@ pub enum NamedChain {
 
     Boba = 288,
 
+    #[cfg_attr(feature = "serde", serde(alias = "base", alias = "baseevm"))]
     Base = 8453,
+
     #[cfg_attr(feature = "serde", serde(alias = "base-goerli"))]
     BaseGoerli = 84531,
     #[cfg_attr(feature = "serde", serde(alias = "base-sepolia"))]
@@ -245,15 +328,26 @@ pub enum NamedChain {
     LineaSepolia = 59141,
 
     #[strum(to_string = "zksync")]
-    #[cfg_attr(feature = "serde", serde(alias = "zksync"))]
+    #[cfg_attr(
+        feature = "serde",
+        serde(
+            alias = "zksync",
+            alias = "zksync-era",
+            alias = "zksyncera",
+            alias = "zksyncera_eth",
+            alias = "zksera",
+            alias = "zksync era"
+        )
+    )]
     ZkSync = 324,
     #[strum(to_string = "zksync-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "zksync_testnet", alias = "zksync-testnet"))]
     ZkSyncTestnet = 300,
 
     #[strum(to_string = "mantle")]
-    #[cfg_attr(feature = "serde", serde(alias = "mantle"))]
+    #[cfg_attr(feature = "serde", serde(alias = "mantle", alias = "mantle(mnt)"))]
     Mantle = 5000,
+
     #[strum(to_string = "mantle-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "mantle-testnet"))]
     MantleTestnet = 5001,
@@ -369,6 +463,7 @@ pub enum NamedChain {
     #[strum(to_string = "world-sepolia")]
     #[cfg_attr(feature = "serde", serde(alias = "worldchain-sepolia", alias = "world-sepolia"))]
     WorldSepolia = 4801,
+    #[cfg_attr(feature = "serde", serde(alias = "iotx"))]
     Iotex = 4689,
     Core = 1116,
     Merlin = 4200,
