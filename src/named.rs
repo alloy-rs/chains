@@ -141,6 +141,7 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "arbitrum-nova"))]
     ArbitrumNova = 42170,
 
+    #[strum(serialize = "cro", "cronos")]
     #[cfg_attr(feature = "serde", serde(alias = "cronos", alias = "cro", alias = "cro_chain"))]
     Cronos = 25,
     CronosTestnet = 338,
@@ -271,14 +272,17 @@ pub enum NamedChain {
     )]
     PolygonZkEvmTestnet = 1442,
 
+    #[strum(serialize="fmt", serialize="fantom", serialize="fantom(ftm)")]
     #[cfg_attr(feature = "serde", serde(alias = "ftm", alias = "fantom(ftm)", alias = "fantom"))]
     Fantom = 250,
     FantomTestnet = 4002,
 
+    #[strum(serialize="glmr", serialize="moonbeam")]
     #[cfg_attr(feature = "serde", serde(alias = "moonbeam", alias = "glmr"))]
     Moonbeam = 1284,
     MoonbeamDev = 1281,
 
+    #[strum(serialize="moonriver", serialize="movr")]
     Moonriver = 1285,
 
     Moonbase = 1287,
@@ -308,6 +312,7 @@ pub enum NamedChain {
     Emerald = 42262,
     EmeraldTestnet = 42261,
 
+    #[strum(serialize="fil", serialize="filecoin")]
     #[cfg_attr(feature = "serde", serde(alias = "filecoin", alias = "fil"))]
     FilecoinMainnet = 314,
 
@@ -385,6 +390,7 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "blast-sepolia"))]
     BlastSepolia = 168587773,
 
+    #[strum(serialize="linea", serialize="linea-eth", serialize="linea_eth")]
     Linea = 59144,
     #[cfg_attr(feature = "serde", serde(alias = "linea-goerli"))]
     LineaGoerli = 59140,
@@ -478,6 +484,7 @@ pub enum NamedChain {
     )]
     OpBNBTestnet = 5611,
 
+    #[strum(serialize="ron", serialize="ronin")]
     Ronin = 2020,
 
     Taiko = 167000,
