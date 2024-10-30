@@ -40,7 +40,15 @@ use alloc::string::String;
 #[allow(missing_docs)]
 #[non_exhaustive]
 pub enum NamedChain {
-    #[strum(to_string = "mainnet", serialize = "ethlive")]
+    #[strum(
+        to_string = "mainnet",
+        serialize = "ethlive",
+        serialize = "eth",
+        serialize = "ethereum",
+        serialize = "erc20",
+        serialize = "erc-20",
+        serialize = "ethereum(erc20)"
+    )]
     #[cfg_attr(
         feature = "serde",
         serde(
@@ -65,6 +73,16 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "odyssey"))]
     Odyssey = 911867,
 
+    #[strum(
+        to_string = "optimism",
+        serialize = "op",
+        serialize = "optimism",
+        serialize = "opeth",
+        serialize = "optimism(op)",
+        serialize = "optimism(op-bridged)",
+        serialize = "optimism (v2)",
+        serialize = "optimism (bridged)"
+    )]
     #[cfg_attr(
         feature = "serde",
         serde(
@@ -85,6 +103,19 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "optimism-sepolia"))]
     OptimismSepolia = 11155420,
 
+    #[strum(
+        to_string = "arbitrum",
+        serialize = "arbitrum_one",
+        serialize = "arbitrum-one",
+        serialize = "arb",
+        serialize = "arbitrum",
+        serialize = "arbi",
+        serialize = "arbi(bridged)",
+        serialize = "arbevm",
+        serialize = "arbitrum one",
+        serialize = "arbitrum one(arb)",
+        serialize = "arbitrum one(arb-bridged)"
+    )]
     #[cfg_attr(
         feature = "serde",
         serde(
@@ -129,7 +160,19 @@ pub enum NamedChain {
     /// Note the correct name for BSC should be `BNB Smart Chain` due to the rebranding: <https://www.bnbchain.org/en/blog/bsc-is-now-bnb-chain-the-infrastructure-for-the-metafi-universe>
     /// We keep `Binance Smart Chain` for backward compatibility, and the enum could be renamed in
     /// the future release.
-    #[strum(to_string = "bsc", serialize = "binance-smart-chain", serialize = "bnb-smart-chain")]
+    #[strum(
+        to_string = "bsc",
+        serialize = "binance-smart-chain",
+        serialize = "bnb-smart-chain",
+        serialize = "binance-smart-chain",
+        serialize = "bnb",
+        serialize = "bep20",
+        serialize = "bep",
+        serialize = "bep-20",
+        serialize = "bnb smart chain(bep20)",
+        serialize = "bsc_bnb",
+        serialize = "bsc"
+    )]
     #[cfg_attr(
         feature = "serde",
         serde(
@@ -186,6 +229,13 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "xdai", alias = "gnosis", alias = "gnosis-chain"))]
     Gnosis = 100,
 
+    #[strum(
+        to_string = "polygon",
+        serialize = "matic",
+        serialize = "polygon(bridged)",
+        serialize = "polygon(matic)",
+        serialize = "polygon(matic-bridged)"
+    )]
     #[cfg_attr(
         feature = "serde",
         serde(
@@ -262,6 +312,19 @@ pub enum NamedChain {
     FilecoinMainnet = 314,
 
     FilecoinCalibrationTestnet = 314159,
+
+    #[strum(
+        to_string = "avax",
+        serialize = "avalanche",
+        serialize = "avax-c",
+        serialize = "avax_c",
+        serialize = "avalanche-c",
+        serialize = "avaxcchain",
+        serialize = "avax c-chain",
+        serialize = "avalanche c chain(avax cchain)",
+        serialize = "avax_cchain",
+        serialize = "avaxc"
+    )]
     #[cfg_attr(
         feature = "serde",
         serde(
@@ -293,6 +356,7 @@ pub enum NamedChain {
 
     Boba = 288,
 
+    #[strum(to_string = "base", serialize = "baseevm")]
     #[cfg_attr(feature = "serde", serde(alias = "base", alias = "baseevm"))]
     Base = 8453,
 
@@ -327,7 +391,14 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "linea-sepolia"))]
     LineaSepolia = 59141,
 
-    #[strum(to_string = "zksync")]
+    #[strum(
+        to_string = "zksync",
+        serialize = "zksync-era",
+        serialize = "zksyncera",
+        serialize = "zksyncera_eth",
+        serialize = "zksera",
+        serialize = "zksync era"
+    )]
     #[cfg_attr(
         feature = "serde",
         serde(
