@@ -395,7 +395,8 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "blast-sepolia"))]
     BlastSepolia = 168587773,
 
-    #[strum(serialize="linea", serialize="linea-eth", serialize="linea_eth")]
+    #[strum(serialize="linea", serialize="linea_eth")]
+    #[serde(alias = "linea", alias = "linea_eth")]
     Linea = 59144,
     #[cfg_attr(feature = "serde", serde(alias = "linea-goerli"))]
     LineaGoerli = 59140,
