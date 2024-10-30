@@ -148,13 +148,13 @@ pub enum NamedChain {
 
     Rsk = 30,
 
-    #[strum(to_string = "crab")]
+    #[strum(to_string = "crab", serialize = "crab")]
     #[cfg_attr(feature = "serde", serde(alias = "crab"))]
     Crab = 44,
-    #[strum(to_string = "darwinia")]
+    #[strum(to_string = "darwinia", serialize = "darwinia")]
     #[cfg_attr(feature = "serde", serde(alias = "darwinia"))]
     Darwinia = 46,
-    #[strum(to_string = "koi")]
+    #[strum(to_string = "koi", serialize = "koi")]
     #[cfg_attr(feature = "serde", serde(alias = "koi"))]
     Koi = 701,
 
@@ -192,6 +192,7 @@ pub enum NamedChain {
 
     #[strum(
         to_string = "bsc-testnet",
+        serialize = "bsc-testnet",
         serialize = "binance-smart-chain-testnet",
         serialize = "bnb-smart-chain-testnet"
     )]
@@ -220,18 +221,20 @@ pub enum NamedChain {
 
     #[cfg_attr(feature = "serde", serde(alias = "conflux-espace-testnet"))]
     CfxTestnet = 71,
+    #[strum(serialize = "conflux-espace", serialize = "conflux", serialize = "cfxevm", serialize = "cfx")]
     #[cfg_attr(
         feature = "serde",
         serde(alias = "conflux-espace", alias = "conflux", alias = "cfxevm", alias = "cfx")
     )]
     Cfx = 1030,
 
-    #[strum(to_string = "xdai", serialize = "gnosis", serialize = "gnosis-chain")]
+    #[strum(to_string = "gnosis", serialize = "gnosis", serialize = "gnosis-chain")]
     #[cfg_attr(feature = "serde", serde(alias = "xdai", alias = "gnosis", alias = "gnosis-chain"))]
     Gnosis = 100,
 
     #[strum(
         to_string = "polygon",
+        serialize = "polygon",
         serialize = "matic",
         serialize = "polygon(bridged)",
         serialize = "polygon(matic)",
@@ -249,10 +252,10 @@ pub enum NamedChain {
     )]
     Polygon = 137,
 
-    #[strum(to_string = "mumbai", serialize = "polygon-mumbai")]
+    #[strum(to_string = "polygon_mumbai", serialize = "polygon-mumbai")]
     #[cfg_attr(feature = "serde", serde(alias = "mumbai", alias = "polygon-mumbai"))]
     PolygonMumbai = 80001,
-    #[strum(to_string = "amoy", serialize = "polygon-amoy")]
+    #[strum(to_string = "amoy", serialize = "polygon-amoy", serialize = "polygon-amoy")]
     #[cfg_attr(feature = "serde", serde(alias = "amoy", alias = "polygon-amoy"))]
     PolygonAmoy = 80002,
     #[strum(serialize = "polygon-zkevm", serialize = "zkevm")]
@@ -288,17 +291,17 @@ pub enum NamedChain {
     Moonbase = 1287,
 
     Dev = 1337,
-    #[strum(to_string = "anvil-hardhat", serialize = "anvil", serialize = "hardhat")]
+    #[strum(to_string = "anvil-hardhat", serialize = "anvil", serialize = "hardhat", serialize = "anvil-hardhat")]
     #[cfg_attr(
         feature = "serde",
         serde(alias = "anvil", alias = "hardhat", alias = "anvil-hardhat")
     )]
     AnvilHardhat = 31337,
 
-    #[strum(to_string = "gravity-alpha-mainnet")]
+    #[strum(to_string = "gravity-alpha-mainnet", serialize = "gravity-alpha-mainnet")]
     #[cfg_attr(feature = "serde", serde(alias = "gravity-alpha-mainnet"))]
     GravityAlphaMainnet = 1625,
-    #[strum(to_string = "gravity-alpha-testnet-sepolia")]
+    #[strum(to_string = "gravity-alpha-testnet-sepolia", serialize = "gravity-alpha-testnet-sepolia")]
     #[cfg_attr(feature = "serde", serde(alias = "gravity-alpha-testnet-sepolia"))]
     GravityAlphaTestnetSepolia = 13505,
 
@@ -320,6 +323,7 @@ pub enum NamedChain {
 
     #[strum(
         to_string = "avax",
+        serialize = "avax",
         serialize = "avalanche",
         serialize = "avax-c",
         serialize = "avax_c",
@@ -340,11 +344,12 @@ pub enum NamedChain {
             alias = "avax c-chain",
             alias = "avalanche c chain(avax cchain)",
             alias = "avax_cchain",
-            alias = "avaxc"
+            alias = "avaxc",
+            alias = "avax",
         )
     )]
     Avalanche = 43114,
-    #[strum(to_string = "fuji", serialize = "avalanche-fuji")]
+    #[strum(to_string = "fuji", serialize = "avalanche-fuji", serialize = "fuji")]
     #[cfg_attr(feature = "serde", serde(alias = "fuji"))]
     AvalancheFuji = 43113,
 
@@ -361,7 +366,7 @@ pub enum NamedChain {
 
     Boba = 288,
 
-    #[strum(to_string = "base", serialize = "baseevm")]
+    #[strum(to_string = "base", serialize = "baseevm", serialize = "base")]
     #[cfg_attr(feature = "serde", serde(alias = "base", alias = "baseevm"))]
     Base = 8453,
 
