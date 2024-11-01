@@ -1183,9 +1183,9 @@ impl NamedChain {
             Evmos => ("https://evm.evmos.org/api", "https://evm.evmos.org"),
             EvmosTestnet => ("https://evm.evmos.dev/api", "https://evm.evmos.dev"),
 
-            Celo => ("https://explorer.celo.org/mainnet/api", "https://explorer.celo.org/mainnet"),
+            Celo => ("https://api.celoscan.io/api", "https://celoscan.io"),
             CeloAlfajores => {
-                ("https://explorer.celo.org/alfajores/api", "https://explorer.celo.org/alfajores")
+                ("https://api-alfajores.celoscan.io/api", "https://alfajores.celoscan.io")
             }
             CeloBaklava => {
                 ("https://explorer.celo.org/baklava/api", "https://explorer.celo.org/baklava")
@@ -1391,7 +1391,6 @@ impl NamedChain {
             | AuroraTestnet
             | Celo
             | CeloAlfajores
-            | CeloBaklava
             | Base
             | Linea
             | LineaSepolia
@@ -1424,11 +1423,13 @@ impl NamedChain {
 
             Moonbeam | Moonbase | MoonbeamDev | Moonriver => "MOONSCAN_API_KEY",
 
-            Acala | AcalaMandalaTestnet | AcalaTestnet | Canto | CantoTestnet | Etherlink
-            | EtherlinkTestnet | Flare | FlareCoston2 | KakarotSepolia | Karura | KaruraTestnet
-            | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora | ZoraGoerli | ZoraSepolia
-            | Darwinia | Crab | Koi | Immutable | ImmutableTestnet | SoneiumMinatoTestnet
-            | World | WorldSepolia | Curtis | InkSepolia => "BLOCKSCOUT_API_KEY",
+            Acala | AcalaMandalaTestnet | AcalaTestnet | Canto | CantoTestnet | CeloBaklava
+            | Etherlink | EtherlinkTestnet | Flare | FlareCoston2 | KakarotSepolia | Karura
+            | KaruraTestnet | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora
+            | ZoraGoerli | ZoraSepolia | Darwinia | Crab | Koi | Immutable | ImmutableTestnet
+            | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | InkSepolia => {
+                "BLOCKSCOUT_API_KEY"
+            }
 
             Boba => "BOBASCAN_API_KEY",
 
