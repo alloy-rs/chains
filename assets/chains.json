@@ -1400,7 +1400,7 @@
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://explorer-sepolia.inkonchain.com/api",
+      "etherscanApiUrl": "https://explorer-sepolia.inkonchain.com/api/v2",
       "etherscanBaseUrl": "https://explorer-sepolia.inkonchain.com",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
