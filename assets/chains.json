@@ -1040,8 +1040,8 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://explorer.celo.org/mainnet/api",
-      "etherscanBaseUrl": "https://explorer.celo.org/mainnet",
+      "etherscanApiUrl": "https://api.celoscan.io/api",
+      "etherscanBaseUrl": "https://celoscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "42261": {
@@ -1112,8 +1112,8 @@
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://explorer.celo.org/alfajores/api",
-      "etherscanBaseUrl": "https://explorer.celo.org/alfajores",
+      "etherscanApiUrl": "https://api-alfajores.celoscan.io/api",
+      "etherscanBaseUrl": "https://alfajores.celoscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "58008": {
@@ -1174,7 +1174,7 @@
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://explorer.celo.org/baklava/api",
       "etherscanBaseUrl": "https://explorer.celo.org/baklava",
-      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "80001": {
       "internalId": "PolygonMumbai",
