@@ -1137,7 +1137,7 @@ impl NamedChain {
             }
 
             InkSepolia => (
-                "https://explorer-sepolia.inkonchain.com/api",
+                "https://explorer-sepolia.inkonchain.com/api/v2",
                 "https://explorer-sepolia.inkonchain.com",
             ),
 
