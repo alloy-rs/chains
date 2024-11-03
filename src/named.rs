@@ -384,6 +384,8 @@ pub enum NamedChain {
     #[strum(to_string = "curtis", serialize = "apechain-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "apechain-testnet", alias = "curtis"))]
     Curtis = 33111,
+
+    SonicTestnet = 64165,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -659,7 +661,7 @@ impl NamedChain {
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
             | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
             | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm | PolygonZkEvmTestnet | Metis
-            | Linea | LineaGoerli | LineaSepolia | KakarotSepolia => return None,
+            | Linea | LineaGoerli | LineaSepolia | KakarotSepolia | SonicTestnet => return None,
         }))
     }
 
@@ -789,7 +791,7 @@ impl NamedChain {
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
-            | Merlin | Bitlayer => false,
+            | Merlin | Bitlayer | SonicTestnet => false,
         }
     }
 
@@ -944,7 +946,8 @@ impl NamedChain {
             | SoneiumMinatoTestnet
             | WorldSepolia
             | UnichainSepolia
-            | Curtis => true,
+            | Curtis
+            | SonicTestnet => true,
 
             // Dev chains.
             Dev | AnvilHardhat => true,
@@ -1346,6 +1349,10 @@ impl NamedChain {
 
             ApeChain => ("https://api.apescan.io/api", "https://apescan.io"),
             Curtis => ("https://curtis.explorer.caldera.xyz/api/v2", "https://curtis.apescan.io"),
+            SonicTestnet => (
+                "https://api.routescan.io/v2/network/testnet/evm/64165/etherscan/api",
+                "https://scan.soniclabs.com",
+            ),
         })
     }
 
@@ -1468,7 +1475,8 @@ impl NamedChain {
             | Pulsechain
             | PulsechainTestnet
             | AutonomysNovaTestnet
-            | Iotex => return None,
+            | Iotex
+            | SonicTestnet => return None,
         };
 
         Some(api_key_name)
