@@ -1176,6 +1176,18 @@
       "etherscanBaseUrl": "https://explorer.celo.org/baklava",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "64165": {
+      "internalId": "SonicTestnet",
+      "name": "sonic-testnet",
+      "averageBlocktimeHint": null,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://api.routescan.io/v2/network/testnet/evm/64165/etherscan/api",
+      "etherscanBaseUrl": "https://scan.soniclabs.com",
+      "etherscanApiKeyName": null
+    },
     "80001": {
       "internalId": "PolygonMumbai",
       "name": "mumbai",
