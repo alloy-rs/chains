@@ -1330,12 +1330,12 @@ impl NamedChain {
                 ("https://odyssey-explorer.ithaca.xyz/api", "https://odyssey-explorer.ithaca.xyz")
             }
             World => (
-                "https://worldchain-mainnet.explorer.alchemy.com/api",
-                "https://worldchain-mainnet.explorer.alchemy.com",
+                "https://api.worldscan.org/api",
+                "https://worldscan.org/"
             ),
             WorldSepolia => (
-                "https://worldchain-sepolia.explorer.alchemy.com/api",
-                "https://worldchain-sepolia.explorer.alchemy.com",
+                "https://api-sepolia.worldscan.org/api",
+                "https://sepolia.worldscan.org/",
             ),
             UnichainSepolia => {
                 ("https://sepolia.uniscan.xyz", "https://api-sepolia.uniscan.xyz/api")
