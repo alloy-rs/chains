@@ -1335,7 +1335,7 @@ impl NamedChain {
             ),
             WorldSepolia => (
                 "https://api-sepolia.worldscan.org/api",
-                "https://sepolia.worldscan.org/",
+                "https://sepolia.worldscan.org",
             ),
             UnichainSepolia => {
                 ("https://sepolia.uniscan.xyz", "https://api-sepolia.uniscan.xyz/api")
