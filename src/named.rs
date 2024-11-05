@@ -1329,14 +1329,10 @@ impl NamedChain {
             Odyssey => {
                 ("https://odyssey-explorer.ithaca.xyz/api", "https://odyssey-explorer.ithaca.xyz")
             }
-            World => (
-                "https://api.worldscan.org/api",
-                "https://worldscan.org"
-            ),
-            WorldSepolia => (
-                "https://api-sepolia.worldscan.org/api",
-                "https://sepolia.worldscan.org",
-            ),
+            World => ("https://api.worldscan.org/api", "https://worldscan.org"),
+            WorldSepolia => {
+                ("https://api-sepolia.worldscan.org/api", "https://sepolia.worldscan.org")
+            }
             UnichainSepolia => {
                 ("https://sepolia.uniscan.xyz", "https://api-sepolia.uniscan.xyz/api")
             }
