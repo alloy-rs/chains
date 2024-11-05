@@ -1331,7 +1331,7 @@ impl NamedChain {
             }
             World => (
                 "https://api.worldscan.org/api",
-                "https://worldscan.org/"
+                "https://worldscan.org"
             ),
             WorldSepolia => (
                 "https://api-sepolia.worldscan.org/api",
