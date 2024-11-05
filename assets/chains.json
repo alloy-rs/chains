@@ -439,10 +439,10 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "WRLD",
       "etherscanApiUrl": "https://api.worldscan.org/api",
-      "etherscanBaseUrl": "https://worldscan.org/",
-      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+      "etherscanBaseUrl": "https://worldscan.org",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "595": {
       "internalId": "AcalaMandalaTestnet",
@@ -787,10 +787,10 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "WRLD",
       "etherscanApiUrl": "https://api-sepolia.worldscan.org/api",
-      "etherscanBaseUrl": "https://sepolia.worldscan.org/",
-      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+      "etherscanBaseUrl": "https://sepolia.worldscan.org",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "5000": {
       "internalId": "Mantle",
