@@ -486,6 +486,18 @@ impl Chain {
         Self::from_named(NamedChain::InkSepolia)
     }
 
+    /// Returns the scroll mainnet chain
+    #[inline]
+    pub const fn scroll_mainnet() -> Self {
+        Self::from_named(NamedChain::Scroll)
+    }
+
+    /// Returns the scroll sepolia chain
+    #[inline]
+    pub const fn scroll_sepolia() -> Self {
+        Self::from_named(NamedChain::ScrollSepolia)
+    }
+
     /// Returns the kind of this chain.
     #[inline]
     pub const fn kind(&self) -> &ChainKind {
