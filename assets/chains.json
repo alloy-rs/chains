@@ -740,7 +740,7 @@
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": "RON",
-      "etherscanApiUrl": null,
+      "etherscanApiUrl": "https://api-gateway.skymavis.com/rpc/testnet",
       "etherscanBaseUrl": "https://saigon-app.roninchain.com",
       "etherscanApiKeyName": null
     },
