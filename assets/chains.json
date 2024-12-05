@@ -732,6 +732,18 @@
       "etherscanBaseUrl": "https://app.roninchain.com",
       "etherscanApiKeyName": null
     },
+    "2021": {
+      "internalId": "RoninTestnet",
+      "name": "ronin-testnet",
+      "averageBlocktimeHint": 3000,
+      "isLegacy": true,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "RON",
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": "https://saigon-app.roninchain.com",
+      "etherscanApiKeyName": null
+    },
     "2522": {
       "internalId": "FraxtalTestnet",
       "name": "fraxtal-testnet",
