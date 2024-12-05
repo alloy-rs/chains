@@ -1283,7 +1283,10 @@ impl NamedChain {
             ),
             Degen => ("https://explorer.degen.tips/api", "https://explorer.degen.tips"),
             Ronin => ("https://skynet-api.roninchain.com/ronin", "https://app.roninchain.com"),
-            RoninTestnet => ("https://api-gateway.skymavis.com/rpc/testnet", "https://saigon-app.roninchain.com"),
+            RoninTestnet => (
+                "https://api-gateway.skymavis.com/rpc/testnet",
+                "https://saigon-app.roninchain.com",
+            ),
             Taiko => ("https://api.taikoscan.io/api", "https://taikoscan.io"),
             TaikoHekla => ("https://api-testnet.taikoscan.io/api", "https://hekla.taikoscan.io"),
             Flare => {
