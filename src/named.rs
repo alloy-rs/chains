@@ -315,6 +315,9 @@ pub enum NamedChain {
 
     Ronin = 2020,
 
+    #[cfg_attr(feature = "serde", serde(alias = "ronin-testnet"))]
+    RoninTestnet = 2021,
+
     Taiko = 167000,
     #[cfg_attr(feature = "serde", serde(alias = "taiko-hekla"))]
     TaikoHekla = 167009,
@@ -638,7 +641,7 @@ impl NamedChain {
 
             OpBNBMainnet | OpBNBTestnet | AutonomysNovaTestnet => 1_000,
 
-            Ronin => 3_000,
+            Ronin | RoninTestnet => 3_000,
 
             Flare => 1_800,
 
@@ -704,6 +707,7 @@ impl NamedChain {
             | PolygonZkEvm
             | PolygonZkEvmTestnet
             | Ronin
+            | RoninTestnet
             | Rsk
             | Shimmer
             | Viction
@@ -931,6 +935,7 @@ impl NamedChain {
             | KakarotSepolia
             | EtherlinkTestnet
             | OpBNBTestnet
+            | RoninTestnet
             | TaikoHekla
             | AutonomysNovaTestnet
             | FlareCoston2
@@ -984,7 +989,7 @@ impl NamedChain {
 
             Degen => "DEGEN",
 
-            Ronin => "RON",
+            Ronin | RoninTestnet => "RON",
 
             Shimmer => "SMR",
 
@@ -1278,6 +1283,7 @@ impl NamedChain {
             ),
             Degen => ("https://explorer.degen.tips/api", "https://explorer.degen.tips"),
             Ronin => ("https://skynet-api.roninchain.com/ronin", "https://app.roninchain.com"),
+            RoninTestnet => ("https://api-gateway.skymavis.com/rpc/testnet", "https://saigon-app.roninchain.com"),
             Taiko => ("https://api.taikoscan.io/api", "https://taikoscan.io"),
             TaikoHekla => ("https://api-testnet.taikoscan.io/api", "https://hekla.taikoscan.io"),
             Flare => {
@@ -1466,6 +1472,7 @@ impl NamedChain {
             | Elastos
             | Degen
             | Ronin
+            | RoninTestnet
             | Cfx
             | CfxTestnet
             | Pulsechain

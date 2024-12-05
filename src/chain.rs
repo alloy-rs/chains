@@ -420,6 +420,12 @@ impl Chain {
         Self::from_named(NamedChain::Ronin)
     }
 
+    /// Returns the ronin testnet chain.
+    #[inline]
+    pub const fn ronin_testnet() -> Self {
+        Self::from_named(NamedChain::RoninTestnet)
+    }
+
     /// Returns the taiko mainnet chain.
     #[inline]
     pub const fn taiko() -> Self {
