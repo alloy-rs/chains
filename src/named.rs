@@ -4,6 +4,7 @@ use num_enum::TryFromPrimitiveError;
 
 #[allow(unused_imports)]
 use alloc::string::String;
+use utoipa::ToSchema;
 // When adding a new chain:
 //   1. add new variant to the NamedChain enum;
 //   2. add extra information in the last `impl` block (explorer URLs, block time) when applicable;
@@ -24,7 +25,7 @@ use alloc::string::String;
 // do not use the same case style.
 
 /// An Ethereum EIP-155 chain.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash, ToSchema)]
 #[derive(strum::IntoStaticStr)] // Into<&'static str>, AsRef<str>, fmt::Display and serde::Serialize
 #[derive(strum::VariantNames)] // NamedChain::VARIANTS
 #[derive(strum::VariantArray)] // NamedChain::VARIANTS
@@ -252,7 +253,7 @@ pub enum NamedChain {
     )]
     Polygon = 137,
 
-    #[strum(to_string = "polygon_mumbai", serialize = "polygon-mumbai")]
+    #[strum(to_string = "polygon_mumbai", serialize = "polygon-mumbai", serialize="mumbai")]
     #[cfg_attr(feature = "serde", serde(alias = "mumbai", alias = "polygon-mumbai"))]
     PolygonMumbai = 80001,
     #[strum(to_string = "amoy", serialize = "polygon-amoy", serialize = "polygon-amoy")]
@@ -396,7 +397,7 @@ pub enum NamedChain {
     BlastSepolia = 168587773,
 
     #[strum(serialize="linea", serialize="linea_eth")]
-    #[serde(alias = "linea", alias = "linea_eth")]
+    #[cfg_attr(feautre="serde", serde(alias = "linea", alias = "linea_eth"))]
     Linea = 59144,
     #[cfg_attr(feature = "serde", serde(alias = "linea-goerli"))]
     LineaGoerli = 59140,

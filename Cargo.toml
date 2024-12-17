@@ -15,6 +15,7 @@ repository = "https://github.com/alloy-rs/chains"
 num_enum = { version = "0.7", default-features = false }
 strum = { version = "0.26", default-features = false, features = ["derive"] }
 alloy-primitives = { version = "0.8", default-features = false }
+utoipa = "5.2.0"
 
 # serde
 serde = { version = "1.0", default-features = false, features = [
