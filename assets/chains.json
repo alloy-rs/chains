@@ -696,6 +696,18 @@
       "etherscanBaseUrl": "https://testnet-zkevm.polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
     },
+    "1480": {
+      "internalId": "Vana",
+      "name": "vana",
+      "averageBlocktimeHint": 6000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "VANA",
+      "etherscanApiUrl": "https://vanascan.io",
+      "etherscanBaseUrl": "https://instance_base_url/api",
+      "etherscanApiKeyName": "VANASCAN_API_KEY"
+    },
     "1625": {
       "internalId": "GravityAlphaMainnet",
       "name": "gravity-alpha-mainnet",
