@@ -5,7 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.50](https://github.com/alloy-rs/chains/releases/tag/v0.1.50) - 2024-12-23
+
+### Miscellaneous Tasks
+
+- Fix spec
+
+### Other
+
+- Adding in Ink Mainnet information ([#120](https://github.com/alloy-rs/chains/issues/120))
+
 ## [0.1.49](https://github.com/alloy-rs/chains/releases/tag/v0.1.49) - 2024-12-20
+
+### Miscellaneous Tasks
+
+- Release 0.1.49
 
 ### Other
 
