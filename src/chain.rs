@@ -492,6 +492,7 @@ impl Chain {
         Self::from_named(NamedChain::InkSepolia)
     }
 
+    /// Returns the ink mainnet chain.
     #[inline]
     pub const fn ink_mainnet() -> Self {
         Self::from_named(NamedChain::Ink)

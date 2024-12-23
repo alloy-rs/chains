@@ -1140,6 +1140,18 @@
       "etherscanBaseUrl": "https://alfajores.celoscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "57073": {
+      "internalId": "Ink",
+      "name": "ink",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://explorer.inkonchain.com/api/v2",
+      "etherscanBaseUrl": "https://explorer.inkonchain.com",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "58008": {
       "internalId": "PgnSepolia",
       "name": "pgn-sepolia",

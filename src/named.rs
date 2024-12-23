@@ -590,8 +590,8 @@ impl NamedChain {
             | ApeChain
             | Curtis => 260,
 
-            Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia
-            | Ink | InkSepolia | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli
+            Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia | Ink
+            | InkSepolia | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli
             | ZoraSepolia | Mantle | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia
             | SoneiumMinatoTestnet => 2_000,
 
@@ -1151,10 +1151,7 @@ impl NamedChain {
                 ("https://api-sepolia.scrollscan.com/api", "https://sepolia.scrollscan.com")
             }
 
-            Ink => (
-                "https://explorer.inkonchain.com/api/v2",
-                "https://explorer.inkonchain.com",
-            ),
+            Ink => ("https://explorer.inkonchain.com/api/v2", "https://explorer.inkonchain.com"),
             InkSepolia => (
                 "https://explorer-sepolia.inkonchain.com/api/v2",
                 "https://explorer-sepolia.inkonchain.com",
