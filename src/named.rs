@@ -224,6 +224,7 @@ pub enum NamedChain {
 
     Shimmer = 148,
 
+    Ink = 57073,
     #[cfg_attr(feature = "serde", serde(alias = "ink_sepolia_testnet", alias = "ink-sepolia"))]
     InkSepolia = 763373,
 
@@ -524,6 +525,7 @@ impl NamedChain {
                 | BaseSepolia
                 | Fraxtal
                 | FraxtalTestnet
+                | Ink
                 | InkSepolia
                 | Mode
                 | ModeSepolia
@@ -589,7 +591,7 @@ impl NamedChain {
             | Curtis => 260,
 
             Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia
-            | InkSepolia | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli
+            | Ink | InkSepolia | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli
             | ZoraSepolia | Mantle | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia
             | SoneiumMinatoTestnet => 2_000,
 
@@ -757,6 +759,7 @@ impl NamedChain {
             | Zora
             | ZoraGoerli
             | ZoraSepolia
+            | Ink
             | InkSepolia
             | Mantle
             | MantleSepolia
@@ -917,6 +920,7 @@ impl NamedChain {
             | FraxtalTestnet
             | LineaGoerli
             | LineaSepolia
+            | Ink
             | InkSepolia
             | MantleTestnet
             | MantleSepolia
@@ -1147,6 +1151,10 @@ impl NamedChain {
                 ("https://api-sepolia.scrollscan.com/api", "https://sepolia.scrollscan.com")
             }
 
+            Ink => (
+                "https://explorer.inkonchain.com/api/v2",
+                "https://explorer.inkonchain.com",
+            ),
             InkSepolia => (
                 "https://explorer-sepolia.inkonchain.com/api/v2",
                 "https://explorer-sepolia.inkonchain.com",
@@ -1443,7 +1451,7 @@ impl NamedChain {
             | Etherlink | EtherlinkTestnet | Flare | FlareCoston2 | KakarotSepolia | Karura
             | KaruraTestnet | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora
             | ZoraGoerli | ZoraSepolia | Darwinia | Crab | Koi | Immutable | ImmutableTestnet
-            | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | InkSepolia => {
+            | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia => {
                 "BLOCKSCOUT_API_KEY"
             }
 
