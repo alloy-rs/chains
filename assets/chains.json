@@ -864,6 +864,18 @@
       "etherscanBaseUrl": "https://opbnb-testnet.bscscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "7000": {
+      "internalId": "Zeta",
+      "name": "zeta",
+      "averageBlocktimeHint": 6000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "ZETA",
+      "etherscanApiUrl": "https://zetachain.blockscout.com",
+      "etherscanBaseUrl": "https://zetachain.blockscout.com/api",
+      "etherscanApiKeyName": "ZETASCAN_API_KEY"
+    },
     "7700": {
       "internalId": "Canto",
       "name": "canto",

@@ -378,6 +378,7 @@ pub enum NamedChain {
     Merlin = 4200,
     Bitlayer = 200901,
     Vana = 1480,
+    Zeta = 7000,
 
     #[strum(to_string = "unichain-sepolia")]
     #[cfg_attr(feature = "serde", serde(alias = "unichain-sepolia"))]
@@ -662,6 +663,7 @@ impl NamedChain {
             Merlin => 3_000,
             Bitlayer => 3_000,
             Vana => 6_000,
+            Zeta => 6_000,
 
             UnichainSepolia => 1_000,
 
@@ -800,7 +802,7 @@ impl NamedChain {
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
-            | Merlin | Bitlayer | SonicTestnet | Vana => false,
+            | Merlin | Bitlayer | SonicTestnet | Vana | Zeta => false,
         }
     }
 
@@ -971,7 +973,7 @@ impl NamedChain {
             | Fraxtal | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn | Mode
             | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
             | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex | Core
-            | Merlin | Bitlayer | ApeChain | Vana => false,
+            | Merlin | Bitlayer | ApeChain | Vana | Zeta => false,
         }
     }
 
@@ -1022,6 +1024,7 @@ impl NamedChain {
             Merlin => "BTC",
             Bitlayer => "BTC",
             Vana => "VANA",
+            Zeta => "ZETA",
 
             ApeChain | Curtis => "APE",
 
@@ -1360,6 +1363,7 @@ impl NamedChain {
             Merlin => ("https://scan.merlinchain.io", "https://scan.merlinchain.io/api"),
             Bitlayer => ("https://www.btrscan.com", "https://api.btrscan.com/scan/api"),
             Vana => ("https://vanascan.io", "https://instance_base_url/api"),
+            Zeta => ("https://zetachain.blockscout.com", "https://zetachain.blockscout.com/api"),
 
             ApeChain => ("https://api.apescan.io/api", "https://apescan.io"),
             Curtis => ("https://curtis.explorer.caldera.xyz/api/v2", "https://curtis.apescan.io"),
@@ -1458,6 +1462,7 @@ impl NamedChain {
             Merlin => "MERLINSCAN_API_KEY",
             Bitlayer => "BITLAYERSCAN_API_KEY",
             Vana => "VANASCAN_API_KEY",
+            Zeta => "ZETASCAN_API_KEY",
 
             // Explicitly exhaustive. See NB above.
             Metis
@@ -1579,6 +1584,7 @@ impl NamedChain {
             Bitlayer => address!("ff204e2681a6fa0e2c3fade68a1b28fb90e4fc5f"),
             ApeChain => address!("48b62137EdfA95a428D35C09E44256a739F6B557"),
             Vana => address!("00EDdD9621Fb08436d0331c149D1690909a5906d"),
+            Zeta => address!("5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf"),
             _ => return None,
         };
 
