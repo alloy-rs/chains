@@ -331,6 +331,7 @@ impl Chain {
     }
 
     /// Returns the arbitrum testnet chain.
+    #[inline]
     pub const fn arbitrum_testnet() -> Self {
         Self::from_named(NamedChain::ArbitrumTestnet)
     }
