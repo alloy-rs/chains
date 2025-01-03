@@ -1139,9 +1139,10 @@ impl NamedChain {
             GravityAlphaTestnetSepolia => {
                 ("https://explorer-sepolia.gravity.xyz/api", "https://explorer-sepolia.gravity.xyz")
             }
-            HappychainTestnet => {
-                ("https://happy-testnet-sepolia.explorer.caldera.xyz/api", "https://happy-testnet-sepolia.explorer.caldera.xyz")
-            }
+            HappychainTestnet => (
+                "https://happy-testnet-sepolia.explorer.caldera.xyz/api",
+                "https://happy-testnet-sepolia.explorer.caldera.xyz",
+            ),
 
             XaiSepolia => ("https://sepolia.xaiscan.io/api", "https://sepolia.xaiscan.io"),
             Xai => ("https://xaiscan.io/api", "https://xaiscan.io"),
