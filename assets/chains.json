@@ -1296,6 +1296,30 @@
       "etherscanBaseUrl": "https://sepolia.basescan.org",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "98864": {
+      "internalId": "PlumeDevnet",
+      "name": "plume-devnet",
+      "averageBlocktimeHint": 260,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://test-explorer.plumenetwork.xyz/api",
+      "etherscanBaseUrl": "https://test-explorer.plumenetwork.xyz",
+      "etherscanApiKeyName": null
+    },
+    "98865": {
+      "internalId": "Plume",
+      "name": "plume",
+      "averageBlocktimeHint": 260,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://explorer.plumenetwork.xyz/api",
+      "etherscanBaseUrl": "https://explorer.plumenetwork.xyz",
+      "etherscanApiKeyName": null
+    },
     "128123": {
       "internalId": "EtherlinkTestnet",
       "name": "etherlink-testnet",

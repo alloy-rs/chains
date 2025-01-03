@@ -392,6 +392,9 @@ pub enum NamedChain {
     Curtis = 33111,
 
     SonicTestnet = 64165,
+
+    PlumeDevnet = 98864,
+    Plume = 98865,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -589,7 +592,9 @@ impl NamedChain {
             | SyndrSepolia
             | ArbitrumNova
             | ApeChain
-            | Curtis => 260,
+            | Curtis
+            | Plume
+            | PlumeDevnet => 260,
 
             Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia | Ink
             | InkSepolia | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli
@@ -796,7 +801,9 @@ impl NamedChain {
             | WorldSepolia
             | UnichainSepolia
             | ApeChain
-            | Curtis => false,
+            | Curtis
+            | Plume
+            | PlumeDevnet => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
@@ -960,7 +967,8 @@ impl NamedChain {
             | WorldSepolia
             | UnichainSepolia
             | Curtis
-            | SonicTestnet => true,
+            | SonicTestnet
+            | PlumeDevnet => true,
 
             // Dev chains.
             Dev | AnvilHardhat => true,
@@ -973,7 +981,7 @@ impl NamedChain {
             | Fraxtal | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn | Mode
             | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
             | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex | Core
-            | Merlin | Bitlayer | ApeChain | Vana | Zeta => false,
+            | Merlin | Bitlayer | ApeChain | Vana | Zeta | Plume => false,
         }
     }
 
@@ -983,7 +991,7 @@ impl NamedChain {
 
         Some(match self {
             Mainnet | Goerli | Holesky | Kovan | Sepolia | Morden | Ropsten | Rinkeby | Scroll
-            | ScrollSepolia | Taiko | TaikoHekla | UnichainSepolia => "ETH",
+            | ScrollSepolia | Taiko | TaikoHekla | Plume | PlumeDevnet | UnichainSepolia => "ETH",
 
             Mantle | MantleSepolia => "MNT",
 
@@ -1371,6 +1379,12 @@ impl NamedChain {
                 "https://api.routescan.io/v2/network/testnet/evm/64165/etherscan/api",
                 "https://scan.soniclabs.com",
             ),
+
+            Plume => ("https://explorer.plumenetwork.xyz/api", "https://explorer.plumenetwork.xyz"),
+            PlumeDevnet => (
+                "https://test-explorer.plumenetwork.xyz/api",
+                "https://test-explorer.plumenetwork.xyz",
+            ),
         })
     }
 
@@ -1497,7 +1511,9 @@ impl NamedChain {
             | PulsechainTestnet
             | AutonomysNovaTestnet
             | Iotex
-            | SonicTestnet => return None,
+            | SonicTestnet
+            | Plume
+            | PlumeDevnet => return None,
         };
 
         Some(api_key_name)
