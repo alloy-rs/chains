@@ -306,6 +306,36 @@ impl Chain {
         Self::from_named(NamedChain::BaseSepolia)
     }
 
+    /// Returns the arbitrum mainnet chain.
+    #[inline]
+    pub const fn arbitrum_mainnet() -> Self {
+        Self::from_named(NamedChain::Arbitrum)
+    }
+
+    /// Returns the arbitrum nova chain.
+    #[inline]
+    pub const fn arbitrum_nova() -> Self {
+        Self::from_named(NamedChain::ArbitrumNova)
+    }
+
+    /// Returns the arbitrum goerli chain.
+    #[inline]
+    pub const fn arbitrum_goerli() -> Self {
+        Self::from_named(NamedChain::ArbitrumGoerli)
+    }
+
+    /// Returns the arbitrum sepolia chain.
+    #[inline]
+    pub const fn arbitrum_sepolia() -> Self {
+        Self::from_named(NamedChain::ArbitrumSepolia)
+    }
+
+    /// Returns the arbitrum testnet chain.
+    #[inline]
+    pub const fn arbitrum_testnet() -> Self {
+        Self::from_named(NamedChain::ArbitrumTestnet)
+    }
+
     /// Returns the syndr l3 mainnet chain.
     #[inline]
     pub const fn syndr() -> Self {
