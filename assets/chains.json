@@ -300,6 +300,18 @@
       "etherscanBaseUrl": "https://opbnb.bscscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "216": {
+      "internalId": "HappychainTestnet",
+      "name": "happychain-testnet",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "HAPPY",
+      "etherscanApiUrl": "https://happy-testnet-sepolia.explorer.caldera.xyz/api",
+      "etherscanBaseUrl": "https://happy-testnet-sepolia.explorer.caldera.xyz",
+      "etherscanApiKeyName": "null"
+    },
     "250": {
       "internalId": "Fantom",
       "name": "fantom",

@@ -269,6 +269,10 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "xai-sepolia"))]
     XaiSepolia = 37714555429,
 
+    #[strum(to_string = "happychain-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "happychain-testnet"))]
+    HappychainTestnet = 216,
+
     Viction = 88,
 
     Zora = 7777777,
@@ -543,6 +547,7 @@ impl NamedChain {
                 | World
                 | WorldSepolia
                 | UnichainSepolia
+                | HappychainTestnet
         )
     }
 
@@ -594,7 +599,7 @@ impl NamedChain {
             Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia | Ink
             | InkSepolia | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli
             | ZoraSepolia | Mantle | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia
-            | SoneiumMinatoTestnet => 2_000,
+            | HappychainTestnet | SoneiumMinatoTestnet => 2_000,
 
             Odyssey => 1_000,
 
@@ -749,6 +754,7 @@ impl NamedChain {
             | GravityAlphaTestnetSepolia
             | Xai
             | XaiSepolia
+            | HappychainTestnet
             | Syndr
             | SyndrSepolia
             | FilecoinMainnet
@@ -852,6 +858,7 @@ impl NamedChain {
                 | EtherlinkTestnet
                 | Scroll
                 | ScrollSepolia
+                | HappychainTestnet
                 | Shimmer
                 | OpBNBMainnet
                 | OpBNBTestnet
@@ -920,6 +927,7 @@ impl NamedChain {
             | FantomTestnet
             | FilecoinCalibrationTestnet
             | FraxtalTestnet
+            | HappychainTestnet
             | LineaGoerli
             | LineaSepolia
             | Ink
@@ -990,6 +998,8 @@ impl NamedChain {
             GravityAlphaMainnet | GravityAlphaTestnetSepolia => "G",
 
             Xai | XaiSepolia => "XAI",
+
+            HappychainTestnet => "HAPPY",
 
             BinanceSmartChain | BinanceSmartChainTestnet | OpBNBMainnet | OpBNBTestnet => "BNB",
 
@@ -1128,6 +1138,9 @@ impl NamedChain {
             }
             GravityAlphaTestnetSepolia => {
                 ("https://explorer-sepolia.gravity.xyz/api", "https://explorer-sepolia.gravity.xyz")
+            }
+            HappychainTestnet => {
+                ("https://happy-testnet-sepolia.explorer.caldera.xyz/api", "https://happy-testnet-sepolia.explorer.caldera.xyz")
             }
 
             XaiSepolia => ("https://sepolia.xaiscan.io/api", "https://sepolia.xaiscan.io"),
@@ -1497,6 +1510,7 @@ impl NamedChain {
             | PulsechainTestnet
             | AutonomysNovaTestnet
             | Iotex
+            | HappychainTestnet
             | SonicTestnet => return None,
         };
 
@@ -1658,6 +1672,7 @@ mod tests {
             (MantleSepolia, &["mantle-sepolia"]),
             (GravityAlphaMainnet, &["gravity-alpha-mainnet"]),
             (GravityAlphaTestnetSepolia, &["gravity-alpha-testnet-sepolia"]),
+            (HappychainTestnet, &["happychain-testnet"]),
             (Xai, &["xai"]),
             (XaiSepolia, &["xai-sepolia"]),
             (Base, &["base"]),
