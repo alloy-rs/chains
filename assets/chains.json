@@ -310,7 +310,7 @@
       "nativeCurrencySymbol": "HAPPY",
       "etherscanApiUrl": "https://happy-testnet-sepolia.explorer.caldera.xyz/api",
       "etherscanBaseUrl": "https://happy-testnet-sepolia.explorer.caldera.xyz",
-      "etherscanApiKeyName": "null"
+      "etherscanApiKeyName": null
     },
     "250": {
       "internalId": "Fantom",
