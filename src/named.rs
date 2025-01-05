@@ -396,6 +396,14 @@ pub enum NamedChain {
     Curtis = 33111,
 
     SonicTestnet = 64165,
+
+    #[strum(to_string = "treasure")]
+    #[cfg_attr(feature = "serde", serde(alias = "treasure"))]
+    Treasure = 61166,
+
+    #[strum(to_string = "treasure-topaz", serialize = "treasure-topaz-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "treasure-topaz-testnet", alias = "treasure-topaz"))]
+    TreasureTopaz = 978658,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -675,7 +683,7 @@ impl NamedChain {
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
             | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
             | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm | PolygonZkEvmTestnet | Metis
-            | Linea | LineaGoerli | LineaSepolia | KakarotSepolia | SonicTestnet => return None,
+            | Linea | LineaGoerli | LineaSepolia | KakarotSepolia | SonicTestnet | Treasure | TreasureTopaz => return None,
         }))
     }
 
@@ -721,6 +729,8 @@ impl NamedChain {
             | RoninTestnet
             | Rsk
             | Shimmer
+            | Treasure
+            | TreasureTopaz
             | Viction
             | ZkSync
             | ZkSyncTestnet => true,
@@ -968,6 +978,7 @@ impl NamedChain {
             | WorldSepolia
             | UnichainSepolia
             | Curtis
+            | TreasureTopaz
             | SonicTestnet => true,
 
             // Dev chains.
@@ -981,7 +992,7 @@ impl NamedChain {
             | Fraxtal | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn | Mode
             | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
             | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex | Core
-            | Merlin | Bitlayer | ApeChain | Vana | Zeta => false,
+            | Merlin | Bitlayer | ApeChain | Vana | Zeta | Treasure => false,
         }
     }
 
@@ -1037,6 +1048,8 @@ impl NamedChain {
             Zeta => "ZETA",
 
             ApeChain | Curtis => "APE",
+
+            Treasure | TreasureTopaz => "MAGIC",
 
             _ => return None,
         })
@@ -1385,6 +1398,11 @@ impl NamedChain {
                 "https://api.routescan.io/v2/network/testnet/evm/64165/etherscan/api",
                 "https://scan.soniclabs.com",
             ),
+
+            Treasure => ("https://block-explorer.treasurescan.io/api", "https://treasurescan.io"),
+            TreasureTopaz => {
+                ("https://block-explorer.topaz.treasurescan.io/api", "https://topaz.treasurescan.io")
+            }
         })
     }
 
@@ -1512,7 +1530,9 @@ impl NamedChain {
             | AutonomysNovaTestnet
             | Iotex
             | HappychainTestnet
-            | SonicTestnet => return None,
+            | SonicTestnet
+            | Treasure
+            | TreasureTopaz => return None,
         };
 
         Some(api_key_name)
@@ -1600,6 +1620,7 @@ impl NamedChain {
             ApeChain => address!("48b62137EdfA95a428D35C09E44256a739F6B557"),
             Vana => address!("00EDdD9621Fb08436d0331c149D1690909a5906d"),
             Zeta => address!("5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf"),
+            Treasure => address!("0x263d8f36bb8d0d9526255e205868c26690b04b88"),
             _ => return None,
         };
 
@@ -1692,6 +1713,8 @@ mod tests {
             (SoneiumMinatoTestnet, &["soneium-minato-testnet"]),
             (ApeChain, &["apechain"]),
             (Curtis, &["apechain-testnet", "curtis"]),
+            (Treasure, &["treasure"]),
+            (TreasureTopaz, &["treasure-topaz-testnet", "treasure-topaz"]),
         ];
 
         for &(chain, aliases) in ALIASES {
