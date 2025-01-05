@@ -402,7 +402,10 @@ pub enum NamedChain {
     Treasure = 61166,
 
     #[strum(to_string = "treasure-topaz", serialize = "treasure-topaz-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "treasure-topaz-testnet", alias = "treasure-topaz"))]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "treasure-topaz-testnet", alias = "treasure-topaz")
+    )]
     TreasureTopaz = 978658,
 }
 
@@ -683,7 +686,8 @@ impl NamedChain {
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
             | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
             | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm | PolygonZkEvmTestnet | Metis
-            | Linea | LineaGoerli | LineaSepolia | KakarotSepolia | SonicTestnet | Treasure | TreasureTopaz => return None,
+            | Linea | LineaGoerli | LineaSepolia | KakarotSepolia | SonicTestnet | Treasure
+            | TreasureTopaz => return None,
         }))
     }
 
@@ -1400,9 +1404,10 @@ impl NamedChain {
             ),
 
             Treasure => ("https://block-explorer.treasurescan.io/api", "https://treasurescan.io"),
-            TreasureTopaz => {
-                ("https://block-explorer.topaz.treasurescan.io/api", "https://topaz.treasurescan.io")
-            }
+            TreasureTopaz => (
+                "https://block-explorer.topaz.treasurescan.io/api",
+                "https://topaz.treasurescan.io",
+            ),
         })
     }
 
