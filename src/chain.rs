@@ -540,6 +540,18 @@ impl Chain {
         Self::from_named(NamedChain::ScrollSepolia)
     }
 
+    /// Returns the Treasure mainnet chain.
+    #[inline]
+    pub const fn treasure() -> Self {
+        Self::from_named(NamedChain::Treasure)
+    }
+
+    /// Returns the Treasure Topaz testnet chain.
+    #[inline]
+    pub const fn treasure_topaz_testnet() -> Self {
+        Self::from_named(NamedChain::TreasureTopaz)
+    }
+
     /// Returns the kind of this chain.
     #[inline]
     pub const fn kind(&self) -> &ChainKind {

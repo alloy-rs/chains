@@ -1224,6 +1224,18 @@
       "etherscanBaseUrl": "https://lineascan.build",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "61166": {
+      "internalId": "Treasure",
+      "name": "treasure",
+      "averageBlocktimeHint": null,
+      "isLegacy": true,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "MAGIC",
+      "etherscanApiUrl": "https://block-explorer.treasurescan.io/api",
+      "etherscanBaseUrl": "https://treasurescan.io",
+      "etherscanApiKeyName": null
+    },
     "62320": {
       "internalId": "CeloBaklava",
       "name": "celo-baklava",
@@ -1486,6 +1498,18 @@
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://odyssey-explorer.ithaca.xyz/api",
       "etherscanBaseUrl": "https://odyssey-explorer.ithaca.xyz",
+      "etherscanApiKeyName": null
+    },
+    "978658": {
+      "internalId": "TreasureTopaz",
+      "name": "treasure-topaz",
+      "averageBlocktimeHint": null,
+      "isLegacy": true,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "MAGIC",
+      "etherscanApiUrl": "https://block-explorer.topaz.treasurescan.io/api",
+      "etherscanBaseUrl": "https://topaz.treasurescan.io",
       "etherscanApiKeyName": null
     },
     "7777777": {
