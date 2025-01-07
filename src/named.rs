@@ -1625,7 +1625,7 @@ impl NamedChain {
             ApeChain => address!("48b62137EdfA95a428D35C09E44256a739F6B557"),
             Vana => address!("00EDdD9621Fb08436d0331c149D1690909a5906d"),
             Zeta => address!("5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf"),
-            Treasure => address!("0x263d8f36bb8d0d9526255e205868c26690b04b88"),
+            Treasure => address!("263d8f36bb8d0d9526255e205868c26690b04b88"),
             _ => return None,
         };
 
