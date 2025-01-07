@@ -62,6 +62,13 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "optimism-sepolia"))]
     OptimismSepolia = 11155420,
 
+    #[strum(to_string = "bob")]
+    #[cfg_attr(feature = "serde", serde(alias = "bob"))]
+    Bob = 60808,
+    #[strum(to_string = "bob-sepolia")]
+    #[cfg_attr(feature = "serde", serde(alias = "bob-sepolia"))]
+    BobSepolia = 808813,
+
     #[cfg_attr(feature = "serde", serde(alias = "arbitrum_one", alias = "arbitrum-one"))]
     Arbitrum = 42161,
     ArbitrumTestnet = 421611,
@@ -610,7 +617,7 @@ impl NamedChain {
             Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia | Ink
             | InkSepolia | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli
             | ZoraSepolia | Mantle | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia
-            | HappychainTestnet | SoneiumMinatoTestnet => 2_000,
+            | HappychainTestnet | SoneiumMinatoTestnet | Bob | BobSepolia => 2_000,
 
             Odyssey => 1_000,
 
@@ -755,6 +762,8 @@ impl NamedChain {
             | Optimism
             | OptimismGoerli
             | OptimismSepolia
+            | Bob
+            | BobSepolia
             | Polygon
             | PolygonMumbai
             | PolygonAmoy
@@ -842,6 +851,8 @@ impl NamedChain {
                 | Optimism
                 | OptimismGoerli
                 | OptimismSepolia
+                | Bob
+                | BobSepolia
                 | Odyssey
                 | Base
                 | BaseGoerli
@@ -952,6 +963,7 @@ impl NamedChain {
             | OptimismGoerli
             | OptimismKovan
             | OptimismSepolia
+            | BobSepolia
             | PolygonMumbai
             | PolygonAmoy
             | PolygonZkEvmTestnet
@@ -996,7 +1008,7 @@ impl NamedChain {
             | Fraxtal | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn | Mode
             | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
             | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex | Core
-            | Merlin | Bitlayer | ApeChain | Vana | Zeta | Treasure => false,
+            | Merlin | Bitlayer | ApeChain | Vana | Zeta | Treasure | Bob => false,
         }
     }
 
@@ -1125,6 +1137,12 @@ impl NamedChain {
             OptimismSepolia => (
                 "https://api-sepolia-optimistic.etherscan.io/api",
                 "https://sepolia-optimism.etherscan.io",
+            ),
+
+            Bob => ("https://explorer.gobob.xyz/api", "https://explorer.gobob.xyz"),
+            BobSepolia => (
+                "https://bob-sepolia.explorer.gobob.xyz/api",
+                "https://bob-sepolia.explorer.gobob.xyz",
             ),
 
             Fantom => ("https://api.ftmscan.com/api", "https://ftmscan.com"),
@@ -1518,6 +1536,8 @@ impl NamedChain {
             | Dev
             | GravityAlphaMainnet
             | GravityAlphaTestnetSepolia
+            | Bob
+            | BobSepolia
             | ZkSync
             | ZkSyncTestnet
             | FilecoinMainnet
@@ -1699,6 +1719,8 @@ mod tests {
             (MantleSepolia, &["mantle-sepolia"]),
             (GravityAlphaMainnet, &["gravity-alpha-mainnet"]),
             (GravityAlphaTestnetSepolia, &["gravity-alpha-testnet-sepolia"]),
+            (Bob, &["bob"]),
+            (BobSepolia, &["bob-sepolia"]),
             (HappychainTestnet, &["happychain-testnet"]),
             (Xai, &["xai"]),
             (XaiSepolia, &["xai-sepolia"]),
