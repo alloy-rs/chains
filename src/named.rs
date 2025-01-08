@@ -1729,6 +1729,8 @@ mod tests {
             (BaseSepolia, &["base-sepolia"]),
             (Fraxtal, &["fraxtal"]),
             (FraxtalTestnet, &["fraxtal-testnet"]),
+            (Ink, &["ink"]),
+            (InkSepolia, &["ink-sepolia"]),
             (BlastSepolia, &["blast-sepolia"]),
             (Syndr, &["syndr"]),
             (SyndrSepolia, &["syndr-sepolia"]),
