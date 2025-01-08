@@ -1224,6 +1224,18 @@
       "etherscanBaseUrl": "https://lineascan.build",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "60808": {
+      "internalId": "Bob",
+      "name": "bob",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://explorer.gobob.xyz/api",
+      "etherscanBaseUrl": "https://explorer.gobob.xyz",
+      "etherscanApiKeyName": null
+    },
     "61166": {
       "internalId": "Treasure",
       "name": "treasure",
@@ -1487,6 +1499,18 @@
       "etherscanApiUrl": "https://explorer-sepolia.inkonchain.com/api/v2",
       "etherscanBaseUrl": "https://explorer-sepolia.inkonchain.com",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
+    "808813": {
+      "internalId": "BobSepolia",
+      "name": "bob-sepolia",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://bob-sepolia.explorer.gobob.xyz/api",
+      "etherscanBaseUrl": "https://bob-sepolia.explorer.gobob.xyz",
+      "etherscanApiKeyName": null
     },
     "911867": {
       "internalId": "Odyssey",
