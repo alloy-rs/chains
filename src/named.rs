@@ -614,12 +614,12 @@ impl NamedChain {
             | ApeChain
             | Curtis => 260,
 
-            Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia | Ink
-            | InkSepolia | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli
-            | ZoraSepolia | Mantle | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia
+            Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia
+            | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli | ZoraSepolia
+            | Mantle | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia
             | HappychainTestnet | SoneiumMinatoTestnet | Bob | BobSepolia => 2_000,
 
-            Odyssey => 1_000,
+            Ink | InkSepolia | Odyssey => 1_000,
 
             Viction => 2_000,
 
@@ -861,6 +861,8 @@ impl NamedChain {
                 | BlastSepolia
                 | Fraxtal
                 | FraxtalTestnet
+                | Ink
+                | InkSepolia
                 | Gnosis
                 | Chiado
                 | ZoraSepolia
@@ -955,7 +957,6 @@ impl NamedChain {
             | HappychainTestnet
             | LineaGoerli
             | LineaSepolia
-            | Ink
             | InkSepolia
             | MantleTestnet
             | MantleSepolia
@@ -1005,10 +1006,10 @@ impl NamedChain {
             | BinanceSmartChain | Poa | Sokol | Scroll | Metis | Gnosis | Polygon
             | PolygonZkEvm | Fantom | Moonbeam | Moonriver | Moonbase | Evmos | Chiado | Oasis
             | Emerald | FilecoinMainnet | Avalanche | Celo | Aurora | Canto | Boba | Base
-            | Fraxtal | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn | Mode
-            | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
-            | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex | Core
-            | Merlin | Bitlayer | ApeChain | Vana | Zeta | Treasure | Bob => false,
+            | Fraxtal | Ink | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn
+            | Mode | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala
+            | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
+            | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Treasure | Bob => false,
         }
     }
 
@@ -1729,6 +1730,8 @@ mod tests {
             (BaseSepolia, &["base-sepolia"]),
             (Fraxtal, &["fraxtal"]),
             (FraxtalTestnet, &["fraxtal-testnet"]),
+            (Ink, &["ink"]),
+            (InkSepolia, &["ink-sepolia"]),
             (BlastSepolia, &["blast-sepolia"]),
             (Syndr, &["syndr"]),
             (SyndrSepolia, &["syndr-sepolia"]),
