@@ -415,6 +415,27 @@ pub enum NamedChain {
         serde(alias = "treasure-topaz-testnet", alias = "treasure-topaz")
     )]
     TreasureTopaz = 978658,
+
+    #[strum(to_string = "berachain-cartio", serialize = "berachain-cartio-testnet")]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "berachain-cartio-testnet", alias = "berachain-cartio")
+    )]
+    BerachainCartio = 80000,
+
+    #[strum(to_string = "berachain-bartio", serialize = "berachain-bartio-testnet")]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "berachain-bartio-testnet", alias = "berachain-bartio")
+    )]
+    BerachainBartio = 80084,
+
+    #[strum(to_string = "berachain-artio", serialize = "berachain-artio-testnet")]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "berachain-artio-testnet", alias = "berachain-artio")
+    )]
+    BerachainArtio = 80085,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -692,6 +713,8 @@ impl NamedChain {
 
             UnichainSepolia => 1_000,
 
+            BerachainBartio | BerachainArtio | BerachainCartio => 2_000,
+
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
             | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
             | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm | PolygonZkEvmTestnet | Metis
@@ -827,6 +850,9 @@ impl NamedChain {
             | WorldSepolia
             | UnichainSepolia
             | ApeChain
+            | BerachainBartio
+            | BerachainArtio
+            | BerachainCartio
             | Curtis => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
@@ -998,7 +1024,10 @@ impl NamedChain {
             | UnichainSepolia
             | Curtis
             | TreasureTopaz
-            | SonicTestnet => true,
+            | SonicTestnet
+            | BerachainBartio
+            | BerachainArtio
+            | BerachainCartio => true,
 
             // Dev chains.
             Dev | AnvilHardhat => true,
@@ -1071,6 +1100,8 @@ impl NamedChain {
             ApeChain | Curtis => "APE",
 
             Treasure | TreasureTopaz => "MAGIC",
+
+            BerachainBartio | BerachainArtio | BerachainCartio => "BERA",
 
             _ => return None,
         })
@@ -1432,6 +1463,11 @@ impl NamedChain {
                 "https://block-explorer.topaz.treasurescan.io/api",
                 "https://topaz.treasurescan.io",
             ),
+            BerachainBartio => ("https://bartio.beratrail.io/api", "https://bartio.beratrail.io"),
+            BerachainArtio => ("https://artio.beratrail.io/api", "https://artio.beratrail.io"),
+            BerachainCartio => {
+                ("https://80000.testnet.routescan.io/api", "https://80000.testnet.routescan.io")
+            }
         })
     }
 
@@ -1564,7 +1600,10 @@ impl NamedChain {
             | HappychainTestnet
             | SonicTestnet
             | Treasure
-            | TreasureTopaz => return None,
+            | TreasureTopaz
+            | BerachainBartio
+            | BerachainArtio
+            | BerachainCartio => return None,
         };
 
         Some(api_key_name)
@@ -1752,6 +1791,9 @@ mod tests {
             (Curtis, &["apechain-testnet", "curtis"]),
             (Treasure, &["treasure"]),
             (TreasureTopaz, &["treasure-topaz-testnet", "treasure-topaz"]),
+            (BerachainArtio, &["berachain-artio-testnet", "berachain-artio"]),
+            (BerachainBartio, &["berachain-bartio-testnet", "berachain-bartio"]),
+            (BerachainCartio, &["berachain-cartio-testnet", "berachain-cartio"]),
         ];
 
         for &(chain, aliases) in ALIASES {
