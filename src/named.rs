@@ -390,6 +390,7 @@ pub enum NamedChain {
     Bitlayer = 200901,
     Vana = 1480,
     Zeta = 7000,
+    Kaia = 8217,
 
     #[strum(to_string = "unichain-sepolia")]
     #[cfg_attr(feature = "serde", serde(alias = "unichain-sepolia"))]
@@ -687,6 +688,7 @@ impl NamedChain {
             Bitlayer => 3_000,
             Vana => 6_000,
             Zeta => 6_000,
+            Kaia => 1_000,
 
             UnichainSepolia => 1_000,
 
@@ -831,7 +833,7 @@ impl NamedChain {
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
-            | Merlin | Bitlayer | SonicTestnet | Vana | Zeta => false,
+            | Merlin | Bitlayer | SonicTestnet | Vana | Zeta | Kaia => false,
         }
     }
 
@@ -1009,7 +1011,9 @@ impl NamedChain {
             | Fraxtal | Ink | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn
             | Mode | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala
             | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
-            | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Treasure | Bob => false,
+            | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob => {
+                false
+            }
         }
     }
 
@@ -1063,7 +1067,7 @@ impl NamedChain {
             Bitlayer => "BTC",
             Vana => "VANA",
             Zeta => "ZETA",
-
+            Kaia => "KAIA",
             ApeChain | Curtis => "APE",
 
             Treasure | TreasureTopaz => "MAGIC",
@@ -1414,6 +1418,7 @@ impl NamedChain {
             Bitlayer => ("https://www.btrscan.com", "https://api.btrscan.com/scan/api"),
             Vana => ("https://vanascan.io", "https://instance_base_url/api"),
             Zeta => ("https://zetachain.blockscout.com", "https://zetachain.blockscout.com/api"),
+            Kaia => ("https://kaiascan.io", "https://mainnet-oapi.kaiascan.io/api"),
 
             ApeChain => ("https://api.apescan.io/api", "https://apescan.io"),
             Curtis => ("https://curtis.explorer.caldera.xyz/api/v2", "https://curtis.apescan.io"),
@@ -1519,6 +1524,7 @@ impl NamedChain {
             Bitlayer => "BITLAYERSCAN_API_KEY",
             Vana => "VANASCAN_API_KEY",
             Zeta => "ZETASCAN_API_KEY",
+            Kaia => "KAIASCAN_API_KEY",
 
             // Explicitly exhaustive. See NB above.
             Metis
@@ -1646,6 +1652,7 @@ impl NamedChain {
             ApeChain => address!("48b62137EdfA95a428D35C09E44256a739F6B557"),
             Vana => address!("00EDdD9621Fb08436d0331c149D1690909a5906d"),
             Zeta => address!("5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf"),
+            Kaia => address!("19aac5f612f524b754ca7e7c41cbfa2e981a4432"),
             Treasure => address!("263d8f36bb8d0d9526255e205868c26690b04b88"),
             _ => return None,
         };

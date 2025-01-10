@@ -900,6 +900,18 @@
       "etherscanBaseUrl": "https://evm.explorer.canto.io",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "8217": {
+      "internalId": "Kaia",
+      "name": "kaia",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "KAIA",
+      "etherscanApiUrl": "https://kaiascan.io",
+      "etherscanBaseUrl": "https://mainnet-oapi.kaiascan.io/api",
+      "etherscanApiKeyName": "KAIASCAN_API_KEY"
+    },
     "8453": {
       "internalId": "Base",
       "name": "base",
