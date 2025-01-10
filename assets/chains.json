@@ -1284,6 +1284,18 @@
       "etherscanBaseUrl": "https://scan.soniclabs.com",
       "etherscanApiKeyName": null
     },
+    "80000": {
+      "internalId": "BerachainCartio",
+      "name": "berachain-cartio",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "BERA",
+      "etherscanApiUrl": "https://80000.testnet.routescan.io/api",
+      "etherscanBaseUrl": "https://80000.testnet.routescan.io",
+      "etherscanApiKeyName": null
+    },
     "80001": {
       "internalId": "PolygonMumbai",
       "name": "mumbai",
@@ -1307,6 +1319,30 @@
       "etherscanApiUrl": "https://api-amoy.polygonscan.com/api",
       "etherscanBaseUrl": "https://amoy.polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
+    },
+    "80084": {
+      "internalId": "BerachainBartio",
+      "name": "berachain-bartio",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "BERA",
+      "etherscanApiUrl": "https://bartio.beratrail.io/api",
+      "etherscanBaseUrl": "https://bartio.beratrail.io",
+      "etherscanApiKeyName": null
+    },
+    "80085": {
+      "internalId": "BerachainArtio",
+      "name": "berachain-artio",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "BERA",
+      "etherscanApiUrl": "https://artio.beratrail.io/api",
+      "etherscanBaseUrl": "https://artio.beratrail.io",
+      "etherscanApiKeyName": null
     },
     "81457": {
       "internalId": "Blast",
