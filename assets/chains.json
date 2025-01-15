@@ -1284,18 +1284,6 @@
       "etherscanBaseUrl": "https://scan.soniclabs.com",
       "etherscanApiKeyName": null
     },
-    "80000": {
-      "internalId": "BerachainCartio",
-      "name": "berachain-cartio",
-      "averageBlocktimeHint": 2000,
-      "isLegacy": false,
-      "supportsShanghai": false,
-      "isTestnet": true,
-      "nativeCurrencySymbol": "BERA",
-      "etherscanApiUrl": "https://80000.testnet.routescan.io/api",
-      "etherscanBaseUrl": "https://80000.testnet.routescan.io",
-      "etherscanApiKeyName": null
-    },
     "80001": {
       "internalId": "PolygonMumbai",
       "name": "mumbai",
