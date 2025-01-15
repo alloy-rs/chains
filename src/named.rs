@@ -416,13 +416,6 @@ pub enum NamedChain {
     )]
     TreasureTopaz = 978658,
 
-    #[strum(to_string = "berachain-cartio", serialize = "berachain-cartio-testnet")]
-    #[cfg_attr(
-        feature = "serde",
-        serde(alias = "berachain-cartio-testnet", alias = "berachain-cartio")
-    )]
-    BerachainCartio = 80000,
-
     #[strum(to_string = "berachain-bartio", serialize = "berachain-bartio-testnet")]
     #[cfg_attr(
         feature = "serde",
@@ -713,7 +706,7 @@ impl NamedChain {
 
             UnichainSepolia => 1_000,
 
-            BerachainBartio | BerachainArtio | BerachainCartio => 2_000,
+            BerachainBartio | BerachainArtio => 2_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
             | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
@@ -852,7 +845,6 @@ impl NamedChain {
             | ApeChain
             | BerachainBartio
             | BerachainArtio
-            | BerachainCartio
             | Curtis => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
@@ -1026,8 +1018,7 @@ impl NamedChain {
             | TreasureTopaz
             | SonicTestnet
             | BerachainBartio
-            | BerachainArtio
-            | BerachainCartio => true,
+            | BerachainArtio => true,
 
             // Dev chains.
             Dev | AnvilHardhat => true,
@@ -1101,7 +1092,7 @@ impl NamedChain {
 
             Treasure | TreasureTopaz => "MAGIC",
 
-            BerachainBartio | BerachainArtio | BerachainCartio => "BERA",
+            BerachainBartio | BerachainArtio => "BERA",
 
             _ => return None,
         })
@@ -1465,9 +1456,6 @@ impl NamedChain {
             ),
             BerachainBartio => ("https://bartio.beratrail.io/api", "https://bartio.beratrail.io"),
             BerachainArtio => ("https://artio.beratrail.io/api", "https://artio.beratrail.io"),
-            BerachainCartio => {
-                ("https://80000.testnet.routescan.io/api", "https://80000.testnet.routescan.io")
-            }
         })
     }
 
@@ -1602,8 +1590,7 @@ impl NamedChain {
             | Treasure
             | TreasureTopaz
             | BerachainBartio
-            | BerachainArtio
-            | BerachainCartio => return None,
+            | BerachainArtio => return None,
         };
 
         Some(api_key_name)
@@ -1793,7 +1780,6 @@ mod tests {
             (TreasureTopaz, &["treasure-topaz-testnet", "treasure-topaz"]),
             (BerachainArtio, &["berachain-artio-testnet", "berachain-artio"]),
             (BerachainBartio, &["berachain-bartio-testnet", "berachain-bartio"]),
-            (BerachainCartio, &["berachain-cartio-testnet", "berachain-cartio"]),
         ];
 
         for &(chain, aliases) in ALIASES {
