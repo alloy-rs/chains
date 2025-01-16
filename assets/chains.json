@@ -732,6 +732,18 @@
       "etherscanBaseUrl": "https://explorer.gravity.xyz",
       "etherscanApiKeyName": null
     },
+    "1868": {
+      "internalId": "Soneium",
+      "name": "soneium",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://soneium.blockscout.com/api",
+      "etherscanBaseUrl": "https://soneium.blockscout.com",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "1946": {
       "internalId": "SoneiumMinatoTestnet",
       "name": "soneium-minato-testnet",
@@ -740,8 +752,8 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://explorer-testnet.soneium.org/api",
-      "etherscanBaseUrl": "https://explorer-testnet.soneium.org",
+      "etherscanApiUrl": "https://soneium-minato.blockscout.com/api",
+      "etherscanBaseUrl": "https://soneium-minato.blockscout.com",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "2020": {
