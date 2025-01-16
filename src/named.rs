@@ -375,6 +375,10 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "immutable-testnet"))]
     ImmutableTestnet = 13473,
 
+    #[strum(to_string = "soneium")]
+    #[cfg_attr(feature = "serde", serde(alias = "soneium"))]
+    Soneium = 1868,
+
     #[strum(to_string = "soneium-minato-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "soneium-minato-testnet"))]
     SoneiumMinatoTestnet = 1946,
@@ -575,6 +579,7 @@ impl NamedChain {
                 | BlastSepolia
                 | OpBNBMainnet
                 | OpBNBTestnet
+                | Soneium
                 | SoneiumMinatoTestnet
                 | Odyssey
                 | World
@@ -632,7 +637,7 @@ impl NamedChain {
             Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia
             | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli | ZoraSepolia
             | Mantle | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia
-            | HappychainTestnet | SoneiumMinatoTestnet | Bob | BobSepolia => 2_000,
+            | HappychainTestnet | Soneium | SoneiumMinatoTestnet | Bob | BobSepolia => 2_000,
 
             Ink | InkSepolia | Odyssey => 1_000,
 
@@ -838,6 +843,7 @@ impl NamedChain {
             | Koi
             | Immutable
             | ImmutableTestnet
+            | Soneium
             | SoneiumMinatoTestnet
             | World
             | WorldSepolia
@@ -929,6 +935,7 @@ impl NamedChain {
                 | Koi
                 | Immutable
                 | ImmutableTestnet
+                | Soneium
                 | SoneiumMinatoTestnet
                 | World
                 | WorldSepolia
@@ -1011,6 +1018,7 @@ impl NamedChain {
             | XaiSepolia
             | Koi
             | ImmutableTestnet
+            | Soneium
             | SoneiumMinatoTestnet
             | WorldSepolia
             | UnichainSepolia
@@ -1422,9 +1430,11 @@ impl NamedChain {
                 "https://explorer.testnet.immutable.com/api",
                 "https://explorer.testnet.immutable.com",
             ),
-            SoneiumMinatoTestnet => {
-                ("https://explorer-testnet.soneium.org/api", "https://explorer-testnet.soneium.org")
-            }
+            Soneium => ("https://soneium.blockscout.com/api", "https://soneium.blockscout.com"),
+            SoneiumMinatoTestnet => (
+                "https://soneium-minato.blockscout.com/api",
+                "https://soneium-minato.blockscout.com",
+            ),
             Odyssey => {
                 ("https://odyssey-explorer.ithaca.xyz/api", "https://odyssey-explorer.ithaca.xyz")
             }
@@ -1537,7 +1547,7 @@ impl NamedChain {
             | Etherlink | EtherlinkTestnet | Flare | FlareCoston2 | KakarotSepolia | Karura
             | KaruraTestnet | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora
             | ZoraGoerli | ZoraSepolia | Darwinia | Crab | Koi | Immutable | ImmutableTestnet
-            | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia => {
+            | Soneium | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia => {
                 "BLOCKSCOUT_API_KEY"
             }
 
@@ -1773,6 +1783,7 @@ mod tests {
             (AutonomysNovaTestnet, &["autonomys-nova-testnet"]),
             (Immutable, &["immutable"]),
             (ImmutableTestnet, &["immutable-testnet"]),
+            (Soneium, &["soneium"]),
             (SoneiumMinatoTestnet, &["soneium-minato-testnet"]),
             (ApeChain, &["apechain"]),
             (Curtis, &["apechain-testnet", "curtis"]),
