@@ -5,11 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.56](https://github.com/alloy-rs/chains/releases/tag/v0.1.56) - 2025-01-16
+
+### Bug Fixes
+
+- Berachain chain information ([#133](https://github.com/alloy-rs/chains/issues/133))
+
+### Features
+
+- Added berachain ([#132](https://github.com/alloy-rs/chains/issues/132))
+
+### Other
+
+- Added Soneium chain, updated Minato explorer ([#134](https://github.com/alloy-rs/chains/issues/134))
+
 ## [0.1.55](https://github.com/alloy-rs/chains/releases/tag/v0.1.55) - 2025-01-10
 
 ### Features
 
 - Add kaia ([#131](https://github.com/alloy-rs/chains/issues/131))
+
+### Miscellaneous Tasks
+
+- Release 0.1.55
 
 ## [0.1.54](https://github.com/alloy-rs/chains/releases/tag/v0.1.54) - 2025-01-08
 
