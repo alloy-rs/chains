@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.57](https://github.com/alloy-rs/chains/releases/tag/v0.1.57) - 2025-01-22
+
+### Features
+
+- Add sonic mainnet ([#135](https://github.com/alloy-rs/chains/issues/135))
+
 ## [0.1.56](https://github.com/alloy-rs/chains/releases/tag/v0.1.56) - 2025-01-16
 
 ### Bug Fixes
@@ -14,6 +20,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Features
 
 - Added berachain ([#132](https://github.com/alloy-rs/chains/issues/132))
+
+### Miscellaneous Tasks
+
+- Release 0.1.56
 
 ### Other
 
