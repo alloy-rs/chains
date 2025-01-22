@@ -276,6 +276,18 @@
       "etherscanBaseUrl": "https://polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
     },
+    "146": {
+      "internalId": "Sonic",
+      "name": "sonic",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "S",
+      "etherscanApiUrl": "https://api.sonicscan.org/api",
+      "etherscanBaseUrl": "https://sonicscan.org",
+      "etherscanApiKeyName": "SONICSCAN_API_KEY"
+    },
     "148": {
       "internalId": "Shimmer",
       "name": "shimmer",
