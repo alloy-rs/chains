@@ -407,7 +407,12 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "apechain-testnet", alias = "curtis"))]
     Curtis = 33111,
 
+    #[strum(to_string = "sonic-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "sonic-testnet"))]
     SonicTestnet = 64165,
+    #[strum(to_string = "sonic")]
+    #[cfg_attr(feature = "serde", serde(alias = "sonic"))]
+    Sonic = 146,
 
     #[strum(to_string = "treasure")]
     #[cfg_attr(feature = "serde", serde(alias = "treasure"))]
@@ -709,6 +714,8 @@ impl NamedChain {
             Zeta => 6_000,
             Kaia => 1_000,
 
+            Sonic => 1_000,
+
             UnichainSepolia => 1_000,
 
             BerachainBartio | BerachainArtio => 2_000,
@@ -845,6 +852,7 @@ impl NamedChain {
             | ImmutableTestnet
             | Soneium
             | SoneiumMinatoTestnet
+            | Sonic
             | World
             | WorldSepolia
             | UnichainSepolia
@@ -1018,7 +1026,6 @@ impl NamedChain {
             | XaiSepolia
             | Koi
             | ImmutableTestnet
-            | Soneium
             | SoneiumMinatoTestnet
             | WorldSepolia
             | UnichainSepolia
@@ -1039,9 +1046,8 @@ impl NamedChain {
             | Fraxtal | Ink | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn
             | Mode | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala
             | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
-            | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob => {
-                false
-            }
+            | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob
+            | Soneium | Sonic => false,
         }
     }
 
@@ -1101,6 +1107,8 @@ impl NamedChain {
             Treasure | TreasureTopaz => "MAGIC",
 
             BerachainBartio | BerachainArtio => "BERA",
+
+            Sonic => "S",
 
             _ => return None,
         })
@@ -1458,7 +1466,7 @@ impl NamedChain {
                 "https://api.routescan.io/v2/network/testnet/evm/64165/etherscan/api",
                 "https://scan.soniclabs.com",
             ),
-
+            Sonic => ("https://api.sonicscan.org/api", "https://sonicscan.org"),
             Treasure => ("https://block-explorer.treasurescan.io/api", "https://treasurescan.io"),
             TreasureTopaz => (
                 "https://block-explorer.topaz.treasurescan.io/api",
@@ -1559,7 +1567,7 @@ impl NamedChain {
             Vana => "VANASCAN_API_KEY",
             Zeta => "ZETASCAN_API_KEY",
             Kaia => "KAIASCAN_API_KEY",
-
+            Sonic => "SONICSCAN_API_KEY",
             // Explicitly exhaustive. See NB above.
             Metis
             | Chiado
