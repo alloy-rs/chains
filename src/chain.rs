@@ -102,6 +102,13 @@ impl PartialEq<u64> for Chain {
     }
 }
 
+impl PartialEq<Chain> for u64 {
+    #[inline]
+    fn eq(&self, other: &Chain) -> bool {
+        other.eq(self)
+    }
+}
+
 impl PartialOrd<u64> for Chain {
     #[inline]
     fn partial_cmp(&self, other: &u64) -> Option<Ordering> {
