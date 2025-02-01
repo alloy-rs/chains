@@ -440,17 +440,11 @@ pub enum NamedChain {
     BerachainArtio = 80085,
 
     #[strum(to_string = "superposition-testnet")]
-    #[cfg_attr(
-        feature = "serde",
-        serde(alias = "superposition-testnet")
-    )]
+    #[cfg_attr(feature = "serde", serde(alias = "superposition-testnet"))]
     SuperpositionTestnet = 98985,
 
     #[strum(to_string = "superposition")]
-    #[cfg_attr(
-        feature = "serde",
-        serde(alias = "superposition")
-    )]
+    #[cfg_attr(feature = "serde", serde(alias = "superposition"))]
     Superposition = 55244,
 }
 
@@ -1496,8 +1490,13 @@ impl NamedChain {
             ),
             BerachainBartio => ("https://bartio.beratrail.io/api", "https://bartio.beratrail.io"),
             BerachainArtio => ("https://artio.beratrail.io/api", "https://artio.beratrail.io"),
-            SuperpositionTestnet => ("https://testnet-explorer.superposition.so/api", "https://testnet-explorer.superposition.so"),
-            Superposition => ("https://explorer.superposition.so/api", "https://explorer.superposition.so")
+            SuperpositionTestnet => (
+                "https://testnet-explorer.superposition.so/api",
+                "https://testnet-explorer.superposition.so",
+            ),
+            Superposition => {
+                ("https://explorer.superposition.so/api", "https://explorer.superposition.so")
+            }
         })
     }
 
@@ -1580,9 +1579,7 @@ impl NamedChain {
             | KaruraTestnet | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora
             | ZoraGoerli | ZoraSepolia | Darwinia | Crab | Koi | Immutable | ImmutableTestnet
             | Soneium | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia
-            | SuperpositionTestnet | Superposition => {
-                "BLOCKSCOUT_API_KEY"
-            }
+            | SuperpositionTestnet | Superposition => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
