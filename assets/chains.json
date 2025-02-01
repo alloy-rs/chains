@@ -1200,6 +1200,18 @@
       "etherscanBaseUrl": "https://alfajores.celoscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "55244": {
+      "internalId": "Superposition",
+      "name": "superposition",
+      "averageBlocktimeHint": 260,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://explorer.superposition.so/api",
+      "etherscanBaseUrl": "https://explorer.superposition.so",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "57073": {
       "internalId": "Ink",
       "name": "ink",
@@ -1391,6 +1403,18 @@
       "etherscanApiUrl": "https://api-sepolia.basescan.org/api",
       "etherscanBaseUrl": "https://sepolia.basescan.org",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "98985": {
+      "internalId": "SuperpositionTestnet",
+      "name": "superposition-testnet",
+      "averageBlocktimeHint": 260,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://testnet-explorer.superposition.so/api",
+      "etherscanBaseUrl": "https://testnet-explorer.superposition.so",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "128123": {
       "internalId": "EtherlinkTestnet",

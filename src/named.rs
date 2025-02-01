@@ -438,6 +438,20 @@ pub enum NamedChain {
         serde(alias = "berachain-artio-testnet", alias = "berachain-artio")
     )]
     BerachainArtio = 80085,
+
+    #[strum(to_string = "superposition-testnet")]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "superposition-testnet")
+    )]
+    SuperpositionTestnet = 98985,
+
+    #[strum(to_string = "superposition")]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "superposition")
+    )]
+    Superposition = 55244,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -637,7 +651,9 @@ impl NamedChain {
             | SyndrSepolia
             | ArbitrumNova
             | ApeChain
-            | Curtis => 260,
+            | Curtis
+            | SuperpositionTestnet
+            | Superposition => 260,
 
             Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia
             | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli | ZoraSepolia
@@ -859,7 +875,9 @@ impl NamedChain {
             | ApeChain
             | BerachainBartio
             | BerachainArtio
-            | Curtis => false,
+            | Curtis
+            | SuperpositionTestnet
+            | Superposition => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
@@ -951,6 +969,8 @@ impl NamedChain {
                 | UnichainSepolia
                 | ApeChain
                 | Curtis
+                | SuperpositionTestnet
+                | Superposition
         )
     }
 
@@ -1033,7 +1053,8 @@ impl NamedChain {
             | TreasureTopaz
             | SonicTestnet
             | BerachainBartio
-            | BerachainArtio => true,
+            | BerachainArtio
+            | SuperpositionTestnet => true,
 
             // Dev chains.
             Dev | AnvilHardhat => true,
@@ -1047,7 +1068,7 @@ impl NamedChain {
             | Mode | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala
             | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
             | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob
-            | Soneium | Sonic => false,
+            | Soneium | Sonic | Superposition => false,
         }
     }
 
@@ -1057,7 +1078,8 @@ impl NamedChain {
 
         Some(match self {
             Mainnet | Goerli | Holesky | Kovan | Sepolia | Morden | Ropsten | Rinkeby | Scroll
-            | ScrollSepolia | Taiko | TaikoHekla | UnichainSepolia => "ETH",
+            | ScrollSepolia | Taiko | TaikoHekla | UnichainSepolia | SuperpositionTestnet
+            | Superposition => "ETH",
 
             Mantle | MantleSepolia => "MNT",
 
@@ -1474,6 +1496,8 @@ impl NamedChain {
             ),
             BerachainBartio => ("https://bartio.beratrail.io/api", "https://bartio.beratrail.io"),
             BerachainArtio => ("https://artio.beratrail.io/api", "https://artio.beratrail.io"),
+            SuperpositionTestnet => ("https://testnet-explorer.superposition.so/api", "https://testnet-explorer.superposition.so"),
+            Superposition => ("https://explorer.superposition.so/api", "https://explorer.superposition.so")
         })
     }
 
@@ -1555,7 +1579,8 @@ impl NamedChain {
             | Etherlink | EtherlinkTestnet | Flare | FlareCoston2 | KakarotSepolia | Karura
             | KaruraTestnet | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora
             | ZoraGoerli | ZoraSepolia | Darwinia | Crab | Koi | Immutable | ImmutableTestnet
-            | Soneium | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia => {
+            | Soneium | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia
+            | SuperpositionTestnet | Superposition => {
                 "BLOCKSCOUT_API_KEY"
             }
 
@@ -1698,6 +1723,7 @@ impl NamedChain {
             Zeta => address!("5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf"),
             Kaia => address!("19aac5f612f524b754ca7e7c41cbfa2e981a4432"),
             Treasure => address!("263d8f36bb8d0d9526255e205868c26690b04b88"),
+            Superposition => address!("1fB719f10b56d7a85DCD32f27f897375fB21cfdd"),
             _ => return None,
         };
 
@@ -1799,6 +1825,8 @@ mod tests {
             (TreasureTopaz, &["treasure-topaz-testnet", "treasure-topaz"]),
             (BerachainArtio, &["berachain-artio-testnet", "berachain-artio"]),
             (BerachainBartio, &["berachain-bartio-testnet", "berachain-bartio"]),
+            (SuperpositionTestnet, &["superposition-testnet"]),
+            (Superposition, &["superposition"]),
         ];
 
         for &(chain, aliases) in ALIASES {
