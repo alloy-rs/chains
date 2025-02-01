@@ -559,6 +559,18 @@ impl Chain {
         Self::from_named(NamedChain::TreasureTopaz)
     }
 
+    /// Returns the Superposition testnet chain.
+    #[inline]
+    pub const fn superposition_testnet() -> Self {
+        Self::from_named(NamedChain::SuperpositionTestnet)
+    }
+
+    /// Returns the Superposition mainnet chain.
+    #[inline]
+    pub const fn superposition() -> Self {
+        Self::from_named(NamedChain::Superposition)
+    }
+
     /// Returns the kind of this chain.
     #[inline]
     pub const fn kind(&self) -> &ChainKind {
