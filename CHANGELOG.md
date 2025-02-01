@@ -5,11 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.58](https://github.com/alloy-rs/chains/releases/tag/v0.1.58) - 2025-02-01
+
+### Features
+
+- Add inverse partialeq for chainid ([#136](https://github.com/alloy-rs/chains/issues/136))
+
+### Other
+
+- Rustfmt
+- Add Superposition testnet/mainnet ([#137](https://github.com/alloy-rs/chains/issues/137))
+
 ## [0.1.57](https://github.com/alloy-rs/chains/releases/tag/v0.1.57) - 2025-01-22
 
 ### Features
 
 - Add sonic mainnet ([#135](https://github.com/alloy-rs/chains/issues/135))
+
+### Miscellaneous Tasks
+
+- Release 0.1.57
 
 ## [0.1.56](https://github.com/alloy-rs/chains/releases/tag/v0.1.56) - 2025-01-16
 
