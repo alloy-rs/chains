@@ -439,6 +439,8 @@ pub enum NamedChain {
     )]
     BerachainArtio = 80085,
 
+    Berachain = 80094,
+
     #[strum(to_string = "superposition-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "superposition-testnet"))]
     SuperpositionTestnet = 98985,
@@ -728,7 +730,7 @@ impl NamedChain {
 
             UnichainSepolia => 1_000,
 
-            BerachainBartio | BerachainArtio => 2_000,
+            BerachainBartio | BerachainArtio | Berachain => 2_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
             | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
@@ -869,6 +871,7 @@ impl NamedChain {
             | ApeChain
             | BerachainBartio
             | BerachainArtio
+            | Berachain
             | Curtis
             | SuperpositionTestnet
             | Superposition => false,
@@ -1062,7 +1065,7 @@ impl NamedChain {
             | Mode | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala
             | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
             | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob
-            | Soneium | Sonic | Superposition => false,
+            | Soneium | Sonic | Superposition | Berachain => false,
         }
     }
 
@@ -1122,7 +1125,7 @@ impl NamedChain {
 
             Treasure | TreasureTopaz => "MAGIC",
 
-            BerachainBartio | BerachainArtio => "BERA",
+            BerachainBartio | BerachainArtio | Berachain => "BERA",
 
             Sonic => "S",
 
@@ -1467,14 +1470,14 @@ impl NamedChain {
                 ("https://api-sepolia.worldscan.org/api", "https://sepolia.worldscan.org")
             }
             UnichainSepolia => {
-                ("https://sepolia.uniscan.xyz", "https://api-sepolia.uniscan.xyz/api")
+                ("https://api-sepolia.uniscan.xyz/api", "https://sepolia.uniscan.xyz")
             }
-            Core => ("https://scan.coredao.org", "https://openapi.coredao.org/api"),
-            Merlin => ("https://scan.merlinchain.io", "https://scan.merlinchain.io/api"),
-            Bitlayer => ("https://www.btrscan.com", "https://api.btrscan.com/scan/api"),
-            Vana => ("https://vanascan.io", "https://instance_base_url/api"),
-            Zeta => ("https://zetachain.blockscout.com", "https://zetachain.blockscout.com/api"),
-            Kaia => ("https://kaiascan.io", "https://mainnet-oapi.kaiascan.io/api"),
+            Core => ("https://openapi.coredao.org/api", "https://scan.coredao.org"),
+            Merlin => ("https://scan.merlinchain.io/api", "https://scan.merlinchain.io"),
+            Bitlayer => ("https://api.btrscan.com/scan/api", "https://www.btrscan.com"),
+            Vana => ("https://api.vanascan.io/api", "https://vanascan.io"),
+            Zeta => ("https://zetachain.blockscout.com/api", "https://zetachain.blockscout.com"),
+            Kaia => ("https://mainnet-oapi.kaiascan.io/api", "https://kaiascan.io"),
 
             ApeChain => ("https://api.apescan.io/api", "https://apescan.io"),
             Curtis => ("https://curtis.explorer.caldera.xyz/api/v2", "https://curtis.apescan.io"),
@@ -1490,6 +1493,7 @@ impl NamedChain {
             ),
             BerachainBartio => ("https://bartio.beratrail.io/api", "https://bartio.beratrail.io"),
             BerachainArtio => ("https://artio.beratrail.io/api", "https://artio.beratrail.io"),
+            Berachain => ("https://api.berascan.com/api", "https://berascan.com"),
             SuperpositionTestnet => (
                 "https://testnet-explorer.superposition.so/api",
                 "https://testnet-explorer.superposition.so",
@@ -1590,6 +1594,7 @@ impl NamedChain {
             Zeta => "ZETASCAN_API_KEY",
             Kaia => "KAIASCAN_API_KEY",
             Sonic => "SONICSCAN_API_KEY",
+            Berachain => "BERASCAN_API_KEY",
             // Explicitly exhaustive. See NB above.
             Metis
             | Chiado
@@ -1721,6 +1726,8 @@ impl NamedChain {
             Kaia => address!("19aac5f612f524b754ca7e7c41cbfa2e981a4432"),
             Treasure => address!("263d8f36bb8d0d9526255e205868c26690b04b88"),
             Superposition => address!("1fB719f10b56d7a85DCD32f27f897375fB21cfdd"),
+            Sonic => address!("039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38"),
+            Berachain => address!("6969696969696969696969696969696969696969"),
             _ => return None,
         };
 

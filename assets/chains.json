@@ -632,8 +632,8 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "CORE",
-      "etherscanApiUrl": "https://scan.coredao.org",
-      "etherscanBaseUrl": "https://openapi.coredao.org/api",
+      "etherscanApiUrl": "https://openapi.coredao.org/api",
+      "etherscanBaseUrl": "https://scan.coredao.org",
       "etherscanApiKeyName": "CORESCAN_API_KEY"
     },
     "1281": {
@@ -692,8 +692,8 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://sepolia.uniscan.xyz",
-      "etherscanBaseUrl": "https://api-sepolia.uniscan.xyz/api",
+      "etherscanApiUrl": "https://api-sepolia.uniscan.xyz/api",
+      "etherscanBaseUrl": "https://sepolia.uniscan.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "1337": {
@@ -728,8 +728,8 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "VANA",
-      "etherscanApiUrl": "https://vanascan.io",
-      "etherscanBaseUrl": "https://instance_base_url/api",
+      "etherscanApiUrl": "https://api.vanascan.io/api",
+      "etherscanBaseUrl": "https://vanascan.io",
       "etherscanApiKeyName": "VANASCAN_API_KEY"
     },
     "1625": {
@@ -824,8 +824,8 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "BTC",
-      "etherscanApiUrl": "https://scan.merlinchain.io",
-      "etherscanBaseUrl": "https://scan.merlinchain.io/api",
+      "etherscanApiUrl": "https://scan.merlinchain.io/api",
+      "etherscanBaseUrl": "https://scan.merlinchain.io",
       "etherscanApiKeyName": "MERLINSCAN_API_KEY"
     },
     "4689": {
@@ -908,8 +908,8 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "ZETA",
-      "etherscanApiUrl": "https://zetachain.blockscout.com",
-      "etherscanBaseUrl": "https://zetachain.blockscout.com/api",
+      "etherscanApiUrl": "https://zetachain.blockscout.com/api",
+      "etherscanBaseUrl": "https://zetachain.blockscout.com",
       "etherscanApiKeyName": "ZETASCAN_API_KEY"
     },
     "7700": {
@@ -932,8 +932,8 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "KAIA",
-      "etherscanApiUrl": "https://kaiascan.io",
-      "etherscanBaseUrl": "https://mainnet-oapi.kaiascan.io/api",
+      "etherscanApiUrl": "https://mainnet-oapi.kaiascan.io/api",
+      "etherscanBaseUrl": "https://kaiascan.io",
       "etherscanApiKeyName": "KAIASCAN_API_KEY"
     },
     "8453": {
@@ -1368,6 +1368,18 @@
       "etherscanBaseUrl": "https://artio.beratrail.io",
       "etherscanApiKeyName": null
     },
+    "80094": {
+      "internalId": "Berachain",
+      "name": "berachain",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "BERA",
+      "etherscanApiUrl": "https://api.berascan.com/api",
+      "etherscanBaseUrl": "https://berascan.com",
+      "etherscanApiKeyName": "BERASCAN_API_KEY"
+    },
     "81457": {
       "internalId": "Blast",
       "name": "blast",
@@ -1460,8 +1472,8 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "BTC",
-      "etherscanApiUrl": "https://www.btrscan.com",
-      "etherscanBaseUrl": "https://api.btrscan.com/scan/api",
+      "etherscanApiUrl": "https://api.btrscan.com/scan/api",
+      "etherscanBaseUrl": "https://www.btrscan.com",
       "etherscanApiKeyName": "BITLAYERSCAN_API_KEY"
     },
     "314159": {
