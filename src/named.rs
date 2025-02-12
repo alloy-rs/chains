@@ -4,6 +4,7 @@ use num_enum::TryFromPrimitiveError;
 
 #[allow(unused_imports)]
 use alloc::string::String;
+use crate::NamedChain::TelosEVMTestnet;
 // When adding a new chain:
 //   1. add new variant to the NamedChain enum;
 //   2. add extra information in the last `impl` block (explorer URLs, block time) when applicable;
@@ -83,6 +84,9 @@ pub enum NamedChain {
     CronosTestnet = 338,
 
     Rsk = 30,
+
+    TelosEVM = 40,
+    TelosEVMTestnet = 41,
 
     #[strum(to_string = "crab")]
     #[cfg_attr(feature = "serde", serde(alias = "crab"))]
@@ -730,6 +734,8 @@ impl NamedChain {
 
             Sonic => 1_000,
 
+            TelosEVM | TelosEVMTestnet => 500,
+
             UnichainSepolia | Unichain => 1_000,
 
             BerachainBartio | BerachainArtio | Berachain => 2_000,
@@ -784,6 +790,8 @@ impl NamedChain {
             | RoninTestnet
             | Rsk
             | Shimmer
+            | TelosEVM
+            | TelosEVMTestnet
             | Treasure
             | TreasureTopaz
             | Viction
@@ -1055,7 +1063,8 @@ impl NamedChain {
             | SonicTestnet
             | BerachainBartio
             | BerachainArtio
-            | SuperpositionTestnet => true,
+            | SuperpositionTestnet
+            | TelosEVMTestnet => true,
 
             // Dev chains.
             Dev | AnvilHardhat => true,
@@ -1069,7 +1078,7 @@ impl NamedChain {
             | Mode | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala
             | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
             | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob
-            | Soneium | Sonic | Superposition | Berachain | Unichain => false,
+            | Soneium | Sonic | Superposition | Berachain | Unichain | TelosEVM => false,
         }
     }
 
@@ -1132,6 +1141,8 @@ impl NamedChain {
             BerachainBartio | BerachainArtio | Berachain => "BERA",
 
             Sonic => "S",
+
+            TelosEVM | TelosEVMTestnet => "TLOS",
 
             _ => return None,
         })
@@ -1506,6 +1517,8 @@ impl NamedChain {
             Superposition => {
                 ("https://explorer.superposition.so/api", "https://explorer.superposition.so")
             }
+            TelosEVM => ("https://api.teloscan.io/api", "https://teloscan.io"),
+            TelosEVMTestnet => ("https://api.testnet.teloscan.io/api", "https://testnet.teloscan.io"),
         })
     }
 
@@ -1641,7 +1654,9 @@ impl NamedChain {
             | Treasure
             | TreasureTopaz
             | BerachainBartio
-            | BerachainArtio => return None,
+            | BerachainArtio
+            | TelosEVM
+            | TelosEVMTestnet => return None,
         };
 
         Some(api_key_name)

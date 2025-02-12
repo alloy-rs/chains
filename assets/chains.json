@@ -120,6 +120,30 @@
       "etherscanBaseUrl": "https://blockscout.com/rsk/mainnet",
       "etherscanApiKeyName": null
     },
+    "40": {
+      "internalId": "TelosEVM",
+      "name": "telosevm",
+      "averageBlocktimeHint": 500,
+      "isLegacy": true,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "TLOS",
+      "etherscanApiUrl": "https://api.teloscan.io/api",
+      "etherscanBaseUrl": "https://telosscan.io",
+      "etherscanApiKeyName": null
+    },
+    "41": {
+      "internalId": "TelosEVMTestnet",
+      "name": "telosevm-testnet",
+      "averageBlocktimeHint": 500,
+      "isLegacy": true,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "TLOS",
+      "etherscanApiUrl": "https://api.testnet.teloscan.io/api",
+      "etherscanBaseUrl": "https://testnet.telosscan.io",
+      "etherscanApiKeyName": null
+    },
     "42": {
       "internalId": "Kovan",
       "name": "kovan",
