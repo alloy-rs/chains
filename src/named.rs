@@ -396,6 +396,7 @@ pub enum NamedChain {
     Zeta = 7000,
     Kaia = 8217,
 
+    Unichain = 130,
     #[strum(to_string = "unichain-sepolia")]
     #[cfg_attr(feature = "serde", serde(alias = "unichain-sepolia"))]
     UnichainSepolia = 1301,
@@ -599,6 +600,7 @@ impl NamedChain {
                 | Odyssey
                 | World
                 | WorldSepolia
+                | Unichain
                 | UnichainSepolia
                 | HappychainTestnet
         )
@@ -728,7 +730,7 @@ impl NamedChain {
 
             Sonic => 1_000,
 
-            UnichainSepolia => 1_000,
+            UnichainSepolia | Unichain => 1_000,
 
             BerachainBartio | BerachainArtio | Berachain => 2_000,
 
@@ -867,6 +869,7 @@ impl NamedChain {
             | Sonic
             | World
             | WorldSepolia
+            | Unichain
             | UnichainSepolia
             | ApeChain
             | BerachainBartio
@@ -963,6 +966,7 @@ impl NamedChain {
                 | World
                 | WorldSepolia
                 | Iotex
+                | Unichain
                 | UnichainSepolia
                 | ApeChain
                 | Curtis
@@ -1065,7 +1069,7 @@ impl NamedChain {
             | Mode | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala
             | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
             | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob
-            | Soneium | Sonic | Superposition | Berachain => false,
+            | Soneium | Sonic | Superposition | Berachain | Unichain => false,
         }
     }
 
@@ -1075,8 +1079,8 @@ impl NamedChain {
 
         Some(match self {
             Mainnet | Goerli | Holesky | Kovan | Sepolia | Morden | Ropsten | Rinkeby | Scroll
-            | ScrollSepolia | Taiko | TaikoHekla | UnichainSepolia | SuperpositionTestnet
-            | Superposition => "ETH",
+            | ScrollSepolia | Taiko | TaikoHekla | Unichain | UnichainSepolia
+            | SuperpositionTestnet | Superposition => "ETH",
 
             Mantle | MantleSepolia => "MNT",
 
@@ -1469,6 +1473,7 @@ impl NamedChain {
             WorldSepolia => {
                 ("https://api-sepolia.worldscan.org/api", "https://sepolia.worldscan.org")
             }
+            Unichain => ("https://api.uniscan.xyz/api", "https://uniscan.xyz"),
             UnichainSepolia => {
                 ("https://api-sepolia.uniscan.xyz/api", "https://sepolia.uniscan.xyz")
             }
@@ -1565,6 +1570,7 @@ impl NamedChain {
             | ScrollSepolia
             | Taiko
             | TaikoHekla
+            | Unichain
             | UnichainSepolia
             | ApeChain => "ETHERSCAN_API_KEY",
 

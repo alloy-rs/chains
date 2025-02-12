@@ -264,6 +264,18 @@
       "etherscanBaseUrl": "https://coston2-explorer.flare.network",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "130": {
+      "internalId": "Unichain",
+      "name": "unichain",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://api.uniscan.xyz/api",
+      "etherscanBaseUrl": "https://uniscan.xyz",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "137": {
       "internalId": "Polygon",
       "name": "polygon",
