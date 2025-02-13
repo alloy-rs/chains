@@ -121,27 +121,27 @@
       "etherscanApiKeyName": null
     },
     "40": {
-      "internalId": "TelosEVM",
-      "name": "telosevm",
+      "internalId": "TelosEvm",
+      "name": "telos",
       "averageBlocktimeHint": 500,
       "isLegacy": true,
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "TLOS",
       "etherscanApiUrl": "https://api.teloscan.io/api",
-      "etherscanBaseUrl": "https://telosscan.io",
+      "etherscanBaseUrl": "https://teloscan.io",
       "etherscanApiKeyName": null
     },
     "41": {
-      "internalId": "TelosEVMTestnet",
-      "name": "telosevm-testnet",
+      "internalId": "TelosEvmTestnet",
+      "name": "telos-testnet",
       "averageBlocktimeHint": 500,
       "isLegacy": true,
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": "TLOS",
       "etherscanApiUrl": "https://api.testnet.teloscan.io/api",
-      "etherscanBaseUrl": "https://testnet.telosscan.io",
+      "etherscanBaseUrl": "https://testnet.teloscan.io",
       "etherscanApiKeyName": null
     },
     "42": {
