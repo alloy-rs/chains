@@ -738,7 +738,7 @@ impl NamedChain {
             Vana => 6_000,
             Zeta => 6_000,
             Kaia => 1_000,
-            Story => 2_600,
+            Story => 2_500,
 
             Sonic => 1_000,
 

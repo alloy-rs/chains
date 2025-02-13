@@ -771,7 +771,7 @@
     "1514": {
       "internalId": "Story",
       "name": "story",
-      "averageBlocktimeHint": 2600,
+      "averageBlocktimeHint": 2500,
       "isLegacy": false,
       "supportsShanghai": false,
       "isTestnet": false,
