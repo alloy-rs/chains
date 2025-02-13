@@ -766,7 +766,19 @@
       "nativeCurrencySymbol": "VANA",
       "etherscanApiUrl": "https://api.vanascan.io/api",
       "etherscanBaseUrl": "https://vanascan.io",
-      "etherscanApiKeyName": "VANASCAN_API_KEY"
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
+    "1514": {
+      "internalId": "Story",
+      "name": "story",
+      "averageBlocktimeHint": 2600,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "IP",
+      "etherscanApiUrl": "https://www.storyscan.xyz/api/v2",
+      "etherscanBaseUrl": "https://www.storyscan.xyz",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "1625": {
       "internalId": "GravityAlphaMainnet",

@@ -405,6 +405,7 @@ pub enum NamedChain {
     Vana = 1480,
     Zeta = 7000,
     Kaia = 8217,
+    Story = 1514,
 
     Unichain = 130,
     #[strum(to_string = "unichain-sepolia")]
@@ -737,6 +738,7 @@ impl NamedChain {
             Vana => 6_000,
             Zeta => 6_000,
             Kaia => 1_000,
+            Story => 2_600,
 
             Sonic => 1_000,
 
@@ -897,7 +899,7 @@ impl NamedChain {
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
-            | Merlin | Bitlayer | SonicTestnet | Vana | Zeta | Kaia => false,
+            | Merlin | Bitlayer | SonicTestnet | Vana | Zeta | Kaia | Story => false,
         }
     }
 
@@ -1084,7 +1086,7 @@ impl NamedChain {
             | Mode | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala
             | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
             | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob
-            | Soneium | Sonic | Superposition | Berachain | Unichain | TelosEvm => false,
+            | Soneium | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story => false,
         }
     }
 
@@ -1140,6 +1142,7 @@ impl NamedChain {
             Vana => "VANA",
             Zeta => "ZETA",
             Kaia => "KAIA",
+            Story => "IP",
             ApeChain | Curtis => "APE",
 
             Treasure | TreasureTopaz => "MAGIC",
@@ -1500,6 +1503,7 @@ impl NamedChain {
             Vana => ("https://api.vanascan.io/api", "https://vanascan.io"),
             Zeta => ("https://zetachain.blockscout.com/api", "https://zetachain.blockscout.com"),
             Kaia => ("https://mainnet-oapi.kaiascan.io/api", "https://kaiascan.io"),
+            Story => ("https://www.storyscan.xyz/api/v2", "https://www.storyscan.xyz"),
 
             ApeChain => ("https://api.apescan.io/api", "https://apescan.io"),
             Curtis => ("https://curtis.explorer.caldera.xyz/api/v2", "https://curtis.apescan.io"),
@@ -1610,14 +1614,13 @@ impl NamedChain {
             | KaruraTestnet | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora
             | ZoraGoerli | ZoraSepolia | Darwinia | Crab | Koi | Immutable | ImmutableTestnet
             | Soneium | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia
-            | SuperpositionTestnet | Superposition => "BLOCKSCOUT_API_KEY",
+            | SuperpositionTestnet | Superposition | Vana | Story => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
             Core => "CORESCAN_API_KEY",
             Merlin => "MERLINSCAN_API_KEY",
             Bitlayer => "BITLAYERSCAN_API_KEY",
-            Vana => "VANASCAN_API_KEY",
             Zeta => "ZETASCAN_API_KEY",
             Kaia => "KAIASCAN_API_KEY",
             Sonic => "SONICSCAN_API_KEY",
@@ -1753,6 +1756,7 @@ impl NamedChain {
             Vana => address!("00EDdD9621Fb08436d0331c149D1690909a5906d"),
             Zeta => address!("5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf"),
             Kaia => address!("19aac5f612f524b754ca7e7c41cbfa2e981a4432"),
+            Story => address!("1514000000000000000000000000000000000000"),
             Treasure => address!("263d8f36bb8d0d9526255e205868c26690b04b88"),
             Superposition => address!("1fB719f10b56d7a85DCD32f27f897375fB21cfdd"),
             Sonic => address!("039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38"),
