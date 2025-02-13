@@ -571,6 +571,18 @@ impl Chain {
         Self::from_named(NamedChain::Superposition)
     }
 
+    /// Returns the Unichain mainnet chain.
+    #[inline]
+    pub const fn unichain_mainnet() -> Self {
+        Self::from_named(NamedChain::Unichain)
+    }
+
+    /// Returns the Unichain sepolia chain.
+    #[inline]
+    pub const fn unichain_sepolia() -> Self {
+        Self::from_named(NamedChain::UnichainSepolia)
+    }
+
     /// Returns the kind of this chain.
     #[inline]
     pub const fn kind(&self) -> &ChainKind {
