@@ -5,11 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.62](https://github.com/alloy-rs/chains/releases/tag/v0.1.62) - 2025-02-18
+
+### Dependencies
+
+- [deps] Bump strum
+
+### Features
+
+- Add methods for Unichain mainnet and sepolia ([#143](https://github.com/alloy-rs/chains/issues/143))
+
+### Other
+
+- Add story ([#142](https://github.com/alloy-rs/chains/issues/142))
+
 ## [0.1.61](https://github.com/alloy-rs/chains/releases/tag/v0.1.61) - 2025-02-13
 
 ### Features
 
 - Add telos aliases ([#141](https://github.com/alloy-rs/chains/issues/141))
+
+### Miscellaneous Tasks
+
+- Release 0.1.61
 
 ## [0.1.60](https://github.com/alloy-rs/chains/releases/tag/v0.1.60) - 2025-02-12
 
