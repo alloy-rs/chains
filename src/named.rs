@@ -460,6 +460,10 @@ pub enum NamedChain {
     #[strum(to_string = "superposition")]
     #[cfg_attr(feature = "serde", serde(alias = "superposition"))]
     Superposition = 55244,
+
+    #[strum(serialize = "monad-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "monad-testnet"))]
+    MonadTestnet = 10143,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -748,6 +752,8 @@ impl NamedChain {
 
             BerachainBartio | BerachainArtio | Berachain => 2_000,
 
+            MonadTestnet => 500,
+
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
             | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
             | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm | PolygonZkEvmTestnet | Metis
@@ -893,7 +899,8 @@ impl NamedChain {
             | Berachain
             | Curtis
             | SuperpositionTestnet
-            | Superposition => false,
+            | Superposition
+            | MonadTestnet => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
@@ -988,6 +995,7 @@ impl NamedChain {
                 | Curtis
                 | SuperpositionTestnet
                 | Superposition
+                | MonadTestnet
         )
     }
 
@@ -1072,6 +1080,7 @@ impl NamedChain {
             | BerachainBartio
             | BerachainArtio
             | SuperpositionTestnet
+            | MonadTestnet
             | TelosEvmTestnet => true,
 
             // Dev chains.
@@ -1527,6 +1536,7 @@ impl NamedChain {
             Superposition => {
                 ("https://explorer.superposition.so/api", "https://explorer.superposition.so")
             }
+            MonadTestnet => ("https://sourcify.dev/server", "https://testnet.monadexplorer.com"),
             TelosEvm => ("https://api.teloscan.io/api", "https://teloscan.io"),
             TelosEvmTestnet => {
                 ("https://api.testnet.teloscan.io/api", "https://testnet.teloscan.io")
@@ -1597,6 +1607,7 @@ impl NamedChain {
             | TaikoHekla
             | Unichain
             | UnichainSepolia
+            | MonadTestnet
             | ApeChain => "ETHERSCAN_API_KEY",
 
             Avalanche | AvalancheFuji => "SNOWTRACE_API_KEY",

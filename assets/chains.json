@@ -1020,6 +1020,18 @@
       "etherscanBaseUrl": "https://evm.evmos.org",
       "etherscanApiKeyName": null
     },
+    "10143": {
+      "internalId": "MonadTestnet",
+      "name": "monad-testnet",
+      "averageBlocktimeHint": 500,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://sourcify.dev/server",
+      "etherscanBaseUrl": "https://testnet.monadexplorer.com",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "10200": {
       "internalId": "Chiado",
       "name": "chiado",
