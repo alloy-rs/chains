@@ -670,9 +670,9 @@ impl NamedChain {
             | Superposition => 260,
 
             Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia
-            | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraSepolia
-            | Mantle | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia
-            | HappychainTestnet | Soneium | SoneiumMinatoTestnet | Bob | BobSepolia => 2_000,
+            | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraSepolia | Mantle
+            | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia | HappychainTestnet
+            | Soneium | SoneiumMinatoTestnet | Bob | BobSepolia => 2_000,
 
             Ink | InkSepolia | Odyssey => 1_000,
 
@@ -1543,7 +1543,10 @@ impl NamedChain {
             TelosEvmTestnet => {
                 ("https://api.testnet.teloscan.io/api", "https://testnet.teloscan.io")
             }
-            Hyperliquid => ("https://hyperliquid.cloud.blockscout.com/api/v2", "https://hyperliquid.cloud.blockscout.com"),
+            Hyperliquid => (
+                "https://hyperliquid.cloud.blockscout.com/api/v2",
+                "https://hyperliquid.cloud.blockscout.com",
+            ),
         })
     }
 
@@ -1626,10 +1629,11 @@ impl NamedChain {
             Acala | AcalaMandalaTestnet | AcalaTestnet | Canto | CantoTestnet | CeloBaklava
             | Etherlink | EtherlinkTestnet | Flare | FlareCoston2 | KakarotSepolia | Karura
             | KaruraTestnet | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora
-            | ZoraSepolia | Darwinia | Crab | Koi | Immutable | ImmutableTestnet
-            | Soneium | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia
-            | SuperpositionTestnet | Superposition | Vana | Story
-            | Hyperliquid => "BLOCKSCOUT_API_KEY",
+            | ZoraSepolia | Darwinia | Crab | Koi | Immutable | ImmutableTestnet | Soneium
+            | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia
+            | SuperpositionTestnet | Superposition | Vana | Story | Hyperliquid => {
+                "BLOCKSCOUT_API_KEY"
+            }
 
             Boba => "BOBASCAN_API_KEY",
 
