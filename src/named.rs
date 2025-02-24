@@ -293,8 +293,6 @@ pub enum NamedChain {
     Viction = 88,
 
     Zora = 7777777,
-    #[cfg_attr(feature = "serde", serde(alias = "zora-goerli"))]
-    ZoraGoerli = 999,
     #[cfg_attr(feature = "serde", serde(alias = "zora-sepolia"))]
     ZoraSepolia = 999999999,
 
@@ -464,6 +462,10 @@ pub enum NamedChain {
     #[strum(serialize = "monad-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "monad-testnet"))]
     MonadTestnet = 10143,
+
+    #[strum(to_string = "hyperliquid")]
+    #[cfg_attr(feature = "serde", serde(alias = "hyperliquid"))]
+    Hyperliquid = 999,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -605,7 +607,6 @@ impl NamedChain {
                 | Pgn
                 | PgnSepolia
                 | Zora
-                | ZoraGoerli
                 | ZoraSepolia
                 | BlastSepolia
                 | OpBNBMainnet
@@ -669,9 +670,9 @@ impl NamedChain {
             | Superposition => 260,
 
             Optimism | OptimismGoerli | OptimismSepolia | Base | BaseGoerli | BaseSepolia
-            | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraGoerli | ZoraSepolia
-            | Mantle | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia
-            | HappychainTestnet | Soneium | SoneiumMinatoTestnet | Bob | BobSepolia => 2_000,
+            | Blast | BlastSepolia | Fraxtal | FraxtalTestnet | Zora | ZoraSepolia | Mantle
+            | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia | HappychainTestnet
+            | Soneium | SoneiumMinatoTestnet | Bob | BobSepolia => 2_000,
 
             Ink | InkSepolia | Odyssey => 1_000,
 
@@ -753,6 +754,8 @@ impl NamedChain {
             BerachainBartio | BerachainArtio | Berachain => 2_000,
 
             MonadTestnet => 500,
+
+            Hyperliquid => 2_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
             | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
@@ -854,7 +857,6 @@ impl NamedChain {
             | Gnosis
             | Chiado
             | Zora
-            | ZoraGoerli
             | ZoraSepolia
             | Ink
             | InkSepolia
@@ -900,7 +902,8 @@ impl NamedChain {
             | Curtis
             | SuperpositionTestnet
             | Superposition
-            | MonadTestnet => false,
+            | MonadTestnet
+            | Hyperliquid => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
@@ -1051,7 +1054,6 @@ impl NamedChain {
             | ScrollSepolia
             | Shimmer
             | ZkSyncTestnet
-            | ZoraGoerli
             | ZoraSepolia
             | ModeSepolia
             | PgnSepolia
@@ -1095,7 +1097,8 @@ impl NamedChain {
             | Mode | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala
             | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
             | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob
-            | Soneium | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story => false,
+            | Soneium | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story
+            | Hyperliquid => false,
         }
     }
 
@@ -1161,6 +1164,8 @@ impl NamedChain {
             Sonic => "S",
 
             TelosEvm | TelosEvmTestnet => "TLOS",
+
+            Hyperliquid => "HYPE",
 
             _ => return None,
         })
@@ -1400,9 +1405,6 @@ impl NamedChain {
             Viction => ("https://www.vicscan.xyz/api", "https://www.vicscan.xyz"),
 
             Zora => ("https://explorer.zora.energy/api", "https://explorer.zora.energy"),
-            ZoraGoerli => {
-                ("https://testnet.explorer.zora.energy/api", "https://testnet.explorer.zora.energy")
-            }
             ZoraSepolia => {
                 ("https://sepolia.explorer.zora.energy/api", "https://sepolia.explorer.zora.energy")
             }
@@ -1541,6 +1543,10 @@ impl NamedChain {
             TelosEvmTestnet => {
                 ("https://api.testnet.teloscan.io/api", "https://testnet.teloscan.io")
             }
+            Hyperliquid => (
+                "https://hyperliquid.cloud.blockscout.com/api/v2",
+                "https://hyperliquid.cloud.blockscout.com",
+            ),
         })
     }
 
@@ -1623,9 +1629,11 @@ impl NamedChain {
             Acala | AcalaMandalaTestnet | AcalaTestnet | Canto | CantoTestnet | CeloBaklava
             | Etherlink | EtherlinkTestnet | Flare | FlareCoston2 | KakarotSepolia | Karura
             | KaruraTestnet | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora
-            | ZoraGoerli | ZoraSepolia | Darwinia | Crab | Koi | Immutable | ImmutableTestnet
-            | Soneium | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia
-            | SuperpositionTestnet | Superposition | Vana | Story => "BLOCKSCOUT_API_KEY",
+            | ZoraSepolia | Darwinia | Crab | Koi | Immutable | ImmutableTestnet | Soneium
+            | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia
+            | SuperpositionTestnet | Superposition | Vana | Story | Hyperliquid => {
+                "BLOCKSCOUT_API_KEY"
+            }
 
             Boba => "BOBASCAN_API_KEY",
 
@@ -1772,6 +1780,7 @@ impl NamedChain {
             Superposition => address!("1fB719f10b56d7a85DCD32f27f897375fB21cfdd"),
             Sonic => address!("039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38"),
             Berachain => address!("6969696969696969696969696969696969696969"),
+            Hyperliquid => address!("5555555555555555555555555555555555555555"),
             _ => return None,
         };
 
@@ -1875,6 +1884,7 @@ mod tests {
             (BerachainBartio, &["berachain-bartio-testnet", "berachain-bartio"]),
             (SuperpositionTestnet, &["superposition-testnet"]),
             (Superposition, &["superposition"]),
+            (Hyperliquid, &["hyperliquid"]),
         ];
 
         for &(chain, aliases) in ALIASES {

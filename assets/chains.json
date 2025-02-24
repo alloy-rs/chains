@@ -613,15 +613,15 @@
       "etherscanApiKeyName": null
     },
     "999": {
-      "internalId": "ZoraGoerli",
-      "name": "zora-goerli",
+      "internalId": "Hyperliquid",
+      "name": "hyperliquid",
       "averageBlocktimeHint": 2000,
       "isLegacy": false,
       "supportsShanghai": false,
-      "isTestnet": true,
-      "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://testnet.explorer.zora.energy/api",
-      "etherscanBaseUrl": "https://testnet.explorer.zora.energy",
+      "isTestnet": false,
+      "nativeCurrencySymbol": "HYPE",
+      "etherscanApiUrl": "https://hyperliquid.cloud.blockscout.com/api/v2",
+      "etherscanBaseUrl": "https://hyperliquid.cloud.blockscout.com",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "1030": {
