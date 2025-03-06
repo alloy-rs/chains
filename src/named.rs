@@ -463,6 +463,13 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "monad-testnet"))]
     MonadTestnet = 10143,
 
+    #[strum(serialize = "megaeth-testnet")]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "megaeth-testnet", alias = "megaeth_testnet", alias = "mega-eth-testnet")
+    )]
+    MegaEthTestnet = 6342,
+
     #[strum(to_string = "hyperliquid")]
     #[cfg_attr(feature = "serde", serde(alias = "hyperliquid"))]
     Hyperliquid = 999,
@@ -758,6 +765,7 @@ impl NamedChain {
             BerachainBartio | BerachainArtio | Berachain => 2_000,
 
             MonadTestnet => 500,
+            MegaEthTestnet => 10,
 
             Hyperliquid => 2_000,
 
@@ -909,6 +917,7 @@ impl NamedChain {
             | SuperpositionTestnet
             | Superposition
             | MonadTestnet
+            | MegaEthTestnet
             | Hyperliquid
             | Abstract => false,
 
@@ -1008,6 +1017,7 @@ impl NamedChain {
                 | SuperpositionTestnet
                 | Superposition
                 | MonadTestnet
+                | MegaEthTestnet
         )
     }
 
@@ -1092,6 +1102,7 @@ impl NamedChain {
             | BerachainArtio
             | SuperpositionTestnet
             | MonadTestnet
+            | MegaEthTestnet
             | TelosEvmTestnet => true,
 
             // Dev chains.
@@ -1548,6 +1559,8 @@ impl NamedChain {
                 ("https://explorer.superposition.so/api", "https://explorer.superposition.so")
             }
             MonadTestnet => ("https://sourcify.dev/server", "https://testnet.monadexplorer.com"),
+            // TODO: find actual endpoint if that exists
+            MegaEthTestnet => ("https://www.megaexplorer.xyz", "https://www.megaexplorer.xyz"),
             TelosEvm => ("https://api.teloscan.io/api", "https://teloscan.io"),
             TelosEvmTestnet => {
                 ("https://api.testnet.teloscan.io/api", "https://testnet.teloscan.io")
@@ -1624,6 +1637,7 @@ impl NamedChain {
             | Unichain
             | UnichainSepolia
             | MonadTestnet
+            | MegaEthTestnet
             | ApeChain
             | Abstract => "ETHERSCAN_API_KEY",
 
