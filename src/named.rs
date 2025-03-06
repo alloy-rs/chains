@@ -965,6 +965,8 @@ impl NamedChain {
                 | ScrollSepolia
                 | HappychainTestnet
                 | Shimmer
+                | BinanceSmartChain
+                | BinanceSmartChainTestnet
                 | OpBNBMainnet
                 | OpBNBTestnet
                 | KakarotSepolia
