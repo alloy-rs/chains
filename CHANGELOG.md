@@ -5,10 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.64](https://github.com/alloy-rs/chains/releases/tag/v0.1.64) - 2025-03-06
+
+### Bug Fixes
+
+- Add BSC chain id to supports_shanghai ([#146](https://github.com/alloy-rs/chains/issues/146))
+
 ## [0.1.63](https://github.com/alloy-rs/chains/releases/tag/v0.1.63) - 2025-02-24
 
 ### Miscellaneous Tasks
 
+- Release 0.1.63
 - Add hyperliquid ([#145](https://github.com/alloy-rs/chains/issues/145))
 - Add monad testnet ([#144](https://github.com/alloy-rs/chains/issues/144))
 
