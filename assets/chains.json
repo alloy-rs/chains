@@ -852,6 +852,18 @@
       "etherscanBaseUrl": "https://holesky.fraxscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "2741": {
+      "internalId": "Abstract",
+      "name": "abstract",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://api.abscan.org/api",
+      "etherscanBaseUrl": "https://abscan.org",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "4002": {
       "internalId": "FantomTestnet",
       "name": "fantom-testnet",

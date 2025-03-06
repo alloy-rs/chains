@@ -466,6 +466,10 @@ pub enum NamedChain {
     #[strum(to_string = "hyperliquid")]
     #[cfg_attr(feature = "serde", serde(alias = "hyperliquid"))]
     Hyperliquid = 999,
+
+    #[strum(to_string = "abstract")]
+    #[cfg_attr(feature = "serde", serde(alias = "abstract"))]
+    Abstract = 2741,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -757,6 +761,8 @@ impl NamedChain {
 
             Hyperliquid => 2_000,
 
+            Abstract => 1_000,
+
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
             | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
             | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm | PolygonZkEvmTestnet | Metis
@@ -903,7 +909,8 @@ impl NamedChain {
             | SuperpositionTestnet
             | Superposition
             | MonadTestnet
-            | Hyperliquid => false,
+            | Hyperliquid
+            | Abstract => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
@@ -1100,7 +1107,7 @@ impl NamedChain {
             | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
             | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob
             | Soneium | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story
-            | Hyperliquid => false,
+            | Hyperliquid | Abstract => false,
         }
     }
 
@@ -1111,7 +1118,7 @@ impl NamedChain {
         Some(match self {
             Mainnet | Goerli | Holesky | Kovan | Sepolia | Morden | Ropsten | Rinkeby | Scroll
             | ScrollSepolia | Taiko | TaikoHekla | Unichain | UnichainSepolia
-            | SuperpositionTestnet | Superposition => "ETH",
+            | SuperpositionTestnet | Superposition | Abstract => "ETH",
 
             Mantle | MantleSepolia => "MNT",
 
@@ -1549,6 +1556,7 @@ impl NamedChain {
                 "https://hyperliquid.cloud.blockscout.com/api/v2",
                 "https://hyperliquid.cloud.blockscout.com",
             ),
+            Abstract => ("https://api.abscan.org/api", "https://abscan.org"),
         })
     }
 
@@ -1616,7 +1624,8 @@ impl NamedChain {
             | Unichain
             | UnichainSepolia
             | MonadTestnet
-            | ApeChain => "ETHERSCAN_API_KEY",
+            | ApeChain
+            | Abstract => "ETHERSCAN_API_KEY",
 
             Avalanche | AvalancheFuji => "SNOWTRACE_API_KEY",
 
@@ -1783,6 +1792,7 @@ impl NamedChain {
             Sonic => address!("039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38"),
             Berachain => address!("6969696969696969696969696969696969696969"),
             Hyperliquid => address!("5555555555555555555555555555555555555555"),
+            Abstract => address!("3439153EB7AF838Ad19d56E1571FBD09333C2809"),
             _ => return None,
         };
 
@@ -1887,6 +1897,7 @@ mod tests {
             (SuperpositionTestnet, &["superposition-testnet"]),
             (Superposition, &["superposition"]),
             (Hyperliquid, &["hyperliquid"]),
+            (Abstract, &["abstract"]),
         ];
 
         for &(chain, aliases) in ALIASES {
