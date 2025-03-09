@@ -1176,6 +1176,8 @@ impl NamedChain {
 
             Hyperliquid => "HYPE",
 
+            Polygon | PolygonMumbai | PolygonZkEvm | PolygonZkEvmTestnet | PolygonAmoy => "POL",
+
             _ => return None,
         })
     }

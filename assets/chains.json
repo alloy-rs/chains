@@ -307,7 +307,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "POL",
       "etherscanApiUrl": "https://api.polygonscan.com/api",
       "etherscanBaseUrl": "https://polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
@@ -655,7 +655,7 @@
       "isLegacy": true,
       "supportsShanghai": false,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "POL",
       "etherscanApiUrl": "https://api-zkevm.polygonscan.com/api",
       "etherscanBaseUrl": "https://zkevm.polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
@@ -751,7 +751,7 @@
       "isLegacy": true,
       "supportsShanghai": false,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "POL",
       "etherscanApiUrl": "https://api-testnet-zkevm.polygonscan.com/api",
       "etherscanBaseUrl": "https://testnet-zkevm.polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
@@ -1399,7 +1399,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "POL",
       "etherscanApiUrl": "https://api-testnet.polygonscan.com/api",
       "etherscanBaseUrl": "https://mumbai.polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
@@ -1411,7 +1411,7 @@
       "isLegacy": false,
       "supportsShanghai": false,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "POL",
       "etherscanApiUrl": "https://api-amoy.polygonscan.com/api",
       "etherscanBaseUrl": "https://amoy.polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
