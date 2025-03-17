@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.66](https://github.com/alloy-rs/chains/releases/tag/v0.1.66) - 2025-03-17
+
+### Features
+
+- Add hoodi fn ([#153](https://github.com/alloy-rs/chains/issues/153))
+
+### Miscellaneous Tasks
+
+- Allow paste ([#151](https://github.com/alloy-rs/chains/issues/151))
+
 ## [0.1.65](https://github.com/alloy-rs/chains/releases/tag/v0.1.65) - 2025-03-17
 
 ### Features
@@ -12,6 +22,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add hoodi ([#150](https://github.com/alloy-rs/chains/issues/150))
 - Add polygon symbol ([#149](https://github.com/alloy-rs/chains/issues/149))
 - Add abstract ([#147](https://github.com/alloy-rs/chains/issues/147))
+
+### Miscellaneous Tasks
+
+- Release 0.1.65
 
 ## [0.1.64](https://github.com/alloy-rs/chains/releases/tag/v0.1.64) - 2025-03-06
 
