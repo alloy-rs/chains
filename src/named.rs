@@ -49,6 +49,7 @@ pub enum NamedChain {
     Goerli = 5,
     Kovan = 42,
     Holesky = 17000,
+    Hoodi = 560048,
     Sepolia = 11155111,
 
     #[cfg_attr(feature = "serde", serde(alias = "odyssey"))]
@@ -763,11 +764,11 @@ impl NamedChain {
 
             Abstract => 1_000,
 
-            Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | MantleTestnet
-            | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk | EmeraldTestnet
-            | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm | PolygonZkEvmTestnet | Metis
-            | Linea | LineaGoerli | LineaSepolia | KakarotSepolia | SonicTestnet | Treasure
-            | TreasureTopaz => return None,
+            Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi
+            | MantleTestnet | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk
+            | EmeraldTestnet | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm
+            | PolygonZkEvmTestnet | Metis | Linea | LineaGoerli | LineaSepolia | KakarotSepolia
+            | SonicTestnet | Treasure | TreasureTopaz => return None,
         }))
     }
 
@@ -826,6 +827,7 @@ impl NamedChain {
             | Goerli
             | Sepolia
             | Holesky
+            | Hoodi
             | Odyssey
             | Base
             | BaseGoerli
@@ -932,6 +934,7 @@ impl NamedChain {
                 | Goerli
                 | Sepolia
                 | Holesky
+                | Hoodi
                 | AnvilHardhat
                 | Optimism
                 | OptimismGoerli
@@ -1023,7 +1026,7 @@ impl NamedChain {
 
         match self {
             // Ethereum testnets.
-            Goerli | Holesky | Kovan | Sepolia | Morden | Ropsten | Rinkeby => true,
+            Goerli | Holesky | Kovan | Sepolia | Morden | Ropsten | Rinkeby | Hoodi => true,
 
             // Other testnets.
             ArbitrumGoerli
@@ -1436,11 +1439,6 @@ impl NamedChain {
             ),
 
             Elastos => ("https://esc.elastos.io/api", "https://esc.elastos.io"),
-
-            AnvilHardhat | Dev | Morden | MoonbeamDev | FilecoinMainnet | AutonomysNovaTestnet
-            | Iotex => {
-                return None;
-            }
             KakarotSepolia => {
                 ("https://sepolia.kakarotscan.org/api", "https://sepolia.kakarotscan.org")
             }
@@ -1559,6 +1557,11 @@ impl NamedChain {
                 "https://hyperliquid.cloud.blockscout.com",
             ),
             Abstract => ("https://api.abscan.org/api", "https://abscan.org"),
+            // TODO: add hoodi etherscan when live
+            AnvilHardhat | Dev | Morden | MoonbeamDev | FilecoinMainnet | AutonomysNovaTestnet
+            | Iotex | Hoodi => {
+                return None;
+            }
         })
     }
 
@@ -1583,6 +1586,7 @@ impl NamedChain {
             | Rinkeby
             | Goerli
             | Holesky
+            | Hoodi
             | Optimism
             | OptimismGoerli
             | OptimismKovan
@@ -1729,7 +1733,7 @@ impl NamedChain {
         use NamedChain::*;
 
         const DNS_PREFIX: &str = "enrtree://AKA3AM6LPBYEUDMVNU3BSVQJ5AD45Y7YPOHJLEF6W26QOE4VTUDPE@";
-        if let Mainnet | Goerli | Sepolia | Ropsten | Rinkeby | Holesky = self {
+        if let Mainnet | Goerli | Sepolia | Ropsten | Rinkeby | Holesky | Hoodi = self {
             // `{DNS_PREFIX}all.{self.lower()}.ethdisco.net`
             let mut s = String::with_capacity(DNS_PREFIX.len() + 32);
             s.push_str(DNS_PREFIX);

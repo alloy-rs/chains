@@ -1644,6 +1644,18 @@
       "etherscanBaseUrl": "https://scrollscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "560048": {
+      "internalId": "Hoodi",
+      "name": "hoodi",
+      "averageBlocktimeHint": null,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "660279": {
       "internalId": "Xai",
       "name": "xai",
