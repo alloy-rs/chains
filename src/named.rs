@@ -1289,8 +1289,8 @@ impl NamedChain {
                 ("https://explorer-sepolia.gravity.xyz/api", "https://explorer-sepolia.gravity.xyz")
             }
             HappychainTestnet => (
-                "https://happy-testnet-sepolia.explorer.caldera.xyz/api",
-                "https://happy-testnet-sepolia.explorer.caldera.xyz",
+                "https://explorer.testnet.happy.tech/api",
+                "https://explorer.testnet.happy.tech",
             ),
 
             XaiSepolia => ("https://sepolia.xaiscan.io/api", "https://sepolia.xaiscan.io"),

@@ -356,8 +356,8 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "HAPPY",
-      "etherscanApiUrl": "https://happy-testnet-sepolia.explorer.caldera.xyz/api",
-      "etherscanBaseUrl": "https://happy-testnet-sepolia.explorer.caldera.xyz",
+      "etherscanApiUrl": "https://explorer.testnet.happy.tech/api",
+      "etherscanBaseUrl": "https://explorer.testnet.happy.tech",
       "etherscanApiKeyName": null
     },
     "250": {
