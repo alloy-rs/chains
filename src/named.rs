@@ -1733,7 +1733,7 @@ impl NamedChain {
         use NamedChain::*;
 
         const DNS_PREFIX: &str = "enrtree://AKA3AM6LPBYEUDMVNU3BSVQJ5AD45Y7YPOHJLEF6W26QOE4VTUDPE@";
-        if let Mainnet | Goerli | Sepolia | Ropsten | Rinkeby | Holesky | Hoodi = self {
+        if let Mainnet | Goerli | Sepolia | Ropsten | Rinkeby | Holesky = self {
             // `{DNS_PREFIX}all.{self.lower()}.ethdisco.net`
             let mut s = String::with_capacity(DNS_PREFIX.len() + 32);
             s.push_str(DNS_PREFIX);
