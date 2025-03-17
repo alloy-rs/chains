@@ -271,6 +271,12 @@ impl Chain {
         Self::from_named(NamedChain::Holesky)
     }
 
+    /// Returns the hoodi chain.
+    #[inline]
+    pub const fn hoodi() -> Self {
+        Self::from_named(NamedChain::Hoodi)
+    }
+
     /// Returns the sepolia chain.
     #[inline]
     pub const fn sepolia() -> Self {
