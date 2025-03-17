@@ -5,11 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.65](https://github.com/alloy-rs/chains/releases/tag/v0.1.65) - 2025-03-17
+
+### Features
+
+- Add hoodi ([#150](https://github.com/alloy-rs/chains/issues/150))
+- Add polygon symbol ([#149](https://github.com/alloy-rs/chains/issues/149))
+- Add abstract ([#147](https://github.com/alloy-rs/chains/issues/147))
+
 ## [0.1.64](https://github.com/alloy-rs/chains/releases/tag/v0.1.64) - 2025-03-06
 
 ### Bug Fixes
 
 - Add BSC chain id to supports_shanghai ([#146](https://github.com/alloy-rs/chains/issues/146))
+
+### Miscellaneous Tasks
+
+- Release 0.1.64
 
 ## [0.1.63](https://github.com/alloy-rs/chains/releases/tag/v0.1.63) - 2025-02-24
 
