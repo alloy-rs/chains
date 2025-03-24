@@ -1416,6 +1416,18 @@
       "etherscanBaseUrl": "https://amoy.polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
     },
+    "80069": {
+      "internalId": "BerachainBepolia",
+      "name": "berachain-bepolia",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "BERA",
+      "etherscanApiUrl": "https://bepolia.beratrail.io/api",
+      "etherscanBaseUrl": "https://bepolia.beratrail.io",
+      "etherscanApiKeyName": null
+    },
     "80084": {
       "internalId": "BerachainBartio",
       "name": "berachain-bartio",

@@ -436,6 +436,13 @@ pub enum NamedChain {
     )]
     TreasureTopaz = 978658,
 
+    #[strum(to_string = "berachain-bepolia", serialize = "berachain-bepolia-testnet")]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "berachain-bepolia-testnet", alias = "berachain-bepolia")
+    )]
+    BerachainBepolia = 80069,
+
     #[strum(to_string = "berachain-bartio", serialize = "berachain-bartio-testnet")]
     #[cfg_attr(
         feature = "serde",
@@ -756,7 +763,7 @@ impl NamedChain {
 
             UnichainSepolia | Unichain => 1_000,
 
-            BerachainBartio | BerachainArtio | Berachain => 2_000,
+            BerachainBepolia | BerachainBartio | BerachainArtio | Berachain => 2_000,
 
             MonadTestnet => 500,
 
@@ -904,6 +911,7 @@ impl NamedChain {
             | Unichain
             | UnichainSepolia
             | ApeChain
+            | BerachainBepolia
             | BerachainBartio
             | BerachainArtio
             | Berachain
@@ -1091,6 +1099,7 @@ impl NamedChain {
             | Curtis
             | TreasureTopaz
             | SonicTestnet
+            | BerachainBepolia
             | BerachainBartio
             | BerachainArtio
             | SuperpositionTestnet
@@ -1171,7 +1180,7 @@ impl NamedChain {
 
             Treasure | TreasureTopaz => "MAGIC",
 
-            BerachainBartio | BerachainArtio | Berachain => "BERA",
+            BerachainBepolia | BerachainBartio | BerachainArtio | Berachain => "BERA",
 
             Sonic => "S",
 
@@ -1536,6 +1545,7 @@ impl NamedChain {
                 "https://block-explorer.topaz.treasurescan.io/api",
                 "https://topaz.treasurescan.io",
             ),
+            BerachainBepolia => ("https://bepolia.beratrail.io/api", "https://bepolia.beratrail.io"), 
             BerachainBartio => ("https://bartio.beratrail.io/api", "https://bartio.beratrail.io"),
             BerachainArtio => ("https://artio.beratrail.io/api", "https://artio.beratrail.io"),
             Berachain => ("https://api.berascan.com/api", "https://berascan.com"),
@@ -1699,6 +1709,7 @@ impl NamedChain {
             | SonicTestnet
             | Treasure
             | TreasureTopaz
+            | BerachainBepolia
             | BerachainBartio
             | BerachainArtio
             | TelosEvm
@@ -1897,6 +1908,7 @@ mod tests {
             (Curtis, &["apechain-testnet", "curtis"]),
             (Treasure, &["treasure"]),
             (TreasureTopaz, &["treasure-topaz-testnet", "treasure-topaz"]),
+            (BerachainBepolia, &["berachain-bepolia-testnet", "berachain-bepolia"]),
             (BerachainArtio, &["berachain-artio-testnet", "berachain-artio"]),
             (BerachainBartio, &["berachain-bartio-testnet", "berachain-bartio"]),
             (SuperpositionTestnet, &["superposition-testnet"]),

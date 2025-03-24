@@ -565,6 +565,18 @@ impl Chain {
         Self::from_named(NamedChain::TreasureTopaz)
     }
 
+    /// Returns the Berachain mainnet chain.
+    #[inline]
+    pub const fn berachain() -> Self {
+        Self::from_named(NamedChain::Berachain)
+    }
+
+    /// Returns the Berachain Bepolia testnet chain.
+    #[inline]
+    pub const fn berachain_bepolia() -> Self {
+        Self::from_named(NamedChain::BerachainBepolia)
+    } 
+
     /// Returns the Superposition testnet chain.
     #[inline]
     pub const fn superposition_testnet() -> Self {
