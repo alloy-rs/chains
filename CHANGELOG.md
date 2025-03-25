@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.67](https://github.com/alloy-rs/chains/releases/tag/v0.1.67) - 2025-03-25
+
+### Bug Fixes
+
+- Update happychain testnet explorer url ([#154](https://github.com/alloy-rs/chains/issues/154))
+
+### Features
+
+- Update berachain bepolia ([#155](https://github.com/alloy-rs/chains/issues/155))
+
 ## [0.1.66](https://github.com/alloy-rs/chains/releases/tag/v0.1.66) - 2025-03-17
 
 ### Features
@@ -13,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Miscellaneous Tasks
 
+- Release 0.1.66
 - Allow paste ([#151](https://github.com/alloy-rs/chains/issues/151))
 
 ## [0.1.65](https://github.com/alloy-rs/chains/releases/tag/v0.1.65) - 2025-03-17
