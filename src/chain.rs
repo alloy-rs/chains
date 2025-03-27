@@ -575,7 +575,7 @@ impl Chain {
     #[inline]
     pub const fn berachain_bepolia() -> Self {
         Self::from_named(NamedChain::BerachainBepolia)
-    } 
+    }
 
     /// Returns the Superposition testnet chain.
     #[inline]
