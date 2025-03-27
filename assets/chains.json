@@ -1664,8 +1664,8 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
+      "etherscanApiUrl": "https://api-hoodi.etherscan.io/api",
+      "etherscanBaseUrl": "https://hoodi.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "660279": {
