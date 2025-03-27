@@ -1226,6 +1226,7 @@ impl NamedChain {
             Goerli => ("https://api-goerli.etherscan.io/api", "https://goerli.etherscan.io"),
             Sepolia => ("https://api-sepolia.etherscan.io/api", "https://sepolia.etherscan.io"),
             Holesky => ("https://api-holesky.etherscan.io/api", "https://holesky.etherscan.io"),
+            Hoodi => ("https://api-hoodi.etherscan.io/api", "https://hoodi.etherscan.io"),
 
             Polygon => ("https://api.polygonscan.com/api", "https://polygonscan.com"),
             PolygonMumbai => {
@@ -1545,7 +1546,9 @@ impl NamedChain {
                 "https://block-explorer.topaz.treasurescan.io/api",
                 "https://topaz.treasurescan.io",
             ),
-            BerachainBepolia => ("https://bepolia.beratrail.io/api", "https://bepolia.beratrail.io"), 
+            BerachainBepolia => {
+                ("https://bepolia.beratrail.io/api", "https://bepolia.beratrail.io")
+            }
             BerachainBartio => ("https://bartio.beratrail.io/api", "https://bartio.beratrail.io"),
             BerachainArtio => ("https://artio.beratrail.io/api", "https://artio.beratrail.io"),
             Berachain => ("https://api.berascan.com/api", "https://berascan.com"),
@@ -1568,7 +1571,7 @@ impl NamedChain {
             Abstract => ("https://api.abscan.org/api", "https://abscan.org"),
             // TODO: add hoodi etherscan when live
             AnvilHardhat | Dev | Morden | MoonbeamDev | FilecoinMainnet | AutonomysNovaTestnet
-            | Iotex | Hoodi => {
+            | Iotex => {
                 return None;
             }
         })
