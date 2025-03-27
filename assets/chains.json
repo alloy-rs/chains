@@ -1284,6 +1284,18 @@
       "etherscanBaseUrl": "https://explorer.superposition.so",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "57054": {
+      "internalId": "SonicBlaze",
+      "name": "sonic-blaze",
+      "averageBlocktimeHint": null,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "S",
+      "etherscanApiUrl": "https://api-testnet.sonicscan.org/api",
+      "etherscanBaseUrl": "https://testnet.sonicscan.org",
+      "etherscanApiKeyName": null
+    },
     "57073": {
       "internalId": "Ink",
       "name": "ink",

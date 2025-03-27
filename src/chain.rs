@@ -577,6 +577,18 @@ impl Chain {
         Self::from_named(NamedChain::BerachainBepolia)
     }
 
+    /// Returns the Sonic mainnet chain.
+    #[inline]
+    pub const fn sonic() -> Self {
+        Self::from_named(NamedChain::Sonic)
+    }
+
+    /// Returns the Sonic Blaze testnet chain.
+    #[inline]
+    pub const fn sonic_blaze() -> Self {
+        Self::from_named(NamedChain::SonicBlaze)
+    }
+
     /// Returns the Superposition testnet chain.
     #[inline]
     pub const fn superposition_testnet() -> Self {
