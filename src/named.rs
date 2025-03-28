@@ -17,6 +17,7 @@ use alloc::string::String;
 //      More info: <https://serde.rs/variant-attrs.html>
 //     - Add a test at the bottom of the file
 //   4. run `cargo test --all-features` to update the JSON bindings and schema.
+//   5. run `cargo fmt --all` to properly format the code.
 
 // We don't derive Serialize because it is manually implemented using AsRef<str> and it would break
 // a lot of things since Serialize is `kebab-case` vs Deserialize `snake_case`. This means that the
@@ -1540,7 +1541,9 @@ impl NamedChain {
 
             ApeChain => ("https://api.apescan.io/api", "https://apescan.io"),
             Curtis => ("https://curtis.explorer.caldera.xyz/api/v2", "https://curtis.apescan.io"),
-            SonicBlaze => ("https://api-testnet.sonicscan.org/api", "https://testnet.sonicscan.org"),
+            SonicBlaze => {
+                ("https://api-testnet.sonicscan.org/api", "https://testnet.sonicscan.org")
+            }
             SonicTestnet => (
                 "https://api.routescan.io/v2/network/testnet/evm/64165/etherscan/api",
                 "https://scan.soniclabs.com",
