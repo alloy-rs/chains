@@ -17,6 +17,7 @@ use alloc::string::String;
 //      More info: <https://serde.rs/variant-attrs.html>
 //     - Add a test at the bottom of the file
 //   4. run `cargo test --all-features` to update the JSON bindings and schema.
+//   5. run `cargo fmt --all` to properly format the code.
 
 // We don't derive Serialize because it is manually implemented using AsRef<str> and it would break
 // a lot of things since Serialize is `kebab-case` vs Deserialize `snake_case`. This means that the
@@ -418,6 +419,9 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "apechain-testnet", alias = "curtis"))]
     Curtis = 33111,
 
+    #[strum(to_string = "sonic-blaze")]
+    #[cfg_attr(feature = "serde", serde(alias = "sonic-blaze"))]
+    SonicBlaze = 57054,
     #[strum(to_string = "sonic-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "sonic-testnet"))]
     SonicTestnet = 64165,
@@ -775,7 +779,7 @@ impl NamedChain {
             | MantleTestnet | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk
             | EmeraldTestnet | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm
             | PolygonZkEvmTestnet | Metis | Linea | LineaGoerli | LineaSepolia | KakarotSepolia
-            | SonicTestnet | Treasure | TreasureTopaz => return None,
+            | SonicBlaze | SonicTestnet | Treasure | TreasureTopaz => return None,
         }))
     }
 
@@ -926,7 +930,7 @@ impl NamedChain {
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
-            | Merlin | Bitlayer | SonicTestnet | Vana | Zeta | Kaia | Story => false,
+            | Merlin | Bitlayer | SonicBlaze | SonicTestnet | Vana | Zeta | Kaia | Story => false,
         }
     }
 
@@ -1098,6 +1102,7 @@ impl NamedChain {
             | UnichainSepolia
             | Curtis
             | TreasureTopaz
+            | SonicBlaze
             | SonicTestnet
             | BerachainBepolia
             | BerachainBartio
@@ -1182,7 +1187,7 @@ impl NamedChain {
 
             BerachainBepolia | BerachainBartio | BerachainArtio | Berachain => "BERA",
 
-            Sonic => "S",
+            Sonic | SonicBlaze => "S",
 
             TelosEvm | TelosEvmTestnet => "TLOS",
 
@@ -1536,6 +1541,9 @@ impl NamedChain {
 
             ApeChain => ("https://api.apescan.io/api", "https://apescan.io"),
             Curtis => ("https://curtis.explorer.caldera.xyz/api/v2", "https://curtis.apescan.io"),
+            SonicBlaze => {
+                ("https://api-testnet.sonicscan.org/api", "https://testnet.sonicscan.org")
+            }
             SonicTestnet => (
                 "https://api.routescan.io/v2/network/testnet/evm/64165/etherscan/api",
                 "https://scan.soniclabs.com",
@@ -1709,6 +1717,7 @@ impl NamedChain {
             | AutonomysNovaTestnet
             | Iotex
             | HappychainTestnet
+            | SonicBlaze
             | SonicTestnet
             | Treasure
             | TreasureTopaz
