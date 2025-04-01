@@ -406,6 +406,7 @@ pub enum NamedChain {
     Zeta = 7000,
     Kaia = 8217,
     Story = 1514,
+    Sei = 1329,
 
     Unichain = 130,
     #[strum(to_string = "unichain-sepolia")]
@@ -760,6 +761,7 @@ impl NamedChain {
             Zeta => 6_000,
             Kaia => 1_000,
             Story => 2_500,
+            Sei => 500,
 
             Sonic => 1_000,
 
@@ -930,7 +932,9 @@ impl NamedChain {
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
-            | Merlin | Bitlayer | SonicBlaze | SonicTestnet | Vana | Zeta | Kaia | Story => false,
+            | Merlin | Bitlayer | SonicBlaze | SonicTestnet | Vana | Zeta | Kaia | Story | Sei => {
+                false
+            }
         }
     }
 
@@ -1123,7 +1127,7 @@ impl NamedChain {
             | Mode | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala
             | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
             | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob
-            | Soneium | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story
+            | Soneium | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story | Sei
             | Hyperliquid | Abstract => false,
         }
     }
@@ -1181,6 +1185,7 @@ impl NamedChain {
             Zeta => "ZETA",
             Kaia => "KAIA",
             Story => "IP",
+            Sei => "SEI",
             ApeChain | Curtis => "APE",
 
             Treasure | TreasureTopaz => "MAGIC",
@@ -1579,7 +1584,7 @@ impl NamedChain {
             Abstract => ("https://api.abscan.org/api", "https://abscan.org"),
             // TODO: add hoodi etherscan when live
             AnvilHardhat | Dev | Morden | MoonbeamDev | FilecoinMainnet | AutonomysNovaTestnet
-            | Iotex => {
+            | Iotex | Sei => {
                 return None;
             }
         })
@@ -1725,7 +1730,8 @@ impl NamedChain {
             | BerachainBartio
             | BerachainArtio
             | TelosEvm
-            | TelosEvmTestnet => return None,
+            | TelosEvmTestnet
+            | Sei => return None,
         };
 
         Some(api_key_name)
@@ -1821,6 +1827,7 @@ impl NamedChain {
             Berachain => address!("6969696969696969696969696969696969696969"),
             Hyperliquid => address!("5555555555555555555555555555555555555555"),
             Abstract => address!("3439153EB7AF838Ad19d56E1571FBD09333C2809"),
+            Sei => address!("E30feDd158A2e3b13e9badaeABaFc5516e95e8C7"),
             _ => return None,
         };
 
