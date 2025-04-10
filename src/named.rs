@@ -85,6 +85,7 @@ pub enum NamedChain {
     CronosTestnet = 338,
 
     Rsk = 30,
+    RskTestnet = 31,
 
     #[strum(to_string = "telos")]
     #[cfg_attr(feature = "serde", serde(alias = "telos", alias = "telos_evm"))]
@@ -779,7 +780,7 @@ impl NamedChain {
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi
             | MantleTestnet | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk
-            | EmeraldTestnet | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm
+            | RskTestnet | EmeraldTestnet | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm
             | PolygonZkEvmTestnet | Metis | Linea | LineaGoerli | LineaSepolia | KakarotSepolia
             | SonicBlaze | SonicTestnet | Treasure | TreasureTopaz => return None,
         }))
@@ -826,6 +827,7 @@ impl NamedChain {
             | Ronin
             | RoninTestnet
             | Rsk
+            | RskTestnet
             | Shimmer
             | TelosEvm
             | TelosEvmTestnet
@@ -1113,6 +1115,7 @@ impl NamedChain {
             | BerachainArtio
             | SuperpositionTestnet
             | MonadTestnet
+            | RskTestnet
             | TelosEvmTestnet => true,
 
             // Dev chains.
@@ -1365,6 +1368,10 @@ impl NamedChain {
             Poa => ("https://blockscout.com/poa/core/api", "https://blockscout.com/poa/core"),
 
             Rsk => ("https://blockscout.com/rsk/mainnet/api", "https://blockscout.com/rsk/mainnet"),
+            RskTestnet => (
+                "https://rootstock-testnet.blockscout.com/api",
+                "https://rootstock-testnet.blockscout.com",
+            ),
 
             Oasis => ("https://scan.oasischain.io/api", "https://scan.oasischain.io"),
 
@@ -1692,6 +1699,7 @@ impl NamedChain {
             | Odyssey
             | Sepolia
             | Rsk
+            | RskTestnet
             | Sokol
             | Poa
             | Oasis
