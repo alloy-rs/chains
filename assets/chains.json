@@ -120,6 +120,18 @@
       "etherscanBaseUrl": "https://blockscout.com/rsk/mainnet",
       "etherscanApiKeyName": null
     },
+    "31": {
+      "internalId": "RskTestnet",
+      "name": "rsk-testnet",
+      "averageBlocktimeHint": null,
+      "isLegacy": true,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://rootstock-testnet.blockscout.com/api",
+      "etherscanBaseUrl": "https://rootstock-testnet.blockscout.com",
+      "etherscanApiKeyName": null
+    },
     "40": {
       "internalId": "TelosEvm",
       "name": "telos",
