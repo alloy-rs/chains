@@ -25,6 +25,18 @@ pub enum ChainKind {
     Id(u64),
 }
 
+impl ChainKind {
+    /// Returns true if this a named variant.
+    pub const fn is_named(self) -> bool {
+        matches!(self, Self::Named(_))
+    }
+
+    /// Returns true if this an Id variant.
+    pub const fn is_id(self) -> bool {
+        matches!(self, Self::Id(_))
+    }
+}
+
 impl fmt::Debug for Chain {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str("Chain::")?;
@@ -241,6 +253,16 @@ impl Chain {
         } else {
             Self::from_id_unchecked(id)
         }
+    }
+
+    /// Returns true if this a named variant.
+    pub const fn is_named(self) -> bool {
+        self.kind().is_named()
+    }
+
+    /// Returns true if this an Id variant.
+    pub const fn is_id(self) -> bool {
+        self.kind().is_id()
     }
 
     /// Creates a new [`Chain`] from the given ID, without checking if an associated [`NamedChain`]
