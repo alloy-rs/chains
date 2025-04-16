@@ -484,6 +484,14 @@ pub enum NamedChain {
     #[strum(to_string = "abstract")]
     #[cfg_attr(feature = "serde", serde(alias = "abstract"))]
     Abstract = 2741,
+
+    #[strum(to_string = "corn")]
+    #[cfg_attr(feature = "serde", serde(alias = "corn"))]
+    Corn = 21000000,
+
+    #[strum(to_string = "corn-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "corn-testnet"))]
+    CornTestnet = 21000001,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -782,7 +790,9 @@ impl NamedChain {
             | MantleTestnet | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk
             | RskTestnet | EmeraldTestnet | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm
             | PolygonZkEvmTestnet | Metis | Linea | LineaGoerli | LineaSepolia | KakarotSepolia
-            | SonicBlaze | SonicTestnet | Treasure | TreasureTopaz => return None,
+            | SonicBlaze | SonicTestnet | Treasure | TreasureTopaz | Corn | CornTestnet => {
+                return None
+            }
         }))
     }
 
@@ -928,7 +938,9 @@ impl NamedChain {
             | Superposition
             | MonadTestnet
             | Hyperliquid
-            | Abstract => false,
+            | Abstract
+            | Corn
+            | CornTestnet => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
@@ -1029,6 +1041,8 @@ impl NamedChain {
                 | SuperpositionTestnet
                 | Superposition
                 | MonadTestnet
+                | Corn
+                | CornTestnet
         )
     }
 
@@ -1116,7 +1130,8 @@ impl NamedChain {
             | SuperpositionTestnet
             | MonadTestnet
             | RskTestnet
-            | TelosEvmTestnet => true,
+            | TelosEvmTestnet
+            | CornTestnet => true,
 
             // Dev chains.
             Dev | AnvilHardhat => true,
@@ -1131,7 +1146,7 @@ impl NamedChain {
             | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
             | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob
             | Soneium | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story | Sei
-            | Hyperliquid | Abstract => false,
+            | Hyperliquid | Abstract | Corn => false,
         }
     }
 
@@ -1202,6 +1217,8 @@ impl NamedChain {
             Hyperliquid => "HYPE",
 
             Polygon | PolygonMumbai | PolygonZkEvm | PolygonZkEvmTestnet | PolygonAmoy => "POL",
+
+            Corn | CornTestnet => "BTCN",
 
             _ => return None,
         })
@@ -1589,6 +1606,14 @@ impl NamedChain {
                 "https://hyperliquid.cloud.blockscout.com",
             ),
             Abstract => ("https://api.abscan.org/api", "https://abscan.org"),
+            Corn => (
+                "https://api.routescan.io/v2/network/mainnet/evm/21000000/etherscan/api",
+                "https://cornscan.io",
+            ),
+            CornTestnet => (
+                "https://api.routescan.io/v2/network/testnet/evm/21000001/etherscan/api",
+                "https://testnet.cornscan.io",
+            ),
             // TODO: add hoodi etherscan when live
             AnvilHardhat | Dev | Morden | MoonbeamDev | FilecoinMainnet | AutonomysNovaTestnet
             | Iotex | Sei => {
@@ -1693,6 +1718,7 @@ impl NamedChain {
             Kaia => "KAIASCAN_API_KEY",
             Sonic => "SONICSCAN_API_KEY",
             Berachain => "BERASCAN_API_KEY",
+            Corn | CornTestnet => "ROUTESCAN_API_KEY",
             // Explicitly exhaustive. See NB above.
             Metis
             | Chiado

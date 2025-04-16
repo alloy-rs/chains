@@ -1800,6 +1800,30 @@
       "etherscanBaseUrl": "https://sepolia-optimism.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "21000000": {
+      "internalId": "Corn",
+      "name": "corn",
+      "averageBlocktimeHint": null,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "BTCN",
+      "etherscanApiUrl": "https://api.routescan.io/v2/network/mainnet/evm/21000000/etherscan/api",
+      "etherscanBaseUrl": "https://cornscan.io",
+      "etherscanApiKeyName": "ROUTESCAN_API_KEY"
+    },
+    "21000001": {
+      "internalId": "CornTestnet",
+      "name": "corn-testnet",
+      "averageBlocktimeHint": null,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "BTCN",
+      "etherscanApiUrl": "https://api.routescan.io/v2/network/testnet/evm/21000001/etherscan/api",
+      "etherscanBaseUrl": "https://testnet.cornscan.io",
+      "etherscanApiKeyName": "ROUTESCAN_API_KEY"
+    },
     "168587773": {
       "internalId": "BlastSepolia",
       "name": "blast-sepolia",
