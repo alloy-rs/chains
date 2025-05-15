@@ -372,6 +372,18 @@
       "etherscanBaseUrl": "https://explorer.testnet.happy.tech",
       "etherscanApiKeyName": null
     },
+    "232": {
+      "internalId": "Lens",
+      "name": "lens",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": true,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "GHO",
+      "etherscanApiUrl": "https://explorer-api.lens.xyz",
+      "etherscanBaseUrl": "https://explorer.lens.xyz",
+      "etherscanApiKeyName": null
+    },
     "250": {
       "internalId": "Fantom",
       "name": "fantom",
@@ -411,14 +423,14 @@
     "300": {
       "internalId": "ZkSyncTestnet",
       "name": "zksync-testnet",
-      "averageBlocktimeHint": null,
+      "averageBlocktimeHint": 1000,
       "isLegacy": true,
       "supportsShanghai": false,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://api-sepolia-era.zksync.network/api",
       "etherscanBaseUrl": "https://sepolia-era.zksync.network",
-      "etherscanApiKeyName": null
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "314": {
       "internalId": "FilecoinMainnet",
@@ -435,14 +447,14 @@
     "324": {
       "internalId": "ZkSync",
       "name": "zksync",
-      "averageBlocktimeHint": null,
+      "averageBlocktimeHint": 1000,
       "isLegacy": true,
       "supportsShanghai": false,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://api-era.zksync.network/api",
       "etherscanBaseUrl": "https://era.zksync.network",
-      "etherscanApiKeyName": null
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "338": {
       "internalId": "CronosTestnet",
@@ -880,7 +892,7 @@
       "internalId": "Abstract",
       "name": "abstract",
       "averageBlocktimeHint": 1000,
-      "isLegacy": false,
+      "isLegacy": true,
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "ETH",
@@ -1080,6 +1092,18 @@
       "etherscanBaseUrl": "https://blockscout.chiadochain.net",
       "etherscanApiKeyName": null
     },
+    "11124": {
+      "internalId": "AbstractTestnet",
+      "name": "abstract-testnet",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": true,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://api-testnet.abscan.org/api",
+      "etherscanBaseUrl": "https://sepolia.abscan.org",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "13371": {
       "internalId": "Immutable",
       "name": "immutable",
@@ -1188,6 +1212,18 @@
       "etherscanBaseUrl": "https://explorer.mode.network",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "37111": {
+      "internalId": "LensTestnet",
+      "name": "lens-testnet",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": true,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "GRASS",
+      "etherscanApiUrl": "https://block-explorer-api.staging.lens.zksync.dev",
+      "etherscanBaseUrl": "https://explorer.testnet.lens.xyz",
+      "etherscanApiKeyName": null
+    },
     "42161": {
       "internalId": "Arbitrum",
       "name": "arbitrum",
@@ -1294,6 +1330,18 @@
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api-alfajores.celoscan.io/api",
       "etherscanBaseUrl": "https://alfajores.celoscan.io",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "50104": {
+      "internalId": "Sophon",
+      "name": "sophon",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": true,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "SOPH",
+      "etherscanApiUrl": "https://api.sophscan.xyz/api",
+      "etherscanBaseUrl": "https://sophscan.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "55244": {
@@ -1834,6 +1882,18 @@
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api-sepolia.blastscan.io/api",
       "etherscanBaseUrl": "https://sepolia.blastscan.io",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "531050104": {
+      "internalId": "SophonTestnet",
+      "name": "sophon-testnet",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": true,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "SOPH",
+      "etherscanApiUrl": "https://api-sepolia.sophscan.xyz/api",
+      "etherscanBaseUrl": "https://testnet.sophscan.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "666666666": {
