@@ -2085,8 +2085,8 @@ mod tests {
     fn ensure_no_trailing_etherscan_url_separator() {
         for chain in NamedChain::iter() {
             if let Some((api, base)) = chain.etherscan_urls() {
-                assert!(!api.ends_with('/'), "{:?} api url has trailing /", chain);
-                assert!(!base.ends_with('/'), "{:?} base url has trailing /", chain);
+                assert!(!api.ends_with('/'), "{chain:?} api url has trailing /");
+                assert!(!base.ends_with('/'), "{chain:?} base url has trailing /");
             }
         }
     }
