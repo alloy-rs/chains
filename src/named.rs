@@ -485,6 +485,10 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "abstract"))]
     Abstract = 2741,
 
+    #[strum(to_string = "abstract-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "abstract-testnet"))]
+    AbstractTestnet = 11124,
+
     #[strum(to_string = "corn")]
     #[cfg_attr(feature = "serde", serde(alias = "corn"))]
     Corn = 21000000,
@@ -492,6 +496,22 @@ pub enum NamedChain {
     #[strum(to_string = "corn-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "corn-testnet"))]
     CornTestnet = 21000001,
+
+    #[strum(to_string = "sophon")]
+    #[cfg_attr(feature = "serde", serde(alias = "sophon"))]
+    Sophon = 50104,
+
+    #[strum(to_string = "sophon-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "sophon-testnet"))]
+    SophonTestnet = 531050104,
+
+    #[strum(to_string = "lens")]
+    #[cfg_attr(feature = "serde", serde(alias = "lens"))]
+    Lens = 232,
+
+    #[strum(to_string = "lens-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "lens-testnet"))]
+    LensTestnet = 37111,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -655,6 +675,23 @@ impl NamedChain {
         matches!(self, Arbitrum | ArbitrumTestnet | ArbitrumGoerli | ArbitrumSepolia | ArbitrumNova)
     }
 
+    /// Returns true if the chain contains Elastic Network configuration.
+    pub const fn is_elastic(self) -> bool {
+        use NamedChain::*;
+
+        matches!(
+            self,
+            ZkSync
+                | ZkSyncTestnet
+                | Abstract
+                | AbstractTestnet
+                | Sophon
+                | SophonTestnet
+                | Lens
+                | LensTestnet
+        )
+    }
+
     /// Returns the chain's average blocktime, if applicable.
     ///
     /// It can be beneficial to know the average blocktime to adjust the polling of an HTTP provider
@@ -784,15 +821,16 @@ impl NamedChain {
 
             Hyperliquid => 2_000,
 
-            Abstract => 1_000,
+            Abstract | AbstractTestnet => 1_000,
+            ZkSync | ZkSyncTestnet => 1_000,
+            Sophon | SophonTestnet => 1_000,
+            Lens | LensTestnet => 1_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi
             | MantleTestnet | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk
-            | RskTestnet | EmeraldTestnet | Boba | ZkSync | ZkSyncTestnet | PolygonZkEvm
-            | PolygonZkEvmTestnet | Metis | Linea | LineaGoerli | LineaSepolia | KakarotSepolia
-            | SonicBlaze | SonicTestnet | Treasure | TreasureTopaz | Corn | CornTestnet => {
-                return None
-            }
+            | RskTestnet | EmeraldTestnet | Boba | PolygonZkEvm | PolygonZkEvmTestnet | Metis
+            | Linea | LineaGoerli | LineaSepolia | KakarotSepolia | SonicBlaze | SonicTestnet
+            | Treasure | TreasureTopaz | Corn | CornTestnet => return None,
         }))
     }
 
@@ -845,7 +883,13 @@ impl NamedChain {
             | TreasureTopaz
             | Viction
             | ZkSync
-            | ZkSyncTestnet => true,
+            | ZkSyncTestnet
+            | AbstractTestnet
+            | Abstract
+            | Lens
+            | LensTestnet
+            | Sophon
+            | SophonTestnet => true,
 
             // Known EIP-1559 chains.
             Mainnet
@@ -938,7 +982,6 @@ impl NamedChain {
             | Superposition
             | MonadTestnet
             | Hyperliquid
-            | Abstract
             | Corn
             | CornTestnet => false,
 
@@ -1131,6 +1174,9 @@ impl NamedChain {
             | MonadTestnet
             | RskTestnet
             | TelosEvmTestnet
+            | AbstractTestnet
+            | LensTestnet
+            | SophonTestnet
             | CornTestnet => true,
 
             // Dev chains.
@@ -1146,7 +1192,7 @@ impl NamedChain {
             | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
             | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob
             | Soneium | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story | Sei
-            | Hyperliquid | Abstract | Corn => false,
+            | Hyperliquid | Abstract | Sophon | Lens | Corn => false,
         }
     }
 
@@ -1157,7 +1203,7 @@ impl NamedChain {
         Some(match self {
             Mainnet | Goerli | Holesky | Kovan | Sepolia | Morden | Ropsten | Rinkeby | Scroll
             | ScrollSepolia | Taiko | TaikoHekla | Unichain | UnichainSepolia
-            | SuperpositionTestnet | Superposition | Abstract => "ETH",
+            | SuperpositionTestnet | Superposition | Abstract | ZkSync | ZkSyncTestnet => "ETH",
 
             Mantle | MantleSepolia => "MNT",
 
@@ -1219,6 +1265,11 @@ impl NamedChain {
             Polygon | PolygonMumbai | PolygonZkEvm | PolygonZkEvmTestnet | PolygonAmoy => "POL",
 
             Corn | CornTestnet => "BTCN",
+
+            Sophon | SophonTestnet => "SOPH",
+
+            LensTestnet => "GRASS",
+            Lens => "GHO",
 
             _ => return None,
         })
@@ -1606,6 +1657,7 @@ impl NamedChain {
                 "https://hyperliquid.cloud.blockscout.com",
             ),
             Abstract => ("https://api.abscan.org/api", "https://abscan.org"),
+            AbstractTestnet => ("https://api-testnet.abscan.org/api", "https://sepolia.abscan.org"),
             Corn => (
                 "https://api.routescan.io/v2/network/mainnet/evm/21000000/etherscan/api",
                 "https://cornscan.io",
@@ -1619,6 +1671,15 @@ impl NamedChain {
             | Iotex | Sei => {
                 return None;
             }
+            Sophon => ("https://api.sophscan.xyz/api", "https://sophscan.xyz"),
+            SophonTestnet => {
+                ("https://api-sepolia.sophscan.xyz/api", "https://testnet.sophscan.xyz")
+            }
+            Lens => ("https://explorer-api.lens.xyz", "https://explorer.lens.xyz"),
+            LensTestnet => (
+                "https://block-explorer-api.staging.lens.zksync.dev",
+                "https://explorer.testnet.lens.xyz",
+            ),
         })
     }
 
@@ -1688,7 +1749,12 @@ impl NamedChain {
             | UnichainSepolia
             | MonadTestnet
             | ApeChain
-            | Abstract => "ETHERSCAN_API_KEY",
+            | Abstract
+            | AbstractTestnet
+            | ZkSyncTestnet
+            | ZkSync
+            | Sophon
+            | SophonTestnet => "ETHERSCAN_API_KEY",
 
             Avalanche | AvalancheFuji => "SNOWTRACE_API_KEY",
 
@@ -1739,8 +1805,6 @@ impl NamedChain {
             | GravityAlphaTestnetSepolia
             | Bob
             | BobSepolia
-            | ZkSync
-            | ZkSyncTestnet
             | FilecoinMainnet
             | LineaGoerli
             | FilecoinCalibrationTestnet
@@ -1765,6 +1829,8 @@ impl NamedChain {
             | BerachainArtio
             | TelosEvm
             | TelosEvmTestnet
+            | Lens
+            | LensTestnet
             | Sei => return None,
         };
 
@@ -1862,6 +1928,8 @@ impl NamedChain {
             Hyperliquid => address!("5555555555555555555555555555555555555555"),
             Abstract => address!("3439153EB7AF838Ad19d56E1571FBD09333C2809"),
             Sei => address!("E30feDd158A2e3b13e9badaeABaFc5516e95e8C7"),
+            ZkSync => address!("5aea5775959fbc2557cc8789bc1bf90a239d9a91"),
+            Sophon => address!("f1f9e08a0818594fde4713ae0db1e46672ca960e"),
             _ => return None,
         };
 
@@ -1930,6 +1998,7 @@ mod tests {
             (AnvilHardhat, &["anvil", "hardhat"]),
             (AvalancheFuji, &["fuji"]),
             (ZkSync, &["zksync"]),
+            (ZkSyncTestnet, &["zksync-testnet"]),
             (Mantle, &["mantle"]),
             (MantleTestnet, &["mantle-testnet"]),
             (MantleSepolia, &["mantle-sepolia"]),
@@ -1968,6 +2037,11 @@ mod tests {
             (Superposition, &["superposition"]),
             (Hyperliquid, &["hyperliquid"]),
             (Abstract, &["abstract"]),
+            (AbstractTestnet, &["abstract-testnet"]),
+            (Sophon, &["sophon"]),
+            (SophonTestnet, &["sophon-testnet"]),
+            (Lens, &["lens"]),
+            (LensTestnet, &["lens-testnet"]),
         ];
 
         for &(chain, aliases) in ALIASES {
