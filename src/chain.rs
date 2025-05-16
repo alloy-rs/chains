@@ -635,6 +635,54 @@ impl Chain {
         Self::from_named(NamedChain::UnichainSepolia)
     }
 
+    /// Returns the ZKSync mainnet chain.
+    #[inline]
+    pub const fn zksync() -> Self {
+        Self::from_named(NamedChain::ZkSync)
+    }
+
+    /// Returns the ZKSync testnet chain.
+    #[inline]
+    pub const fn zksync_testnet() -> Self {
+        Self::from_named(NamedChain::ZkSyncTestnet)
+    }
+
+    /// Returns the Abstract mainnet chain.
+    #[inline]
+    pub const fn abs() -> Self {
+        Self::from_named(NamedChain::Abstract)
+    }
+
+    /// Returns the Abstract testnet chain.
+    #[inline]
+    pub const fn abstract_testnet() -> Self {
+        Self::from_named(NamedChain::AbstractTestnet)
+    }
+
+    /// Returns the Sophon mainnet chain.
+    #[inline]
+    pub const fn sophon() -> Self {
+        Self::from_named(NamedChain::Sophon)
+    }
+
+    /// Returns the Sophon testnet chain.
+    #[inline]
+    pub const fn sophon_testnet() -> Self {
+        Self::from_named(NamedChain::SophonTestnet)
+    }
+
+    /// Returns the Lens mainnet chain.
+    #[inline]
+    pub const fn lens() -> Self {
+        Self::from_named(NamedChain::Lens)
+    }
+
+    /// Returns the Lens testnet chain.
+    #[inline]
+    pub const fn lens_testnet() -> Self {
+        Self::from_named(NamedChain::LensTestnet)
+    }
+
     /// Returns the kind of this chain.
     #[inline]
     pub const fn kind(&self) -> &ChainKind {
@@ -663,6 +711,12 @@ impl Chain {
     #[inline]
     pub const fn is_arbitrum(self) -> bool {
         matches!(self.named(), Some(named) if named.is_arbitrum())
+    }
+
+    /// Returns true if the chain contains Elastic Network configuration.
+    #[inline]
+    pub const fn is_elastic(self) -> bool {
+        matches!(self.named(), Some(named) if named.is_elastic())
     }
 
     /// Attempts to convert the chain into a named chain.
