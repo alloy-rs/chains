@@ -5,11 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1](https://github.com/alloy-rs/chains/releases/tag/v0.2.1) - 2025-05-16
+
+### Features
+
+- Introduces elastic network named chains ([#164](https://github.com/alloy-rs/chains/issues/164))
+
+### Miscellaneous Tasks
+
+- Add is_ helper fns ([#163](https://github.com/alloy-rs/chains/issues/163))
+
+### Other
+
+- Add corn chain ([#162](https://github.com/alloy-rs/chains/issues/162))
+
+### Styling
+
+- Add `Rootstock` testnet chain ([#161](https://github.com/alloy-rs/chains/issues/161))
+
 ## [0.2.0](https://github.com/alloy-rs/chains/releases/tag/v0.2.0) - 2025-04-09
 
 ### Dependencies
 
 - [deps] Primitives 1.0 ([#157](https://github.com/alloy-rs/chains/issues/157))
+
+### Miscellaneous Tasks
+
+- Release 0.2.0
 
 ### Other
 
