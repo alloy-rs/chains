@@ -849,8 +849,8 @@ impl NamedChain {
 
         match self {
             // Known legacy chains / non EIP-1559 compliant.
-            Boba | CeloAlfajores | CeloBaklava | Elastos | Emerald | EmeraldTestnet | Fantom
-            | FantomTestnet | MantleTestnet | Metis | Oasis | OptimismKovan | PolygonZkEvm
+            CeloAlfajores | CeloBaklava | Elastos | Emerald | EmeraldTestnet | Fantom
+            | FantomTestnet | MantleTestnet | OptimismKovan | PolygonZkEvm
             | PolygonZkEvmTestnet | Ronin | RoninTestnet | Rsk | RskTestnet | Shimmer
             | Treasure | TreasureTopaz | Viction | Sophon | SophonTestnet => true,
 
@@ -868,6 +868,9 @@ impl NamedChain {
             | Base
             | BaseGoerli
             | BaseSepolia
+            | Boba
+            | Metis
+            | Oasis
             | Blast
             | BlastSepolia
             | Celo
