@@ -842,54 +842,17 @@ impl NamedChain {
     /// use alloy_chains::NamedChain;
     ///
     /// assert!(!NamedChain::Mainnet.is_legacy());
-    /// assert!(NamedChain::Celo.is_legacy());
+    /// assert!(NamedChain::Fantom.is_legacy());
     /// ```
     pub const fn is_legacy(self) -> bool {
         use NamedChain::*;
 
         match self {
             // Known legacy chains / non EIP-1559 compliant.
-            Acala
-            | AcalaMandalaTestnet
-            | AcalaTestnet
-            | ArbitrumTestnet
-            | BinanceSmartChain
-            | BinanceSmartChainTestnet
-            | Boba
-            | Celo
-            | CeloAlfajores
-            | CeloBaklava
-            | Elastos
-            | Emerald
-            | EmeraldTestnet
-            | Fantom
-            | FantomTestnet
-            | Karura
-            | KaruraTestnet
-            | MantleTestnet
-            | Metis
-            | Oasis
-            | OptimismKovan
-            | PolygonZkEvm
-            | PolygonZkEvmTestnet
-            | Ronin
-            | RoninTestnet
-            | Rsk
-            | RskTestnet
-            | Shimmer
-            | TelosEvm
-            | TelosEvmTestnet
-            | Treasure
-            | TreasureTopaz
-            | Viction
-            | ZkSync
-            | ZkSyncTestnet
-            | AbstractTestnet
-            | Abstract
-            | Lens
-            | LensTestnet
-            | Sophon
-            | SophonTestnet => true,
+            CeloAlfajores | CeloBaklava | Elastos | Emerald | EmeraldTestnet | Fantom
+            | FantomTestnet | MantleTestnet | OptimismKovan | PolygonZkEvm
+            | PolygonZkEvmTestnet | Ronin | RoninTestnet | Rsk | RskTestnet | Shimmer
+            | Treasure | TreasureTopaz | Viction | Sophon | SophonTestnet => true,
 
             // Known EIP-1559 chains.
             Mainnet
@@ -898,11 +861,19 @@ impl NamedChain {
             | Holesky
             | Hoodi
             | Odyssey
+            | Acala
+            | AcalaMandalaTestnet
+            | AcalaTestnet
+            | ArbitrumTestnet
             | Base
             | BaseGoerli
             | BaseSepolia
+            | Boba
+            | Metis
+            | Oasis
             | Blast
             | BlastSepolia
+            | Celo
             | Fraxtal
             | FraxtalTestnet
             | Optimism
@@ -983,7 +954,19 @@ impl NamedChain {
             | MonadTestnet
             | Hyperliquid
             | Corn
-            | CornTestnet => false,
+            | CornTestnet
+            | ZkSync
+            | ZkSyncTestnet
+            | AbstractTestnet
+            | Abstract
+            | Lens
+            | LensTestnet
+            | BinanceSmartChain
+            | BinanceSmartChainTestnet
+            | Karura
+            | KaruraTestnet
+            | TelosEvm
+            | TelosEvmTestnet => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
@@ -1846,7 +1829,9 @@ impl NamedChain {
     /// use alloy_chains::NamedChain;
     ///
     /// let chain = NamedChain::Mainnet;
-    /// std::env::set_var(chain.etherscan_api_key_name().unwrap(), "KEY");
+    /// unsafe {
+    ///     std::env::set_var(chain.etherscan_api_key_name().unwrap(), "KEY");
+    /// }
     /// assert_eq!(chain.etherscan_api_key().as_deref(), Some("KEY"));
     /// ```
     #[cfg(feature = "std")]
