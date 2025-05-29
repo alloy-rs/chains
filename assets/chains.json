@@ -111,11 +111,11 @@
     "30": {
       "internalId": "Rsk",
       "name": "rsk",
-      "averageBlocktimeHint": null,
+      "averageBlocktimeHint": 25000,
       "isLegacy": true,
-      "supportsShanghai": false,
+      "supportsShanghai": true,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "RBTC",
       "etherscanApiUrl": "https://blockscout.com/rsk/mainnet/api",
       "etherscanBaseUrl": "https://blockscout.com/rsk/mainnet",
       "etherscanApiKeyName": null
@@ -123,11 +123,11 @@
     "31": {
       "internalId": "RskTestnet",
       "name": "rsk-testnet",
-      "averageBlocktimeHint": null,
+      "averageBlocktimeHint": 25000,
       "isLegacy": true,
-      "supportsShanghai": false,
+      "supportsShanghai": true,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "tRBTC",
       "etherscanApiUrl": "https://rootstock-testnet.blockscout.com/api",
       "etherscanBaseUrl": "https://rootstock-testnet.blockscout.com",
       "etherscanApiKeyName": null
