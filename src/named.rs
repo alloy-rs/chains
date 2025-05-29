@@ -825,11 +825,12 @@ impl NamedChain {
             ZkSync | ZkSyncTestnet => 1_000,
             Sophon | SophonTestnet => 1_000,
             Lens | LensTestnet => 1_000,
+            Rsk | RskTestnet => 25_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi
-            | MantleTestnet | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol | Rsk
-            | RskTestnet | EmeraldTestnet | Boba | PolygonZkEvm | PolygonZkEvmTestnet | Metis
-            | Linea | LineaGoerli | LineaSepolia | KakarotSepolia | SonicBlaze | SonicTestnet
+            | MantleTestnet | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol
+            | EmeraldTestnet | Boba | PolygonZkEvm | PolygonZkEvmTestnet | Metis | Linea
+            | LineaGoerli | LineaSepolia | KakarotSepolia | SonicBlaze | SonicTestnet
             | Treasure | TreasureTopaz | Corn | CornTestnet => return None,
         }))
     }
@@ -1069,6 +1070,8 @@ impl NamedChain {
                 | MonadTestnet
                 | Corn
                 | CornTestnet
+                | Rsk
+                | RskTestnet
         )
     }
 
@@ -1253,6 +1256,9 @@ impl NamedChain {
 
             LensTestnet => "GRASS",
             Lens => "GHO",
+
+            Rsk => "RBTC",
+            RskTestnet => "tRBTC",
 
             _ => return None,
         })
@@ -1915,6 +1921,7 @@ impl NamedChain {
             Sei => address!("E30feDd158A2e3b13e9badaeABaFc5516e95e8C7"),
             ZkSync => address!("5aea5775959fbc2557cc8789bc1bf90a239d9a91"),
             Sophon => address!("f1f9e08a0818594fde4713ae0db1e46672ca960e"),
+            Rsk => address!("967f8799af07df1534d48a95a5c9febe92c53ae0"),
             _ => return None,
         };
 
