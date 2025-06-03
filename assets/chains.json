@@ -1508,8 +1508,8 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "BERA",
-      "etherscanApiUrl": "https://bepolia.beratrail.io/api",
-      "etherscanBaseUrl": "https://bepolia.beratrail.io",
+      "etherscanApiUrl": "https://api-testnet.berascan.com/api",
+      "etherscanBaseUrl": "https://testnet.berascan.com",
       "etherscanApiKeyName": null
     },
     "80094": {
