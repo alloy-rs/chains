@@ -449,20 +449,6 @@ pub enum NamedChain {
     )]
     BerachainBepolia = 80069,
 
-    #[strum(to_string = "berachain-bartio", serialize = "berachain-bartio-testnet")]
-    #[cfg_attr(
-        feature = "serde",
-        serde(alias = "berachain-bartio-testnet", alias = "berachain-bartio")
-    )]
-    BerachainBartio = 80084,
-
-    #[strum(to_string = "berachain-artio", serialize = "berachain-artio-testnet")]
-    #[cfg_attr(
-        feature = "serde",
-        serde(alias = "berachain-artio-testnet", alias = "berachain-artio")
-    )]
-    BerachainArtio = 80085,
-
     Berachain = 80094,
 
     #[strum(to_string = "superposition-testnet")]
@@ -815,7 +801,7 @@ impl NamedChain {
 
             UnichainSepolia | Unichain => 1_000,
 
-            BerachainBepolia | BerachainBartio | BerachainArtio | Berachain => 2_000,
+            BerachainBepolia | Berachain => 2_000,
 
             MonadTestnet => 500,
 
@@ -946,8 +932,6 @@ impl NamedChain {
             | UnichainSepolia
             | ApeChain
             | BerachainBepolia
-            | BerachainBartio
-            | BerachainArtio
             | Berachain
             | Curtis
             | SuperpositionTestnet
@@ -1072,6 +1056,8 @@ impl NamedChain {
                 | CornTestnet
                 | Rsk
                 | RskTestnet
+                | Berachain
+                | BerachainBepolia
         )
     }
 
@@ -1154,8 +1140,6 @@ impl NamedChain {
             | SonicBlaze
             | SonicTestnet
             | BerachainBepolia
-            | BerachainBartio
-            | BerachainArtio
             | SuperpositionTestnet
             | MonadTestnet
             | RskTestnet
@@ -1240,7 +1224,7 @@ impl NamedChain {
 
             Treasure | TreasureTopaz => "MAGIC",
 
-            BerachainBepolia | BerachainBartio | BerachainArtio | Berachain => "BERA",
+            BerachainBepolia | Berachain => "BERA",
 
             Sonic | SonicBlaze => "S",
 
@@ -1624,10 +1608,8 @@ impl NamedChain {
                 "https://topaz.treasurescan.io",
             ),
             BerachainBepolia => {
-                ("https://bepolia.beratrail.io/api", "https://bepolia.beratrail.io")
+                ("https://api-testnet.berascan.com/api", "https://testnet.berascan.com")
             }
-            BerachainBartio => ("https://bartio.beratrail.io/api", "https://bartio.beratrail.io"),
-            BerachainArtio => ("https://artio.beratrail.io/api", "https://artio.beratrail.io"),
             Berachain => ("https://api.berascan.com/api", "https://berascan.com"),
             SuperpositionTestnet => (
                 "https://testnet-explorer.superposition.so/api",
@@ -1772,7 +1754,7 @@ impl NamedChain {
             Zeta => "ZETASCAN_API_KEY",
             Kaia => "KAIASCAN_API_KEY",
             Sonic => "SONICSCAN_API_KEY",
-            Berachain => "BERASCAN_API_KEY",
+            Berachain | BerachainBepolia => "BERASCAN_API_KEY",
             Corn | CornTestnet => "ROUTESCAN_API_KEY",
             // Explicitly exhaustive. See NB above.
             Metis
@@ -1813,9 +1795,6 @@ impl NamedChain {
             | SonicTestnet
             | Treasure
             | TreasureTopaz
-            | BerachainBepolia
-            | BerachainBartio
-            | BerachainArtio
             | TelosEvm
             | TelosEvmTestnet
             | Lens
@@ -2023,8 +2002,6 @@ mod tests {
             (Treasure, &["treasure"]),
             (TreasureTopaz, &["treasure-topaz-testnet", "treasure-topaz"]),
             (BerachainBepolia, &["berachain-bepolia-testnet", "berachain-bepolia"]),
-            (BerachainArtio, &["berachain-artio-testnet", "berachain-artio"]),
-            (BerachainBartio, &["berachain-bartio-testnet", "berachain-bartio"]),
             (SuperpositionTestnet, &["superposition-testnet"]),
             (Superposition, &["superposition"]),
             (Hyperliquid, &["hyperliquid"]),
