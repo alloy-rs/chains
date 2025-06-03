@@ -1602,7 +1602,7 @@ impl NamedChain {
                 "https://topaz.treasurescan.io",
             ),
             BerachainBepolia => {
-                ("https://bepolia.beratrail.io/api", "https://bepolia.beratrail.io")
+                ("https://api-testnet.berascan.com/api", "https://testnet.berascan.com/")
             }
             Berachain => ("https://api.berascan.com/api", "https://berascan.com"),
             SuperpositionTestnet => (
