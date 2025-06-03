@@ -5,10 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.3](https://github.com/alloy-rs/chains/releases/tag/v0.2.3) - 2025-06-03
+
+### Features
+
+- Update berachain ([#167](https://github.com/alloy-rs/chains/issues/167))
+
+### Other
+
+- Update `Rootstock` (rsk) chain ([#166](https://github.com/alloy-rs/chains/issues/166))
+
 ## [0.2.2](https://github.com/alloy-rs/chains/releases/tag/v0.2.2) - 2025-05-25
 
 ### Miscellaneous Tasks
 
+- Release 0.2.2
 - Update outdated legacy chains ([#165](https://github.com/alloy-rs/chains/issues/165))
 
 ## [0.2.1](https://github.com/alloy-rs/chains/releases/tag/v0.2.1) - 2025-05-16
