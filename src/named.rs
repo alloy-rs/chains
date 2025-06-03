@@ -1748,7 +1748,7 @@ impl NamedChain {
             Zeta => "ZETASCAN_API_KEY",
             Kaia => "KAIASCAN_API_KEY",
             Sonic => "SONICSCAN_API_KEY",
-            Berachain => "BERASCAN_API_KEY",
+            Berachain | BerachainBepolia => "BERASCAN_API_KEY",
             Corn | CornTestnet => "ROUTESCAN_API_KEY",
             // Explicitly exhaustive. See NB above.
             Metis
@@ -1789,7 +1789,6 @@ impl NamedChain {
             | SonicTestnet
             | Treasure
             | TreasureTopaz
-            | BerachainBepolia
             | TelosEvm
             | TelosEvmTestnet
             | Lens

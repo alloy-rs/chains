@@ -1510,7 +1510,7 @@
       "nativeCurrencySymbol": "BERA",
       "etherscanApiUrl": "https://api-testnet.berascan.com/api",
       "etherscanBaseUrl": "https://testnet.berascan.com",
-      "etherscanApiKeyName": null
+      "etherscanApiKeyName": "BERASCAN_API_KEY"
     },
     "80094": {
       "internalId": "Berachain",
