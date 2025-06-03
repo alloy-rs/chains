@@ -1069,6 +1069,8 @@ impl NamedChain {
                 | MonadTestnet
                 | Corn
                 | CornTestnet
+                | Berachain
+                | BerachainBepolia
         )
     }
 
