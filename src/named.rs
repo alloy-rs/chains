@@ -1062,6 +1062,7 @@ impl NamedChain {
                 | RskTestnet
                 | Berachain
                 | BerachainBepolia
+                | InjectiveTestnet
         )
     }
 

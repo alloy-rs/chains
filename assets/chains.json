@@ -785,7 +785,7 @@
       "name": "injective-testnet",
       "averageBlocktimeHint": 700,
       "isLegacy": false,
-      "supportsShanghai": false,
+      "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "INJ",
       "etherscanApiUrl": null,
