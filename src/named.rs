@@ -498,6 +498,10 @@ pub enum NamedChain {
     #[strum(to_string = "lens-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "lens-testnet"))]
     LensTestnet = 37111,
+
+    #[strum(to_string = "injective-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "injective-testnet"))]
+    InjectiveTestnet = 1439,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -812,6 +816,7 @@ impl NamedChain {
             Sophon | SophonTestnet => 1_000,
             Lens | LensTestnet => 1_000,
             Rsk | RskTestnet => 25_000,
+            InjectiveTestnet => 700,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi
             | MantleTestnet | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol
@@ -957,9 +962,8 @@ impl NamedChain {
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
-            | Merlin | Bitlayer | SonicBlaze | SonicTestnet | Vana | Zeta | Kaia | Story | Sei => {
-                false
-            }
+            | Merlin | Bitlayer | SonicBlaze | SonicTestnet | Vana | Zeta | Kaia | Story | Sei
+            | InjectiveTestnet => false,
         }
     }
 
@@ -1058,6 +1062,7 @@ impl NamedChain {
                 | RskTestnet
                 | Berachain
                 | BerachainBepolia
+                | InjectiveTestnet
         )
     }
 
@@ -1147,6 +1152,7 @@ impl NamedChain {
             | AbstractTestnet
             | LensTestnet
             | SophonTestnet
+            | InjectiveTestnet
             | CornTestnet => true,
 
             // Dev chains.
@@ -1243,6 +1249,8 @@ impl NamedChain {
 
             Rsk => "RBTC",
             RskTestnet => "tRBTC",
+
+            InjectiveTestnet => "INJ",
 
             _ => return None,
         })
@@ -1639,7 +1647,7 @@ impl NamedChain {
             ),
             // TODO: add hoodi etherscan when live
             AnvilHardhat | Dev | Morden | MoonbeamDev | FilecoinMainnet | AutonomysNovaTestnet
-            | Iotex | Sei => {
+            | Iotex | Sei | InjectiveTestnet => {
                 return None;
             }
             Sophon => ("https://api.sophscan.xyz/api", "https://sophscan.xyz"),
@@ -1799,7 +1807,8 @@ impl NamedChain {
             | TelosEvmTestnet
             | Lens
             | LensTestnet
-            | Sei => return None,
+            | Sei
+            | InjectiveTestnet => return None,
         };
 
         Some(api_key_name)

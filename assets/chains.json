@@ -780,6 +780,18 @@
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": null
     },
+    "1439": {
+      "internalId": "InjectiveTestnet",
+      "name": "injective-testnet",
+      "averageBlocktimeHint": 700,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "INJ",
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
+      "etherscanApiKeyName": null
+    },
     "1442": {
       "internalId": "PolygonZkEvmTestnet",
       "name": "polygon-zkevm-testnet",
