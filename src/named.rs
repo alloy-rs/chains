@@ -1915,6 +1915,180 @@ impl NamedChain {
 
         Some(addr)
     }
+
+    /// Returns the address of the ENScribe contract, if it exists.
+    ///
+    /// Example:
+    ///
+    /// ```
+    /// use alloy_chains::NamedChain;
+    /// use alloy_primitives::address;
+    ///
+    /// let chain = NamedChain::Mainnet;
+    /// assert_eq!(
+    ///     chain.enscribe_address(),
+    ///     Some(address!("0xd14360d477ef49182b5141952fe67b007688725a"))
+    /// );
+    /// ```
+    pub const fn enscribe_address(self) -> Option<Address> {
+        use NamedChain::*;
+
+        let addr = match self {
+            Mainnet => address!("0xd14360d477ef49182b5141952fe67b007688725a"),
+            Sepolia => address!("0x98350BfB3ba627B18CC84c8A46440A2E3f74d6a7"),
+            Linea => address!("0x6d8Ac46BFC1bD0b6022f997108e9800Fd84fdD44"),
+            LineaSepolia => address!("0x564708c1f36ed9109736fd1d10c575ee4eeadbbd"),
+            Base => address!("0x8429c428F93754449C4b955F2Ae9fde17eF4e95a"),
+            BaseSepolia => address!("0x3b854b093A4F60aB7C9635c2b84d015BC2359B2a"),
+            _ => return None,
+        };
+
+        Some(addr)
+    }
+
+    /// Returns the address of the ENS registry, if it exists.
+    ///
+    /// Example:
+    ///
+    /// ```
+    /// use alloy_chains::NamedChain;
+    /// use alloy_primitives::address;
+    ///
+    /// let chain = NamedChain::Mainnet;
+    /// assert_eq!(
+    ///     chain.ens_registry_address(),
+    ///     Some(address!("0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e"))
+    /// );
+    /// ```
+    pub const fn ens_registry_address(self) -> Option<Address> {
+        use NamedChain::*;
+
+        let addr = match self {
+            Mainnet | Sepolia => address!("0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e"),
+            Linea => address!("0x50130b669B28C339991d8676FA73CF122a121267"),
+            LineaSepolia => address!("0x5B2636F0f2137B4aE722C01dd5122D7d3e9541f7"),
+            Base => address!("0xB94704422c2a1E396835A571837Aa5AE53285a95"),
+            BaseSepolia => address!("0x1493b2567056c2181630115660963E13A8E32735"),
+            _ => return None,
+        };
+
+        Some(addr)
+    }
+
+    /// Returns the address of the ENS reverse registrar, if it exists.
+    ///
+    /// Example:
+    ///
+    /// ```
+    /// use alloy_chains::NamedChain;
+    /// use alloy_primitives::address;
+    ///
+    /// let chain = NamedChain::Mainnet;
+    /// assert_eq!(
+    ///     chain.reverse_registrar_address(),
+    ///     Some(address!("0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb"))
+    /// );
+    /// ```
+    pub const fn reverse_registrar_address(self) -> Option<Address> {
+        use NamedChain::*;
+
+        let addr = match self {
+            Mainnet => address!("0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb"),
+            Sepolia => address!("0xCF75B92126B02C9811d8c632144288a3eb84afC8"),
+            Linea => address!("0x08D3fF6E65f680844fd2465393ff6f0d742b67D5"),
+            LineaSepolia => address!("0x4aAA964D8EB65508ca3DA3b0A3C060c16059E613"),
+            Base => address!("0x79EA96012eEa67A83431F1701B3dFf7e37F9E282"),
+            BaseSepolia => address!("0xa0A8401ECF248a9375a0a71C4dedc263dA18dCd7"),
+            _ => return None,
+        };
+
+        Some(addr)
+    }
+
+    /// Returns the address of the ENS public resolver, if it exists.
+    ///
+    /// Example:
+    ///
+    /// ```
+    /// use alloy_chains::NamedChain;
+    /// use alloy_primitives::address;
+    ///
+    /// let chain = NamedChain::Mainnet;
+    /// assert_eq!(
+    ///     chain.public_resolver_address(),
+    ///     Some(address!("0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63"))
+    /// );
+    /// ```
+    pub const fn public_resolver_address(self) -> Option<Address> {
+        use NamedChain::*;
+
+        let addr = match self {
+            Mainnet => address!("0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63"),
+            Sepolia => address!("0x8948458626811dd0c23EB25Cc74291247077cC51"),
+            Linea => address!("0x86c5AED9F27837074612288610fB98ccC1733126"),
+            LineaSepolia => address!("0xA2008916Ed2d7ED0Ecd747a8a5309267e42cf1f1"),
+            Base => address!("0xC6d566A56A1aFf6508b41f6c90ff131615583BCD"),
+            BaseSepolia => address!("0x6533C94869D28fAA8dF77cc63f9e2b2D6Cf77eBA"),
+            _ => return None,
+        };
+
+        Some(addr)
+    }
+
+    /// Returns the address of the ENS name wrapper, if it exists.
+    ///
+    /// Example:
+    ///
+    /// ```
+    /// use alloy_chains::NamedChain;
+    /// use alloy_primitives::address;
+    ///
+    /// let chain = NamedChain::Mainnet;
+    /// assert_eq!(
+    ///     chain.name_wrapper_address(),
+    ///     Some(address!("0xD4416b13d2b3a9aBae7AcD5D6C2BbDBE25686401"))
+    /// );
+    /// ```
+    pub const fn name_wrapper_address(self) -> Option<Address> {
+        use NamedChain::*;
+
+        let addr = match self {
+            Mainnet => address!("0xD4416b13d2b3a9aBae7AcD5D6C2BbDBE25686401"),
+            Sepolia => address!("0x0635513f179D50A207757E05759CbD106d7dFcE8"),
+            Linea => address!("0xA53cca02F98D590819141Aa85C891e2Af713C223"),
+            LineaSepolia => address!("0xF127De9E039a789806fEd4C6b1C0f3aFfeA9425e"),
+            _ => return None,
+        };
+
+        Some(addr)
+    }
+
+    /// Returns the parent name configured, if it exists.
+    ///
+    /// Example:
+    ///
+    /// ```
+    /// use alloy_chains::NamedChain;
+    /// use alloy_primitives::address;
+    ///
+    /// let chain = NamedChain::Mainnet;
+    /// assert_eq!(chain.parent_name(), Some("deployd.eth".to_owned()));
+    /// ```
+    pub fn parent_name(self) -> Option<String> {
+        use NamedChain::*;
+
+        let parent_name = match self {
+            Mainnet => "deployd.eth",
+            Sepolia => "testapp.eth",
+            Linea => "deployd.linea.eth",
+            LineaSepolia => "repo.enscribe.linea-sepolia.eth",
+            Base => "deployd.base.eth",
+            BaseSepolia => "testapp.basetest.eth",
+            _ => return None,
+        };
+
+        Some(parent_name.to_owned())
+    }
 }
 
 #[cfg(test)]
