@@ -1916,7 +1916,9 @@ impl NamedChain {
         Some(addr)
     }
 
-    /// Returns the address of the ENScribe contract, if it exists.
+    /// Returns the address of the [Enscribe](https://github.com/enscribexyz/enscribe/blob/main/contracts/sepolia/EnscribeSepolia.sol) contract, if it exists.
+    ///
+    /// The Enscribe contract can deploy a contract and set an ENS name for it.
     ///
     /// Example:
     ///
@@ -1946,7 +1948,9 @@ impl NamedChain {
         Some(addr)
     }
 
-    /// Returns the address of the ENS registry, if it exists.
+    /// Returns the address of the [ENS Registry](https://github.com/ensdomains/ens-contracts/blob/c7336637ce56187c40c060d0819bb3cce5c45ba6/contracts/registry/ENSRegistry.sol), if it exists.
+    ///
+    /// The registry maintains a list of domains, recording the owner, resolver, and TTL for each, and allows the owner of a domain to make changes to that data. [More info](https://docs.ens.domains/registry/ens)
     ///
     /// Example:
     ///
@@ -1975,7 +1979,9 @@ impl NamedChain {
         Some(addr)
     }
 
-    /// Returns the address of the ENS reverse registrar, if it exists.
+    /// Returns the address of the [ENS Reverse Registrar](https://github.com/ensdomains/ens-contracts/blob/c7336637ce56187c40c060d0819bb3cce5c45ba6/contracts/reverseRegistrar/ReverseRegistrar.sol), if it exists.
+    ///
+    /// The ENS Reverse registrar is responsible for helping with reverse lookups (mapping from an eth address to an ENS name). [More info](https://docs.ens.domains/registry/reverse)
     ///
     /// Example:
     ///
@@ -2005,7 +2011,9 @@ impl NamedChain {
         Some(addr)
     }
 
-    /// Returns the address of the ENS public resolver, if it exists.
+    /// Returns the address of the [ENS Public Resolver](https://github.com/ensdomains/ens-contracts/blob/c7336637ce56187c40c060d0819bb3cce5c45ba6/contracts/resolvers/PublicResolver.sol), if it exists.
+    ///
+    /// The ENS public resolver permits the owner of a name to update their records, includes permissions, and stores its data on layer-1 ethereum. [More info](https://docs.ens.domains/resolvers/public)
     ///
     /// Example:
     ///
@@ -2035,7 +2043,9 @@ impl NamedChain {
         Some(addr)
     }
 
-    /// Returns the address of the ENS name wrapper, if it exists.
+    /// Returns the address of the [ENS Name Wrapper](https://github.com/ensdomains/ens-contracts/blob/c7336637ce56187c40c060d0819bb3cce5c45ba6/contracts/wrapper/NameWrapper.sol), if it exists.
+    ///
+    /// The ENS Name Wrapper is a contract for ENS that allows you to "wrap" any ENS name into a ERC-1155 NFT. [More info](https://docs.ens.domains/wrapper/overview)
     ///
     /// Example:
     ///
@@ -2064,6 +2074,8 @@ impl NamedChain {
     }
 
     /// Returns the parent name configured, if it exists.
+    ///
+    /// This is the default parent domain available on chains supporting ENS and can be used to create subnames under them if the user doesn't have their own domains created.
     ///
     /// Example:
     ///
