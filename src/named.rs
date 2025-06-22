@@ -4,6 +4,7 @@ use num_enum::TryFromPrimitiveError;
 
 #[allow(unused_imports)]
 use alloc::string::String;
+use crate::NamedChain::AnvilHardhat;
 // When adding a new chain:
 //   1. add new variant to the NamedChain enum;
 //   2. add extra information in the last `impl` block (explorer URLs, block time) when applicable;
@@ -1916,7 +1917,7 @@ impl NamedChain {
         Some(addr)
     }
 
-    /// Returns the address of the [Enscribe](https://github.com/enscribexyz/enscribe/blob/main/contracts/sepolia/EnscribeSepolia.sol) contract, if it exists.
+    /// Returns the address of the [Enscribe](https://github.com/enscribexyz/enscribe-contracts/blob/main/src/main/solidity/Enscribe.sol) contract, if it exists.
     ///
     /// The Enscribe contract can deploy a contract and set an ENS name for it.
     ///
@@ -1942,6 +1943,7 @@ impl NamedChain {
             LineaSepolia => address!("0x564708c1f36ed9109736fd1d10c575ee4eeadbbd"),
             Base => address!("0x8429c428F93754449C4b955F2Ae9fde17eF4e95a"),
             BaseSepolia => address!("0x3b854b093A4F60aB7C9635c2b84d015BC2359B2a"),
+            AnvilHardhat => address!("0x0165878A594ca255338adfa4d48449f69242Eb8F"),
             _ => return None,
         };
 
@@ -1973,6 +1975,7 @@ impl NamedChain {
             LineaSepolia => address!("0x5B2636F0f2137B4aE722C01dd5122D7d3e9541f7"),
             Base => address!("0xB94704422c2a1E396835A571837Aa5AE53285a95"),
             BaseSepolia => address!("0x1493b2567056c2181630115660963E13A8E32735"),
+            AnvilHardhat => address!("0x5FbDB2315678afecb367f032d93F642f64180aa3"),
             _ => return None,
         };
 
@@ -2005,6 +2008,7 @@ impl NamedChain {
             LineaSepolia => address!("0x4aAA964D8EB65508ca3DA3b0A3C060c16059E613"),
             Base => address!("0x79EA96012eEa67A83431F1701B3dFf7e37F9E282"),
             BaseSepolia => address!("0xa0A8401ECF248a9375a0a71C4dedc263dA18dCd7"),
+            AnvilHardhat => address!("0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"),
             _ => return None,
         };
 
@@ -2037,6 +2041,7 @@ impl NamedChain {
             LineaSepolia => address!("0xA2008916Ed2d7ED0Ecd747a8a5309267e42cf1f1"),
             Base => address!("0xC6d566A56A1aFf6508b41f6c90ff131615583BCD"),
             BaseSepolia => address!("0x6533C94869D28fAA8dF77cc63f9e2b2D6Cf77eBA"),
+            AnvilHardhat => address!("0x9A676e781A523b5d0C0e43731313A708CB607508"),
             _ => return None,
         };
 
@@ -2067,6 +2072,7 @@ impl NamedChain {
             Sepolia => address!("0x0635513f179D50A207757E05759CbD106d7dFcE8"),
             Linea => address!("0xA53cca02F98D590819141Aa85C891e2Af713C223"),
             LineaSepolia => address!("0xF127De9E039a789806fEd4C6b1C0f3aFfeA9425e"),
+            AnvilHardhat => address!("0x5FC8d32690cc91D4c39d9d3abcBD16989F875707"),
             _ => return None,
         };
 
@@ -2096,6 +2102,7 @@ impl NamedChain {
             LineaSepolia => "repo.enscribe.linea-sepolia.eth",
             Base => "deployd.base.eth",
             BaseSepolia => "testapp.basetest.eth",
+            AnvilHardhat => "forge.eth",
             _ => return None,
         };
 
