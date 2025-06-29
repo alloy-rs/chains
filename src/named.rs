@@ -1,4 +1,4 @@
-use alloy_primitives::{address, Address};
+use alloy_primitives::{Address, address};
 use core::{cmp::Ordering, fmt, time::Duration};
 use num_enum::TryFromPrimitiveError;
 

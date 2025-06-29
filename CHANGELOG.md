@@ -321,7 +321,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Dependencies
 
-- Bump msrv 1.81 ([#114](https://github.com/alloy-rs/chains/issues/114))
+- Bump msrv 1.85 ([#114](https://github.com/alloy-rs/chains/issues/114))
 
 ### Miscellaneous Tasks
 

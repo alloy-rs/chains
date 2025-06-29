@@ -2,8 +2,8 @@
 name = "alloy-chains"
 description = "Canonical type definitions for EIP-155 chains"
 version = "0.2.4"
-edition = "2021"
-rust-version = "1.81"
+edition = "2024"
+rust-version = "1.85"
 authors = ["Alloy Contributors"]
 license = "MIT OR Apache-2.0"
 keywords = ["ethers", "primitives", "ethereum", "revm", "reth"]
