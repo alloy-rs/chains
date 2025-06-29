@@ -4,6 +4,7 @@ use num_enum::TryFromPrimitiveError;
 
 #[allow(unused_imports)]
 use alloc::string::String;
+
 // When adding a new chain:
 //   1. add new variant to the NamedChain enum;
 //   2. add extra information in the last `impl` block (explorer URLs, block time) when applicable;
@@ -600,6 +601,15 @@ impl alloy_rlp::Decodable for NamedChain {
     fn decode(buf: &mut &[u8]) -> alloy_rlp::Result<Self> {
         let n = u64::decode(buf)?;
         Self::try_from(n).map_err(|_| alloy_rlp::Error::Overflow)
+    }
+}
+
+#[cfg(feature = "arbitrary")]
+impl<'a> arbitrary::Arbitrary<'a> for NamedChain {
+    fn arbitrary(u: &mut arbitrary::Unstructured<'a>) -> arbitrary::Result<Self> {
+        use strum::{EnumCount, VariantArray};
+        let idx = u.choose_index(NamedChain::COUNT)?;
+        Ok(NamedChain::VARIANTS[idx])
     }
 }
 
@@ -1956,6 +1966,18 @@ mod tests {
             let chain_string = serde_json::to_string(&chain).unwrap();
             let chain_string = chain_string.replace('-', "_");
             assert_eq!(serde_json::from_str::<'_, NamedChain>(&chain_string).unwrap(), chain);
+        }
+    }
+
+    #[test]
+    #[cfg(feature = "arbitrary")]
+    fn test_arbitrary_named_chain() {
+        use arbitrary::{Arbitrary, Unstructured};
+        let data = vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 255];
+        let mut unstructured = Unstructured::new(&data);
+
+        for _ in 0..10 {
+            let _chain = NamedChain::arbitrary(&mut unstructured).unwrap();
         }
     }
 
