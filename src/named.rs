@@ -2,6 +2,7 @@ use alloy_primitives::{address, Address};
 use core::{cmp::Ordering, fmt, time::Duration};
 use num_enum::TryFromPrimitiveError;
 
+#[allow(unused_imports)]
 use alloc::string::String;
 
 // When adding a new chain:
