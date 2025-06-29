@@ -1977,17 +1977,7 @@ mod tests {
         let mut unstructured = Unstructured::new(&data);
 
         for _ in 0..10 {
-            let chain = NamedChain::arbitrary(&mut unstructured);
-            match chain {
-                Ok(c) => println!("Generated NamedChain: {:?}", c),
-                Err(e) => {
-                    if e == arbitrary::Error::NotEnoughData {
-                        println!("NamedChain enum is empty, cannot generate arbitrary.");
-                        break;
-                    }
-                    panic!("Failed to generate arbitrary NamedChain: {:?}", e);
-                }
-            }
+            let _chain = NamedChain::arbitrary(&mut unstructured).unwrap();
         }
     }
 
