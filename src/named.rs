@@ -1,12 +1,8 @@
 use alloy_primitives::{address, Address};
-#[cfg(feature = "arbitrary")]
-use arbitrary::{Arbitrary, Unstructured};
 use core::{cmp::Ordering, fmt, time::Duration};
 use num_enum::TryFromPrimitiveError;
 
 use alloc::string::String;
-#[allow(unused_imports)]
-use strum::{EnumCount,IntoEnumIterator};
 
 // When adding a new chain:
 //   1. add new variant to the NamedChain enum;
@@ -508,25 +504,6 @@ pub enum NamedChain {
     InjectiveTestnet = 1439,
 }
 
-#[cfg(feature = "arbitrary")]
-impl<'a> Arbitrary<'a> for NamedChain {
-    fn arbitrary(u: &mut Unstructured<'a>) -> arbitrary::Result<Self> {
-        let count = NamedChain::COUNT; // Use the derived COUNT directly
-
-        // Handle the edge case if the enum happens to be empty, though unlikely here
-        if count == 0 {
-            return Err(arbitrary::Error::NotEnoughData);
-        }
-
-        // Generate a random index within the bounds of the enum variants
-        let idx = u.int_in_range(0..=(count - 1))?;
-
-        // Retrieve the NamedChain variant at that index
-        // .expect() is safe here because we've guaranteed `idx` is within `count - 1`
-        Ok(NamedChain::iter().nth(idx).expect("index within NamedChain variants"))
-    }
-}
-
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
 // the `#[default]` attribute as its own `#[num_enum(default)]`
 impl Default for NamedChain {
@@ -623,6 +600,15 @@ impl alloy_rlp::Decodable for NamedChain {
     fn decode(buf: &mut &[u8]) -> alloy_rlp::Result<Self> {
         let n = u64::decode(buf)?;
         Self::try_from(n).map_err(|_| alloy_rlp::Error::Overflow)
+    }
+}
+
+#[cfg(feature = "arbitrary")]
+impl<'a> arbitrary::Arbitrary<'a> for NamedChain {
+    fn arbitrary(u: &mut arbitrary::Unstructured<'a>) -> arbitrary::Result<Self> {
+        use strum::{EnumCount, VariantArray};
+        let idx = u.choose_index(NamedChain::COUNT)?;
+        Ok(NamedChain::VARIANTS[idx])
     }
 }
 
@@ -1985,7 +1971,7 @@ mod tests {
     #[test]
     #[cfg(feature = "arbitrary")]
     fn test_arbitrary_named_chain() {
-        use arbitrary::Unstructured;
+        use arbitrary::{Arbitrary, Unstructured};
         let data = vec![0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 255];
         let mut unstructured = Unstructured::new(&data);
 
