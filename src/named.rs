@@ -1279,11 +1279,11 @@ impl NamedChain {
     ///
     /// assert_eq!(
     ///     NamedChain::Mainnet.etherscan_urls(),
-    ///     Some(("https://api.etherscan.io/api", "https://etherscan.io"))
+    ///     Some(("https://api.etherscan.io/v2/api?chainid=1", "https://etherscan.io"))
     /// );
     /// assert_eq!(
     ///     NamedChain::Avalanche.etherscan_urls(),
-    ///     Some(("https://api.snowtrace.io/api", "https://snowtrace.io"))
+    ///     Some(("https://api.etherscan.io/v2/api?chainid=43114", "https://snowtrace.io"))
     /// );
     /// assert_eq!(NamedChain::AnvilHardhat.etherscan_urls(), None);
     /// ```
@@ -1291,36 +1291,44 @@ impl NamedChain {
         use NamedChain::*;
 
         Some(match self {
-            Mainnet => ("https://api.etherscan.io/api", "https://etherscan.io"),
+            Mainnet => ("https://api.etherscan.io/v2/api?chainid=1", "https://etherscan.io"),
             Ropsten => ("https://api-ropsten.etherscan.io/api", "https://ropsten.etherscan.io"),
             Kovan => ("https://api-kovan.etherscan.io/api", "https://kovan.etherscan.io"),
             Rinkeby => ("https://api-rinkeby.etherscan.io/api", "https://rinkeby.etherscan.io"),
             Goerli => ("https://api-goerli.etherscan.io/api", "https://goerli.etherscan.io"),
-            Sepolia => ("https://api-sepolia.etherscan.io/api", "https://sepolia.etherscan.io"),
-            Holesky => ("https://api-holesky.etherscan.io/api", "https://holesky.etherscan.io"),
-            Hoodi => ("https://api-hoodi.etherscan.io/api", "https://hoodi.etherscan.io"),
+            Sepolia => {
+                ("https://api.etherscan.io/v2/api?chainid=11155111", "https://sepolia.etherscan.io")
+            }
+            Holesky => {
+                ("https://api.etherscan.io/v2/api?chainid=17000", "https://holesky.etherscan.io")
+            }
+            Hoodi => {
+                ("https://api.etherscan.io/v2/api?chainid=560048", "https://hoodi.etherscan.io")
+            }
 
-            Polygon => ("https://api.polygonscan.com/api", "https://polygonscan.com"),
+            Polygon => ("https://api.etherscan.io/v2/api?chainid=137", "https://polygonscan.com"),
             PolygonMumbai => {
                 ("https://api-testnet.polygonscan.com/api", "https://mumbai.polygonscan.com")
             }
-            PolygonAmoy => ("https://api-amoy.polygonscan.com/api", "https://amoy.polygonscan.com"),
+            PolygonAmoy => {
+                ("https://api.etherscan.io/v2/api?chainid=80002", "https://amoy.polygonscan.com")
+            }
 
             PolygonZkEvm => {
-                ("https://api-zkevm.polygonscan.com/api", "https://zkevm.polygonscan.com")
+                ("https://api.etherscan.io/v2/api?chainid=1101", "https://zkevm.polygonscan.com")
             }
             PolygonZkEvmTestnet => (
                 "https://api-testnet-zkevm.polygonscan.com/api",
                 "https://testnet-zkevm.polygonscan.com",
             ),
 
-            Avalanche => ("https://api.snowtrace.io/api", "https://snowtrace.io"),
+            Avalanche => ("https://api.etherscan.io/v2/api?chainid=43114", "https://snowtrace.io"),
             AvalancheFuji => {
-                ("https://api-testnet.snowtrace.io/api", "https://testnet.snowtrace.io")
+                ("https://api.etherscan.io/v2/api?chainid=43113", "https://testnet.snowtrace.io")
             }
 
             Optimism => {
-                ("https://api-optimistic.etherscan.io/api", "https://optimistic.etherscan.io")
+                ("https://api.etherscan.io/v2/api?chainid=10", "https://optimistic.etherscan.io")
             }
             OptimismGoerli => (
                 "https://api-goerli-optimistic.etherscan.io/api",
@@ -1331,7 +1339,7 @@ impl NamedChain {
                 "https://kovan-optimistic.etherscan.io",
             ),
             OptimismSepolia => (
-                "https://api-sepolia-optimistic.etherscan.io/api",
+                "https://api.etherscan.io/v2/api?chainid=11155420",
                 "https://sepolia-optimism.etherscan.io",
             ),
 
@@ -1344,25 +1352,32 @@ impl NamedChain {
             Fantom => ("https://api.ftmscan.com/api", "https://ftmscan.com"),
             FantomTestnet => ("https://api-testnet.ftmscan.com/api", "https://testnet.ftmscan.com"),
 
-            BinanceSmartChain => ("https://api.bscscan.com/api", "https://bscscan.com"),
+            BinanceSmartChain => {
+                ("https://api.etherscan.io/v2/api?chainid=52", "https://bscscan.com")
+            }
             BinanceSmartChainTestnet => {
-                ("https://api-testnet.bscscan.com/api", "https://testnet.bscscan.com")
+                ("https://api.etherscan.io/v2/api?chainid=97", "https://testnet.bscscan.com")
             }
 
-            OpBNBMainnet => ("https://opbnb.bscscan.com/api", "https://opbnb.bscscan.com"),
-            OpBNBTestnet => {
-                ("https://opbnb-testnet.bscscan.com/api", "https://opbnb-testnet.bscscan.com")
+            OpBNBMainnet => {
+                ("https://api.etherscan.io/v2/api?chainid=204", "https://opbnb.bscscan.com")
             }
+            OpBNBTestnet => (
+                "https://api.etherscan.io/v2/api?chainid=5611",
+                "https://opbnb-testnet.bscscan.com",
+            ),
 
-            Arbitrum => ("https://api.arbiscan.io/api", "https://arbiscan.io"),
+            Arbitrum => ("https://api.etherscan.io/v2/api?chainid=42161", "https://arbiscan.io"),
             ArbitrumTestnet => {
                 ("https://api-testnet.arbiscan.io/api", "https://testnet.arbiscan.io")
             }
             ArbitrumGoerli => ("https://api-goerli.arbiscan.io/api", "https://goerli.arbiscan.io"),
             ArbitrumSepolia => {
-                ("https://api-sepolia.arbiscan.io/api", "https://sepolia.arbiscan.io")
+                ("https://api.etherscan.io/v2/api?chainid=421614", "https://sepolia.arbiscan.io")
             }
-            ArbitrumNova => ("https://api-nova.arbiscan.io/api", "https://nova.arbiscan.io"),
+            ArbitrumNova => {
+                ("https://api.etherscan.io/v2/api?chainid=42170", "https://nova.arbiscan.io")
+            }
 
             GravityAlphaMainnet => {
                 ("https://explorer.gravity.xyz/api", "https://explorer.gravity.xyz")
@@ -1374,28 +1389,37 @@ impl NamedChain {
                 ("https://explorer.testnet.happy.tech/api", "https://explorer.testnet.happy.tech")
             }
 
-            XaiSepolia => ("https://sepolia.xaiscan.io/api", "https://sepolia.xaiscan.io"),
-            Xai => ("https://xaiscan.io/api", "https://xaiscan.io"),
+            XaiSepolia => (
+                "https://api.etherscan.io/v2/api?chainid=37714555429",
+                "https://sepolia.xaiscan.io",
+            ),
+            Xai => ("https://api.etherscan.io/v2/api?chainid=660279", "https://xaiscan.io"),
 
             Syndr => ("https://explorer.syndr.com/api", "https://explorer.syndr.com"),
             SyndrSepolia => {
                 ("https://sepolia-explorer.syndr.com/api", "https://sepolia-explorer.syndr.com")
             }
 
-            Cronos => ("https://api.cronoscan.com/api", "https://cronoscan.com"),
+            Cronos => ("https://api.etherscan.io/v2/api?chainid=25", "https://cronoscan.com"),
             CronosTestnet => {
                 ("https://api-testnet.cronoscan.com/api", "https://testnet.cronoscan.com")
             }
 
-            Moonbeam => ("https://api-moonbeam.moonscan.io/api", "https://moonbeam.moonscan.io"),
-            Moonbase => ("https://api-moonbase.moonscan.io/api", "https://moonbase.moonscan.io"),
-            Moonriver => ("https://api-moonriver.moonscan.io/api", "https://moonriver.moonscan.io"),
+            Moonbeam => {
+                ("https://api.etherscan.io/v2/api?chainid=1284", "https://moonbeam.moonscan.io")
+            }
+            Moonbase => {
+                ("https://api.etherscan.io/v2/api?chainid=1287", "https://moonbase.moonscan.io")
+            }
+            Moonriver => {
+                ("https://api.etherscan.io/v2/api?chainid=1285", "https://moonriver.moonscan.io")
+            }
 
-            Gnosis => ("https://api.gnosisscan.io/api", "https://gnosisscan.io"),
+            Gnosis => ("https://api.etherscan.io/v2/api?chainid=100", "https://gnosisscan.io"),
 
-            Scroll => ("https://api.scrollscan.com/api", "https://scrollscan.com"),
+            Scroll => ("https://api.etherscan.io/v2/api?chainid=534352", "https://scrollscan.com"),
             ScrollSepolia => {
-                ("https://api-sepolia.scrollscan.com/api", "https://sepolia.scrollscan.com")
+                ("https://api.etherscan.io/v2/api?chainid=534351", "https://sepolia.scrollscan.com")
             }
 
             Ink => ("https://explorer.inkonchain.com/api/v2", "https://explorer.inkonchain.com"),
@@ -1450,9 +1474,9 @@ impl NamedChain {
             Evmos => ("https://evm.evmos.org/api", "https://evm.evmos.org"),
             EvmosTestnet => ("https://evm.evmos.dev/api", "https://evm.evmos.dev"),
 
-            Celo => ("https://api.celoscan.io/api", "https://celoscan.io"),
+            Celo => ("https://api.etherscan.io/v2/api?chainid=42220", "https://celoscan.io"),
             CeloAlfajores => {
-                ("https://api-alfajores.celoscan.io/api", "https://alfajores.celoscan.io")
+                ("https://api.etherscan.io/v2/api?chainid=44787", "https://alfajores.celoscan.io")
             }
             CeloBaklava => {
                 ("https://explorer.celo.org/baklava/api", "https://explorer.celo.org/baklava")
@@ -1466,40 +1490,47 @@ impl NamedChain {
 
             Boba => ("https://api.bobascan.com/api", "https://bobascan.com"),
 
-            Base => ("https://api.basescan.org/api", "https://basescan.org"),
+            Base => ("https://api.etherscan.io/v2/api?chainid=8453", "https://basescan.org"),
             BaseGoerli => ("https://api-goerli.basescan.org/api", "https://goerli.basescan.org"),
-            BaseSepolia => ("https://api-sepolia.basescan.org/api", "https://sepolia.basescan.org"),
+            BaseSepolia => {
+                ("https://api.etherscan.io/v2/api?chainid=84532", "https://sepolia.basescan.org")
+            }
 
-            Fraxtal => ("https://api.fraxscan.com/api", "https://fraxscan.com"),
+            Fraxtal => ("https://api.etherscan.io/v2/api?chainid=252", "https://fraxscan.com"),
             FraxtalTestnet => {
-                ("https://api-holesky.fraxscan.com/api", "https://holesky.fraxscan.com")
+                ("https://api.etherscan.io/v2/api?chainid=2522", "https://holesky.fraxscan.com")
             }
 
-            Blast => ("https://api.blastscan.io/api", "https://blastscan.io"),
-            BlastSepolia => {
-                ("https://api-sepolia.blastscan.io/api", "https://sepolia.blastscan.io")
-            }
+            Blast => ("https://api.etherscan.io/v2/api?chainid=81457", "https://blastscan.io"),
+            BlastSepolia => (
+                "https://api.etherscan.io/v2/api?chainid=168587773",
+                "https://sepolia.blastscan.io",
+            ),
 
-            ZkSync => ("https://api-era.zksync.network/api", "https://era.zksync.network"),
-            ZkSyncTestnet => {
-                ("https://api-sepolia-era.zksync.network/api", "https://sepolia-era.zksync.network")
-            }
+            ZkSync => ("https://api.etherscan.io/v2/api?chainid=324", "https://era.zksync.network"),
+            ZkSyncTestnet => (
+                "https://api.etherscan.io/v2/api?chainid=300",
+                "https://sepolia-era.zksync.network",
+            ),
 
-            Linea => ("https://api.lineascan.build/api", "https://lineascan.build"),
+            Linea => ("https://api.etherscan.io/v2/api?chainid=59144", "https://lineascan.build"),
             LineaGoerli => {
                 ("https://explorer.goerli.linea.build/api", "https://explorer.goerli.linea.build")
             }
             LineaSepolia => {
-                ("https://api-sepolia.lineascan.build/api", "https://sepolia.lineascan.build")
+                ("https://api.etherscan.io/v2/api?chainid=59141", "https://sepolia.lineascan.build")
             }
 
-            Mantle => ("https://explorer.mantle.xyz/api", "https://explorer.mantle.xyz"),
+            Mantle => {
+                ("https://api.etherscan.io/v2/api?chainid=5000", "https://explorer.mantle.xyz")
+            }
             MantleTestnet => {
                 ("https://explorer.testnet.mantle.xyz/api", "https://explorer.testnet.mantle.xyz")
             }
-            MantleSepolia => {
-                ("https://explorer.sepolia.mantle.xyz/api", "https://explorer.sepolia.mantle.xyz")
-            }
+            MantleSepolia => (
+                "https://api.etherscan.io/v2/api?chainid=5003",
+                "https://explorer.sepolia.mantle.xyz",
+            ),
 
             Viction => ("https://www.vicscan.xyz/api", "https://www.vicscan.xyz"),
 
@@ -1538,8 +1569,10 @@ impl NamedChain {
                 "https://api-gateway.skymavis.com/rpc/testnet",
                 "https://saigon-app.roninchain.com",
             ),
-            Taiko => ("https://api.taikoscan.io/api", "https://taikoscan.io"),
-            TaikoHekla => ("https://api-testnet.taikoscan.io/api", "https://hekla.taikoscan.io"),
+            Taiko => ("https://api.etherscan.io/v2/api?chainid=167000", "https://taikoscan.io"),
+            TaikoHekla => {
+                ("https://api.etherscan.io/v2/api?chainid=167009", "https://hekla.taikoscan.io")
+            }
             Flare => {
                 ("https://flare-explorer.flare.network/api", "https://flare-explorer.flare.network")
             }
@@ -1594,13 +1627,13 @@ impl NamedChain {
             Odyssey => {
                 ("https://odyssey-explorer.ithaca.xyz/api", "https://odyssey-explorer.ithaca.xyz")
             }
-            World => ("https://api.worldscan.org/api", "https://worldscan.org"),
+            World => ("https://api.etherscan.io/v2/api?chainid=480", "https://worldscan.org"),
             WorldSepolia => {
-                ("https://api-sepolia.worldscan.org/api", "https://sepolia.worldscan.org")
+                ("https://api.etherscan.io/v2/api?chainid=4801", "https://sepolia.worldscan.org")
             }
-            Unichain => ("https://api.uniscan.xyz/api", "https://uniscan.xyz"),
+            Unichain => ("https://api.etherscan.io/v2/api?chainid=130", "https://uniscan.xyz"),
             UnichainSepolia => {
-                ("https://api-sepolia.uniscan.xyz/api", "https://sepolia.uniscan.xyz")
+                ("https://api.etherscan.io/v2/api?chainid=1301", "https://sepolia.uniscan.xyz")
             }
             Core => ("https://openapi.coredao.org/api", "https://scan.coredao.org"),
             Merlin => ("https://scan.merlinchain.io/api", "https://scan.merlinchain.io"),
@@ -1610,25 +1643,27 @@ impl NamedChain {
             Kaia => ("https://mainnet-oapi.kaiascan.io/api", "https://kaiascan.io"),
             Story => ("https://www.storyscan.xyz/api/v2", "https://www.storyscan.xyz"),
 
-            ApeChain => ("https://api.apescan.io/api", "https://apescan.io"),
-            Curtis => ("https://curtis.explorer.caldera.xyz/api/v2", "https://curtis.apescan.io"),
+            ApeChain => ("https://api.etherscan.io/v2/api?chainid=33139", "https://apescan.io"),
+            Curtis => {
+                ("https://api.etherscan.io/v2/api?chainid=33111", "https://curtis.apescan.io")
+            }
             SonicBlaze => {
-                ("https://api-testnet.sonicscan.org/api", "https://testnet.sonicscan.org")
+                ("https://api.etherscan.io/v2/api?chainid=57054", "https://testnet.sonicscan.org")
             }
             SonicTestnet => (
                 "https://api.routescan.io/v2/network/testnet/evm/64165/etherscan/api",
                 "https://scan.soniclabs.com",
             ),
-            Sonic => ("https://api.sonicscan.org/api", "https://sonicscan.org"),
+            Sonic => ("https://api.etherscan.io/v2/api?chainid=146", "https://sonicscan.org"),
             Treasure => ("https://block-explorer.treasurescan.io/api", "https://treasurescan.io"),
             TreasureTopaz => (
                 "https://block-explorer.topaz.treasurescan.io/api",
                 "https://topaz.treasurescan.io",
             ),
             BerachainBepolia => {
-                ("https://api-testnet.berascan.com/api", "https://testnet.berascan.com")
+                ("https://api.etherscan.io/v2/api?chainid=80069", "https://testnet.berascan.com")
             }
-            Berachain => ("https://api.berascan.com/api", "https://berascan.com"),
+            Berachain => ("https://api.etherscan.io/v2/api?chainid=80094", "https://berascan.com"),
             SuperpositionTestnet => (
                 "https://testnet-explorer.superposition.so/api",
                 "https://testnet-explorer.superposition.so",
@@ -1636,9 +1671,10 @@ impl NamedChain {
             Superposition => {
                 ("https://explorer.superposition.so/api", "https://explorer.superposition.so")
             }
-            MonadTestnet => {
-                ("https://api.etherscan.io/v2/api?chainid=10143", "https://testnet.monadscan.com")
-            }
+            MonadTestnet => (
+                "https://api.etherscan.io/v2/api?chainid=10143",
+                "https://testnet.monadexplorer.com",
+            ),
             TelosEvm => ("https://api.teloscan.io/api", "https://teloscan.io"),
             TelosEvmTestnet => {
                 ("https://api.testnet.teloscan.io/api", "https://testnet.teloscan.io")
@@ -1647,8 +1683,10 @@ impl NamedChain {
                 "https://hyperliquid.cloud.blockscout.com/api/v2",
                 "https://hyperliquid.cloud.blockscout.com",
             ),
-            Abstract => ("https://api.abscan.org/api", "https://abscan.org"),
-            AbstractTestnet => ("https://api-testnet.abscan.org/api", "https://sepolia.abscan.org"),
+            Abstract => ("https://api.etherscan.io/v2/api?chainid=2741", "https://abscan.org"),
+            AbstractTestnet => {
+                ("https://api.etherscan.io/v2/api?chainid=11124", "https://sepolia.abscan.org")
+            }
             Corn => (
                 "https://api.routescan.io/v2/network/mainnet/evm/21000000/etherscan/api",
                 "https://cornscan.io",
@@ -1662,10 +1700,11 @@ impl NamedChain {
             | Iotex | Sei | InjectiveTestnet => {
                 return None;
             }
-            Sophon => ("https://api.sophscan.xyz/api", "https://sophscan.xyz"),
-            SophonTestnet => {
-                ("https://api-sepolia.sophscan.xyz/api", "https://testnet.sophscan.xyz")
-            }
+            Sophon => ("https://api.etherscan.io/v2/api?chainid=50104", "https://sophscan.xyz"),
+            SophonTestnet => (
+                "https://api.etherscan.io/v2/api?chainid=531050104",
+                "https://testnet.sophscan.xyz",
+            ),
             Lens => ("https://explorer-api.lens.xyz", "https://explorer.lens.xyz"),
             LensTestnet => (
                 "https://block-explorer-api.staging.lens.zksync.dev",
