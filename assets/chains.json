@@ -8,7 +8,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://api.etherscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=1",
       "etherscanBaseUrl": "https://etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -68,7 +68,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api-optimistic.etherscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=10",
       "etherscanBaseUrl": "https://optimistic.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -104,7 +104,7 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api.cronoscan.com/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=25",
       "etherscanBaseUrl": "https://cronoscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -200,7 +200,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "BNB",
-      "etherscanApiUrl": "https://api.bscscan.com/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=52",
       "etherscanBaseUrl": "https://bscscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -260,7 +260,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "BNB",
-      "etherscanApiUrl": "https://api-testnet.bscscan.com/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=97",
       "etherscanBaseUrl": "https://testnet.bscscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -284,7 +284,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api.gnosisscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=100",
       "etherscanBaseUrl": "https://gnosisscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -308,7 +308,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://api.uniscan.xyz/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=130",
       "etherscanBaseUrl": "https://uniscan.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -320,7 +320,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "POL",
-      "etherscanApiUrl": "https://api.polygonscan.com/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=137",
       "etherscanBaseUrl": "https://polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
     },
@@ -332,7 +332,7 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "S",
-      "etherscanApiUrl": "https://api.sonicscan.org/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=146",
       "etherscanBaseUrl": "https://sonicscan.org",
       "etherscanApiKeyName": "SONICSCAN_API_KEY"
     },
@@ -356,7 +356,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "BNB",
-      "etherscanApiUrl": "https://opbnb.bscscan.com/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=204",
       "etherscanBaseUrl": "https://opbnb.bscscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -404,7 +404,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api.fraxscan.com/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=252",
       "etherscanBaseUrl": "https://fraxscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -428,7 +428,7 @@
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://api-sepolia-era.zksync.network/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=300",
       "etherscanBaseUrl": "https://sepolia-era.zksync.network",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -452,7 +452,7 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://api-era.zksync.network/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=324",
       "etherscanBaseUrl": "https://era.zksync.network",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -524,7 +524,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "WRLD",
-      "etherscanApiUrl": "https://api.worldscan.org/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=480",
       "etherscanBaseUrl": "https://worldscan.org",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
@@ -680,7 +680,7 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "POL",
-      "etherscanApiUrl": "https://api-zkevm.polygonscan.com/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=1101",
       "etherscanBaseUrl": "https://zkevm.polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
     },
@@ -716,7 +716,7 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api-moonbeam.moonscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=1284",
       "etherscanBaseUrl": "https://moonbeam.moonscan.io",
       "etherscanApiKeyName": "MOONSCAN_API_KEY"
     },
@@ -728,7 +728,7 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api-moonriver.moonscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=1285",
       "etherscanBaseUrl": "https://moonriver.moonscan.io",
       "etherscanApiKeyName": "MOONSCAN_API_KEY"
     },
@@ -740,7 +740,7 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api-moonbase.moonscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=1287",
       "etherscanBaseUrl": "https://moonbase.moonscan.io",
       "etherscanApiKeyName": "MOONSCAN_API_KEY"
     },
@@ -752,7 +752,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://api-sepolia.uniscan.xyz/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=1301",
       "etherscanBaseUrl": "https://sepolia.uniscan.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -896,7 +896,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api-holesky.fraxscan.com/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=2522",
       "etherscanBaseUrl": "https://holesky.fraxscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -908,7 +908,7 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://api.abscan.org/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=2741",
       "etherscanBaseUrl": "https://abscan.org",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -956,7 +956,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "WRLD",
-      "etherscanApiUrl": "https://api-sepolia.worldscan.org/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=4801",
       "etherscanBaseUrl": "https://sepolia.worldscan.org",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
@@ -968,7 +968,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "MNT",
-      "etherscanApiUrl": "https://explorer.mantle.xyz/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=5000",
       "etherscanBaseUrl": "https://explorer.mantle.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -992,7 +992,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "MNT",
-      "etherscanApiUrl": "https://explorer.sepolia.mantle.xyz/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=5003",
       "etherscanBaseUrl": "https://explorer.sepolia.mantle.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1004,7 +1004,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "BNB",
-      "etherscanApiUrl": "https://opbnb-testnet.bscscan.com/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=5611",
       "etherscanBaseUrl": "https://opbnb-testnet.bscscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1052,7 +1052,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api.basescan.org/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=8453",
       "etherscanBaseUrl": "https://basescan.org",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1088,7 +1088,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://sourcify.dev/server",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=10143",
       "etherscanBaseUrl": "https://testnet.monadexplorer.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1112,7 +1112,7 @@
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api-testnet.abscan.org/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=11124",
       "etherscanBaseUrl": "https://sepolia.abscan.org",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1160,7 +1160,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://api-holesky.etherscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=17000",
       "etherscanBaseUrl": "https://holesky.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1196,7 +1196,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "APE",
-      "etherscanApiUrl": "https://curtis.explorer.caldera.xyz/api/v2",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=33111",
       "etherscanBaseUrl": "https://curtis.apescan.io",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
@@ -1208,7 +1208,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "APE",
-      "etherscanApiUrl": "https://api.apescan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=33139",
       "etherscanBaseUrl": "https://apescan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1244,7 +1244,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api.arbiscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=42161",
       "etherscanBaseUrl": "https://arbiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1256,7 +1256,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api-nova.arbiscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=42170",
       "etherscanBaseUrl": "https://nova.arbiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1268,7 +1268,7 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api.celoscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=42220",
       "etherscanBaseUrl": "https://celoscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1316,7 +1316,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api-testnet.snowtrace.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=43113",
       "etherscanBaseUrl": "https://testnet.snowtrace.io",
       "etherscanApiKeyName": "SNOWTRACE_API_KEY"
     },
@@ -1328,7 +1328,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api.snowtrace.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=43114",
       "etherscanBaseUrl": "https://snowtrace.io",
       "etherscanApiKeyName": "SNOWTRACE_API_KEY"
     },
@@ -1340,7 +1340,7 @@
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api-alfajores.celoscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=44787",
       "etherscanBaseUrl": "https://alfajores.celoscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1352,7 +1352,7 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "SOPH",
-      "etherscanApiUrl": "https://api.sophscan.xyz/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=50104",
       "etherscanBaseUrl": "https://sophscan.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1376,7 +1376,7 @@
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": "S",
-      "etherscanApiUrl": "https://api-testnet.sonicscan.org/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=57054",
       "etherscanBaseUrl": "https://testnet.sonicscan.org",
       "etherscanApiKeyName": null
     },
@@ -1424,7 +1424,7 @@
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api-sepolia.lineascan.build/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=59141",
       "etherscanBaseUrl": "https://sepolia.lineascan.build",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1436,7 +1436,7 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api.lineascan.build/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=59144",
       "etherscanBaseUrl": "https://lineascan.build",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1508,7 +1508,7 @@
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": "POL",
-      "etherscanApiUrl": "https://api-amoy.polygonscan.com/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=80002",
       "etherscanBaseUrl": "https://amoy.polygonscan.com",
       "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
     },
@@ -1520,7 +1520,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "BERA",
-      "etherscanApiUrl": "https://api-testnet.berascan.com/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=80069",
       "etherscanBaseUrl": "https://testnet.berascan.com",
       "etherscanApiKeyName": "BERASCAN_API_KEY"
     },
@@ -1532,7 +1532,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "BERA",
-      "etherscanApiUrl": "https://api.berascan.com/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=80094",
       "etherscanBaseUrl": "https://berascan.com",
       "etherscanApiKeyName": "BERASCAN_API_KEY"
     },
@@ -1544,7 +1544,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api.blastscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=81457",
       "etherscanBaseUrl": "https://blastscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1568,7 +1568,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api-sepolia.basescan.org/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=84532",
       "etherscanBaseUrl": "https://sepolia.basescan.org",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1604,7 +1604,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://api.taikoscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=167000",
       "etherscanBaseUrl": "https://taikoscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1616,7 +1616,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://api-testnet.taikoscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=167009",
       "etherscanBaseUrl": "https://hekla.taikoscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1676,7 +1676,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api-sepolia.arbiscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=421614",
       "etherscanBaseUrl": "https://sepolia.arbiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1712,7 +1712,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://api-sepolia.scrollscan.com/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=534351",
       "etherscanBaseUrl": "https://sepolia.scrollscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1724,7 +1724,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://api.scrollscan.com/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=534352",
       "etherscanBaseUrl": "https://scrollscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1736,7 +1736,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api-hoodi.etherscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=560048",
       "etherscanBaseUrl": "https://hoodi.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1748,7 +1748,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "XAI",
-      "etherscanApiUrl": "https://xaiscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=660279",
       "etherscanBaseUrl": "https://xaiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1820,7 +1820,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://api-sepolia.etherscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=11155111",
       "etherscanBaseUrl": "https://sepolia.etherscan.io",
       "etherscanApiKeyName": null
     },
@@ -1832,7 +1832,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api-sepolia-optimistic.etherscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=11155420",
       "etherscanBaseUrl": "https://sepolia-optimism.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1868,7 +1868,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api-sepolia.blastscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=168587773",
       "etherscanBaseUrl": "https://sepolia.blastscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1880,7 +1880,7 @@
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": "SOPH",
-      "etherscanApiUrl": "https://api-sepolia.sophscan.xyz/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=531050104",
       "etherscanBaseUrl": "https://testnet.sophscan.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -1940,7 +1940,7 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "XAI",
-      "etherscanApiUrl": "https://sepolia.xaiscan.io/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=37714555429",
       "etherscanBaseUrl": "https://sepolia.xaiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
