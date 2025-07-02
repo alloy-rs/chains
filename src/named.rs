@@ -18,7 +18,7 @@ use alloc::string::String;
 //      More info: <https://serde.rs/variant-attrs.html>
 //     - Add a test at the bottom of the file
 //   4. run `cargo test --all-features` to update the JSON bindings and schema.
-//   5. run `cargo fmt --all` to properly format the code.
+//   5. run `cargo +nightly fmt --all` to properly format the code.
 
 // We don't derive Serialize because it is manually implemented using AsRef<str> and it would break
 // a lot of things since Serialize is `kebab-case` vs Deserialize `snake_case`. This means that the
