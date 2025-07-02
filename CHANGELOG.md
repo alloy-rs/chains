@@ -5,11 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.5](https://github.com/alloy-rs/chains/releases/tag/v0.2.5) - 2025-07-02
+
+### Dependencies
+
+- Bump edition 2024 and msrv 1.85 ([#172](https://github.com/alloy-rs/chains/issues/172))
+
+### Features
+
+- Implement arbitrary for NamedChain ([#171](https://github.com/alloy-rs/chains/issues/171))
+
+### Miscellaneous Tasks
+
+- Update etherscan api urls to v2 ([#174](https://github.com/alloy-rs/chains/issues/174))
+
+### Styling
+
+- Update monad testnet explorer ([#175](https://github.com/alloy-rs/chains/issues/175))
+
 ## [0.2.4](https://github.com/alloy-rs/chains/releases/tag/v0.2.4) - 2025-06-09
 
 ### Features
 
 - Add InjectiveTestnet ([#168](https://github.com/alloy-rs/chains/issues/168))
+
+### Miscellaneous Tasks
+
+- Release 0.2.4
 
 ## [0.2.3](https://github.com/alloy-rs/chains/releases/tag/v0.2.3) - 2025-06-03
 
@@ -321,7 +343,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Dependencies
 
-- Bump msrv 1.85 ([#114](https://github.com/alloy-rs/chains/issues/114))
+- Bump msrv 1.81 ([#114](https://github.com/alloy-rs/chains/issues/114))
 
 ### Miscellaneous Tasks
 
