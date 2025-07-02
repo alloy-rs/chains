@@ -1088,8 +1088,8 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://sourcify.dev/server",
-      "etherscanBaseUrl": "https://testnet.monadexplorer.com",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=10143",
+      "etherscanBaseUrl": "https://testnet.monadscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "10200": {
