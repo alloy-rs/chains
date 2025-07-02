@@ -1636,7 +1636,9 @@ impl NamedChain {
             Superposition => {
                 ("https://explorer.superposition.so/api", "https://explorer.superposition.so")
             }
-            MonadTestnet => ("https://sourcify.dev/server", "https://testnet.monadexplorer.com"),
+            MonadTestnet => {
+                ("https://api.etherscan.io/v2/api?chainid=10143", "https://testnet.monadscan.com")
+            }
             TelosEvm => ("https://api.teloscan.io/api", "https://teloscan.io"),
             TelosEvmTestnet => {
                 ("https://api.testnet.teloscan.io/api", "https://testnet.teloscan.io")
