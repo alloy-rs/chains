@@ -644,9 +644,9 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "HYPE",
-      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=999",
-      "etherscanBaseUrl": "https://hyperevmscan.io",
-      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+      "etherscanApiUrl": "https://hyperliquid.cloud.blockscout.com/api/v2",
+      "etherscanBaseUrl": "https://hyperliquid.cloud.blockscout.com",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "1030": {
       "internalId": "Cfx",
