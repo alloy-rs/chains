@@ -1679,7 +1679,7 @@ impl NamedChain {
                 ("https://api.testnet.teloscan.io/api", "https://testnet.teloscan.io")
             }
             Hyperliquid => (
-                "https://api.etherscan.io/v2/api?chainid=999"
+                "https://api.etherscan.io/v2/api?chainid=999",
                 "https://hyperliquid.cloud.blockscout.com/api/v2",
                 "https://hyperliquid.cloud.blockscout.com",
             ),
