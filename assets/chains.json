@@ -696,6 +696,18 @@
       "etherscanBaseUrl": "https://scan.coredao.org",
       "etherscanApiKeyName": "CORESCAN_API_KEY"
     },
+    "1135": {
+      "internalId": "Lisk",
+      "name": "lisk",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://blockscout.lisk.com/api",
+      "etherscanBaseUrl": "https://blockscout.lisk.com",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "1281": {
       "internalId": "MoonbeamDev",
       "name": "moonbeam-dev",
@@ -1751,6 +1763,18 @@
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=660279",
       "etherscanBaseUrl": "https://xaiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "747474": {
+      "internalId": "Katana",
+      "name": "katana",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://explorer.katanarpc.com/api",
+      "etherscanBaseUrl": "https://explorer.katanarpc.com",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "763373": {
       "internalId": "InkSepolia",
