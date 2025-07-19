@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.6](https://github.com/alloy-rs/chains/releases/tag/v0.2.6) - 2025-07-19
+
+### Features
+
+- Adds katana and lisk ([#178](https://github.com/alloy-rs/chains/issues/178))
+
+### Other
+
+- Add Hyperevmscan.io ([#177](https://github.com/alloy-rs/chains/issues/177))
+
 ## [0.2.5](https://github.com/alloy-rs/chains/releases/tag/v0.2.5) - 2025-07-02
 
 ### Dependencies
@@ -17,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Miscellaneous Tasks
 
+- Release 0.2.5
 - Update etherscan api urls to v2 ([#174](https://github.com/alloy-rs/chains/issues/174))
 
 ### Styling
