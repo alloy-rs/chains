@@ -503,6 +503,14 @@ pub enum NamedChain {
     #[strum(to_string = "injective-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "injective-testnet"))]
     InjectiveTestnet = 1439,
+
+    #[strum(to_string = "katana")]
+    #[cfg_attr(feature = "serde", serde(alias = "katana"))]
+    Katana = 747474,
+
+    #[strum(to_string = "lisk")]
+    #[cfg_attr(feature = "serde", serde(alias = "lisk"))]
+    Lisk = 1135,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -665,6 +673,7 @@ impl NamedChain {
                 | Unichain
                 | UnichainSepolia
                 | HappychainTestnet
+                | Lisk
         )
     }
 
@@ -827,6 +836,8 @@ impl NamedChain {
             Lens | LensTestnet => 1_000,
             Rsk | RskTestnet => 25_000,
             InjectiveTestnet => 700,
+            Katana => 1_000,
+            Lisk => 2_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi
             | MantleTestnet | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol
@@ -973,7 +984,7 @@ impl NamedChain {
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
             | Merlin | Bitlayer | SonicBlaze | SonicTestnet | Vana | Zeta | Kaia | Story | Sei
-            | InjectiveTestnet => false,
+            | InjectiveTestnet | Katana | Lisk => false,
         }
     }
 
@@ -1178,7 +1189,7 @@ impl NamedChain {
             | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
             | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob
             | Soneium | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story | Sei
-            | Hyperliquid | Abstract | Sophon | Lens | Corn => false,
+            | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana | Lisk => false,
         }
     }
 
@@ -1189,7 +1200,8 @@ impl NamedChain {
         Some(match self {
             Mainnet | Goerli | Holesky | Kovan | Sepolia | Morden | Ropsten | Rinkeby | Scroll
             | ScrollSepolia | Taiko | TaikoHekla | Unichain | UnichainSepolia
-            | SuperpositionTestnet | Superposition | Abstract | ZkSync | ZkSyncTestnet => "ETH",
+            | SuperpositionTestnet | Superposition | Abstract | ZkSync | ZkSyncTestnet | Katana
+            | Lisk => "ETH",
 
             Mantle | MantleSepolia => "MNT",
 
@@ -1708,6 +1720,8 @@ impl NamedChain {
                 "https://block-explorer-api.staging.lens.zksync.dev",
                 "https://explorer.testnet.lens.xyz",
             ),
+            Katana => ("https://explorer.katanarpc.com/api", "https://explorer.katanarpc.com"),
+            Lisk => ("https://blockscout.lisk.com/api", "https://blockscout.lisk.com"),
         })
     }
 
@@ -1800,7 +1814,9 @@ impl NamedChain {
             | KaruraTestnet | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora
             | ZoraSepolia | Darwinia | Crab | Koi | Immutable | ImmutableTestnet | Soneium
             | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia
-            | SuperpositionTestnet | Superposition | Vana | Story => "BLOCKSCOUT_API_KEY",
+            | SuperpositionTestnet | Superposition | Vana | Story | Katana | Lisk => {
+                "BLOCKSCOUT_API_KEY"
+            }
 
             Boba => "BOBASCAN_API_KEY",
 
@@ -2080,6 +2096,8 @@ mod tests {
             (SophonTestnet, &["sophon-testnet"]),
             (Lens, &["lens"]),
             (LensTestnet, &["lens-testnet"]),
+            (Katana, &["katana"]),
+            (Lisk, &["lisk"]),
         ];
 
         for &(chain, aliases) in ALIASES {
