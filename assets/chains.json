@@ -1188,6 +1188,30 @@
       "etherscanBaseUrl": "https://holesky.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "20993": {
+      "internalId": "FluentDevnet",
+      "name": "fluent-devnet",
+      "averageBlocktimeHint": 3000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://blockscout.dev.gblend.xyz/api",
+      "etherscanBaseUrl": "https://blockscout.dev.gblend.xyz",
+      "etherscanApiKeyName": null
+    },
+    "20994": {
+      "internalId": "FluentTestnet",
+      "name": "fluent-testnet",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://testnet.fluentscan.xyz/api",
+      "etherscanBaseUrl": "https://testnet.fluentscan.xyz",
+      "etherscanApiKeyName": null
+    },
     "26863": {
       "internalId": "Oasis",
       "name": "oasis",
