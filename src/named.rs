@@ -511,6 +511,10 @@ pub enum NamedChain {
     #[strum(to_string = "lisk")]
     #[cfg_attr(feature = "serde", serde(alias = "lisk"))]
     Lisk = 1135,
+
+    #[strum(to_string = "fuse")]
+    #[cfg_attr(feature = "serde", serde(alias = "fuse"))]
+    Fuse = 122,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -838,6 +842,7 @@ impl NamedChain {
             InjectiveTestnet => 700,
             Katana => 1_000,
             Lisk => 2_000,
+            Fuse => 5_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi
             | MantleTestnet | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol
@@ -984,7 +989,7 @@ impl NamedChain {
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
             | Merlin | Bitlayer | SonicBlaze | SonicTestnet | Vana | Zeta | Kaia | Story | Sei
-            | InjectiveTestnet | Katana | Lisk => false,
+            | InjectiveTestnet | Katana | Lisk | Fuse => false,
         }
     }
 
@@ -1189,7 +1194,7 @@ impl NamedChain {
             | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
             | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob
             | Soneium | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story | Sei
-            | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana | Lisk => false,
+            | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana | Lisk | Fuse => false,
         }
     }
 
@@ -1722,6 +1727,7 @@ impl NamedChain {
             ),
             Katana => ("https://explorer.katanarpc.com/api", "https://explorer.katanarpc.com"),
             Lisk => ("https://blockscout.lisk.com/api", "https://blockscout.lisk.com"),
+            Fuse => ("https://explorer.fuse.io/api", "https://explorer.fuse.io"),
         })
     }
 
@@ -1814,7 +1820,7 @@ impl NamedChain {
             | KaruraTestnet | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora
             | ZoraSepolia | Darwinia | Crab | Koi | Immutable | ImmutableTestnet | Soneium
             | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia
-            | SuperpositionTestnet | Superposition | Vana | Story | Katana | Lisk => {
+            | SuperpositionTestnet | Superposition | Vana | Story | Katana | Lisk | Fuse => {
                 "BLOCKSCOUT_API_KEY"
             }
 
@@ -2098,6 +2104,7 @@ mod tests {
             (LensTestnet, &["lens-testnet"]),
             (Katana, &["katana"]),
             (Lisk, &["lisk"]),
+            (Fuse, &["fuse"]),
         ];
 
         for &(chain, aliases) in ALIASES {

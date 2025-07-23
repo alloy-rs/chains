@@ -300,6 +300,18 @@
       "etherscanBaseUrl": "https://coston2-explorer.flare.network",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "122": {
+      "internalId": "Fuse",
+      "name": "fuse",
+      "averageBlocktimeHint": 5000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://explorer.fuse.io/api",
+      "etherscanBaseUrl": "https://explorer.fuse.io",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "130": {
       "internalId": "Unichain",
       "name": "unichain",
