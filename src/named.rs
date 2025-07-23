@@ -515,6 +515,13 @@ pub enum NamedChain {
     #[strum(to_string = "fuse")]
     #[cfg_attr(feature = "serde", serde(alias = "fuse"))]
     Fuse = 122,
+    #[strum(to_string = "fluent-devnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "fluent-devnet"))]
+    FluentDevnet = 20993,
+
+    #[strum(to_string = "fluent-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "fluent-testnet"))]
+    FluentTestnet = 20994,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -843,6 +850,8 @@ impl NamedChain {
             Katana => 1_000,
             Lisk => 2_000,
             Fuse => 5_000,
+            FluentDevnet => 3_000,
+            FluentTestnet => 1_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi
             | MantleTestnet | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol
@@ -982,7 +991,9 @@ impl NamedChain {
             | Karura
             | KaruraTestnet
             | TelosEvm
-            | TelosEvmTestnet => false,
+            | TelosEvmTestnet
+            | FluentDevnet
+            | FluentTestnet => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
@@ -1089,6 +1100,8 @@ impl NamedChain {
                 | Berachain
                 | BerachainBepolia
                 | InjectiveTestnet
+                | FluentDevnet
+                | FluentTestnet
         )
     }
 
@@ -1179,6 +1192,8 @@ impl NamedChain {
             | LensTestnet
             | SophonTestnet
             | InjectiveTestnet
+            | FluentDevnet
+            | FluentTestnet
             | CornTestnet => true,
 
             // Dev chains.
@@ -1728,6 +1743,12 @@ impl NamedChain {
             Katana => ("https://explorer.katanarpc.com/api", "https://explorer.katanarpc.com"),
             Lisk => ("https://blockscout.lisk.com/api", "https://blockscout.lisk.com"),
             Fuse => ("https://explorer.fuse.io/api", "https://explorer.fuse.io"),
+            FluentDevnet => {
+                ("https://blockscout.dev.gblend.xyz/api", "https://blockscout.dev.gblend.xyz")
+            }
+            FluentTestnet => {
+                ("https://testnet.fluentscan.xyz/api", "https://testnet.fluentscan.xyz")
+            }
         })
     }
 
@@ -1878,7 +1899,9 @@ impl NamedChain {
             | Lens
             | LensTestnet
             | Sei
-            | InjectiveTestnet => return None,
+            | InjectiveTestnet
+            | FluentDevnet
+            | FluentTestnet => return None,
         };
 
         Some(api_key_name)
@@ -2105,6 +2128,8 @@ mod tests {
             (Katana, &["katana"]),
             (Lisk, &["lisk"]),
             (Fuse, &["fuse"]),
+            (FluentDevnet, &["fluent-devnet"]),
+            (FluentTestnet, &["fluent-testnet"]),
         ];
 
         for &(chain, aliases) in ALIASES {
