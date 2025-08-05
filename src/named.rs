@@ -770,7 +770,7 @@ impl NamedChain {
             Acala | AcalaMandalaTestnet | AcalaTestnet | Karura | KaruraTestnet | Moonbeam
             | Moonriver => 12_500,
 
-            BinanceSmartChain | BinanceSmartChainTestnet => 3_000,
+            BinanceSmartChain | BinanceSmartChainTestnet => 750,
 
             Avalanche | AvalancheFuji => 2_000,
 
