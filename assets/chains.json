@@ -195,7 +195,7 @@
     "56": {
       "internalId": "BinanceSmartChain",
       "name": "bsc",
-      "averageBlocktimeHint": 3000,
+      "averageBlocktimeHint": 750,
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
@@ -255,7 +255,7 @@
     "97": {
       "internalId": "BinanceSmartChainTestnet",
       "name": "bsc-testnet",
-      "averageBlocktimeHint": 3000,
+      "averageBlocktimeHint": 750,
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
@@ -812,9 +812,9 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "INJ",
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
-      "etherscanApiKeyName": null
+      "etherscanApiUrl": "https://testnet.blockscout-api.injective.network/api",
+      "etherscanBaseUrl": "https://testnet.blockscout.injective.network",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "1442": {
       "internalId": "PolygonZkEvmTestnet",
@@ -863,6 +863,18 @@
       "etherscanApiUrl": "https://explorer.gravity.xyz/api",
       "etherscanBaseUrl": "https://explorer.gravity.xyz",
       "etherscanApiKeyName": null
+    },
+    "1776": {
+      "internalId": "Injective",
+      "name": "injective",
+      "averageBlocktimeHint": 700,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "INJ",
+      "etherscanApiUrl": "https://blockscout-api.injective.network/api",
+      "etherscanBaseUrl": "https://blockscout.injective.network",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "1868": {
       "internalId": "Soneium",
