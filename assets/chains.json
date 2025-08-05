@@ -195,7 +195,7 @@
     "56": {
       "internalId": "BinanceSmartChain",
       "name": "bsc",
-      "averageBlocktimeHint": 3000,
+      "averageBlocktimeHint": 750,
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
@@ -255,7 +255,7 @@
     "97": {
       "internalId": "BinanceSmartChainTestnet",
       "name": "bsc-testnet",
-      "averageBlocktimeHint": 3000,
+      "averageBlocktimeHint": 750,
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
