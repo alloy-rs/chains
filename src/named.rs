@@ -500,6 +500,10 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "lens-testnet"))]
     LensTestnet = 37111,
 
+    #[strum(to_string = "injective")]
+    #[cfg_attr(feature = "serde", serde(alias = "injective"))]
+    Injective = 1776,
+
     #[strum(to_string = "injective-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "injective-testnet"))]
     InjectiveTestnet = 1439,
@@ -846,7 +850,7 @@ impl NamedChain {
             Sophon | SophonTestnet => 1_000,
             Lens | LensTestnet => 1_000,
             Rsk | RskTestnet => 25_000,
-            InjectiveTestnet => 700,
+            Injective | InjectiveTestnet => 700,
             Katana => 1_000,
             Lisk => 2_000,
             Fuse => 5_000,
@@ -1000,7 +1004,7 @@ impl NamedChain {
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
             | Merlin | Bitlayer | SonicBlaze | SonicTestnet | Vana | Zeta | Kaia | Story | Sei
-            | InjectiveTestnet | Katana | Lisk | Fuse => false,
+            | Injective | InjectiveTestnet | Katana | Lisk | Fuse => false,
         }
     }
 
@@ -1099,6 +1103,7 @@ impl NamedChain {
                 | RskTestnet
                 | Berachain
                 | BerachainBepolia
+                | Injective
                 | InjectiveTestnet
                 | FluentDevnet
                 | FluentTestnet
@@ -1209,7 +1214,9 @@ impl NamedChain {
             | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
             | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob
             | Soneium | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story | Sei
-            | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana | Lisk | Fuse => false,
+            | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana | Lisk | Fuse | Injective => {
+                false
+            }
         }
     }
 
@@ -1292,6 +1299,7 @@ impl NamedChain {
             Rsk => "RBTC",
             RskTestnet => "tRBTC",
 
+            Injective => "INJ",
             InjectiveTestnet => "INJ",
 
             _ => return None,
@@ -1727,7 +1735,7 @@ impl NamedChain {
             ),
             // TODO: add hoodi etherscan when live
             AnvilHardhat | Dev | Morden | MoonbeamDev | FilecoinMainnet | AutonomysNovaTestnet
-            | Iotex | Sei | InjectiveTestnet => {
+            | Iotex | Sei => {
                 return None;
             }
             Sophon => ("https://api.etherscan.io/v2/api?chainid=50104", "https://sophscan.xyz"),
@@ -1743,6 +1751,14 @@ impl NamedChain {
             Katana => ("https://explorer.katanarpc.com/api", "https://explorer.katanarpc.com"),
             Lisk => ("https://blockscout.lisk.com/api", "https://blockscout.lisk.com"),
             Fuse => ("https://explorer.fuse.io/api", "https://explorer.fuse.io"),
+            Injective => (
+                "https://blockscout-api.injective.network/api",
+                "https://blockscout.injective.network",
+            ),
+            InjectiveTestnet => (
+                "https://testnet.blockscout-api.injective.network/api",
+                "https://testnet.blockscout.injective.network",
+            ),
             FluentDevnet => {
                 ("https://blockscout.dev.gblend.xyz/api", "https://blockscout.dev.gblend.xyz")
             }
@@ -1841,9 +1857,8 @@ impl NamedChain {
             | KaruraTestnet | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora
             | ZoraSepolia | Darwinia | Crab | Koi | Immutable | ImmutableTestnet | Soneium
             | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia
-            | SuperpositionTestnet | Superposition | Vana | Story | Katana | Lisk | Fuse => {
-                "BLOCKSCOUT_API_KEY"
-            }
+            | SuperpositionTestnet | Superposition | Vana | Story | Katana | Lisk | Fuse
+            | Injective | InjectiveTestnet => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
@@ -1899,7 +1914,6 @@ impl NamedChain {
             | Lens
             | LensTestnet
             | Sei
-            | InjectiveTestnet
             | FluentDevnet
             | FluentTestnet => return None,
         };
@@ -2130,6 +2144,8 @@ mod tests {
             (Fuse, &["fuse"]),
             (FluentDevnet, &["fluent-devnet"]),
             (FluentTestnet, &["fluent-testnet"]),
+            (Injective, &["injective"]),
+            (InjectiveTestnet, &["injective-testnet"]),
         ];
 
         for &(chain, aliases) in ALIASES {
