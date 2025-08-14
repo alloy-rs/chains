@@ -695,7 +695,7 @@ impl Chain {
         self.0
     }
 
-    /// Returns `true` if this chain is a Polygon chain.
+    /// Returns `true` if this chain is Ethereum or an Ethereum testnet.
     #[inline]
     pub const fn is_ethereum(&self) -> bool {
         matches!(self.named(), Some(named) if named.is_ethereum())
@@ -707,7 +707,7 @@ impl Chain {
         matches!(self.named(), Some(named) if named.is_optimism())
     }
 
-    /// Returns `true` if this chain is Ethereum or an Ethereum testnet.
+    /// Returns `true` if this chain is a Polygon chain.
     #[inline]
     pub const fn is_polygon(&self) -> bool {
         matches!(self.named(), Some(named) if named.is_polygon())
