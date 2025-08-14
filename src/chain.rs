@@ -707,6 +707,12 @@ impl Chain {
         matches!(self.named(), Some(named) if named.is_optimism())
     }
 
+    /// Returns `true` if this chain is a Polygon chain.
+    #[inline]
+    pub const fn is_polygon(&self) -> bool {
+        matches!(self.named(), Some(named) if named.is_polygon())
+    }
+
     /// Returns true if the chain contains Arbitrum configuration.
     #[inline]
     pub const fn is_arbitrum(self) -> bool {

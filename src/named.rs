@@ -692,6 +692,13 @@ impl NamedChain {
         )
     }
 
+    /// Returns true if the chain contains Polygon configuration.
+    pub const fn is_polygon(self) -> bool {
+        use NamedChain::*;
+
+        matches!(self, Polygon | PolygonAmoy | PolygonZkEvm | PolygonMumbai | PolygonZkEvmTestnet)
+    }
+
     /// Returns true if the chain contains Arbitrum configuration.
     pub const fn is_arbitrum(self) -> bool {
         use NamedChain::*;
