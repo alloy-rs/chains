@@ -5,11 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.7](https://github.com/alloy-rs/chains/releases/tag/v0.2.7) - 2025-08-19
+
+### Features
+
+- Add is_polygon ([#185](https://github.com/alloy-rs/chains/issues/185))
+- Add Injective ([#184](https://github.com/alloy-rs/chains/issues/184))
+
+### Miscellaneous Tasks
+
+- Make katana opstack ([#187](https://github.com/alloy-rs/chains/issues/187))
+- Make celo opstack ([#186](https://github.com/alloy-rs/chains/issues/186))
+- Update BSC poll interval to reflect BSC block time ([#181](https://github.com/alloy-rs/chains/issues/181))
+
+### Other
+
+- Adds fluent devnet and testnet ([#179](https://github.com/alloy-rs/chains/issues/179))
+- Support Fuse chain ([#180](https://github.com/alloy-rs/chains/issues/180))
+
 ## [0.2.6](https://github.com/alloy-rs/chains/releases/tag/v0.2.6) - 2025-07-19
 
 ### Features
 
 - Adds katana and lisk ([#178](https://github.com/alloy-rs/chains/issues/178))
+
+### Miscellaneous Tasks
+
+- Release 0.2.6
 
 ### Other
 
