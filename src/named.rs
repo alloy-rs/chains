@@ -689,6 +689,7 @@ impl NamedChain {
                 | UnichainSepolia
                 | HappychainTestnet
                 | Lisk
+                | Celo
         )
     }
 
