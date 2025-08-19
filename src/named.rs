@@ -690,6 +690,7 @@ impl NamedChain {
                 | HappychainTestnet
                 | Lisk
                 | Celo
+                | Katana
         )
     }
 
