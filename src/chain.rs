@@ -87,7 +87,6 @@ impl TryFrom<Chain> for NamedChain {
 impl FromStr for Chain {
     type Err = core::num::ParseIntError;
 
-    #[inline]
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         if let Ok(chain) = NamedChain::from_str(s) {
             Ok(Self::from_named(chain))
@@ -98,7 +97,6 @@ impl FromStr for Chain {
 }
 
 impl fmt::Display for Chain {
-    #[inline]
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self.kind() {
             ChainKind::Named(chain) => chain.fmt(f),
@@ -256,11 +254,13 @@ impl Chain {
     }
 
     /// Returns true if this a named variant.
+    #[inline]
     pub const fn is_named(self) -> bool {
         self.kind().is_named()
     }
 
     /// Returns true if this an Id variant.
+    #[inline]
     pub const fn is_id(self) -> bool {
         self.kind().is_id()
     }
