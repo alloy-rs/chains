@@ -221,22 +221,6 @@ impl proptest::arbitrary::Arbitrary for Chain {
 }
 
 impl Chain {
-    #[allow(non_snake_case)]
-    #[doc(hidden)]
-    #[deprecated(since = "0.1.0", note = "use `Self::from_named()` instead")]
-    #[inline]
-    pub const fn Named(named: NamedChain) -> Self {
-        Self::from_named(named)
-    }
-
-    #[allow(non_snake_case)]
-    #[doc(hidden)]
-    #[deprecated(since = "0.1.0", note = "use `Self::from_id()` instead")]
-    #[inline]
-    pub const fn Id(id: u64) -> Self {
-        Self::from_id_unchecked(id)
-    }
-
     /// Creates a new [`Chain`] by wrapping a [`NamedChain`].
     #[inline]
     pub const fn from_named(named: NamedChain) -> Self {
@@ -777,12 +761,6 @@ impl Chain {
             ChainKind::Named(named) => named.supports_shanghai(),
             ChainKind::Id(_) => false,
         }
-    }
-
-    #[doc(hidden)]
-    #[deprecated(since = "0.1.3", note = "use `supports_shanghai` instead")]
-    pub const fn supports_push0(self) -> bool {
-        self.supports_shanghai()
     }
 
     /// Returns the chain's blockchain explorer and its API (Etherscan and Etherscan-like) URLs.

@@ -1119,12 +1119,6 @@ impl NamedChain {
         )
     }
 
-    #[doc(hidden)]
-    #[deprecated(since = "0.1.3", note = "use `supports_shanghai` instead")]
-    pub const fn supports_push0(self) -> bool {
-        self.supports_shanghai()
-    }
-
     /// Returns whether the chain is a testnet.
     pub const fn is_testnet(self) -> bool {
         use NamedChain::*;
