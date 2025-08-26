@@ -590,10 +590,24 @@ impl PartialEq<u64> for NamedChain {
     }
 }
 
+impl PartialEq<NamedChain> for u64 {
+    #[inline]
+    fn eq(&self, other: &NamedChain) -> bool {
+        other.eq(self)
+    }
+}
+
 impl PartialOrd<u64> for NamedChain {
     #[inline]
     fn partial_cmp(&self, other: &u64) -> Option<Ordering> {
         (*self as u64).partial_cmp(other)
+    }
+}
+
+impl PartialOrd<NamedChain> for u64 {
+    #[inline]
+    fn partial_cmp(&self, other: &NamedChain) -> Option<Ordering> {
+        other.partial_cmp(self)
     }
 }
 
@@ -699,6 +713,13 @@ impl NamedChain {
         use NamedChain::*;
 
         matches!(self, Polygon | PolygonAmoy | PolygonZkEvm | PolygonMumbai | PolygonZkEvmTestnet)
+    }
+
+    /// Returns true if the chain contains Gnosis configuration.
+    pub const fn is_gnosis(self) -> bool {
+        use NamedChain::*;
+
+        matches!(self, Gnosis | Chiado)
     }
 
     /// Returns true if the chain contains Arbitrum configuration.
@@ -2034,6 +2055,12 @@ mod tests {
 
     #[allow(unused_imports)]
     use alloc::string::ToString;
+
+    #[test]
+    fn assert_eq_named() {
+        assert_eq!(NamedChain::Mainnet, NamedChain::Mainnet as u64);
+        assert_eq!(NamedChain::Mainnet as u64, NamedChain::Mainnet);
+    }
 
     #[test]
     #[cfg(feature = "serde")]

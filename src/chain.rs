@@ -126,6 +126,13 @@ impl PartialOrd<u64> for Chain {
     }
 }
 
+impl PartialOrd<Chain> for u64 {
+    #[inline]
+    fn partial_cmp(&self, other: &Chain) -> Option<Ordering> {
+        other.id().partial_cmp(self)
+    }
+}
+
 #[cfg(feature = "serde")]
 impl serde::Serialize for Chain {
     fn serialize<S: serde::Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
@@ -697,6 +704,12 @@ impl Chain {
         matches!(self.named(), Some(named) if named.is_polygon())
     }
 
+    /// Returns `true` if this chain is a Gnosis chain.
+    #[inline]
+    pub const fn is_gnosis(&self) -> bool {
+        matches!(self.named(), Some(named) if named.is_gnosis())
+    }
+
     /// Returns true if the chain contains Arbitrum configuration.
     #[inline]
     pub const fn is_arbitrum(self) -> bool {
@@ -812,6 +825,12 @@ mod tests {
 
     #[allow(unused_imports)]
     use alloc::string::ToString;
+
+    #[test]
+    fn assert_eq_chain() {
+        assert_eq!(Chain::mainnet(), NamedChain::Mainnet as u64);
+        assert_eq!(NamedChain::Mainnet as u64, Chain::mainnet());
+    }
 
     #[test]
     fn test_id() {
