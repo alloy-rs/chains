@@ -1736,7 +1736,6 @@ impl NamedChain {
                 "https://api.routescan.io/v2/network/testnet/evm/21000001/etherscan/api",
                 "https://testnet.cornscan.io",
             ),
-            // TODO: add hoodi etherscan when live
             AnvilHardhat | Dev | Morden | MoonbeamDev | FilecoinMainnet | AutonomysNovaTestnet
             | Iotex | Sei => {
                 return None;
