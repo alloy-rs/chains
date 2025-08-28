@@ -5,10 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.9](https://github.com/alloy-rs/chains/releases/tag/v0.2.9) - 2025-08-28
+
+### Miscellaneous Tasks
+
+- Add base, optimism native token name ([#193](https://github.com/alloy-rs/chains/issues/193))
+- Use Option::unzip now that msrv is 1.81 ([#192](https://github.com/alloy-rs/chains/issues/192))
+
 ## [0.2.8](https://github.com/alloy-rs/chains/releases/tag/v0.2.8) - 2025-08-21
 
 ### Miscellaneous Tasks
 
+- Release 0.2.8
 - Remove deprecated functions ([#189](https://github.com/alloy-rs/chains/issues/189))
 - Tweak inline ([#188](https://github.com/alloy-rs/chains/issues/188))
 
