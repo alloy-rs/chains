@@ -67,7 +67,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=10",
       "etherscanBaseUrl": "https://optimistic.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
@@ -1087,7 +1087,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=8453",
       "etherscanBaseUrl": "https://basescan.org",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
@@ -1615,7 +1615,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://api-goerli.basescan.org/api",
       "etherscanBaseUrl": "https://goerli.basescan.org",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
@@ -1627,7 +1627,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=84532",
       "etherscanBaseUrl": "https://sepolia.basescan.org",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
@@ -1903,7 +1903,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=11155420",
       "etherscanBaseUrl": "https://sepolia-optimism.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
