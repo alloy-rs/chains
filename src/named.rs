@@ -1231,7 +1231,7 @@ impl NamedChain {
             Mainnet | Goerli | Holesky | Kovan | Sepolia | Morden | Ropsten | Rinkeby | Scroll
             | ScrollSepolia | Taiko | TaikoHekla | Unichain | UnichainSepolia
             | SuperpositionTestnet | Superposition | Abstract | ZkSync | ZkSyncTestnet | Katana
-            | Lisk => "ETH",
+            | Lisk | Base | BaseGoerli | BaseSepolia | Optimism | OptimismSepolia => "ETH",
 
             Mantle | MantleSepolia => "MNT",
 
