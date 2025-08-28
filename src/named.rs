@@ -1237,6 +1237,8 @@ impl NamedChain {
 
             GravityAlphaMainnet | GravityAlphaTestnetSepolia => "G",
 
+            Celo => "CELO",
+
             Xai | XaiSepolia => "XAI",
 
             HappychainTestnet => "HAPPY",
@@ -1302,8 +1304,7 @@ impl NamedChain {
             Rsk => "RBTC",
             RskTestnet => "tRBTC",
 
-            Injective => "INJ",
-            InjectiveTestnet => "INJ",
+            Injective | InjectiveTestnet => "INJ",
 
             _ => return None,
         })

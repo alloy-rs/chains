@@ -1327,7 +1327,7 @@
       "isLegacy": false,
       "supportsShanghai": false,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "CELO",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=42220",
       "etherscanBaseUrl": "https://celoscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
