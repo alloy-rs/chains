@@ -1005,19 +1005,7 @@
       "isTestnet": false,
       "nativeCurrencySymbol": "MNT",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=5000",
-      "etherscanBaseUrl": "https://explorer.mantle.xyz",
-      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
-    },
-    "5001": {
-      "internalId": "MantleTestnet",
-      "name": "mantle-testnet",
-      "averageBlocktimeHint": null,
-      "isLegacy": true,
-      "supportsShanghai": false,
-      "isTestnet": true,
-      "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://explorer.testnet.mantle.xyz/api",
-      "etherscanBaseUrl": "https://explorer.testnet.mantle.xyz",
+      "etherscanBaseUrl": "https://mantlescan.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "5003": {
@@ -1029,7 +1017,7 @@
       "isTestnet": true,
       "nativeCurrencySymbol": "MNT",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=5003",
-      "etherscanBaseUrl": "https://explorer.sepolia.mantle.xyz",
+      "etherscanBaseUrl": "https://sepolia.mantlescan.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "5611": {
