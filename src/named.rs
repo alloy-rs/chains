@@ -276,9 +276,6 @@ pub enum NamedChain {
     #[strum(to_string = "mantle")]
     #[cfg_attr(feature = "serde", serde(alias = "mantle"))]
     Mantle = 5000,
-    #[strum(to_string = "mantle-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "mantle-testnet"))]
-    MantleTestnet = 5001,
     #[strum(to_string = "mantle-sepolia")]
     #[cfg_attr(feature = "serde", serde(alias = "mantle-sepolia"))]
     MantleSepolia = 5003,
@@ -866,11 +863,12 @@ impl NamedChain {
             FluentDevnet => 3_000,
             FluentTestnet => 1_000,
 
-            Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi
-            | MantleTestnet | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol
-            | EmeraldTestnet | Boba | PolygonZkEvm | PolygonZkEvmTestnet | Metis | Linea
-            | LineaGoerli | LineaSepolia | KakarotSepolia | SonicBlaze | SonicTestnet
-            | Treasure | TreasureTopaz | Corn | CornTestnet => return None,
+            Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi | Moonbase
+            | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | PolygonZkEvm
+            | PolygonZkEvmTestnet | Metis | Linea | LineaGoerli | LineaSepolia | KakarotSepolia
+            | SonicBlaze | SonicTestnet | Treasure | TreasureTopaz | Corn | CornTestnet => {
+                return None;
+            }
         }))
     }
 
@@ -890,9 +888,9 @@ impl NamedChain {
         match self {
             // Known legacy chains / non EIP-1559 compliant.
             CeloAlfajores | CeloBaklava | Elastos | Emerald | EmeraldTestnet | Fantom
-            | FantomTestnet | MantleTestnet | OptimismKovan | PolygonZkEvm
-            | PolygonZkEvmTestnet | Ronin | RoninTestnet | Rsk | RskTestnet | Shimmer
-            | Treasure | TreasureTopaz | Viction | Sophon | SophonTestnet => true,
+            | FantomTestnet | OptimismKovan | PolygonZkEvm | PolygonZkEvmTestnet | Ronin
+            | RoninTestnet | Rsk | RskTestnet | Shimmer | Treasure | TreasureTopaz | Viction
+            | Sophon | SophonTestnet => true,
 
             // Known EIP-1559 chains.
             Mainnet
@@ -1152,7 +1150,6 @@ impl NamedChain {
             | LineaGoerli
             | LineaSepolia
             | InkSepolia
-            | MantleTestnet
             | MantleSepolia
             | MoonbeamDev
             | OptimismGoerli
@@ -1480,16 +1477,10 @@ impl NamedChain {
             LineaSepolia => {
                 ("https://api.etherscan.io/v2/api?chainid=59141", "https://sepolia.lineascan.build")
             }
-            Mantle => {
-                ("https://api.etherscan.io/v2/api?chainid=5000", "https://explorer.mantle.xyz")
+            Mantle => ("https://api.etherscan.io/v2/api?chainid=5000", "https://mantlescan.xyz"),
+            MantleSepolia => {
+                ("https://api.etherscan.io/v2/api?chainid=5003", "https://sepolia.mantlescan.xyz")
             }
-            MantleTestnet => {
-                ("https://explorer.testnet.mantle.xyz/api", "https://explorer.testnet.mantle.xyz")
-            }
-            MantleSepolia => (
-                "https://api.etherscan.io/v2/api?chainid=5003",
-                "https://explorer.sepolia.mantle.xyz",
-            ),
             Viction => ("https://www.vicscan.xyz/api", "https://www.vicscan.xyz"),
             Zora => ("https://explorer.zora.energy/api", "https://explorer.zora.energy"),
             ZoraSepolia => {
@@ -1708,7 +1699,6 @@ impl NamedChain {
             | Linea
             | LineaSepolia
             | Mantle
-            | MantleTestnet
             | MantleSepolia
             | Xai
             | XaiSepolia
@@ -1992,7 +1982,6 @@ mod tests {
             (ZkSync, &["zksync"]),
             (ZkSyncTestnet, &["zksync-testnet"]),
             (Mantle, &["mantle"]),
-            (MantleTestnet, &["mantle-testnet"]),
             (MantleSepolia, &["mantle-sepolia"]),
             (GravityAlphaMainnet, &["gravity-alpha-mainnet"]),
             (GravityAlphaTestnetSepolia, &["gravity-alpha-testnet-sepolia"]),
