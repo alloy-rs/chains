@@ -1363,7 +1363,7 @@ impl NamedChain {
                 "https://bob-sepolia.explorer.gobob.xyz",
             ),
             BinanceSmartChain => {
-                ("https://api.etherscan.io/v2/api?chainid=52", "https://bscscan.com")
+                ("https://api.etherscan.io/v2/api?chainid=56", "https://bscscan.com")
             }
             BinanceSmartChainTestnet => {
                 ("https://api.etherscan.io/v2/api?chainid=97", "https://testnet.bscscan.com")
