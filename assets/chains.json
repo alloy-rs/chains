@@ -200,7 +200,7 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "BNB",
-      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=52",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=56",
       "etherscanBaseUrl": "https://bscscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
