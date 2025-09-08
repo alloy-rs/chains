@@ -27,3 +27,6 @@ mod named;
 pub use named::{NamedChain, NamedChainIter};
 
 pub mod spec;
+
+mod verifiers;
+pub use verifiers::VerifierType;

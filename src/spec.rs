@@ -70,7 +70,7 @@ pub struct Chain {
 impl Chain {
     /// Constructs a new chain specification from the given [`NamedChain`].
     pub fn new(c: NamedChain) -> Self {
-        let (etherscan_api_url, etherscan_base_url) = c.etherscan_urls().unzip();
+        let (etherscan_api_url, etherscan_base_url) = c.verifier_urls().unzip();
         Self {
             internal_id: format!("{c:?}"),
             name: c.to_string(),
@@ -83,7 +83,7 @@ impl Chain {
             native_currency_symbol: c.native_currency_symbol().map(Into::into),
             etherscan_api_url: etherscan_api_url.map(Into::into),
             etherscan_base_url: etherscan_base_url.map(Into::into),
-            etherscan_api_key_name: c.etherscan_api_key_name().map(Into::into),
+            etherscan_api_key_name: c.verifier_api_key_name().map(Into::into),
         }
     }
 }
