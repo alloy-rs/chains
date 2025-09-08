@@ -637,6 +637,7 @@ enum VerifierType {
     Etherscan,
     Blockscout,
     Routescan,
+    Sourcify,
     Custom(&'static str),
 }
 
@@ -1679,86 +1680,193 @@ impl NamedChain {
                 "https://esc.elastos.io/api",
                 "https://esc.elastos.io",
             )],
-            KakarotSepolia => {
-                ("https://sepolia.kakarotscan.org/api", "https://sepolia.kakarotscan.org")
-            }
-            Etherlink => ("https://explorer.etherlink.com/api", "https://explorer.etherlink.com"),
-            EtherlinkTestnet => (
+            KakarotSepolia => vec![(
+                VerifierType::Blockscout,
+                "https://sepolia.kakarotscan.org/api",
+                "https://sepolia.kakarotscan.org",
+            )],
+            Etherlink => vec![(
+                VerifierType::Blockscout,
+                "https://explorer.etherlink.com/api",
+                "https://explorer.etherlink.com",
+            )],
+            EtherlinkTestnet => vec![(
+                VerifierType::Blockscout,
                 "https://testnet.explorer.etherlink.com/api",
                 "https://testnet.explorer.etherlink.com",
-            ),
-            Degen => ("https://explorer.degen.tips/api", "https://explorer.degen.tips"),
-            Ronin => ("https://skynet-api.roninchain.com/ronin", "https://app.roninchain.com"),
-            RoninTestnet => (
+            )],
+            Degen => vec![(
+                VerifierType::Blockscout,
+                "https://explorer.degen.tips/api",
+                "https://explorer.degen.tips",
+            )],
+            Ronin => vec![(
+                VerifierType::Sourcify,
+                "https://skynet-api.roninchain.com/ronin",
+                "https://app.roninchain.com",
+            )],
+            RoninTestnet => vec![(
+                VerifierType::Sourcify,
                 "https://api-gateway.skymavis.com/rpc/testnet",
                 "https://saigon-app.roninchain.com",
-            ),
-            Taiko => ("https://api.etherscan.io/v2/api?chainid=167000", "https://taikoscan.io"),
-            TaikoHekla => {
-                ("https://api.etherscan.io/v2/api?chainid=167009", "https://hekla.taikoscan.io")
-            }
-            Flare => {
-                ("https://flare-explorer.flare.network/api", "https://flare-explorer.flare.network")
-            }
-            FlareCoston2 => (
+            )],
+            Taiko => vec![(
+                VerifierType::Etherscan,
+                "https://api.etherscan.io/v2/api?chainid=167000",
+                "https://taikoscan.io",
+            )],
+            TaikoHekla => vec![(
+                VerifierType::Etherscan,
+                "https://api.etherscan.io/v2/api?chainid=167009",
+                "https://hekla.taikoscan.io",
+            )],
+            Flare => vec![(
+                VerifierType::Blockscout,
+                "https://flare-explorer.flare.network/api",
+                "https://flare-explorer.flare.network",
+            )],
+            FlareCoston2 => vec![(
+                VerifierType::Blockscout,
                 "https://coston2-explorer.flare.network/api",
                 "https://coston2-explorer.flare.network",
-            ),
-            Acala => ("https://blockscout.acala.network/api", "https://blockscout.acala.network"),
-            AcalaMandalaTestnet => (
+            )],
+            Acala => vec![(
+                VerifierType::Blockscout,
+                "https://blockscout.acala.network/api",
+                "https://blockscout.acala.network",
+            )],
+            AcalaMandalaTestnet => vec![(
+                VerifierType::Blockscout,
                 "https://blockscout.mandala.aca-staging.network/api",
                 "https://blockscout.mandala.aca-staging.network",
-            ),
-            Karura => {
-                ("https://blockscout.karura.network/api", "https://blockscout.karura.network")
-            }
-            Darwinia => {
-                ("https://explorer.darwinia.network/api", "https://explorer.darwinia.network")
-            }
-            Crab => {
-                ("https://crab-scan.darwinia.network/api", "https://crab-scan.darwinia.network")
-            }
-            Cfx => ("https://evmapi.confluxscan.net/api", "https://evm.confluxscan.io"),
-            CfxTestnet => {
-                ("https://evmapi-testnet.confluxscan.net/api", "https://evmtestnet.confluxscan.io")
-            }
-            Pulsechain => ("https://api.scan.pulsechain.com", "https://scan.pulsechain.com"),
-            PulsechainTestnet => (
+            )],
+            Karura => vec![(
+                VerifierType::Blockscout,
+                "https://blockscout.karura.network/api",
+                "https://blockscout.karura.network",
+            )],
+            Darwinia => vec![(
+                VerifierType::Blockscout,
+                "https://explorer.darwinia.network/api",
+                "https://explorer.darwinia.network",
+            )],
+            Crab => vec![(
+                VerifierType::Blockscout,
+                "https://crab-scan.darwinia.network/api",
+                "https://crab-scan.darwinia.network",
+            )],
+            Cfx => vec![(
+                VerifierType::Custom("Conflux Scan"),
+                "https://evmapi.confluxscan.net/api",
+                "https://evm.confluxscan.io",
+            )],
+            CfxTestnet => vec![(
+                VerifierType::Custom("Conflux Scan"),
+                "https://evmapi-testnet.confluxscan.net/api",
+                "https://evmtestnet.confluxscan.io",
+            )],
+            Pulsechain => vec![(
+                VerifierType::Custom("Pulsechain"),
+                "https://api.scan.pulsechain.com",
+                "https://scan.pulsechain.com",
+            )],
+            PulsechainTestnet => vec![(
+                VerifierType::Custom("Pulsechain"),
                 "https://api.scan.v4.testnet.pulsechain.com",
                 "https://scan.v4.testnet.pulsechain.com",
-            ),
-            Immutable => ("https://explorer.immutable.com/api", "https://explorer.immutable.com"),
-            ImmutableTestnet => (
+            )],
+            Immutable => vec![(
+                VerifierType::Blockscout,
+                "https://explorer.immutable.com/api",
+                "https://explorer.immutable.com",
+            )],
+            ImmutableTestnet => vec![(
+                VerifierType::Blockscout,
                 "https://explorer.testnet.immutable.com/api",
                 "https://explorer.testnet.immutable.com",
-            ),
-            Soneium => ("https://soneium.blockscout.com/api", "https://soneium.blockscout.com"),
-            SoneiumMinatoTestnet => (
+            )],
+            Soneium => vec![(
+                VerifierType::Blockscout,
+                "https://soneium.blockscout.com/api",
+                "https://soneium.blockscout.com",
+            )],
+            SoneiumMinatoTestnet => vec![(
+                VerifierType::Blockscout,
                 "https://soneium-minato.blockscout.com/api",
                 "https://soneium-minato.blockscout.com",
-            ),
-            Odyssey => {
-                ("https://odyssey-explorer.ithaca.xyz/api", "https://odyssey-explorer.ithaca.xyz")
+            )],
+            Odyssey => vec![(
+                VerifierType::Blockscout,
+                "https://odyssey-explorer.ithaca.xyz/api",
+                "https://odyssey-explorer.ithaca.xyz",
+            )],
+            World => vec![(
+                VerifierType::Etherscan,
+                "https://api.etherscan.io/v2/api?chainid=480",
+                "https://worldscan.org",
+            )],
+            WorldSepolia => vec![(
+                VerifierType::Etherscan,
+                "https://api.etherscan.io/v2/api?chainid=4801",
+                "https://sepolia.worldscan.org",
+            )],
+            Unichain => vec![(
+                VerifierType::Etherscan,
+                "https://api.etherscan.io/v2/api?chainid=130",
+                "https://uniscan.xyz",
+            )],
+            UnichainSepolia => vec![(
+                VerifierType::Etherscan,
+                "https://api.etherscan.io/v2/api?chainid=1301",
+                "https://sepolia.uniscan.xyz",
+            )],
+            Core => vec![(
+                VerifierType::Custom("Core Scan"),
+                "https://openapi.coredao.org/api",
+                "https://scan.coredao.org",
+            )],
+            Merlin => vec![(
+                VerifierType::Custom("Unifra"),
+                "https://scan.merlinchain.io/api",
+                "https://scan.merlinchain.io",
+            )],
+            Bitlayer => vec![(
+                VerifierType::Custom("Bitlayer"),
+                "https://api.btrscan.com/scan/api",
+                "https://www.btrscan.com",
+            )],
+            Vana => vec![(
+                VerifierType::Blockscout,
+                "https://api.vanascan.io/api",
+                "https://vanascan.io",
+            )],
+            Zeta => {
+                vec![(
+                    VerifierType::Blockscout,
+                    "https://zetachain.blockscout.com/api",
+                    "https://zetachain.blockscout.com",
+                )]
             }
-            World => ("https://api.etherscan.io/v2/api?chainid=480", "https://worldscan.org"),
-            WorldSepolia => {
-                ("https://api.etherscan.io/v2/api?chainid=4801", "https://sepolia.worldscan.org")
-            }
-            Unichain => ("https://api.etherscan.io/v2/api?chainid=130", "https://uniscan.xyz"),
-            UnichainSepolia => {
-                ("https://api.etherscan.io/v2/api?chainid=1301", "https://sepolia.uniscan.xyz")
-            }
-            Core => ("https://openapi.coredao.org/api", "https://scan.coredao.org"),
-            Merlin => ("https://scan.merlinchain.io/api", "https://scan.merlinchain.io"),
-            Bitlayer => ("https://api.btrscan.com/scan/api", "https://www.btrscan.com"),
-            Vana => ("https://api.vanascan.io/api", "https://vanascan.io"),
-            Zeta => ("https://zetachain.blockscout.com/api", "https://zetachain.blockscout.com"),
-            Kaia => ("https://mainnet-oapi.kaiascan.io/api", "https://kaiascan.io"),
-            Story => ("https://www.storyscan.xyz/api/v2", "https://www.storyscan.xyz"),
-            ApeChain => ("https://api.etherscan.io/v2/api?chainid=33139", "https://apescan.io"),
-            Curtis => {
-                ("https://api.etherscan.io/v2/api?chainid=33111", "https://curtis.apescan.io")
-            }
+            Kaia => vec![(
+                VerifierType::Custom("Bisonai"),
+                "https://mainnet-oapi.kaiascan.io/api",
+                "https://kaiascan.io",
+            )],
+            Story => vec![(
+                VerifierType::Blockscout,
+                "https://www.storyscan.xyz/api/v2",
+                "https://www.storyscan.xyz",
+            )],
+            ApeChain => vec![(
+                VerifierType::Etherscan,
+                "https://api.etherscan.io/v2/api?chainid=33139",
+                "https://apescan.io",
+            )],
+            Curtis => vec![(
+                VerifierType::Etherscan,
+                "https://api.etherscan.io/v2/api?chainid=33111",
+                "https://curtis.apescan.io",
+            )],
             SonicBlaze => {
                 ("https://api.etherscan.io/v2/api?chainid=57054", "https://testnet.sonicscan.org")
             }
