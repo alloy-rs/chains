@@ -1377,8 +1377,8 @@
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=43113",
-      "etherscanBaseUrl": "https://testnet.snowtrace.io",
-      "etherscanApiKeyName": "SNOWTRACE_API_KEY"
+      "etherscanBaseUrl": "https://testnet.snowscan.xyz",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "43114": {
       "internalId": "Avalanche",
@@ -1389,8 +1389,8 @@
       "isTestnet": false,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=43114",
-      "etherscanBaseUrl": "https://snowtrace.io",
-      "etherscanApiKeyName": "SNOWTRACE_API_KEY"
+      "etherscanBaseUrl": "https://snowscan.xyz",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "44787": {
       "internalId": "CeloAlfajores",
