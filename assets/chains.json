@@ -1991,18 +1991,6 @@
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=37714555429",
       "etherscanBaseUrl": "https://sepolia.xaiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
-    },
-    "920637907288165": {
-      "internalId": "KakarotSepolia",
-      "name": "kakarot-sepolia",
-      "averageBlocktimeHint": null,
-      "isLegacy": false,
-      "supportsShanghai": true,
-      "isTestnet": true,
-      "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://sepolia.kakarotscan.org/api",
-      "etherscanBaseUrl": "https://sepolia.kakarotscan.org",
-      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     }
   }
 }
