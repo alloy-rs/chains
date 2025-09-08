@@ -155,28 +155,9 @@ pub enum NamedChain {
     Gnosis = 100,
 
     Polygon = 137,
-    #[strum(to_string = "mumbai", serialize = "polygon-mumbai")]
-    #[cfg_attr(feature = "serde", serde(alias = "mumbai", alias = "polygon-mumbai"))]
-    PolygonMumbai = 80001,
     #[strum(to_string = "amoy", serialize = "polygon-amoy")]
     #[cfg_attr(feature = "serde", serde(alias = "amoy", alias = "polygon-amoy"))]
     PolygonAmoy = 80002,
-    #[strum(serialize = "polygon-zkevm", serialize = "zkevm")]
-    #[cfg_attr(
-        feature = "serde",
-        serde(alias = "zkevm", alias = "polygon_zkevm", alias = "polygon-zkevm")
-    )]
-    PolygonZkEvm = 1101,
-    #[strum(serialize = "polygon-zkevm-testnet", serialize = "zkevm-testnet")]
-    #[cfg_attr(
-        feature = "serde",
-        serde(
-            alias = "zkevm-testnet",
-            alias = "polygon_zkevm_testnet",
-            alias = "polygon-zkevm-testnet"
-        )
-    )]
-    PolygonZkEvmTestnet = 1442,
 
     Fantom = 250,
     FantomTestnet = 4002,
@@ -686,7 +667,7 @@ impl NamedChain {
     pub const fn is_polygon(self) -> bool {
         use NamedChain::*;
 
-        matches!(self, Polygon | PolygonAmoy | PolygonZkEvm | PolygonMumbai | PolygonZkEvmTestnet)
+        matches!(self, Polygon | PolygonAmoy)
     }
 
     /// Returns true if the chain contains Arbitrum configuration.
@@ -762,7 +743,7 @@ impl NamedChain {
 
             Viction => 2_000,
 
-            Polygon | PolygonMumbai | PolygonAmoy => 2_100,
+            Polygon | PolygonAmoy => 2_100,
 
             Acala | AcalaMandalaTestnet | AcalaTestnet | Karura | KaruraTestnet | Moonbeam
             | Moonriver => 12_500,
@@ -855,9 +836,8 @@ impl NamedChain {
             FluentTestnet => 1_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi | Moonbase
-            | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | PolygonZkEvm
-            | PolygonZkEvmTestnet | Metis | Linea | LineaGoerli | LineaSepolia | Treasure
-            | TreasureTopaz | Corn | CornTestnet => {
+            | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | Metis | Linea
+            | LineaGoerli | LineaSepolia | Treasure | TreasureTopaz | Corn | CornTestnet => {
                 return None;
             }
         }))
@@ -879,9 +859,8 @@ impl NamedChain {
         match self {
             // Known legacy chains / non EIP-1559 compliant.
             CeloAlfajores | CeloBaklava | Elastos | Emerald | EmeraldTestnet | Fantom
-            | FantomTestnet | OptimismKovan | PolygonZkEvm | PolygonZkEvmTestnet | Ronin
-            | RoninTestnet | Rsk | RskTestnet | Shimmer | Treasure | TreasureTopaz | Viction
-            | Sophon | SophonTestnet => true,
+            | FantomTestnet | OptimismKovan | Ronin | RoninTestnet | Rsk | RskTestnet | Shimmer
+            | Treasure | TreasureTopaz | Viction | Sophon | SophonTestnet => true,
 
             // Known EIP-1559 chains.
             Mainnet
@@ -911,7 +890,6 @@ impl NamedChain {
             | Bob
             | BobSepolia
             | Polygon
-            | PolygonMumbai
             | PolygonAmoy
             | Avalanche
             | AvalancheFuji
@@ -1042,7 +1020,6 @@ impl NamedChain {
                 | MantleSepolia
                 | Mode
                 | ModeSepolia
-                | PolygonMumbai
                 | Polygon
                 | Arbitrum
                 | ArbitrumNova
@@ -1146,9 +1123,7 @@ impl NamedChain {
             | OptimismKovan
             | OptimismSepolia
             | BobSepolia
-            | PolygonMumbai
             | PolygonAmoy
-            | PolygonZkEvmTestnet
             | ScrollSepolia
             | Shimmer
             | ZkSyncTestnet
@@ -1194,14 +1169,14 @@ impl NamedChain {
 
             // Mainnets.
             Mainnet | Optimism | Arbitrum | ArbitrumNova | Blast | Syndr | Cronos | Rsk
-            | BinanceSmartChain | Poa | Sokol | Scroll | Metis | Gnosis | Polygon
-            | PolygonZkEvm | Fantom | Moonbeam | Moonriver | Moonbase | Evmos | Chiado | Oasis
-            | Emerald | FilecoinMainnet | Avalanche | Celo | Aurora | Canto | Boba | Base
-            | Fraxtal | Ink | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn
-            | Mode | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala
-            | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
-            | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob
-            | Soneium | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story | Sei
+            | BinanceSmartChain | Poa | Sokol | Scroll | Metis | Gnosis | Polygon | Fantom
+            | Moonbeam | Moonriver | Moonbase | Evmos | Chiado | Oasis | Emerald
+            | FilecoinMainnet | Avalanche | Celo | Aurora | Canto | Boba | Base | Fraxtal | Ink
+            | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn | Mode | Viction
+            | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
+            | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex | Core
+            | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob | Soneium
+            | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story | Sei
             | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana | Lisk | Fuse | Injective => {
                 false
             }
@@ -1277,7 +1252,7 @@ impl NamedChain {
 
             Hyperliquid => "HYPE",
 
-            Polygon | PolygonMumbai | PolygonZkEvm | PolygonZkEvmTestnet | PolygonAmoy => "POL",
+            Polygon | PolygonAmoy => "POL",
 
             Corn | CornTestnet => "BTCN",
 
@@ -1622,8 +1597,7 @@ impl NamedChain {
             | CronosTestnet | Dev | Evmos | EvmosTestnet | Fantom | FantomTestnet
             | FilecoinMainnet | Goerli | Iotex | KaruraTestnet | Koi | Kovan | LineaGoerli
             | MoonbeamDev | Morden | Oasis | OptimismGoerli | OptimismKovan | Pgn | PgnSepolia
-            | Poa | PolygonMumbai | PolygonZkEvm | PolygonZkEvmTestnet | Rinkeby | Ropsten
-            | Sei | Sokol | Treasure | TreasureTopaz => {
+            | Poa | Rinkeby | Ropsten | Sei | Sokol | Treasure | TreasureTopaz => {
                 return None;
             }
         })
@@ -1687,6 +1661,8 @@ impl NamedChain {
             | OptimismGoerli
             | OptimismKovan
             | OptimismSepolia
+            | Polygon
+            | PolygonAmoy
             | Rinkeby
             | Ropsten
             | Scroll
@@ -1705,10 +1681,6 @@ impl NamedChain {
             | XaiSepolia
             | ZkSync
             | ZkSyncTestnet => "ETHERSCAN_API_KEY",
-
-            Polygon | PolygonMumbai | PolygonAmoy | PolygonZkEvm | PolygonZkEvmTestnet => {
-                "POLYGONSCAN_API_KEY"
-            }
 
             Fantom | FantomTestnet => "FTMSCAN_API_KEY",
 
@@ -1950,9 +1922,6 @@ mod tests {
                 &["bsc-testnet", "bnb-smart-chain-testnet", "binance-smart-chain-testnet"],
             ),
             (Gnosis, &["gnosis", "gnosis-chain"]),
-            (PolygonMumbai, &["mumbai"]),
-            (PolygonZkEvm, &["zkevm", "polygon-zkevm"]),
-            (PolygonZkEvmTestnet, &["zkevm-testnet", "polygon-zkevm-testnet"]),
             (AnvilHardhat, &["anvil", "hardhat"]),
             (AvalancheFuji, &["fuji"]),
             (ZkSync, &["zksync"]),

@@ -872,14 +872,13 @@ mod tests {
     #[cfg(feature = "serde")]
     #[test]
     fn test_serde() {
-        let chains = r#"["mainnet",1,80001,80002,"mumbai"]"#;
-        let re = r#"["mainnet","mainnet","mumbai","amoy","mumbai"]"#;
+        let chains = r#"["mainnet",1,137,80002]"#;
+        let re = r#"["mainnet","mainnet","polygon","amoy"]"#;
         let expected = [
+            Chain::from_named(NamedChain::Mainnet),
             Chain::mainnet(),
-            Chain::mainnet(),
-            Chain::from_named(NamedChain::PolygonMumbai),
+            Chain::from_named(NamedChain::Polygon),
             Chain::from_id(80002),
-            Chain::from_named(NamedChain::PolygonMumbai),
         ];
         assert_eq!(serde_json::from_str::<alloc::vec::Vec<Chain>>(chains).unwrap(), expected);
         assert_eq!(serde_json::to_string(&expected).unwrap(), re);

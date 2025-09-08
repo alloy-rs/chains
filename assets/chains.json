@@ -334,7 +334,7 @@
       "nativeCurrencySymbol": "POL",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=137",
       "etherscanBaseUrl": "https://polygonscan.com",
-      "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "146": {
       "internalId": "Sonic",
@@ -684,18 +684,6 @@
       "etherscanBaseUrl": "https://explorer.metis.io",
       "etherscanApiKeyName": null
     },
-    "1101": {
-      "internalId": "PolygonZkEvm",
-      "name": "polygon-zkevm",
-      "averageBlocktimeHint": null,
-      "isLegacy": true,
-      "supportsShanghai": false,
-      "isTestnet": false,
-      "nativeCurrencySymbol": "POL",
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
-      "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
-    },
     "1116": {
       "internalId": "Core",
       "name": "core",
@@ -815,18 +803,6 @@
       "etherscanApiUrl": "https://testnet.blockscout-api.injective.network/api",
       "etherscanBaseUrl": "https://testnet.blockscout.injective.network",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
-    },
-    "1442": {
-      "internalId": "PolygonZkEvmTestnet",
-      "name": "polygon-zkevm-testnet",
-      "averageBlocktimeHint": null,
-      "isLegacy": true,
-      "supportsShanghai": false,
-      "isTestnet": true,
-      "nativeCurrencySymbol": "POL",
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
-      "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
     },
     "1480": {
       "internalId": "Vana",
@@ -1524,18 +1500,6 @@
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
-    "80001": {
-      "internalId": "PolygonMumbai",
-      "name": "mumbai",
-      "averageBlocktimeHint": 2100,
-      "isLegacy": false,
-      "supportsShanghai": true,
-      "isTestnet": true,
-      "nativeCurrencySymbol": "POL",
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
-      "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
-    },
     "80002": {
       "internalId": "PolygonAmoy",
       "name": "amoy",
@@ -1546,7 +1510,7 @@
       "nativeCurrencySymbol": "POL",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=80002",
       "etherscanBaseUrl": "https://amoy.polygonscan.com",
-      "etherscanApiKeyName": "POLYGONSCAN_API_KEY"
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "80069": {
       "internalId": "BerachainBepolia",
