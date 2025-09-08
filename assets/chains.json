@@ -1353,8 +1353,8 @@
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=43113",
-      "etherscanBaseUrl": "https://testnet.snowtrace.io",
-      "etherscanApiKeyName": "SNOWTRACE_API_KEY"
+      "etherscanBaseUrl": "https://testnet.snowscan.xyz",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "43114": {
       "internalId": "Avalanche",
@@ -1365,8 +1365,8 @@
       "isTestnet": false,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=43114",
-      "etherscanBaseUrl": "https://snowtrace.io",
-      "etherscanApiKeyName": "SNOWTRACE_API_KEY"
+      "etherscanBaseUrl": "https://snowscan.xyz",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "44787": {
       "internalId": "CeloAlfajores",
@@ -1955,18 +1955,6 @@
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=37714555429",
       "etherscanBaseUrl": "https://sepolia.xaiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
-    },
-    "920637907288165": {
-      "internalId": "KakarotSepolia",
-      "name": "kakarot-sepolia",
-      "averageBlocktimeHint": null,
-      "isLegacy": false,
-      "supportsShanghai": true,
-      "isTestnet": true,
-      "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://sepolia.kakarotscan.org/api",
-      "etherscanBaseUrl": "https://sepolia.kakarotscan.org",
-      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     }
   }
 }

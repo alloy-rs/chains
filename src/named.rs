@@ -288,12 +288,6 @@ pub enum NamedChain {
 
     Elastos = 20,
 
-    #[cfg_attr(
-        feature = "serde",
-        serde(alias = "kakarot-sepolia", alias = "kakarot-starknet-sepolia")
-    )]
-    KakarotSepolia = 920637907288165,
-
     #[cfg_attr(feature = "serde", serde(alias = "etherlink"))]
     Etherlink = 42793,
 
@@ -843,8 +837,7 @@ impl NamedChain {
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi | Moonbase
             | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | Metis | Linea
-            | LineaGoerli | LineaSepolia | KakarotSepolia | Treasure | TreasureTopaz | Corn
-            | CornTestnet => {
+            | LineaGoerli | LineaSepolia | Treasure | TreasureTopaz | Corn | CornTestnet => {
                 return None;
             }
         }))
@@ -928,7 +921,6 @@ impl NamedChain {
             | ModeSepolia
             | Pgn
             | PgnSepolia
-            | KakarotSepolia
             | Etherlink
             | EtherlinkTestnet
             | Degen
@@ -1048,7 +1040,6 @@ impl NamedChain {
                 | BinanceSmartChainTestnet
                 | OpBNBMainnet
                 | OpBNBTestnet
-                | KakarotSepolia
                 | Taiko
                 | TaikoHekla
                 | Avalanche
@@ -1139,7 +1130,6 @@ impl NamedChain {
             | ZoraSepolia
             | ModeSepolia
             | PgnSepolia
-            | KakarotSepolia
             | EtherlinkTestnet
             | OpBNBTestnet
             | RoninTestnet
@@ -1295,10 +1285,6 @@ impl NamedChain {
     ///     NamedChain::Mainnet.etherscan_urls(),
     ///     Some(("https://api.etherscan.io/v2/api?chainid=1", "https://etherscan.io"))
     /// );
-    /// assert_eq!(
-    ///     NamedChain::Avalanche.etherscan_urls(),
-    ///     Some(("https://api.etherscan.io/v2/api?chainid=43114", "https://snowtrace.io"))
-    /// );
     /// assert_eq!(NamedChain::AnvilHardhat.etherscan_urls(), None);
     /// ```
     pub const fn etherscan_urls(self) -> Option<(&'static str, &'static str)> {
@@ -1319,9 +1305,9 @@ impl NamedChain {
             PolygonAmoy => {
                 ("https://api.etherscan.io/v2/api?chainid=80002", "https://amoy.polygonscan.com")
             }
-            Avalanche => ("https://api.etherscan.io/v2/api?chainid=43114", "https://snowtrace.io"),
+            Avalanche => ("https://api.etherscan.io/v2/api?chainid=43114", "https://snowscan.xyz"),
             AvalancheFuji => {
-                ("https://api.etherscan.io/v2/api?chainid=43113", "https://testnet.snowtrace.io")
+                ("https://api.etherscan.io/v2/api?chainid=43113", "https://testnet.snowscan.xyz")
             }
             Optimism => {
                 ("https://api.etherscan.io/v2/api?chainid=10", "https://optimistic.etherscan.io")
@@ -1465,9 +1451,6 @@ impl NamedChain {
                 "https://sepolia.explorer.mode.network",
             ),
             Elastos => ("https://esc.elastos.io/api", "https://esc.elastos.io"),
-            KakarotSepolia => {
-                ("https://sepolia.kakarotscan.org/api", "https://sepolia.kakarotscan.org")
-            }
             Etherlink => ("https://explorer.etherlink.com/api", "https://explorer.etherlink.com"),
             EtherlinkTestnet => (
                 "https://testnet.explorer.etherlink.com/api",
@@ -1634,82 +1617,82 @@ impl NamedChain {
         use NamedChain::*;
 
         let api_key_name = match self {
-            Mainnet
-            | Morden
-            | Ropsten
-            | Kovan
-            | Rinkeby
+            Abstract
+            | AbstractTestnet
+            | ApeChain
+            | Arbitrum
+            | ArbitrumGoerli
+            | ArbitrumNova
+            | ArbitrumSepolia
+            | ArbitrumTestnet
+            | Aurora
+            | AuroraTestnet
+            | Avalanche
+            | AvalancheFuji
+            | Base
+            | BaseGoerli
+            | BaseSepolia
+            | BinanceSmartChain
+            | BinanceSmartChainTestnet
+            | Blast
+            | BlastSepolia
+            | Celo
+            | CeloAlfajores
+            | Cronos
+            | CronosTestnet
+            | Fraxtal
+            | FraxtalTestnet
+            | Gnosis
             | Goerli
             | Holesky
             | Hoodi
+            | Hyperliquid
+            | Kovan
+            | Linea
+            | LineaSepolia
+            | Mainnet
+            | Mantle
+            | MantleSepolia
+            | MonadTestnet
+            | Morden
+            | OpBNBMainnet
+            | OpBNBTestnet
             | Optimism
             | OptimismGoerli
             | OptimismKovan
             | OptimismSepolia
-            | BinanceSmartChain
-            | BinanceSmartChainTestnet
-            | OpBNBMainnet
-            | OpBNBTestnet
-            | Arbitrum
-            | ArbitrumTestnet
-            | ArbitrumGoerli
-            | ArbitrumSepolia
-            | ArbitrumNova
-            | Syndr
-            | SyndrSepolia
-            | Cronos
-            | CronosTestnet
-            | Aurora
-            | AuroraTestnet
-            | Celo
-            | CeloAlfajores
-            | Base
-            | Linea
-            | LineaSepolia
-            | Mantle
-            | MantleSepolia
-            | Xai
-            | XaiSepolia
-            | BaseGoerli
-            | BaseSepolia
-            | Fraxtal
-            | FraxtalTestnet
-            | Blast
-            | BlastSepolia
-            | Gnosis
-            | Sonic
-            | SonicTestnet
+            | Polygon
+            | PolygonAmoy
+            | Rinkeby
+            | Ropsten
             | Scroll
             | ScrollSepolia
+            | Sonic
+            | SonicTestnet
+            | Sophon
+            | SophonTestnet
+            | Syndr
+            | SyndrSepolia
             | Taiko
             | TaikoHekla
             | Unichain
             | UnichainSepolia
-            | MonadTestnet
-            | ApeChain
-            | Abstract
-            | AbstractTestnet
-            | ZkSyncTestnet
+            | Xai
+            | XaiSepolia
             | ZkSync
-            | Hyperliquid
-            | Sophon
-            | SophonTestnet
-            | Polygon
-            | PolygonAmoy => "ETHERSCAN_API_KEY",
-
-            Avalanche | AvalancheFuji => "SNOWTRACE_API_KEY",
+            | ZkSyncTestnet => "ETHERSCAN_API_KEY",
 
             Fantom | FantomTestnet => "FTMSCAN_API_KEY",
 
             Moonbeam | Moonbase | MoonbeamDev | Moonriver => "MOONSCAN_API_KEY",
 
             Acala | AcalaMandalaTestnet | AcalaTestnet | Canto | CantoTestnet | CeloBaklava
-            | Etherlink | EtherlinkTestnet | Flare | FlareCoston2 | KakarotSepolia | Karura
-            | KaruraTestnet | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora
-            | ZoraSepolia | Darwinia | Crab | Koi | Immutable | ImmutableTestnet | Soneium
-            | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia
-            | SuperpositionTestnet | Superposition | Vana | Story | Katana | Lisk | Fuse
-            | Injective | InjectiveTestnet => "BLOCKSCOUT_API_KEY",
+            | Etherlink | EtherlinkTestnet | Flare | FlareCoston2 | Karura | KaruraTestnet
+            | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora | ZoraSepolia | Darwinia
+            | Crab | Koi | Immutable | ImmutableTestnet | Soneium | SoneiumMinatoTestnet
+            | World | WorldSepolia | Curtis | Ink | InkSepolia | SuperpositionTestnet
+            | Superposition | Vana | Story | Katana | Lisk | Fuse | Injective
+            | InjectiveTestnet => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
