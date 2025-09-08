@@ -589,10 +589,10 @@ impl Chain {
         Self::from_named(NamedChain::Sonic)
     }
 
-    /// Returns the Sonic Blaze testnet chain.
+    /// Returns the Sonic testnet chain.
     #[inline]
-    pub const fn sonic_blaze() -> Self {
-        Self::from_named(NamedChain::SonicBlaze)
+    pub const fn sonic_testnet() -> Self {
+        Self::from_named(NamedChain::SonicTestnet)
     }
 
     /// Returns the Superposition testnet chain.
