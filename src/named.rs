@@ -413,15 +413,12 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "apechain-testnet", alias = "curtis"))]
     Curtis = 33111,
 
-    #[strum(to_string = "sonic-blaze")]
-    #[cfg_attr(feature = "serde", serde(alias = "sonic-blaze"))]
-    SonicBlaze = 57054,
-    #[strum(to_string = "sonic-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "sonic-testnet"))]
-    SonicTestnet = 64165,
     #[strum(to_string = "sonic")]
     #[cfg_attr(feature = "serde", serde(alias = "sonic"))]
     Sonic = 146,
+    #[strum(to_string = "sonic-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "sonic-testnet"))]
+    SonicTestnet = 14601,
 
     #[strum(to_string = "treasure")]
     #[cfg_attr(feature = "serde", serde(alias = "treasure"))]
@@ -833,7 +830,7 @@ impl NamedChain {
             Story => 2_500,
             Sei => 500,
 
-            Sonic => 1_000,
+            Sonic | SonicTestnet => 1_000,
 
             TelosEvm | TelosEvmTestnet => 500,
 
@@ -859,8 +856,8 @@ impl NamedChain {
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi | Moonbase
             | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | PolygonZkEvm
-            | PolygonZkEvmTestnet | Metis | Linea | LineaGoerli | LineaSepolia | SonicBlaze
-            | SonicTestnet | Treasure | TreasureTopaz | Corn | CornTestnet => {
+            | PolygonZkEvmTestnet | Metis | Linea | LineaGoerli | LineaSepolia | Treasure
+            | TreasureTopaz | Corn | CornTestnet => {
                 return None;
             }
         }))
@@ -970,6 +967,7 @@ impl NamedChain {
             | Soneium
             | SoneiumMinatoTestnet
             | Sonic
+            | SonicTestnet
             | World
             | WorldSepolia
             | Unichain
@@ -1003,8 +1001,8 @@ impl NamedChain {
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
-            | Merlin | Bitlayer | SonicBlaze | SonicTestnet | Vana | Zeta | Kaia | Story | Sei
-            | Injective | InjectiveTestnet | Katana | Lisk | Fuse => false,
+            | Merlin | Bitlayer | Vana | Zeta | Kaia | Story | Sei | Injective
+            | InjectiveTestnet | Katana | Lisk | Fuse => false,
         }
     }
 
@@ -1177,7 +1175,6 @@ impl NamedChain {
             | UnichainSepolia
             | Curtis
             | TreasureTopaz
-            | SonicBlaze
             | SonicTestnet
             | BerachainBepolia
             | SuperpositionTestnet
@@ -1274,7 +1271,7 @@ impl NamedChain {
 
             BerachainBepolia | Berachain => "BERA",
 
-            Sonic | SonicBlaze => "S",
+            Sonic | SonicTestnet => "S",
 
             TelosEvm | TelosEvmTestnet => "TLOS",
 
@@ -1560,14 +1557,10 @@ impl NamedChain {
             Curtis => {
                 ("https://api.etherscan.io/v2/api?chainid=33111", "https://curtis.apescan.io")
             }
-            SonicBlaze => {
-                ("https://api.etherscan.io/v2/api?chainid=57054", "https://testnet.sonicscan.org")
-            }
-            SonicTestnet => (
-                "https://api.routescan.io/v2/network/testnet/evm/64165/etherscan/api",
-                "https://scan.soniclabs.com",
-            ),
             Sonic => ("https://api.etherscan.io/v2/api?chainid=146", "https://sonicscan.org"),
+            SonicTestnet => {
+                ("https://api.etherscan.io/v2/api?chainid=14601", "https://testnet.sonicscan.org")
+            }
             BerachainBepolia => {
                 ("https://api.etherscan.io/v2/api?chainid=80069", "https://testnet.berascan.com")
             }
@@ -1697,6 +1690,8 @@ impl NamedChain {
             | Blast
             | BlastSepolia
             | Gnosis
+            | Sonic
+            | SonicTestnet
             | Scroll
             | ScrollSepolia
             | Taiko
@@ -1738,7 +1733,6 @@ impl NamedChain {
             Bitlayer => "BITLAYERSCAN_API_KEY",
             Zeta => "ZETASCAN_API_KEY",
             Kaia => "KAIASCAN_API_KEY",
-            Sonic => "SONICSCAN_API_KEY",
             Berachain | BerachainBepolia => "BERASCAN_API_KEY",
             Corn | CornTestnet => "ROUTESCAN_API_KEY",
             // Explicitly exhaustive. See NB above.
@@ -1776,8 +1770,6 @@ impl NamedChain {
             | AutonomysNovaTestnet
             | Iotex
             | HappychainTestnet
-            | SonicBlaze
-            | SonicTestnet
             | Treasure
             | TreasureTopaz
             | TelosEvm
