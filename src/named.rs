@@ -1319,10 +1319,6 @@ impl NamedChain {
     ///     NamedChain::Mainnet.etherscan_urls(),
     ///     Some(("https://api.etherscan.io/v2/api?chainid=1", "https://etherscan.io"))
     /// );
-    /// assert_eq!(
-    ///     NamedChain::Avalanche.etherscan_urls(),
-    ///     Some(("https://api.etherscan.io/v2/api?chainid=43114", "https://snowtrace.io"))
-    /// );
     /// assert_eq!(NamedChain::AnvilHardhat.etherscan_urls(), None);
     /// ```
     pub const fn etherscan_urls(self) -> Option<(&'static str, &'static str)> {
@@ -1343,9 +1339,9 @@ impl NamedChain {
             PolygonAmoy => {
                 ("https://api.etherscan.io/v2/api?chainid=80002", "https://amoy.polygonscan.com")
             }
-            Avalanche => ("https://api.etherscan.io/v2/api?chainid=43114", "https://snowtrace.io"),
+            Avalanche => ("https://api.etherscan.io/v2/api?chainid=43114", "https://snowscan.xyz"),
             AvalancheFuji => {
-                ("https://api.etherscan.io/v2/api?chainid=43113", "https://testnet.snowtrace.io")
+                ("https://api.etherscan.io/v2/api?chainid=43113", "https://testnet.snowscan.xyz")
             }
             Optimism => {
                 ("https://api.etherscan.io/v2/api?chainid=10", "https://optimistic.etherscan.io")
@@ -1659,68 +1655,68 @@ impl NamedChain {
         use NamedChain::*;
 
         let api_key_name = match self {
-            Mainnet
-            | Morden
-            | Ropsten
-            | Kovan
-            | Rinkeby
+            Abstract
+            | AbstractTestnet
+            | ApeChain
+            | Arbitrum
+            | ArbitrumGoerli
+            | ArbitrumNova
+            | ArbitrumSepolia
+            | ArbitrumTestnet
+            | Aurora
+            | AuroraTestnet
+            | Avalanche
+            | AvalancheFuji
+            | Base
+            | BaseGoerli
+            | BaseSepolia
+            | BinanceSmartChain
+            | BinanceSmartChainTestnet
+            | Blast
+            | BlastSepolia
+            | Celo
+            | CeloAlfajores
+            | Cronos
+            | CronosTestnet
+            | Fraxtal
+            | FraxtalTestnet
+            | Gnosis
             | Goerli
             | Holesky
             | Hoodi
+            | Hyperliquid
+            | Kovan
+            | Linea
+            | LineaSepolia
+            | Mainnet
+            | Mantle
+            | MantleSepolia
+            | MonadTestnet
+            | Morden
+            | OpBNBMainnet
+            | OpBNBTestnet
             | Optimism
             | OptimismGoerli
             | OptimismKovan
             | OptimismSepolia
-            | BinanceSmartChain
-            | BinanceSmartChainTestnet
-            | OpBNBMainnet
-            | OpBNBTestnet
-            | Arbitrum
-            | ArbitrumTestnet
-            | ArbitrumGoerli
-            | ArbitrumSepolia
-            | ArbitrumNova
-            | Syndr
-            | SyndrSepolia
-            | Cronos
-            | CronosTestnet
-            | Aurora
-            | AuroraTestnet
-            | Celo
-            | CeloAlfajores
-            | Base
-            | Linea
-            | LineaSepolia
-            | Mantle
-            | MantleSepolia
-            | Xai
-            | XaiSepolia
-            | BaseGoerli
-            | BaseSepolia
-            | Fraxtal
-            | FraxtalTestnet
-            | Blast
-            | BlastSepolia
-            | Gnosis
-            | Sonic
-            | SonicTestnet
+            | Rinkeby
+            | Ropsten
             | Scroll
             | ScrollSepolia
+            | Sonic
+            | SonicTestnet
+            | Sophon
+            | SophonTestnet
+            | Syndr
+            | SyndrSepolia
             | Taiko
             | TaikoHekla
             | Unichain
             | UnichainSepolia
-            | MonadTestnet
-            | ApeChain
-            | Abstract
-            | AbstractTestnet
-            | ZkSyncTestnet
+            | Xai
+            | XaiSepolia
             | ZkSync
-            | Hyperliquid
-            | Sophon
-            | SophonTestnet => "ETHERSCAN_API_KEY",
-
-            Avalanche | AvalancheFuji => "SNOWTRACE_API_KEY",
+            | ZkSyncTestnet => "ETHERSCAN_API_KEY",
 
             Polygon | PolygonMumbai | PolygonAmoy | PolygonZkEvm | PolygonZkEvmTestnet => {
                 "POLYGONSCAN_API_KEY"
