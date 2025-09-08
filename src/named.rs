@@ -1,3 +1,4 @@
+use crate::VerifierType;
 use alloy_primitives::{Address, address};
 use core::{cmp::Ordering, fmt, time::Duration};
 use num_enum::TryFromPrimitiveError;
@@ -307,12 +308,6 @@ pub enum NamedChain {
 
     Elastos = 20,
 
-    #[cfg_attr(
-        feature = "serde",
-        serde(alias = "kakarot-sepolia", alias = "kakarot-starknet-sepolia")
-    )]
-    KakarotSepolia = 920637907288165,
-
     #[cfg_attr(feature = "serde", serde(alias = "etherlink"))]
     Etherlink = 42793,
 
@@ -419,15 +414,12 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "apechain-testnet", alias = "curtis"))]
     Curtis = 33111,
 
-    #[strum(to_string = "sonic-blaze")]
-    #[cfg_attr(feature = "serde", serde(alias = "sonic-blaze"))]
-    SonicBlaze = 57054,
-    #[strum(to_string = "sonic-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "sonic-testnet"))]
-    SonicTestnet = 64165,
     #[strum(to_string = "sonic")]
     #[cfg_attr(feature = "serde", serde(alias = "sonic"))]
     Sonic = 146,
+    #[strum(to_string = "sonic-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "sonic-testnet"))]
+    SonicTestnet = 14601,
 
     #[strum(to_string = "treasure")]
     #[cfg_attr(feature = "serde", serde(alias = "treasure"))]
@@ -631,14 +623,6 @@ impl<'a> arbitrary::Arbitrary<'a> for NamedChain {
         let idx = u.choose_index(NamedChain::COUNT)?;
         Ok(NamedChain::VARIANTS[idx])
     }
-}
-
-enum VerifierType {
-    Etherscan,
-    Blockscout,
-    Routescan,
-    Sourcify,
-    Custom(&'static str),
 }
 
 // NB: all utility functions *should* be explicitly exhaustive (not use `_` matcher) so we don't
@@ -847,7 +831,7 @@ impl NamedChain {
             Story => 2_500,
             Sei => 500,
 
-            Sonic => 1_000,
+            Sonic | SonicTestnet => 1_000,
 
             TelosEvm | TelosEvmTestnet => 500,
 
@@ -873,8 +857,8 @@ impl NamedChain {
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi | Moonbase
             | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | PolygonZkEvm
-            | PolygonZkEvmTestnet | Metis | Linea | LineaGoerli | LineaSepolia | KakarotSepolia
-            | SonicBlaze | SonicTestnet | Treasure | TreasureTopaz | Corn | CornTestnet => {
+            | PolygonZkEvmTestnet | Metis | Linea | LineaGoerli | LineaSepolia | Treasure
+            | TreasureTopaz | Corn | CornTestnet => {
                 return None;
             }
         }))
@@ -960,7 +944,6 @@ impl NamedChain {
             | ModeSepolia
             | Pgn
             | PgnSepolia
-            | KakarotSepolia
             | Etherlink
             | EtherlinkTestnet
             | Degen
@@ -985,6 +968,7 @@ impl NamedChain {
             | Soneium
             | SoneiumMinatoTestnet
             | Sonic
+            | SonicTestnet
             | World
             | WorldSepolia
             | Unichain
@@ -1018,8 +1002,8 @@ impl NamedChain {
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
-            | Merlin | Bitlayer | SonicBlaze | SonicTestnet | Vana | Zeta | Kaia | Story | Sei
-            | Injective | InjectiveTestnet | Katana | Lisk | Fuse => false,
+            | Merlin | Bitlayer | Vana | Zeta | Kaia | Story | Sei | Injective
+            | InjectiveTestnet | Katana | Lisk | Fuse => false,
         }
     }
 
@@ -1080,7 +1064,6 @@ impl NamedChain {
                 | BinanceSmartChainTestnet
                 | OpBNBMainnet
                 | OpBNBTestnet
-                | KakarotSepolia
                 | Taiko
                 | TaikoHekla
                 | Avalanche
@@ -1173,7 +1156,6 @@ impl NamedChain {
             | ZoraSepolia
             | ModeSepolia
             | PgnSepolia
-            | KakarotSepolia
             | EtherlinkTestnet
             | OpBNBTestnet
             | RoninTestnet
@@ -1194,7 +1176,6 @@ impl NamedChain {
             | UnichainSepolia
             | Curtis
             | TreasureTopaz
-            | SonicBlaze
             | SonicTestnet
             | BerachainBepolia
             | SuperpositionTestnet
@@ -1291,7 +1272,7 @@ impl NamedChain {
 
             BerachainBepolia | Berachain => "BERA",
 
-            Sonic | SonicBlaze => "S",
+            Sonic | SonicTestnet => "S",
 
             TelosEvm | TelosEvmTestnet => "TLOS",
 
@@ -1330,13 +1311,9 @@ impl NamedChain {
     ///     NamedChain::Mainnet.verifier_urls(),
     ///     Some(("https://api.etherscan.io/v2/api?chainid=1", "https://etherscan.io"))
     /// );
-    /// assert_eq!(
-    ///     NamedChain::Avalanche.verifier_urls(),
-    ///     Some(("https://api.etherscan.io/v2/api?chainid=43114", "https://snowtrace.io"))
-    /// );
-    /// assert_eq!(NamedChain::AnvilHardhat.verifier_urls(), None);
+    /// assert_eq!(NamedChain::AnvilHardhat.etherscan_urls(), None);
     /// ```
-    pub const fn verifier_urls(self) -> Option<Vec<(VerifierType, &'static str, &'static str)>> {
+    pub fn verifier_urls(self) -> Option<Vec<(VerifierType, &'static str, &'static str)>> {
         use NamedChain::*;
 
         Some(match self {
@@ -1359,13 +1336,11 @@ impl NamedChain {
                     "https://holesky.etherscan.io",
                 )]
             }
-            Hoodi => {
-                vec![(
-                    VerifierType::Etherscan,
-                    "https://api.etherscan.io/v2/api?chainid=560048",
-                    "https://hoodi.etherscan.io",
-                )]
-            }
+            Hoodi => vec![(
+                VerifierType::Etherscan,
+                "https://api.etherscan.io/v2/api?chainid=560048",
+                "https://hoodi.etherscan.io",
+            )],
             Polygon => vec![(
                 VerifierType::Etherscan,
                 "https://api.etherscan.io/v2/api?chainid=137",
@@ -1379,12 +1354,12 @@ impl NamedChain {
             Avalanche => vec![(
                 VerifierType::Etherscan,
                 "https://api.etherscan.io/v2/api?chainid=43114",
-                "https://snowtrace.io",
+                "https://snowscan.xyz",
             )],
             AvalancheFuji => vec![(
                 VerifierType::Etherscan,
                 "https://api.etherscan.io/v2/api?chainid=43113",
-                "https://testnet.snowtrace.io",
+                "https://testnet.snowscan.xyz",
             )],
             Optimism => {
                 vec![(
@@ -1680,11 +1655,6 @@ impl NamedChain {
                 "https://esc.elastos.io/api",
                 "https://esc.elastos.io",
             )],
-            KakarotSepolia => vec![(
-                VerifierType::Blockscout,
-                "https://sepolia.kakarotscan.org/api",
-                "https://sepolia.kakarotscan.org",
-            )],
             Etherlink => vec![(
                 VerifierType::Blockscout,
                 "https://explorer.etherlink.com/api",
@@ -1867,74 +1837,145 @@ impl NamedChain {
                 "https://api.etherscan.io/v2/api?chainid=33111",
                 "https://curtis.apescan.io",
             )],
-            SonicBlaze => {
-                ("https://api.etherscan.io/v2/api?chainid=57054", "https://testnet.sonicscan.org")
+            Sonic => vec![(
+                VerifierType::Etherscan,
+                "https://api.etherscan.io/v2/api?chainid=146",
+                "https://sonicscan.org",
+            )],
+            SonicTestnet => {
+                vec![(
+                    VerifierType::Etherscan,
+                    "https://api.etherscan.io/v2/api?chainid=14601",
+                    "https://testnet.sonicscan.org",
+                )]
             }
-            SonicTestnet => (
-                "https://api.routescan.io/v2/network/testnet/evm/64165/etherscan/api",
-                "https://scan.soniclabs.com",
-            ),
-            Sonic => ("https://api.etherscan.io/v2/api?chainid=146", "https://sonicscan.org"),
             BerachainBepolia => {
-                ("https://api.etherscan.io/v2/api?chainid=80069", "https://testnet.berascan.com")
+                vec![(
+                    VerifierType::Etherscan,
+                    "https://api.etherscan.io/v2/api?chainid=80069",
+                    "https://testnet.berascan.com",
+                )]
             }
-            Berachain => ("https://api.etherscan.io/v2/api?chainid=80094", "https://berascan.com"),
-            SuperpositionTestnet => (
+            Berachain => vec![(
+                VerifierType::Etherscan,
+                "https://api.etherscan.io/v2/api?chainid=80094",
+                "https://berascan.com",
+            )],
+            SuperpositionTestnet => vec![(
+                VerifierType::Blockscout,
                 "https://testnet-explorer.superposition.so/api",
                 "https://testnet-explorer.superposition.so",
-            ),
+            )],
             Superposition => {
-                ("https://explorer.superposition.so/api", "https://explorer.superposition.so")
+                vec![(
+                    VerifierType::Blockscout,
+                    "https://explorer.superposition.so/api",
+                    "https://explorer.superposition.so",
+                )]
             }
             MonadTestnet => {
-                ("https://api.etherscan.io/v2/api?chainid=10143", "https://testnet.monadscan.com")
+                vec![(
+                    VerifierType::Etherscan,
+                    "https://api.etherscan.io/v2/api?chainid=10143",
+                    "https://testnet.monadscan.com",
+                )]
             }
-            TelosEvm => ("https://api.teloscan.io/api", "https://teloscan.io"),
+            TelosEvm => vec![(
+                VerifierType::Custom("Telosscan"),
+                "https://api.teloscan.io/api",
+                "https://teloscan.io",
+            )],
             TelosEvmTestnet => {
-                ("https://api.testnet.teloscan.io/api", "https://testnet.teloscan.io")
+                vec![(
+                    VerifierType::Custom("Telosscan"),
+                    "https://api.testnet.teloscan.io/api",
+                    "https://testnet.teloscan.io",
+                )]
             }
             Hyperliquid => {
-                ("https://api.etherscan.io/v2/api?chainid=999", "https://hyperevmscan.io")
+                vec![(
+                    VerifierType::Etherscan,
+                    "https://api.etherscan.io/v2/api?chainid=999",
+                    "https://hyperevmscan.io",
+                )]
             }
-            Abstract => ("https://api.etherscan.io/v2/api?chainid=2741", "https://abscan.org"),
+            Abstract => vec![(
+                VerifierType::Etherscan,
+                "https://api.etherscan.io/v2/api?chainid=2741",
+                "https://abscan.org",
+            )],
             AbstractTestnet => {
-                ("https://api.etherscan.io/v2/api?chainid=11124", "https://sepolia.abscan.org")
+                vec![(
+                    VerifierType::Etherscan,
+                    "https://api.etherscan.io/v2/api?chainid=11124",
+                    "https://sepolia.abscan.org",
+                )]
             }
-            Corn => (
+            Corn => vec![(
+                VerifierType::Routescan,
                 "https://api.routescan.io/v2/network/mainnet/evm/21000000/etherscan/api",
                 "https://cornscan.io",
-            ),
-            CornTestnet => (
+            )],
+            CornTestnet => vec![(
+                VerifierType::Routescan,
                 "https://api.routescan.io/v2/network/testnet/evm/21000001/etherscan/api",
                 "https://testnet.cornscan.io",
-            ),
-            Sophon => ("https://api.etherscan.io/v2/api?chainid=50104", "https://sophscan.xyz"),
-            SophonTestnet => (
+            )],
+            Sophon => vec![(
+                VerifierType::Etherscan,
+                "https://api.etherscan.io/v2/api?chainid=50104",
+                "https://sophscan.xyz",
+            )],
+            SophonTestnet => vec![(
+                VerifierType::Etherscan,
                 "https://api.etherscan.io/v2/api?chainid=531050104",
                 "https://testnet.sophscan.xyz",
-            ),
-            Lens => ("https://explorer-api.lens.xyz", "https://explorer.lens.xyz"),
-            LensTestnet => (
+            )],
+            Lens => vec![(
+                VerifierType::Custom("Lens"),
+                "https://explorer-api.lens.xyz",
+                "https://explorer.lens.xyz",
+            )],
+            LensTestnet => vec![(
+                VerifierType::Custom("Lens"),
                 "https://block-explorer-api.staging.lens.zksync.dev",
                 "https://explorer.testnet.lens.xyz",
-            ),
-            Katana => ("https://explorer.katanarpc.com/api", "https://explorer.katanarpc.com"),
-            Lisk => ("https://blockscout.lisk.com/api", "https://blockscout.lisk.com"),
-            Fuse => ("https://explorer.fuse.io/api", "https://explorer.fuse.io"),
-            Injective => (
+            )],
+            Katana => vec![(
+                VerifierType::Blockscout,
+                "https://explorer.katanarpc.com/api",
+                "https://explorer.katanarpc.com",
+            )],
+            Lisk => vec![(
+                VerifierType::Blockscout,
+                "https://blockscout.lisk.com/api",
+                "https://blockscout.lisk.com",
+            )],
+            Fuse => vec![(
+                VerifierType::Blockscout,
+                "https://explorer.fuse.io/api",
+                "https://explorer.fuse.io",
+            )],
+            Injective => vec![(
+                VerifierType::Blockscout,
                 "https://blockscout-api.injective.network/api",
                 "https://blockscout.injective.network",
-            ),
-            InjectiveTestnet => (
+            )],
+            InjectiveTestnet => vec![(
+                VerifierType::Blockscout,
                 "https://testnet.blockscout-api.injective.network/api",
                 "https://testnet.blockscout.injective.network",
-            ),
-            FluentDevnet => {
-                ("https://blockscout.dev.gblend.xyz/api", "https://blockscout.dev.gblend.xyz")
-            }
-            FluentTestnet => {
-                ("https://testnet.fluentscan.xyz/api", "https://testnet.fluentscan.xyz")
-            }
+            )],
+            FluentDevnet => vec![(
+                VerifierType::Blockscout,
+                "https://blockscout.dev.gblend.xyz/api",
+                "https://blockscout.dev.gblend.xyz",
+            )],
+            FluentTestnet => vec![(
+                VerifierType::Blockscout,
+                "https://testnet.fluentscan.xyz/api",
+                "https://testnet.fluentscan.xyz",
+            )],
             AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
             | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CeloBaklava
             | CronosTestnet | Dev | Evmos | EvmosTestnet | Fantom | FantomTestnet
@@ -1954,73 +1995,75 @@ impl NamedChain {
     /// ```
     /// use alloy_chains::NamedChain;
     ///
-    /// assert_eq!(NamedChain::Mainnet.etherscan_api_key_name(), Some("ETHERSCAN_API_KEY"));
-    /// assert_eq!(NamedChain::AnvilHardhat.etherscan_api_key_name(), None);
+    /// assert_eq!(NamedChain::Mainnet.verifier_api_key_name(), Some("ETHERSCAN_API_KEY"));
+    /// assert_eq!(NamedChain::AnvilHardhat.verifier_api_key_name(), None);
     /// ```
-    pub const fn etherscan_api_key_name(self) -> Option<&'static str> {
+    pub const fn verifier_api_key_name(self) -> Option<&'static str> {
         use NamedChain::*;
 
         let api_key_name = match self {
-            Mainnet
-            | Morden
-            | Ropsten
-            | Kovan
-            | Rinkeby
+            Abstract
+            | AbstractTestnet
+            | ApeChain
+            | Arbitrum
+            | ArbitrumGoerli
+            | ArbitrumNova
+            | ArbitrumSepolia
+            | ArbitrumTestnet
+            | Aurora
+            | AuroraTestnet
+            | Avalanche
+            | AvalancheFuji
+            | Base
+            | BaseGoerli
+            | BaseSepolia
+            | BinanceSmartChain
+            | BinanceSmartChainTestnet
+            | Blast
+            | BlastSepolia
+            | Celo
+            | CeloAlfajores
+            | Cronos
+            | CronosTestnet
+            | Fraxtal
+            | FraxtalTestnet
+            | Gnosis
             | Goerli
             | Holesky
             | Hoodi
+            | Hyperliquid
+            | Kovan
+            | Linea
+            | LineaSepolia
+            | Mainnet
+            | Mantle
+            | MantleSepolia
+            | MonadTestnet
+            | Morden
+            | OpBNBMainnet
+            | OpBNBTestnet
             | Optimism
             | OptimismGoerli
             | OptimismKovan
             | OptimismSepolia
-            | BinanceSmartChain
-            | BinanceSmartChainTestnet
-            | OpBNBMainnet
-            | OpBNBTestnet
-            | Arbitrum
-            | ArbitrumTestnet
-            | ArbitrumGoerli
-            | ArbitrumSepolia
-            | ArbitrumNova
-            | Syndr
-            | SyndrSepolia
-            | Cronos
-            | CronosTestnet
-            | Aurora
-            | AuroraTestnet
-            | Celo
-            | CeloAlfajores
-            | Base
-            | Linea
-            | LineaSepolia
-            | Mantle
-            | MantleSepolia
-            | Xai
-            | XaiSepolia
-            | BaseGoerli
-            | BaseSepolia
-            | Fraxtal
-            | FraxtalTestnet
-            | Blast
-            | BlastSepolia
-            | Gnosis
+            | Rinkeby
+            | Ropsten
             | Scroll
             | ScrollSepolia
+            | Sonic
+            | SonicTestnet
+            | Sophon
+            | SophonTestnet
+            | Syndr
+            | SyndrSepolia
             | Taiko
             | TaikoHekla
             | Unichain
             | UnichainSepolia
-            | MonadTestnet
-            | ApeChain
-            | Abstract
-            | AbstractTestnet
-            | ZkSyncTestnet
+            | Xai
+            | XaiSepolia
             | ZkSync
-            | Hyperliquid
-            | Sophon
-            | SophonTestnet => "ETHERSCAN_API_KEY",
-
-            Avalanche | AvalancheFuji => "SNOWTRACE_API_KEY",
+            | ZkSyncTestnet => "ETHERSCAN_API_KEY",
 
             Polygon | PolygonMumbai | PolygonAmoy | PolygonZkEvm | PolygonZkEvmTestnet => {
                 "POLYGONSCAN_API_KEY"
@@ -2031,12 +2074,12 @@ impl NamedChain {
             Moonbeam | Moonbase | MoonbeamDev | Moonriver => "MOONSCAN_API_KEY",
 
             Acala | AcalaMandalaTestnet | AcalaTestnet | Canto | CantoTestnet | CeloBaklava
-            | Etherlink | EtherlinkTestnet | Flare | FlareCoston2 | KakarotSepolia | Karura
-            | KaruraTestnet | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora
-            | ZoraSepolia | Darwinia | Crab | Koi | Immutable | ImmutableTestnet | Soneium
-            | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia
-            | SuperpositionTestnet | Superposition | Vana | Story | Katana | Lisk | Fuse
-            | Injective | InjectiveTestnet => "BLOCKSCOUT_API_KEY",
+            | Etherlink | EtherlinkTestnet | Flare | FlareCoston2 | Karura | KaruraTestnet
+            | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora | ZoraSepolia | Darwinia
+            | Crab | Koi | Immutable | ImmutableTestnet | Soneium | SoneiumMinatoTestnet
+            | World | WorldSepolia | Curtis | Ink | InkSepolia | SuperpositionTestnet
+            | Superposition | Vana | Story | Katana | Lisk | Fuse | Injective
+            | InjectiveTestnet => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
@@ -2045,7 +2088,6 @@ impl NamedChain {
             Bitlayer => "BITLAYERSCAN_API_KEY",
             Zeta => "ZETASCAN_API_KEY",
             Kaia => "KAIASCAN_API_KEY",
-            Sonic => "SONICSCAN_API_KEY",
             Berachain | BerachainBepolia => "BERASCAN_API_KEY",
             Corn | CornTestnet => "ROUTESCAN_API_KEY",
             // Explicitly exhaustive. See NB above.
@@ -2083,8 +2125,6 @@ impl NamedChain {
             | AutonomysNovaTestnet
             | Iotex
             | HappychainTestnet
-            | SonicBlaze
-            | SonicTestnet
             | Treasure
             | TreasureTopaz
             | TelosEvm
@@ -2114,8 +2154,8 @@ impl NamedChain {
     /// assert_eq!(chain.etherscan_api_key().as_deref(), Some("KEY"));
     /// ```
     #[cfg(feature = "std")]
-    pub fn etherscan_api_key(self) -> Option<String> {
-        self.etherscan_api_key_name().and_then(|name| std::env::var(name).ok())
+    pub fn verifier_api_key(self) -> Option<String> {
+        self.verifier_api_key_name().and_then(|name| std::env::var(name).ok())
     }
 
     /// Returns the address of the public DNS node list for the given chain.
@@ -2363,11 +2403,13 @@ mod tests {
     }
 
     #[test]
-    fn ensure_no_trailing_etherscan_url_separator() {
+    fn ensure_no_trailing_verifier_url_separator() {
         for chain in NamedChain::iter() {
-            if let Some((api, base)) = chain.etherscan_urls() {
-                assert!(!api.ends_with('/'), "{chain:?} api url has trailing /");
-                assert!(!base.ends_with('/'), "{chain:?} base url has trailing /");
+            if let Some(urls) = chain.verifier_urls() {
+                for (_, api, base) in urls {
+                    assert!(!api.ends_with('/'), "{chain:?} api url has trailing /");
+                    assert!(!base.ends_with('/'), "{chain:?} base url has trailing /");
+                }
             }
         }
     }

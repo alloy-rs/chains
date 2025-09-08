@@ -1,4 +1,4 @@
-use crate::NamedChain;
+use crate::{NamedChain, VerifierType};
 use core::{cmp::Ordering, fmt, str::FromStr, time::Duration};
 
 #[allow(unused_imports)]
@@ -589,10 +589,10 @@ impl Chain {
         Self::from_named(NamedChain::Sonic)
     }
 
-    /// Returns the Sonic Blaze testnet chain.
+    /// Returns the Sonic testnet chain.
     #[inline]
-    pub const fn sonic_blaze() -> Self {
-        Self::from_named(NamedChain::SonicBlaze)
+    pub const fn sonic_testnet() -> Self {
+        Self::from_named(NamedChain::SonicTestnet)
     }
 
     /// Returns the Superposition testnet chain.
@@ -766,19 +766,19 @@ impl Chain {
     /// Returns the chain's blockchain explorer and its API (Etherscan and Etherscan-like) URLs.
     ///
     /// See [`NamedChain::etherscan_urls`] for more info.
-    pub const fn etherscan_urls(self) -> Option<(&'static str, &'static str)> {
+    pub fn verifier_urls(self) -> Option<Vec<(VerifierType, &'static str, &'static str)>> {
         match self.kind() {
-            ChainKind::Named(named) => named.etherscan_urls(),
+            ChainKind::Named(named) => named.verifier_urls(),
             ChainKind::Id(_) => None,
         }
     }
 
     /// Returns the chain's blockchain explorer's API key environment variable's default name.
     ///
-    /// See [`NamedChain::etherscan_api_key_name`] for more info.
-    pub const fn etherscan_api_key_name(self) -> Option<&'static str> {
+    /// See [`NamedChain::verifier_api_key_name`] for more info.
+    pub const fn verifier_api_key_name(self) -> Option<&'static str> {
         match self.kind() {
-            ChainKind::Named(named) => named.etherscan_api_key_name(),
+            ChainKind::Named(named) => named.verifier_api_key_name(),
             ChainKind::Id(_) => None,
         }
     }
@@ -788,9 +788,9 @@ impl Chain {
     ///
     /// See [`NamedChain::etherscan_api_key`] for more info.
     #[cfg(feature = "std")]
-    pub fn etherscan_api_key(self) -> Option<String> {
+    pub fn verifier_api_key(self) -> Option<String> {
         match self.kind() {
-            ChainKind::Named(named) => named.etherscan_api_key(),
+            ChainKind::Named(named) => named.verifier_api_key(),
             ChainKind::Id(_) => None,
         }
     }

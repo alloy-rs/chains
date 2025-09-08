@@ -346,7 +346,7 @@
       "nativeCurrencySymbol": "S",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=146",
       "etherscanBaseUrl": "https://sonicscan.org",
-      "etherscanApiKeyName": "SONICSCAN_API_KEY"
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "148": {
       "internalId": "Shimmer",
@@ -1176,6 +1176,18 @@
       "etherscanBaseUrl": "https://explorer-sepolia.gravity.xyz",
       "etherscanApiKeyName": null
     },
+    "14601": {
+      "internalId": "SonicTestnet",
+      "name": "sonic-testnet",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "S",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=14601",
+      "etherscanBaseUrl": "https://testnet.sonicscan.org",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "17000": {
       "internalId": "Holesky",
       "name": "holesky",
@@ -1365,8 +1377,8 @@
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=43113",
-      "etherscanBaseUrl": "https://testnet.snowtrace.io",
-      "etherscanApiKeyName": "SNOWTRACE_API_KEY"
+      "etherscanBaseUrl": "https://testnet.snowscan.xyz",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "43114": {
       "internalId": "Avalanche",
@@ -1377,8 +1389,8 @@
       "isTestnet": false,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=43114",
-      "etherscanBaseUrl": "https://snowtrace.io",
-      "etherscanApiKeyName": "SNOWTRACE_API_KEY"
+      "etherscanBaseUrl": "https://snowscan.xyz",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "44787": {
       "internalId": "CeloAlfajores",
@@ -1415,18 +1427,6 @@
       "etherscanApiUrl": "https://explorer.superposition.so/api",
       "etherscanBaseUrl": "https://explorer.superposition.so",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
-    },
-    "57054": {
-      "internalId": "SonicBlaze",
-      "name": "sonic-blaze",
-      "averageBlocktimeHint": null,
-      "isLegacy": false,
-      "supportsShanghai": false,
-      "isTestnet": true,
-      "nativeCurrencySymbol": "S",
-      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=57054",
-      "etherscanBaseUrl": "https://testnet.sonicscan.org",
-      "etherscanApiKeyName": null
     },
     "57073": {
       "internalId": "Ink",
@@ -1523,18 +1523,6 @@
       "etherscanApiUrl": null,
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
-    },
-    "64165": {
-      "internalId": "SonicTestnet",
-      "name": "sonic-testnet",
-      "averageBlocktimeHint": null,
-      "isLegacy": false,
-      "supportsShanghai": false,
-      "isTestnet": true,
-      "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api.routescan.io/v2/network/testnet/evm/64165/etherscan/api",
-      "etherscanBaseUrl": "https://scan.soniclabs.com",
-      "etherscanApiKeyName": null
     },
     "80001": {
       "internalId": "PolygonMumbai",
@@ -2003,18 +1991,6 @@
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=37714555429",
       "etherscanBaseUrl": "https://sepolia.xaiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
-    },
-    "920637907288165": {
-      "internalId": "KakarotSepolia",
-      "name": "kakarot-sepolia",
-      "averageBlocktimeHint": null,
-      "isLegacy": false,
-      "supportsShanghai": true,
-      "isTestnet": true,
-      "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://sepolia.kakarotscan.org/api",
-      "etherscanBaseUrl": "https://sepolia.kakarotscan.org",
-      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     }
   }
 }
