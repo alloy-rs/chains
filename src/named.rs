@@ -203,8 +203,7 @@ pub enum NamedChain {
     AvalancheFuji = 43113,
 
     Celo = 42220,
-    CeloAlfajores = 44787,
-    CeloBaklava = 62320,
+    CeloSepolia = 11142220,
 
     Aurora = 1313161554,
     AuroraTestnet = 1313161555,
@@ -766,7 +765,7 @@ impl NamedChain {
 
             Dev | AnvilHardhat => 200,
 
-            Celo | CeloAlfajores | CeloBaklava => 5_000,
+            Celo | CeloSepolia => 1_000,
 
             FilecoinCalibrationTestnet | FilecoinMainnet => 30_000,
 
@@ -858,9 +857,9 @@ impl NamedChain {
 
         match self {
             // Known legacy chains / non EIP-1559 compliant.
-            CeloAlfajores | CeloBaklava | Elastos | Emerald | EmeraldTestnet | Fantom
-            | FantomTestnet | OptimismKovan | Ronin | RoninTestnet | Rsk | RskTestnet | Shimmer
-            | Treasure | TreasureTopaz | Viction | Sophon | SophonTestnet => true,
+            Elastos | Emerald | EmeraldTestnet | Fantom | FantomTestnet | OptimismKovan | Ronin
+            | RoninTestnet | Rsk | RskTestnet | Shimmer | Treasure | TreasureTopaz | Viction
+            | Sophon | SophonTestnet => true,
 
             // Known EIP-1559 chains.
             Mainnet
@@ -882,6 +881,7 @@ impl NamedChain {
             | Blast
             | BlastSepolia
             | Celo
+            | CeloSepolia
             | Fraxtal
             | FraxtalTestnet
             | Optimism
@@ -1009,6 +1009,8 @@ impl NamedChain {
                 | BaseSepolia
                 | Blast
                 | BlastSepolia
+                | Celo
+                | CeloSepolia
                 | Fraxtal
                 | FraxtalTestnet
                 | Ink
@@ -1106,8 +1108,7 @@ impl NamedChain {
             | BinanceSmartChainTestnet
             | CantoTestnet
             | CronosTestnet
-            | CeloAlfajores
-            | CeloBaklava
+            | CeloSepolia
             | EmeraldTestnet
             | EvmosTestnet
             | FantomTestnet
@@ -1197,7 +1198,7 @@ impl NamedChain {
 
             GravityAlphaMainnet | GravityAlphaTestnetSepolia => "G",
 
-            Celo => "CELO",
+            Celo | CeloSepolia => "CELO",
 
             Xai | XaiSepolia => "XAI",
 
@@ -1410,8 +1411,8 @@ impl NamedChain {
                 ("https://testnet.aurorascan.dev/api", "https://testnet.aurorascan.dev")
             }
             Celo => ("https://api.etherscan.io/v2/api?chainid=42220", "https://celoscan.io"),
-            CeloAlfajores => {
-                ("https://api.etherscan.io/v2/api?chainid=44787", "https://alfajores.celoscan.io")
+            CeloSepolia => {
+                ("https://celo-sepolia.blockscout.com/api", "https://celo-sepolia.blockscout.com")
             }
             Boba => ("https://api.bobascan.com/api", "https://bobascan.com"),
             Base => ("https://api.etherscan.io/v2/api?chainid=8453", "https://basescan.org"),
@@ -1593,11 +1594,11 @@ impl NamedChain {
                 ("https://testnet.fluentscan.xyz/api", "https://testnet.fluentscan.xyz")
             }
             AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
-            | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CeloBaklava
-            | CronosTestnet | Dev | Evmos | EvmosTestnet | Fantom | FantomTestnet
-            | FilecoinMainnet | Goerli | Iotex | KaruraTestnet | Koi | Kovan | LineaGoerli
-            | MoonbeamDev | Morden | Oasis | OptimismGoerli | OptimismKovan | Pgn | PgnSepolia
-            | Poa | Rinkeby | Ropsten | Sei | Sokol | Treasure | TreasureTopaz => {
+            | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CronosTestnet | Dev
+            | Evmos | EvmosTestnet | Fantom | FantomTestnet | FilecoinMainnet | Goerli | Iotex
+            | KaruraTestnet | Koi | Kovan | LineaGoerli | MoonbeamDev | Morden | Oasis
+            | OptimismGoerli | OptimismKovan | Pgn | PgnSepolia | Poa | Rinkeby | Ropsten | Sei
+            | Sokol | Treasure | TreasureTopaz => {
                 return None;
             }
         })
@@ -1637,7 +1638,6 @@ impl NamedChain {
             | Blast
             | BlastSepolia
             | Celo
-            | CeloAlfajores
             | Cronos
             | CronosTestnet
             | Fraxtal
@@ -1686,7 +1686,7 @@ impl NamedChain {
 
             Moonbeam | Moonbase | MoonbeamDev | Moonriver => "MOONSCAN_API_KEY",
 
-            Acala | AcalaMandalaTestnet | AcalaTestnet | Canto | CantoTestnet | CeloBaklava
+            Acala | AcalaMandalaTestnet | AcalaTestnet | Canto | CantoTestnet | CeloSepolia
             | Etherlink | EtherlinkTestnet | Flare | FlareCoston2 | Karura | KaruraTestnet
             | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora | ZoraSepolia | Darwinia
             | Crab | Koi | Immutable | ImmutableTestnet | Soneium | SoneiumMinatoTestnet
