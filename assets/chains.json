@@ -1299,9 +1299,9 @@
     "42220": {
       "internalId": "Celo",
       "name": "celo",
-      "averageBlocktimeHint": 5000,
+      "averageBlocktimeHint": 1000,
       "isLegacy": false,
-      "supportsShanghai": false,
+      "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "CELO",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=42220",
@@ -1366,18 +1366,6 @@
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=43114",
       "etherscanBaseUrl": "https://snowscan.xyz",
-      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
-    },
-    "44787": {
-      "internalId": "CeloAlfajores",
-      "name": "celo-alfajores",
-      "averageBlocktimeHint": 5000,
-      "isLegacy": true,
-      "supportsShanghai": false,
-      "isTestnet": true,
-      "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=44787",
-      "etherscanBaseUrl": "https://alfajores.celoscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "50104": {
@@ -1487,18 +1475,6 @@
       "etherscanApiUrl": null,
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": null
-    },
-    "62320": {
-      "internalId": "CeloBaklava",
-      "name": "celo-baklava",
-      "averageBlocktimeHint": 5000,
-      "isLegacy": true,
-      "supportsShanghai": false,
-      "isTestnet": true,
-      "nativeCurrencySymbol": null,
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
-      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "80002": {
       "internalId": "PolygonAmoy",
@@ -1822,6 +1798,18 @@
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://explorer.zora.energy/api",
       "etherscanBaseUrl": "https://explorer.zora.energy",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
+    "11142220": {
+      "internalId": "CeloSepolia",
+      "name": "celo-sepolia",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "CELO",
+      "etherscanApiUrl": "https://celo-sepolia.blockscout.com/api",
+      "etherscanBaseUrl": "https://celo-sepolia.blockscout.com",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "11155111": {
