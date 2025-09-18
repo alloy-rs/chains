@@ -5,10 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.10](https://github.com/alloy-rs/chains/releases/tag/v0.2.10) - 2025-09-18
+
+### Bug Fixes
+
+- Update Avalance URLs, now use Etherscan API key ([#203](https://github.com/alloy-rs/chains/issues/203))
+- Sonic Blaze deprecated, Sonic Testnet chain id update, explorer URL update ([#202](https://github.com/alloy-rs/chains/issues/202))
+- Use correct etherscan URL for bsc ([#197](https://github.com/alloy-rs/chains/issues/197))
+
+### Miscellaneous Tasks
+
+- Deprecate Polygon Mumbai, Polygon ZKEvm and Polygon ZkEvm Testnet, fix `POLYGONSCAN_API_KEY` ([#204](https://github.com/alloy-rs/chains/issues/204))
+- Deprecate kakarot sepolia ([#200](https://github.com/alloy-rs/chains/issues/200))
+- Go through all verification API endpoints and deprecate / fix those that are down ([#196](https://github.com/alloy-rs/chains/issues/196))
+- Set native token for celo, smol match change ([#194](https://github.com/alloy-rs/chains/issues/194))
+- Remove hoodi etherscan todo ([#191](https://github.com/alloy-rs/chains/issues/191))
+
+### Other
+
+- Update Celo chains ([#206](https://github.com/alloy-rs/chains/issues/206))
+
 ## [0.2.9](https://github.com/alloy-rs/chains/releases/tag/v0.2.9) - 2025-08-28
 
 ### Miscellaneous Tasks
 
+- Release 0.2.9
 - Add base, optimism native token name ([#193](https://github.com/alloy-rs/chains/issues/193))
 - Use Option::unzip now that msrv is 1.81 ([#192](https://github.com/alloy-rs/chains/issues/192))
 
