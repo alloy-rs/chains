@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.11](https://github.com/alloy-rs/chains/releases/tag/v0.2.11) - 2025-09-19
+
+### Bug Fixes
+
+- Update Katana URLs ([#207](https://github.com/alloy-rs/chains/issues/207))
+
 ## [0.2.10](https://github.com/alloy-rs/chains/releases/tag/v0.2.10) - 2025-09-18
 
 ### Bug Fixes
@@ -15,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Miscellaneous Tasks
 
+- Release 0.2.10
 - Deprecate Polygon Mumbai, Polygon ZKEvm and Polygon ZkEvm Testnet, fix `POLYGONSCAN_API_KEY` ([#204](https://github.com/alloy-rs/chains/issues/204))
 - Deprecate kakarot sepolia ([#200](https://github.com/alloy-rs/chains/issues/200))
 - Go through all verification API endpoints and deprecate / fix those that are down ([#196](https://github.com/alloy-rs/chains/issues/196))
