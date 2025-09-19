@@ -1736,8 +1736,8 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://explorer.katanarpc.com/api",
-      "etherscanBaseUrl": "https://explorer.katanarpc.com",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=747474",
+      "etherscanBaseUrl": "https://katanascan.com",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "763373": {
