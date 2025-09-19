@@ -1576,7 +1576,7 @@ impl NamedChain {
                 "https://block-explorer-api.staging.lens.zksync.dev",
                 "https://explorer.testnet.lens.xyz",
             ),
-            Katana => ("https://explorer.katanarpc.com/api", "https://explorer.katanarpc.com"),
+            Katana => ("https://api.etherscan.io/v2/api?chainid=747474", "https://katanascan.com"),
             Lisk => ("https://blockscout.lisk.com/api", "https://blockscout.lisk.com"),
             Fuse => ("https://explorer.fuse.io/api", "https://explorer.fuse.io"),
             Injective => (
