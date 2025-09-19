@@ -5,11 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.12](https://github.com/alloy-rs/chains/releases/tag/v0.2.12) - 2025-09-19
+
+### Bug Fixes
+
+- Katana now requires an `ETHERSCAN_API_KEY` ([#208](https://github.com/alloy-rs/chains/issues/208))
+
 ## [0.2.11](https://github.com/alloy-rs/chains/releases/tag/v0.2.11) - 2025-09-19
 
 ### Bug Fixes
 
 - Update Katana URLs ([#207](https://github.com/alloy-rs/chains/issues/207))
+
+### Miscellaneous Tasks
+
+- Release 0.2.11
 
 ## [0.2.10](https://github.com/alloy-rs/chains/releases/tag/v0.2.10) - 2025-09-18
 
