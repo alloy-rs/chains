@@ -1647,6 +1647,7 @@ impl NamedChain {
             | Holesky
             | Hoodi
             | Hyperliquid
+            | Katana
             | Kovan
             | Linea
             | LineaSepolia
@@ -1691,8 +1692,9 @@ impl NamedChain {
             | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora | ZoraSepolia | Darwinia
             | Crab | Koi | Immutable | ImmutableTestnet | Soneium | SoneiumMinatoTestnet
             | World | WorldSepolia | Curtis | Ink | InkSepolia | SuperpositionTestnet
-            | Superposition | Vana | Story | Katana | Lisk | Fuse | Injective
-            | InjectiveTestnet => "BLOCKSCOUT_API_KEY",
+            | Superposition | Vana | Story | Lisk | Fuse | Injective | InjectiveTestnet => {
+                "BLOCKSCOUT_API_KEY"
+            }
 
             Boba => "BOBASCAN_API_KEY",
 
