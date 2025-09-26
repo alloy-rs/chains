@@ -386,6 +386,10 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "unichain-sepolia"))]
     UnichainSepolia = 1301,
 
+    #[strum(to_string = "signet-pecorino")]
+    #[cfg_attr(feature = "serde", serde(alias = "signet-pecorino"))]
+    SignetPecorino = 14174,
+
     #[strum(to_string = "apechain")]
     #[cfg_attr(feature = "serde", serde(alias = "apechain"))]
     ApeChain = 33139,
@@ -715,7 +719,7 @@ impl NamedChain {
         use NamedChain::*;
 
         Some(Duration::from_millis(match self {
-            Mainnet | Taiko | TaikoHekla => 12_000,
+            Mainnet | Taiko | TaikoHekla | SignetPecorino => 12_000,
 
             Arbitrum
             | ArbitrumTestnet
@@ -950,6 +954,7 @@ impl NamedChain {
             | WorldSepolia
             | Unichain
             | UnichainSepolia
+            | SignetPecorino
             | ApeChain
             | BerachainBepolia
             | Berachain
@@ -1068,6 +1073,7 @@ impl NamedChain {
                 | Iotex
                 | Unichain
                 | UnichainSepolia
+                | SignetPecorino
                 | ApeChain
                 | Curtis
                 | SuperpositionTestnet
@@ -1149,6 +1155,7 @@ impl NamedChain {
             | SoneiumMinatoTestnet
             | WorldSepolia
             | UnichainSepolia
+            | SignetPecorino
             | Curtis
             | TreasureTopaz
             | SonicTestnet
@@ -1252,6 +1259,8 @@ impl NamedChain {
             TelosEvm | TelosEvmTestnet => "TLOS",
 
             Hyperliquid => "HYPE",
+
+            SignetPecorino => "USDS",
 
             Polygon | PolygonAmoy => "POL",
 
@@ -1518,6 +1527,9 @@ impl NamedChain {
             UnichainSepolia => {
                 ("https://api.etherscan.io/v2/api?chainid=1301", "https://sepolia.uniscan.xyz")
             }
+            SignetPecorino => {
+                ("https://explorer.pecorino.signet.sh/api", "https://explorer.pecorino.signet.sh")
+            }
             Core => ("https://openapi.coredao.org/api", "https://scan.coredao.org"),
             Merlin => ("https://scan.merlinchain.io/api", "https://scan.merlinchain.io"),
             Bitlayer => ("https://api.btrscan.com/scan/api", "https://www.btrscan.com"),
@@ -1692,9 +1704,8 @@ impl NamedChain {
             | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora | ZoraSepolia | Darwinia
             | Crab | Koi | Immutable | ImmutableTestnet | Soneium | SoneiumMinatoTestnet
             | World | WorldSepolia | Curtis | Ink | InkSepolia | SuperpositionTestnet
-            | Superposition | Vana | Story | Lisk | Fuse | Injective | InjectiveTestnet => {
-                "BLOCKSCOUT_API_KEY"
-            }
+            | Superposition | Vana | Story | Lisk | Fuse | Injective | InjectiveTestnet
+            | SignetPecorino => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
