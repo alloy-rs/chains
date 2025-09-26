@@ -1152,6 +1152,18 @@
       "etherscanBaseUrl": "https://explorer-sepolia.gravity.xyz",
       "etherscanApiKeyName": null
     },
+    "14174": {
+      "internalId": "SignetPecorino",
+      "name": "signet-pecorino",
+      "averageBlocktimeHint": 12000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "USDS",
+      "etherscanApiUrl": "https://explorer.pecorino.signet.sh/api",
+      "etherscanBaseUrl": "https://explorer.pecorino.signet.sh",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "14601": {
       "internalId": "SonicTestnet",
       "name": "sonic-testnet",
