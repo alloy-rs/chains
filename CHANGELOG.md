@@ -5,11 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.14](https://github.com/alloy-rs/chains/releases/tag/v0.2.14) - 2025-09-30
+
+### Miscellaneous Tasks
+
+- Add plasma ([#210](https://github.com/alloy-rs/chains/issues/210))
+- Rm doc_auto_cfg ([#211](https://github.com/alloy-rs/chains/issues/211))
+
 ## [0.2.13](https://github.com/alloy-rs/chains/releases/tag/v0.2.13) - 2025-09-26
 
 ### Features
 
 - [chains] Add signet pecorino testnet ([#209](https://github.com/alloy-rs/chains/issues/209))
+
+### Miscellaneous Tasks
+
+- Release 0.2.13
 
 ## [0.2.12](https://github.com/alloy-rs/chains/releases/tag/v0.2.12) - 2025-09-19
 
