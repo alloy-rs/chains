@@ -187,6 +187,8 @@ pub enum NamedChain {
     Evmos = 9001,
     EvmosTestnet = 9000,
 
+    Plasma = 9745,
+
     Chiado = 10200,
 
     Oasis = 26863,
@@ -742,7 +744,7 @@ impl NamedChain {
             | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia | HappychainTestnet
             | Soneium | SoneiumMinatoTestnet | Bob | BobSepolia => 2_000,
 
-            Ink | InkSepolia | Odyssey => 1_000,
+            Ink | InkSepolia | Odyssey | Plasma => 1_000,
 
             Viction => 2_000,
 
@@ -978,7 +980,8 @@ impl NamedChain {
             | TelosEvm
             | TelosEvmTestnet
             | FluentDevnet
-            | FluentTestnet => false,
+            | FluentTestnet
+            | Plasma => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
@@ -1178,7 +1181,7 @@ impl NamedChain {
             // Mainnets.
             Mainnet | Optimism | Arbitrum | ArbitrumNova | Blast | Syndr | Cronos | Rsk
             | BinanceSmartChain | Poa | Sokol | Scroll | Metis | Gnosis | Polygon | Fantom
-            | Moonbeam | Moonriver | Moonbase | Evmos | Chiado | Oasis | Emerald
+            | Moonbeam | Moonriver | Moonbase | Evmos | Chiado | Oasis | Emerald | Plasma
             | FilecoinMainnet | Avalanche | Celo | Aurora | Canto | Boba | Base | Fraxtal | Ink
             | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn | Mode | Viction
             | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
@@ -1275,6 +1278,8 @@ impl NamedChain {
             RskTestnet => "tRBTC",
 
             Injective | InjectiveTestnet => "INJ",
+
+            Plasma => "XPL",
 
             _ => return None,
         })
@@ -1399,6 +1404,10 @@ impl NamedChain {
             Chiado => {
                 ("https://gnosis-chiado.blockscout.com/api", "https://gnosis-chiado.blockscout.com")
             }
+            Plasma => (
+                "https://api.routescan.io/v2/network/mainnet/evm/9745/etherscan/api",
+                "https://plasmascan.to",
+            ),
             FilecoinCalibrationTestnet => (
                 "https://api.calibration.node.glif.io/rpc/v1",
                 "https://calibration.filfox.info/en",
@@ -1715,7 +1724,7 @@ impl NamedChain {
             Zeta => "ZETASCAN_API_KEY",
             Kaia => "KAIASCAN_API_KEY",
             Berachain | BerachainBepolia => "BERASCAN_API_KEY",
-            Corn | CornTestnet => "ROUTESCAN_API_KEY",
+            Corn | CornTestnet | Plasma => "ROUTESCAN_API_KEY",
             // Explicitly exhaustive. See NB above.
             Metis
             | Chiado
