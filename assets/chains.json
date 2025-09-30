@@ -1080,6 +1080,18 @@
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": null
     },
+    "9745": {
+      "internalId": "Plasma",
+      "name": "plasma",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "XPL",
+      "etherscanApiUrl": "https://api.routescan.io/v2/network/mainnet/evm/9745/etherscan/api",
+      "etherscanBaseUrl": "https://plasmascan.to",
+      "etherscanApiKeyName": "ROUTESCAN_API_KEY"
+    },
     "10143": {
       "internalId": "MonadTestnet",
       "name": "monad-testnet",
