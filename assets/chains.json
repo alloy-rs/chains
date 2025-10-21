@@ -768,6 +768,18 @@
       "etherscanBaseUrl": "https://sepolia.uniscan.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "1328": {
+      "internalId": "SeiTestnet",
+      "name": "sei-testnet",
+      "averageBlocktimeHint": 500,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "SEI",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=1328",
+      "etherscanBaseUrl": "https://testnet.seiscan.io",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "1329": {
       "internalId": "Sei",
       "name": "sei",
@@ -776,9 +788,9 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "SEI",
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
-      "etherscanApiKeyName": null
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=1329",
+      "etherscanBaseUrl": "https://seiscan.io",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "1337": {
       "internalId": "Dev",
