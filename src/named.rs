@@ -382,6 +382,9 @@ pub enum NamedChain {
     Kaia = 8217,
     Story = 1514,
     Sei = 1329,
+    #[strum(to_string = "sei-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "sei-testnet"))]
+    SeiTestnet = 1328,
 
     Unichain = 130,
     #[strum(to_string = "unichain-sepolia")]
@@ -814,7 +817,7 @@ impl NamedChain {
             Zeta => 6_000,
             Kaia => 1_000,
             Story => 2_500,
-            Sei => 500,
+            Sei | SeiTestnet => 500,
 
             Sonic | SonicTestnet => 1_000,
 
@@ -987,7 +990,7 @@ impl NamedChain {
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
-            | Merlin | Bitlayer | Vana | Zeta | Kaia | Story | Sei | Injective
+            | Merlin | Bitlayer | Vana | Zeta | Kaia | Story | Sei | SeiTestnet | Injective
             | InjectiveTestnet | Katana | Lisk | Fuse => false,
         }
     }
@@ -1173,6 +1176,7 @@ impl NamedChain {
             | InjectiveTestnet
             | FluentDevnet
             | FluentTestnet
+            | SeiTestnet
             | CornTestnet => true,
 
             // Dev chains.
@@ -1250,7 +1254,7 @@ impl NamedChain {
             Zeta => "ZETA",
             Kaia => "KAIA",
             Story => "IP",
-            Sei => "SEI",
+            Sei | SeiTestnet => "SEI",
             ApeChain | Curtis => "APE",
 
             Treasure | TreasureTopaz => "MAGIC",
@@ -1619,7 +1623,7 @@ impl NamedChain {
             | Evmos | EvmosTestnet | Fantom | FantomTestnet | FilecoinMainnet | Goerli | Iotex
             | KaruraTestnet | Koi | Kovan | LineaGoerli | MoonbeamDev | Morden | Oasis
             | OptimismGoerli | OptimismKovan | Pgn | PgnSepolia | Poa | Rinkeby | Ropsten | Sei
-            | Sokol | Treasure | TreasureTopaz => {
+            | SeiTestnet | Sokol | Treasure | TreasureTopaz => {
                 return None;
             }
         })
@@ -1767,6 +1771,7 @@ impl NamedChain {
             | Lens
             | LensTestnet
             | Sei
+            | SeiTestnet
             | FluentDevnet
             | FluentTestnet => return None,
         };
@@ -1995,6 +2000,7 @@ mod tests {
             (FluentTestnet, &["fluent-testnet"]),
             (Injective, &["injective"]),
             (InjectiveTestnet, &["injective-testnet"]),
+            (SeiTestnet, &["sei-testnet"]),
         ];
 
         for &(chain, aliases) in ALIASES {
