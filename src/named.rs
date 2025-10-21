@@ -1550,6 +1550,10 @@ impl NamedChain {
             Zeta => ("https://zetachain.blockscout.com/api", "https://zetachain.blockscout.com"),
             Kaia => ("https://mainnet-oapi.kaiascan.io/api", "https://kaiascan.io"),
             Story => ("https://www.storyscan.xyz/api/v2", "https://www.storyscan.xyz"),
+            Sei => ("https://api.etherscan.io/v2/api?chainid=1329", "https://seiscan.io"),
+            SeiTestnet => {
+                ("https://api.etherscan.io/v2/api?chainid=1328", "https://testnet.seiscan.io")
+            }
             ApeChain => ("https://api.etherscan.io/v2/api?chainid=33139", "https://apescan.io"),
             Curtis => {
                 ("https://api.etherscan.io/v2/api?chainid=33111", "https://curtis.apescan.io")
@@ -1622,8 +1626,8 @@ impl NamedChain {
             | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CronosTestnet | Dev
             | Evmos | EvmosTestnet | Fantom | FantomTestnet | FilecoinMainnet | Goerli | Iotex
             | KaruraTestnet | Koi | Kovan | LineaGoerli | MoonbeamDev | Morden | Oasis
-            | OptimismGoerli | OptimismKovan | Pgn | PgnSepolia | Poa | Rinkeby | Ropsten | Sei
-            | SeiTestnet | Sokol | Treasure | TreasureTopaz => {
+            | OptimismGoerli | OptimismKovan | Pgn | PgnSepolia | Poa | Rinkeby | Ropsten
+            | Sokol | Treasure | TreasureTopaz => {
                 return None;
             }
         })
@@ -1693,6 +1697,8 @@ impl NamedChain {
             | Ropsten
             | Scroll
             | ScrollSepolia
+            | Sei
+            | SeiTestnet
             | Sonic
             | SonicTestnet
             | Sophon
@@ -1770,8 +1776,6 @@ impl NamedChain {
             | TelosEvmTestnet
             | Lens
             | LensTestnet
-            | Sei
-            | SeiTestnet
             | FluentDevnet
             | FluentTestnet => return None,
         };
