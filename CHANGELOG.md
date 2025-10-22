@@ -5,10 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.15](https://github.com/alloy-rs/chains/releases/tag/v0.2.15) - 2025-10-22
+
+### Other
+
+- Add sei-test net ([#212](https://github.com/alloy-rs/chains/issues/212))
+
 ## [0.2.14](https://github.com/alloy-rs/chains/releases/tag/v0.2.14) - 2025-09-30
 
 ### Miscellaneous Tasks
 
+- Release 0.2.14
 - Add plasma ([#210](https://github.com/alloy-rs/chains/issues/210))
 - Rm doc_auto_cfg ([#211](https://github.com/alloy-rs/chains/issues/211))
 
