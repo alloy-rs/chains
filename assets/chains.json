@@ -1140,6 +1140,18 @@
       "etherscanBaseUrl": "https://sepolia.abscan.org",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "13370": {
+      "internalId": "Cannon",
+      "name": "cannon",
+      "averageBlocktimeHint": null,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
+      "etherscanApiKeyName": null
+    },
     "13371": {
       "internalId": "Immutable",
       "name": "immutable",

@@ -353,6 +353,10 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "pulsechain-testnet"))]
     PulsechainTestnet = 943,
 
+    #[strum(to_string = "cannon")]
+    #[cfg_attr(feature = "serde", serde(alias = "cannon"))]
+    Cannon = 13370,
+
     #[strum(to_string = "immutable")]
     #[cfg_attr(feature = "serde", serde(alias = "immutable"))]
     Immutable = 13371,
@@ -845,7 +849,8 @@ impl NamedChain {
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi | Moonbase
             | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | Metis | Linea
-            | LineaGoerli | LineaSepolia | Treasure | TreasureTopaz | Corn | CornTestnet => {
+            | LineaGoerli | LineaSepolia | Treasure | TreasureTopaz | Corn | CornTestnet
+            | Cannon => {
                 return None;
             }
         }))
@@ -991,7 +996,7 @@ impl NamedChain {
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
             | Merlin | Bitlayer | Vana | Zeta | Kaia | Story | Sei | SeiTestnet | Injective
-            | InjectiveTestnet | Katana | Lisk | Fuse => false,
+            | InjectiveTestnet | Katana | Lisk | Fuse | Cannon => false,
         }
     }
 
@@ -1095,6 +1100,7 @@ impl NamedChain {
                 | InjectiveTestnet
                 | FluentDevnet
                 | FluentTestnet
+                | Cannon
         )
     }
 
@@ -1180,7 +1186,7 @@ impl NamedChain {
             | CornTestnet => true,
 
             // Dev chains.
-            Dev | AnvilHardhat => true,
+            Dev | AnvilHardhat | Cannon => true,
 
             // Mainnets.
             Mainnet | Optimism | Arbitrum | ArbitrumNova | Blast | Syndr | Cronos | Rsk
@@ -1627,7 +1633,7 @@ impl NamedChain {
             | Evmos | EvmosTestnet | Fantom | FantomTestnet | FilecoinMainnet | Goerli | Iotex
             | KaruraTestnet | Koi | Kovan | LineaGoerli | MoonbeamDev | Morden | Oasis
             | OptimismGoerli | OptimismKovan | Pgn | PgnSepolia | Poa | Rinkeby | Ropsten
-            | Sokol | Treasure | TreasureTopaz => {
+            | Sokol | Treasure | TreasureTopaz | Cannon => {
                 return None;
             }
         })
@@ -1777,7 +1783,8 @@ impl NamedChain {
             | Lens
             | LensTestnet
             | FluentDevnet
-            | FluentTestnet => return None,
+            | FluentTestnet
+            | Cannon => return None,
         };
 
         Some(api_key_name)
@@ -2005,6 +2012,7 @@ mod tests {
             (Injective, &["injective"]),
             (InjectiveTestnet, &["injective-testnet"]),
             (SeiTestnet, &["sei-testnet"]),
+            (Cannon, &["cannon"]),
         ];
 
         for &(chain, aliases) in ALIASES {
