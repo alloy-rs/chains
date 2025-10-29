@@ -1856,8 +1856,8 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "CELO",
-      "etherscanApiUrl": "https://celo-sepolia.blockscout.com/api",
-      "etherscanBaseUrl": "https://celo-sepolia.blockscout.com",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=11142220",
+      "etherscanBaseUrl": "https://sepolia.celoscan.io",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "11155111": {
