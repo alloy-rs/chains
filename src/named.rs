@@ -1440,7 +1440,7 @@ impl NamedChain {
             }
             Celo => ("https://api.etherscan.io/v2/api?chainid=42220", "https://celoscan.io"),
             CeloSepolia => {
-                ("https://celo-sepolia.blockscout.com/api", "https://celo-sepolia.blockscout.com")
+                ("https://api.etherscan.io/v2/api?chainid=11142220", "https://sepolia.celoscan.io")
             }
             Boba => ("https://api.bobascan.com/api", "https://bobascan.com"),
             Base => ("https://api.etherscan.io/v2/api?chainid=8453", "https://basescan.org"),
