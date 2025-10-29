@@ -5,10 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.17](https://github.com/alloy-rs/chains/releases/tag/v0.2.17) - 2025-10-29
+
+### Bug Fixes
+
+- Update celo sepolia api to etherscan ([#218](https://github.com/alloy-rs/chains/issues/218))
+
 ## [0.2.16](https://github.com/alloy-rs/chains/releases/tag/v0.2.16) - 2025-10-28
 
 ### Miscellaneous Tasks
 
+- Release 0.2.16
 - Add Cannon ([#216](https://github.com/alloy-rs/chains/issues/216))
 - Update code owners ([#215](https://github.com/alloy-rs/chains/issues/215))
 - Update MSRV in README ([#213](https://github.com/alloy-rs/chains/issues/213))
