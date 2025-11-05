@@ -961,7 +961,7 @@
       "etherscanApiKeyName": "MERLINSCAN_API_KEY"
     },
     "4352": {
-      "internalId": "Memecore",
+      "internalId": "MemeCore",
       "name": "memecore",
       "averageBlocktimeHint": 7000,
       "isLegacy": false,

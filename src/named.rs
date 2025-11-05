@@ -510,7 +510,7 @@ pub enum NamedChain {
 
     #[strum(to_string = "memecore")]
     #[cfg_attr(feature = "serde", serde(alias = "memecore"))]
-    Memecore = 4352,
+    MemeCore = 4352,
 
     #[strum(to_string = "formicarium", serialize = "memecore-formicarium")]
     #[cfg_attr(feature = "serde", serde(alias = "formicairum", alias = "memecore-formicarium"))]
@@ -858,7 +858,7 @@ impl NamedChain {
             Fuse => 5_000,
             FluentDevnet => 3_000,
             FluentTestnet => 1_000,
-            Memecore | Formicarium | Insectarium => 7_000,
+            MemeCore | Formicarium | Insectarium => 7_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi | Moonbase
             | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | Metis | Linea
@@ -1003,7 +1003,7 @@ impl NamedChain {
             | FluentDevnet
             | FluentTestnet
             | Plasma
-            | Memecore
+            | MemeCore
             | Formicarium
             | Insectarium => false,
 
@@ -1117,7 +1117,7 @@ impl NamedChain {
                 | FluentDevnet
                 | FluentTestnet
                 | Cannon
-                | Memecore
+                | MemeCore
                 | Formicarium
                 | Insectarium
         )
@@ -1220,7 +1220,7 @@ impl NamedChain {
             | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob | Soneium
             | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story | Sei
             | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana | Lisk | Fuse | Injective
-            | Memecore => false,
+            | MemeCore => false,
         }
     }
 
@@ -1311,7 +1311,7 @@ impl NamedChain {
 
             Plasma => "XPL",
 
-            Memecore => "M",
+            MemeCore => "M",
             Formicarium => "tM",
             Insectarium => "tM",
 
@@ -1652,7 +1652,7 @@ impl NamedChain {
             FluentTestnet => {
                 ("https://testnet.fluentscan.xyz/api", "https://testnet.fluentscan.xyz")
             }
-            Memecore => ("https://api.etherscan.io/v2/api?chainid=4352", "https://memecorescan.io"),
+            MemeCore => ("https://api.etherscan.io/v2/api?chainid=4352", "https://memecorescan.io"),
             Formicarium => (
                 "https://api.etherscan.io/v2/api?chainid=43521",
                 "https://formicarium.memecorescan.io",
@@ -1752,7 +1752,7 @@ impl NamedChain {
             | XaiSepolia
             | ZkSync
             | ZkSyncTestnet
-            | Memecore
+            | MemeCore
             | Formicarium => "ETHERSCAN_API_KEY",
 
             Fantom | FantomTestnet => "FTMSCAN_API_KEY",
@@ -1922,7 +1922,7 @@ impl NamedChain {
             ZkSync => address!("5aea5775959fbc2557cc8789bc1bf90a239d9a91"),
             Sophon => address!("f1f9e08a0818594fde4713ae0db1e46672ca960e"),
             Rsk => address!("967f8799af07df1534d48a95a5c9febe92c53ae0"),
-            Memecore | Formicarium | Insectarium => {
+            MemeCore | Formicarium | Insectarium => {
                 address!("0x653e645e3d81a72e71328Bc01A04002945E3ef7A")
             }
             _ => return None,
@@ -2052,7 +2052,7 @@ mod tests {
             (InjectiveTestnet, &["injective-testnet"]),
             (SeiTestnet, &["sei-testnet"]),
             (Cannon, &["cannon"]),
-            (Memecore, &["memecore"]),
+            (MemeCore, &["memecore"]),
             (Formicarium, &["formicarium", "memecore-formicarium"]),
             (Insectarium, &["insectarium", "memecore-insectarium"]),
         ];
