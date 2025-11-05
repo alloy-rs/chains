@@ -960,6 +960,18 @@
       "etherscanBaseUrl": "https://scan.merlinchain.io",
       "etherscanApiKeyName": "MERLINSCAN_API_KEY"
     },
+    "4352": {
+      "internalId": "Memecore",
+      "name": "memecore",
+      "averageBlocktimeHint": 7000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "M",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=4352",
+      "etherscanBaseUrl": "https://memecorescan.io",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "4689": {
       "internalId": "Iotex",
       "name": "iotex",
@@ -1140,7 +1152,7 @@
       "etherscanBaseUrl": "https://sepolia.abscan.org",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
-    "13370": {
+        "13370": {
       "internalId": "Cannon",
       "name": "cannon",
       "averageBlocktimeHint": null,
@@ -1415,6 +1427,30 @@
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=43114",
       "etherscanBaseUrl": "https://snowscan.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "43521": {
+      "internalId": "Formicarium",
+      "name": "formicarium",
+      "averageBlocktimeHint": 7000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "tM",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=43521",
+      "etherscanBaseUrl": "https://formicarium.memecorescan.io",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "43522": {
+      "internalId": "Insectarium",
+      "name": "insectarium",
+      "averageBlocktimeHint": 7000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "tM",
+      "etherscanApiUrl": "https://insectarium.blockscout.memecore.com/api",
+      "etherscanBaseUrl": "https://insectarium.blockscout.memecore.com",
+      "etherscanApiKeyName": null
     },
     "50104": {
       "internalId": "Sophon",
