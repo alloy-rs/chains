@@ -691,6 +691,12 @@ impl Chain {
         matches!(self.named(), Some(named) if named.is_optimism())
     }
 
+    /// Returns true if the chain contains Gnosis configuration.
+    #[inline]
+    pub const fn is_gnosis(self) -> bool {
+        matches!(self.named(), Some(named) if named.is_gnosis())
+    }
+
     /// Returns `true` if this chain is a Polygon chain.
     #[inline]
     pub const fn is_polygon(&self) -> bool {
