@@ -675,6 +675,13 @@ impl NamedChain {
         )
     }
 
+    /// Returns true if the chain contains Gnosis configuration.
+    pub const fn is_gnosis(self) -> bool {
+        use NamedChain::*;
+
+        matches!(self, Gnosis | Chiado)
+    }
+
     /// Returns true if the chain contains Polygon configuration.
     pub const fn is_polygon(self) -> bool {
         use NamedChain::*;
