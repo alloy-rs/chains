@@ -5,11 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.17](https://github.com/alloy-rs/chains/releases/tag/v0.2.17) - 2025-10-29
+## [0.2.18](https://github.com/alloy-rs/chains/releases/tag/v0.2.18) - 2025-11-12
 
 ### Bug Fixes
 
 - Update celo sepolia api to etherscan ([#218](https://github.com/alloy-rs/chains/issues/218))
+
+### Features
+
+- Add is gnosis helper ([#221](https://github.com/alloy-rs/chains/issues/221))
+
+### Miscellaneous Tasks
+
+- Add MemeCore ([#223](https://github.com/alloy-rs/chains/issues/223))
+- Release 0.2.17 ([#219](https://github.com/alloy-rs/chains/issues/219))
+
+### Other
+
+- Adds Polkadot Testnet ([#222](https://github.com/alloy-rs/chains/issues/222))
 
 ## [0.2.16](https://github.com/alloy-rs/chains/releases/tag/v0.2.16) - 2025-10-28
 
