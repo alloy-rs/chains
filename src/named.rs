@@ -511,6 +511,18 @@ pub enum NamedChain {
     #[strum(to_string = "fluent-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "fluent-testnet"))]
     FluentTestnet = 20994,
+
+    // === MemeCore chain ===
+    // Variants that belong to the MemeCore chain.
+    #[strum(to_string = "memecore")]
+    #[cfg_attr(feature = "serde", serde(alias = "memecore"))]
+    MemeCore = 4352,
+    #[strum(to_string = "formicarium", serialize = "memecore-formicarium")]
+    #[cfg_attr(feature = "serde", serde(alias = "formicairum", alias = "memecore-formicarium"))]
+    Formicarium = 43521,
+    #[strum(to_string = "insectarium", serialize = "memecore-insectarium")]
+    #[cfg_attr(feature = "serde", serde(alias = "insectarium", alias = "memecore-insectarium"))]
+    Insectarium = 43522,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -858,6 +870,7 @@ impl NamedChain {
             Fuse => 5_000,
             FluentDevnet => 3_000,
             FluentTestnet => 1_000,
+            MemeCore | Formicarium | Insectarium => 7_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi | Moonbase
             | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | Metis | Linea
@@ -1001,7 +1014,10 @@ impl NamedChain {
             | TelosEvmTestnet
             | FluentDevnet
             | FluentTestnet
-            | Plasma => false,
+            | Plasma
+            | MemeCore
+            | Formicarium
+            | Insectarium => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
@@ -1113,6 +1129,9 @@ impl NamedChain {
                 | FluentDevnet
                 | FluentTestnet
                 | Cannon
+                | MemeCore
+                | Formicarium
+                | Insectarium
         )
     }
 
@@ -1196,7 +1215,9 @@ impl NamedChain {
             | FluentDevnet
             | FluentTestnet
             | SeiTestnet
-            | CornTestnet => true,
+            | CornTestnet
+            | Formicarium
+            | Insectarium => true,
 
             // Dev chains.
             Dev | AnvilHardhat | Cannon => true,
@@ -1211,9 +1232,8 @@ impl NamedChain {
             | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex | Core
             | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob | Soneium
             | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story | Sei
-            | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana | Lisk | Fuse | Injective => {
-                false
-            }
+            | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana | Lisk | Fuse | Injective
+            | MemeCore => false,
         }
     }
 
@@ -1303,6 +1323,10 @@ impl NamedChain {
             Injective | InjectiveTestnet => "INJ",
 
             Plasma => "XPL",
+
+            MemeCore => "M",
+            Formicarium => "tM",
+            Insectarium => "tM",
 
             _ => return None,
         })
@@ -1641,6 +1665,15 @@ impl NamedChain {
             FluentTestnet => {
                 ("https://testnet.fluentscan.xyz/api", "https://testnet.fluentscan.xyz")
             }
+            MemeCore => ("https://api.etherscan.io/v2/api?chainid=4352", "https://memecorescan.io"),
+            Formicarium => (
+                "https://api.etherscan.io/v2/api?chainid=43521",
+                "https://formicarium.memecorescan.io",
+            ),
+            Insectarium => (
+                "https://insectarium.blockscout.memecore.com/api",
+                "https://insectarium.blockscout.memecore.com",
+            ),
             AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
             | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CronosTestnet | Dev
             | Evmos | EvmosTestnet | Fantom | FantomTestnet | FilecoinMainnet | Goerli | Iotex
@@ -1731,7 +1764,9 @@ impl NamedChain {
             | Xai
             | XaiSepolia
             | ZkSync
-            | ZkSyncTestnet => "ETHERSCAN_API_KEY",
+            | ZkSyncTestnet
+            | MemeCore
+            | Formicarium => "ETHERSCAN_API_KEY",
 
             Fantom | FantomTestnet => "FTMSCAN_API_KEY",
 
@@ -1798,6 +1833,7 @@ impl NamedChain {
             | FluentDevnet
             | FluentTestnet
             | Cannon
+            | Insectarium
             | PolkadotTestnet => return None,
         };
 
@@ -1900,6 +1936,9 @@ impl NamedChain {
             ZkSync => address!("5aea5775959fbc2557cc8789bc1bf90a239d9a91"),
             Sophon => address!("f1f9e08a0818594fde4713ae0db1e46672ca960e"),
             Rsk => address!("967f8799af07df1534d48a95a5c9febe92c53ae0"),
+            MemeCore | Formicarium | Insectarium => {
+                address!("0x653e645e3d81a72e71328Bc01A04002945E3ef7A")
+            }
             _ => return None,
         };
 
@@ -2027,6 +2066,9 @@ mod tests {
             (InjectiveTestnet, &["injective-testnet"]),
             (SeiTestnet, &["sei-testnet"]),
             (Cannon, &["cannon"]),
+            (MemeCore, &["memecore"]),
+            (Formicarium, &["formicarium", "memecore-formicarium"]),
+            (Insectarium, &["insectarium", "memecore-insectarium"]),
         ];
 
         for &(chain, aliases) in ALIASES {
