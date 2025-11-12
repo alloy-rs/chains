@@ -723,7 +723,7 @@
     "1284": {
       "internalId": "Moonbeam",
       "name": "moonbeam",
-      "averageBlocktimeHint": 12500,
+      "averageBlocktimeHint": 6500,
       "isLegacy": false,
       "supportsShanghai": false,
       "isTestnet": false,
@@ -735,7 +735,7 @@
     "1285": {
       "internalId": "Moonriver",
       "name": "moonriver",
-      "averageBlocktimeHint": 12500,
+      "averageBlocktimeHint": 6500,
       "isLegacy": false,
       "supportsShanghai": false,
       "isTestnet": false,
@@ -1955,6 +1955,18 @@
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=168587773",
       "etherscanBaseUrl": "https://sepolia.blastscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "420420417": {
+      "internalId": "PolkadotTestnet",
+      "name": "polkadot-testnet",
+      "averageBlocktimeHint": null,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
+      "etherscanApiKeyName": null
     },
     "531050104": {
       "internalId": "SophonTestnet",
