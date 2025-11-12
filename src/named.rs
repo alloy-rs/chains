@@ -508,14 +508,14 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "fluent-testnet"))]
     FluentTestnet = 20994,
 
+    // === MemeCore chain ===
+    // Variants that belong to the MemeCore chain.
     #[strum(to_string = "memecore")]
     #[cfg_attr(feature = "serde", serde(alias = "memecore"))]
     MemeCore = 4352,
-
     #[strum(to_string = "formicarium", serialize = "memecore-formicarium")]
     #[cfg_attr(feature = "serde", serde(alias = "formicairum", alias = "memecore-formicarium"))]
     Formicarium = 43521,
-
     #[strum(to_string = "insectarium", serialize = "memecore-insectarium")]
     #[cfg_attr(feature = "serde", serde(alias = "insectarium", alias = "memecore-insectarium"))]
     Insectarium = 43522,
