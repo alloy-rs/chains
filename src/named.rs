@@ -1028,7 +1028,9 @@ impl NamedChain {
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
             | Merlin | Bitlayer | Vana | Zeta | Kaia | Story | Sei | SeiTestnet | StableTestnet
-            | Injective | InjectiveTestnet | Katana | Lisk | Fuse | Cannon | PolkadotTestnet => false,
+            | Injective | InjectiveTestnet | Katana | Lisk | Fuse | Cannon | PolkadotTestnet => {
+                false
+            }
         }
     }
 
