@@ -912,6 +912,18 @@
       "etherscanBaseUrl": "https://saigon-app.roninchain.com",
       "etherscanApiKeyName": null
     },
+    "2201": {
+      "internalId": "StableTestnet",
+      "name": "stable-testnet",
+      "averageBlocktimeHint": 700,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "gUSDT",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=2201",
+      "etherscanBaseUrl": "https://testnet.stablescan.xyz",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "2522": {
       "internalId": "FraxtalTestnet",
       "name": "fraxtal-testnet",
