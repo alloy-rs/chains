@@ -648,6 +648,18 @@
       "etherscanBaseUrl": "https://scan.v4.testnet.pulsechain.com",
       "etherscanApiKeyName": null
     },
+    "988": {
+      "internalId": "StableMainnet",
+      "name": "stable-mainnet",
+      "averageBlocktimeHint": 700,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "gUSDT",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=988",
+      "etherscanBaseUrl": "https://stablescan.xyz",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "999": {
       "internalId": "Hyperliquid",
       "name": "hyperliquid",
