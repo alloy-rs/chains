@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.19](https://github.com/alloy-rs/chains/releases/tag/v0.2.19) - 2025-11-17
+
+### Other
+
+- Add Stable Mainnet [Chain ID 988] ([#225](https://github.com/alloy-rs/chains/issues/225))
+- Add Stable Testnet [Chain ID 2201] ([#224](https://github.com/alloy-rs/chains/issues/224))
+
 ## [0.2.18](https://github.com/alloy-rs/chains/releases/tag/v0.2.18) - 2025-11-12
 
 ### Bug Fixes
@@ -17,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Miscellaneous Tasks
 
+- Release 0.2.18
 - Add MemeCore ([#223](https://github.com/alloy-rs/chains/issues/223))
 - Release 0.2.17 ([#219](https://github.com/alloy-rs/chains/issues/219))
 
