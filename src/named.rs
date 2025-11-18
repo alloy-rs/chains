@@ -447,6 +447,10 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "superposition"))]
     Superposition = 55244,
 
+    #[strum(serialize = "monad")]
+    #[cfg_attr(feature = "serde", serde(alias = "monad"))]
+    Monad = 143,
+
     #[strum(serialize = "monad-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "monad-testnet"))]
     MonadTestnet = 10143,
@@ -862,7 +866,7 @@ impl NamedChain {
 
             BerachainBepolia | Berachain => 2_000,
 
-            MonadTestnet => 500,
+            Monad | MonadTestnet => 400,
 
             Hyperliquid => 2_000,
 
@@ -1003,6 +1007,7 @@ impl NamedChain {
             | Curtis
             | SuperpositionTestnet
             | Superposition
+            | Monad
             | MonadTestnet
             | Hyperliquid
             | Corn
@@ -1127,6 +1132,7 @@ impl NamedChain {
                 | Curtis
                 | SuperpositionTestnet
                 | Superposition
+                | Monad
                 | MonadTestnet
                 | Corn
                 | CornTestnet
@@ -1242,7 +1248,7 @@ impl NamedChain {
             | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
             | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex | Core
             | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob | Soneium
-            | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story | Sei
+            | Sonic | Superposition | Berachain | Monad | Unichain | TelosEvm | Story | Sei
             | StableMainnet | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana | Lisk
             | Fuse | Injective | MemeCore => false,
         }
@@ -1311,6 +1317,8 @@ impl NamedChain {
             Treasure | TreasureTopaz => "MAGIC",
 
             BerachainBepolia | Berachain => "BERA",
+
+            Monad | MonadTestnet => "MON",
 
             Sonic | SonicTestnet => "S",
 
@@ -1634,6 +1642,7 @@ impl NamedChain {
             Superposition => {
                 ("https://explorer.superposition.so/api", "https://explorer.superposition.so")
             }
+            Monad => ("https://api.etherscan.io/v2/api?chainid=143", "https://monadscan.com"),
             MonadTestnet => {
                 ("https://api.etherscan.io/v2/api?chainid=10143", "https://testnet.monadscan.com")
             }
@@ -1753,6 +1762,7 @@ impl NamedChain {
             | Mainnet
             | Mantle
             | MantleSepolia
+            | Monad
             | MonadTestnet
             | Morden
             | OpBNBMainnet
