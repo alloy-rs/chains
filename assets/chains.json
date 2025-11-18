@@ -336,6 +336,18 @@
       "etherscanBaseUrl": "https://polygonscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "143": {
+      "internalId": "Monad",
+      "name": "monad",
+      "averageBlocktimeHint": 400,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "MON",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=143",
+      "etherscanBaseUrl": "https://monadscan.com",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "146": {
       "internalId": "Sonic",
       "name": "sonic",
@@ -1143,11 +1155,11 @@
     "10143": {
       "internalId": "MonadTestnet",
       "name": "monad-testnet",
-      "averageBlocktimeHint": 500,
+      "averageBlocktimeHint": 400,
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "MON",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=10143",
       "etherscanBaseUrl": "https://testnet.monadscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
