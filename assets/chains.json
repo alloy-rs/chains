@@ -1992,6 +1992,18 @@
       "etherscanBaseUrl": "https://sepolia.blastscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "324705682": {
+      "internalId": "SkaleBaseTestnet",
+      "name": "skale-base-testnet",
+      "averageBlocktimeHint": 10000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://base-sepolia-testnet-explorer.skalenodes.com/api",
+      "etherscanBaseUrl": "https://base-sepolia-testnet-explorer.skalenodes.com",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "420420417": {
       "internalId": "PolkadotTestnet",
       "name": "polkadot-testnet",
@@ -2062,6 +2074,18 @@
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://testnet.aurorascan.dev/api",
       "etherscanBaseUrl": "https://testnet.aurorascan.dev",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "1562508942": {
+      "internalId": "SkaleBase",
+      "name": "skale-base",
+      "averageBlocktimeHint": 10000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://skale-base-explorer.skalenodes.com/api",
+      "etherscanBaseUrl": "https://skale-base-explorer.skalenodes.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "37714555429": {
