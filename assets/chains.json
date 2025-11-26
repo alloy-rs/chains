@@ -1993,8 +1993,8 @@
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "324705682": {
-      "internalId": "SkaleBaseTestnet",
-      "name": "skale-base-testnet",
+      "internalId": "SkaleBaseSepoliaTestnet",
+      "name": "skale-base-sepolia-testnet",
       "averageBlocktimeHint": 10000,
       "isLegacy": false,
       "supportsShanghai": false,

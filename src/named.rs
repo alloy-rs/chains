@@ -526,9 +526,9 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "skale-base"))]
     SkaleBase = 1562508942,
 
-    #[strum(to_string = "skale-base-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "skale-base-testnet"))]
-    SkaleBaseTestnet = 324705682,
+    #[strum(to_string = "skale-base-sepolia-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "skale-base-sepolia-testnet"))]
+    SkaleBaseSepoliaTestnet = 324705682,
 
     // === MemeCore chain ===
     // Variants that belong to the MemeCore chain.
@@ -891,7 +891,7 @@ impl NamedChain {
             FluentTestnet => 1_000,
             MemeCore | Formicarium | Insectarium => 7_000,
 
-            SkaleBase | SkaleBaseTestnet => 10_000,
+            SkaleBase | SkaleBaseSepoliaTestnet => 10_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi | Moonbase
             | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | Metis | Linea
@@ -1046,7 +1046,7 @@ impl NamedChain {
             | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
             | Merlin | Bitlayer | Vana | Zeta | Kaia | Story | Sei | SeiTestnet | StableMainnet
-            | StableTestnet | Injective | InjectiveTestnet | Katana | Lisk | Fuse | Cannon | SkaleBase | SkaleBaseTestnet
+            | StableTestnet | Injective | InjectiveTestnet | Katana | Lisk | Fuse | Cannon | SkaleBase | SkaleBaseSepoliaTestnet
             | PolkadotTestnet => false,
         }
     }
@@ -1245,7 +1245,7 @@ impl NamedChain {
             | CornTestnet
             | Formicarium
             | Insectarium
-            | SkaleBaseTestnet => true,
+            | SkaleBaseSepoliaTestnet => true,
 
             // Dev chains.
             Dev | AnvilHardhat | Cannon => true,
@@ -1713,7 +1713,7 @@ impl NamedChain {
                 "https://insectarium.blockscout.memecore.com",
             ),
             SkaleBase => ("https://skale-base-explorer.skalenodes.com/api", "https://skale-base-explorer.skalenodes.com"),
-            SkaleBaseTestnet => ("https://base-sepolia-testnet-explorer.skalenodes.com/api", "https://base-sepolia-testnet-explorer.skalenodes.com"),
+            SkaleBaseSepoliaTestnet => ("https://base-sepolia-testnet-explorer.skalenodes.com/api", "https://base-sepolia-testnet-explorer.skalenodes.com"),
 
             AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
             | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CronosTestnet | Dev
@@ -1812,7 +1812,7 @@ impl NamedChain {
             | MemeCore
             | Formicarium
             | SkaleBase
-            | SkaleBaseTestnet => "ETHERSCAN_API_KEY",
+            | SkaleBaseSepoliaTestnet => "ETHERSCAN_API_KEY",
 
             Fantom | FantomTestnet => "FTMSCAN_API_KEY",
 
