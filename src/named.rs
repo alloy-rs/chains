@@ -891,7 +891,7 @@ impl NamedChain {
             FluentTestnet => 1_000,
             MemeCore | Formicarium | Insectarium => 7_000,
 
-            SkaleBase | SkaleBaseSepoliaTestnet => 10_000,
+            SkaleBase | SkaleBaseSepoliaTestnet => 1_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi | Moonbase
             | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | Metis | Linea
@@ -1810,9 +1810,7 @@ impl NamedChain {
             | ZkSync
             | ZkSyncTestnet
             | MemeCore
-            | Formicarium
-            | SkaleBase
-            | SkaleBaseSepoliaTestnet => "ETHERSCAN_API_KEY",
+            | Formicarium => "ETHERSCAN_API_KEY",
 
             Fantom | FantomTestnet => "FTMSCAN_API_KEY",
 
@@ -1824,7 +1822,7 @@ impl NamedChain {
             | Crab | Koi | Immutable | ImmutableTestnet | Soneium | SoneiumMinatoTestnet
             | World | WorldSepolia | Curtis | Ink | InkSepolia | SuperpositionTestnet
             | Superposition | Vana | Story | Lisk | Fuse | Injective | InjectiveTestnet
-            | SignetPecorino => "BLOCKSCOUT_API_KEY",
+            | SignetPecorino | SkaleBase | SkaleBaseSepoliaTestnet => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
