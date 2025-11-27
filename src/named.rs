@@ -1042,11 +1042,46 @@ impl NamedChain {
             | Insectarium => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
-            Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
-            | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
-            | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
-            | Merlin | Bitlayer | Vana | Zeta | Kaia | Story | Sei | SeiTestnet | StableMainnet
-            | StableTestnet | Injective | InjectiveTestnet | Katana | Lisk | Fuse | Cannon | SkaleBase | SkaleBaseSepoliaTestnet
+            Dev
+            | AnvilHardhat
+            | Morden
+            | Ropsten
+            | Rinkeby
+            | Cronos
+            | CronosTestnet
+            | Kovan
+            | Sokol
+            | Poa
+            | Moonbeam
+            | MoonbeamDev
+            | Moonriver
+            | Moonbase
+            | Evmos
+            | EvmosTestnet
+            | Aurora
+            | AuroraTestnet
+            | Canto
+            | CantoTestnet
+            | Iotex
+            | Core
+            | Merlin
+            | Bitlayer
+            | Vana
+            | Zeta
+            | Kaia
+            | Story
+            | Sei
+            | SeiTestnet
+            | StableMainnet
+            | StableTestnet
+            | Injective
+            | InjectiveTestnet
+            | Katana
+            | Lisk
+            | Fuse
+            | Cannon
+            | SkaleBase
+            | SkaleBaseSepoliaTestnet
             | PolkadotTestnet => false,
         }
     }
@@ -1712,8 +1747,14 @@ impl NamedChain {
                 "https://insectarium.blockscout.memecore.com/api",
                 "https://insectarium.blockscout.memecore.com",
             ),
-            SkaleBase => ("https://skale-base-explorer.skalenodes.com/api", "https://skale-base-explorer.skalenodes.com"),
-            SkaleBaseSepoliaTestnet => ("https://base-sepolia-testnet-explorer.skalenodes.com/api", "https://base-sepolia-testnet-explorer.skalenodes.com"),
+            SkaleBase => (
+                "https://skale-base-explorer.skalenodes.com/api",
+                "https://skale-base-explorer.skalenodes.com",
+            ),
+            SkaleBaseSepoliaTestnet => (
+                "https://base-sepolia-testnet-explorer.skalenodes.com/api",
+                "https://base-sepolia-testnet-explorer.skalenodes.com",
+            ),
 
             AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
             | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CronosTestnet | Dev
@@ -1816,13 +1857,48 @@ impl NamedChain {
 
             Moonbeam | Moonbase | MoonbeamDev | Moonriver => "MOONSCAN_API_KEY",
 
-            Acala | AcalaMandalaTestnet | AcalaTestnet | Canto | CantoTestnet | CeloSepolia
-            | Etherlink | EtherlinkTestnet | Flare | FlareCoston2 | Karura | KaruraTestnet
-            | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora | ZoraSepolia | Darwinia
-            | Crab | Koi | Immutable | ImmutableTestnet | Soneium | SoneiumMinatoTestnet
-            | World | WorldSepolia | Curtis | Ink | InkSepolia | SuperpositionTestnet
-            | Superposition | Vana | Story | Lisk | Fuse | Injective | InjectiveTestnet
-            | SignetPecorino | SkaleBase | SkaleBaseSepoliaTestnet => "BLOCKSCOUT_API_KEY",
+            Acala
+            | AcalaMandalaTestnet
+            | AcalaTestnet
+            | Canto
+            | CantoTestnet
+            | CeloSepolia
+            | Etherlink
+            | EtherlinkTestnet
+            | Flare
+            | FlareCoston2
+            | Karura
+            | KaruraTestnet
+            | Mode
+            | ModeSepolia
+            | Pgn
+            | PgnSepolia
+            | Shimmer
+            | Zora
+            | ZoraSepolia
+            | Darwinia
+            | Crab
+            | Koi
+            | Immutable
+            | ImmutableTestnet
+            | Soneium
+            | SoneiumMinatoTestnet
+            | World
+            | WorldSepolia
+            | Curtis
+            | Ink
+            | InkSepolia
+            | SuperpositionTestnet
+            | Superposition
+            | Vana
+            | Story
+            | Lisk
+            | Fuse
+            | Injective
+            | InjectiveTestnet
+            | SignetPecorino
+            | SkaleBase
+            | SkaleBaseSepoliaTestnet => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
