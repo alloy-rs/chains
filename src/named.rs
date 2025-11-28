@@ -1685,7 +1685,7 @@ impl NamedChain {
             StableTestnet => {
                 ("https://api.etherscan.io/v2/api?chainid=2201", "https://testnet.stablescan.xyz")
             }
-            XdcMainnet => ("https://api.etherscan.io/v2/api?chainid=50", "https://xdcscan.com/"),
+            XdcMainnet => ("https://api.etherscan.io/v2/api?chainid=50", "https://xdcscan.com"),
             XdcTestnet => {
                 ("https://api.etherscan.io/v2/api?chainid=51", "https://testnet.xdcscan.com")
             }
