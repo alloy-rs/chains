@@ -529,6 +529,14 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "fluent-testnet"))]
     FluentTestnet = 20994,
 
+    #[strum(to_string = "skale-base")]
+    #[cfg_attr(feature = "serde", serde(alias = "skale-base"))]
+    SkaleBase = 1562508942,
+
+    #[strum(to_string = "skale-base-sepolia-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "skale-base-sepolia-testnet"))]
+    SkaleBaseSepoliaTestnet = 324705682,
+
     // === MemeCore chain ===
     // Variants that belong to the MemeCore chain.
     #[strum(to_string = "memecore")]
@@ -893,6 +901,8 @@ impl NamedChain {
             FluentTestnet => 1_000,
             MemeCore | Formicarium | Insectarium => 7_000,
 
+            SkaleBase | SkaleBaseSepoliaTestnet => 1_000,
+
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi | Moonbase
             | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | Metis | Linea
             | LineaGoerli | LineaSepolia | Treasure | TreasureTopaz | Corn | CornTestnet
@@ -1042,12 +1052,49 @@ impl NamedChain {
             | Insectarium => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
-            Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
-            | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
-            | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
-            | Merlin | Bitlayer | Vana | Zeta | Kaia | Story | Sei | SeiTestnet | StableMainnet
-            | StableTestnet | Injective | InjectiveTestnet | Katana | Lisk | Fuse | Cannon
-            | PolkadotTestnet | XdcMainnet | XdcTestnet => false,
+            Dev
+            | AnvilHardhat
+            | Morden
+            | Ropsten
+            | Rinkeby
+            | Cronos
+            | CronosTestnet
+            | Kovan
+            | Sokol
+            | Poa
+            | Moonbeam
+            | MoonbeamDev
+            | Moonriver
+            | Moonbase
+            | Evmos
+            | EvmosTestnet
+            | Aurora
+            | AuroraTestnet
+            | Canto
+            | CantoTestnet
+            | Iotex
+            | Core
+            | Merlin
+            | Bitlayer
+            | Vana
+            | Zeta
+            | Kaia
+            | Story
+            | Sei
+            | SeiTestnet
+            | StableMainnet
+            | StableTestnet
+            | Injective
+            | InjectiveTestnet
+            | Katana
+            | Lisk
+            | Fuse
+            | Cannon
+            | SkaleBase
+            | SkaleBaseSepoliaTestnet
+            | PolkadotTestnet
+            | XdcMainnet
+            | XdcTestnet => false,
         }
     }
 
@@ -1244,8 +1291,9 @@ impl NamedChain {
             | StableTestnet
             | CornTestnet
             | Formicarium
-            | XdcTestnet
-            | Insectarium => true,
+            | Insectarium
+            | SkaleBaseSepoliaTestnet
+            | XdcTestnet => true,
 
             // Dev chains.
             Dev | AnvilHardhat | Cannon => true,
@@ -1261,7 +1309,7 @@ impl NamedChain {
             | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob | Soneium
             | Sonic | Superposition | Berachain | Monad | Unichain | TelosEvm | Story | Sei
             | StableMainnet | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana | Lisk
-            | Fuse | Injective | MemeCore | XdcMainnet => false,
+            | Fuse | Injective | MemeCore | SkaleBase | XdcMainnet => false,
         }
     }
 
@@ -1721,6 +1769,15 @@ impl NamedChain {
                 "https://insectarium.blockscout.memecore.com/api",
                 "https://insectarium.blockscout.memecore.com",
             ),
+            SkaleBase => (
+                "https://skale-base-explorer.skalenodes.com/api",
+                "https://skale-base-explorer.skalenodes.com",
+            ),
+            SkaleBaseSepoliaTestnet => (
+                "https://base-sepolia-testnet-explorer.skalenodes.com/api",
+                "https://base-sepolia-testnet-explorer.skalenodes.com",
+            ),
+
             AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
             | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CronosTestnet | Dev
             | Evmos | EvmosTestnet | Fantom | FantomTestnet | FilecoinMainnet | Goerli | Iotex
@@ -1824,13 +1881,48 @@ impl NamedChain {
 
             Moonbeam | Moonbase | MoonbeamDev | Moonriver => "MOONSCAN_API_KEY",
 
-            Acala | AcalaMandalaTestnet | AcalaTestnet | Canto | CantoTestnet | CeloSepolia
-            | Etherlink | EtherlinkTestnet | Flare | FlareCoston2 | Karura | KaruraTestnet
-            | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora | ZoraSepolia | Darwinia
-            | Crab | Koi | Immutable | ImmutableTestnet | Soneium | SoneiumMinatoTestnet
-            | World | WorldSepolia | Curtis | Ink | InkSepolia | SuperpositionTestnet
-            | Superposition | Vana | Story | Lisk | Fuse | Injective | InjectiveTestnet
-            | SignetPecorino => "BLOCKSCOUT_API_KEY",
+            Acala
+            | AcalaMandalaTestnet
+            | AcalaTestnet
+            | Canto
+            | CantoTestnet
+            | CeloSepolia
+            | Etherlink
+            | EtherlinkTestnet
+            | Flare
+            | FlareCoston2
+            | Karura
+            | KaruraTestnet
+            | Mode
+            | ModeSepolia
+            | Pgn
+            | PgnSepolia
+            | Shimmer
+            | Zora
+            | ZoraSepolia
+            | Darwinia
+            | Crab
+            | Koi
+            | Immutable
+            | ImmutableTestnet
+            | Soneium
+            | SoneiumMinatoTestnet
+            | World
+            | WorldSepolia
+            | Curtis
+            | Ink
+            | InkSepolia
+            | SuperpositionTestnet
+            | Superposition
+            | Vana
+            | Story
+            | Lisk
+            | Fuse
+            | Injective
+            | InjectiveTestnet
+            | SignetPecorino
+            | SkaleBase
+            | SkaleBaseSepoliaTestnet => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
