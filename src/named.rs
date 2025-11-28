@@ -1244,6 +1244,7 @@ impl NamedChain {
             | StableTestnet
             | CornTestnet
             | Formicarium
+            | XdcTestnet
             | Insectarium => true,
 
             // Dev chains.
@@ -1260,7 +1261,7 @@ impl NamedChain {
             | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob | Soneium
             | Sonic | Superposition | Berachain | Monad | Unichain | TelosEvm | Story | Sei
             | StableMainnet | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana | Lisk
-            | Fuse | Injective | MemeCore | XdcMainnet | XdcTestnet => false,
+            | Fuse | Injective | MemeCore | XdcMainnet => false,
         }
     }
 

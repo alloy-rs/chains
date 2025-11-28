@@ -210,7 +210,7 @@
       "averageBlocktimeHint": 2400,
       "isLegacy": false,
       "supportsShanghai": false,
-      "isTestnet": false,
+      "isTestnet": true,
       "nativeCurrencySymbol": "TXDC",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=51",
       "etherscanBaseUrl": "https://testnet.xdcscan.com",
