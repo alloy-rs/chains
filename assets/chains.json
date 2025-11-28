@@ -204,6 +204,18 @@
       "etherscanBaseUrl": "https://xdcscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "51": {
+      "internalId": "XdcTestnet",
+      "name": "xdc-testnet",
+      "averageBlocktimeHint": 2400,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "TXDC",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=51",
+      "etherscanBaseUrl": "https://testnet.xdcscan.com",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "56": {
       "internalId": "BinanceSmartChain",
       "name": "bsc",

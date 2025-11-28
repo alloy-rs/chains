@@ -399,6 +399,9 @@ pub enum NamedChain {
     #[strum(to_string = "xdc-mainnet")]
     #[cfg_attr(feature = "serde", serde(alias = "xdc-mainnet"))]
     XdcMainnet = 50,
+    #[strum(to_string = "xdc-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "xdc-testnet"))]
+    XdcTestnet = 51,
 
     Unichain = 130,
     #[strum(to_string = "unichain-sepolia")]
@@ -863,6 +866,7 @@ impl NamedChain {
             StableMainnet | StableTestnet => 700,
 
             XdcMainnet => 2400,
+            XdcTestnet => 2400,
 
             Sonic | SonicTestnet => 1_000,
 
@@ -1043,7 +1047,7 @@ impl NamedChain {
             | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
             | Merlin | Bitlayer | Vana | Zeta | Kaia | Story | Sei | SeiTestnet | StableMainnet
             | StableTestnet | Injective | InjectiveTestnet | Katana | Lisk | Fuse | Cannon
-            | PolkadotTestnet | XdcMainnet => false,
+            | PolkadotTestnet | XdcMainnet | XdcTestnet => false,
         }
     }
 
@@ -1256,7 +1260,7 @@ impl NamedChain {
             | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob | Soneium
             | Sonic | Superposition | Berachain | Monad | Unichain | TelosEvm | Story | Sei
             | StableMainnet | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana | Lisk
-            | Fuse | Injective | MemeCore | XdcMainnet => false,
+            | Fuse | Injective | MemeCore | XdcMainnet | XdcTestnet => false,
         }
     }
 
@@ -1321,6 +1325,7 @@ impl NamedChain {
             ApeChain | Curtis => "APE",
 
             XdcMainnet => "XDC",
+            XdcTestnet => "TXDC",
 
             Treasure | TreasureTopaz => "MAGIC",
 
@@ -1634,6 +1639,9 @@ impl NamedChain {
             XdcMainnet => {
                 ("https://api.etherscan.io/v2/api?chainid=50", "https://xdcscan.com")
             }
+            XdcTestnet => {
+                ("https://api.etherscan.io/v2/api?chainid=51", "https://testnet.xdcscan.com")
+            }
             ApeChain => ("https://api.etherscan.io/v2/api?chainid=33139", "https://apescan.io"),
             Curtis => {
                 ("https://api.etherscan.io/v2/api?chainid=33111", "https://curtis.apescan.io")
@@ -1793,6 +1801,7 @@ impl NamedChain {
             | StableMainnet
             | StableTestnet
             | XdcMainnet
+            | XdcTestnet
             | Sonic
             | SonicTestnet
             | Sophon
@@ -2108,6 +2117,7 @@ mod tests {
             (InjectiveTestnet, &["injective-testnet"]),
             (StableMainnet, &["stable-mainnet"]),
             (XdcMainnet, &["xdc-mainnet"]),
+            (XdcTestnet, &["xdc-testnet"]),
             (SeiTestnet, &["sei-testnet"]),
             (StableTestnet, &["stable-testnet"]),
             (Cannon, &["cannon"]),
