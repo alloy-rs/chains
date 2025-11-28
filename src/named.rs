@@ -396,6 +396,13 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "stable-testnet"))]
     StableTestnet = 2201,
 
+    #[strum(to_string = "xdc-mainnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "xdc-mainnet"))]
+    XdcMainnet = 50,
+    #[strum(to_string = "xdc-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "xdc-testnet"))]
+    XdcTestnet = 51,
+
     Unichain = 130,
     #[strum(to_string = "unichain-sepolia")]
     #[cfg_attr(feature = "serde", serde(alias = "unichain-sepolia"))]
@@ -866,6 +873,9 @@ impl NamedChain {
             Sei | SeiTestnet => 500,
             StableMainnet | StableTestnet => 700,
 
+            XdcMainnet => 2400,
+            XdcTestnet => 2400,
+
             Sonic | SonicTestnet => 1_000,
 
             TelosEvm | TelosEvmTestnet => 500,
@@ -1082,7 +1092,9 @@ impl NamedChain {
             | Cannon
             | SkaleBase
             | SkaleBaseSepoliaTestnet
-            | PolkadotTestnet => false,
+            | PolkadotTestnet
+            | XdcMainnet
+            | XdcTestnet => false,
         }
     }
 
@@ -1280,7 +1292,8 @@ impl NamedChain {
             | CornTestnet
             | Formicarium
             | Insectarium
-            | SkaleBaseSepoliaTestnet => true,
+            | SkaleBaseSepoliaTestnet
+            | XdcTestnet => true,
 
             // Dev chains.
             Dev | AnvilHardhat | Cannon => true,
@@ -1296,7 +1309,7 @@ impl NamedChain {
             | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob | Soneium
             | Sonic | Superposition | Berachain | Monad | Unichain | TelosEvm | Story | Sei
             | StableMainnet | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana | Lisk
-            | Fuse | Injective | MemeCore | SkaleBase => false,
+            | Fuse | Injective | MemeCore | SkaleBase | XdcMainnet => false,
         }
     }
 
@@ -1359,6 +1372,9 @@ impl NamedChain {
             Sei | SeiTestnet => "SEI",
             StableMainnet | StableTestnet => "gUSDT",
             ApeChain | Curtis => "APE",
+
+            XdcMainnet => "XDC",
+            XdcTestnet => "TXDC",
 
             Treasure | TreasureTopaz => "MAGIC",
 
@@ -1669,6 +1685,10 @@ impl NamedChain {
             StableTestnet => {
                 ("https://api.etherscan.io/v2/api?chainid=2201", "https://testnet.stablescan.xyz")
             }
+            XdcMainnet => ("https://api.etherscan.io/v2/api?chainid=50", "https://xdcscan.com"),
+            XdcTestnet => {
+                ("https://api.etherscan.io/v2/api?chainid=51", "https://testnet.xdcscan.com")
+            }
             ApeChain => ("https://api.etherscan.io/v2/api?chainid=33139", "https://apescan.io"),
             Curtis => {
                 ("https://api.etherscan.io/v2/api?chainid=33111", "https://curtis.apescan.io")
@@ -1836,6 +1856,8 @@ impl NamedChain {
             | SeiTestnet
             | StableMainnet
             | StableTestnet
+            | XdcMainnet
+            | XdcTestnet
             | Sonic
             | SonicTestnet
             | Sophon
@@ -2185,6 +2207,8 @@ mod tests {
             (Injective, &["injective"]),
             (InjectiveTestnet, &["injective-testnet"]),
             (StableMainnet, &["stable-mainnet"]),
+            (XdcMainnet, &["xdc-mainnet"]),
+            (XdcTestnet, &["xdc-testnet"]),
             (SeiTestnet, &["sei-testnet"]),
             (StableTestnet, &["stable-testnet"]),
             (Cannon, &["cannon"]),
