@@ -192,6 +192,18 @@
       "etherscanBaseUrl": "https://explorer.darwinia.network",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "50": {
+      "internalId": "XdcMainnet",
+      "name": "xdc-mainnet",
+      "averageBlocktimeHint": 2400,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "XDC",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=50",
+      "etherscanBaseUrl": "https://xdcscan.com",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "56": {
       "internalId": "BinanceSmartChain",
       "name": "bsc",
