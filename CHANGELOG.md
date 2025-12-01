@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.20](https://github.com/alloy-rs/chains/releases/tag/v0.2.20) - 2025-11-19
+## [0.2.21](https://github.com/alloy-rs/chains/releases/tag/v0.2.21) - 2025-12-01
 
 ### Features
 
@@ -13,10 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Miscellaneous Tasks
 
+- Release 0.2.20 ([#228](https://github.com/alloy-rs/chains/issues/228))
 - Release 0.2.19 ([#226](https://github.com/alloy-rs/chains/issues/226))
 
 ### Other
 
+- Add XDC Mainnet + Testnet [Chain ID 50 + 51] ([#231](https://github.com/alloy-rs/chains/issues/231))
+- Add new SKALE Base chains: Sepolia Testnet and Mainnet ([#230](https://github.com/alloy-rs/chains/issues/230))
 - Add Stable Mainnet [Chain ID 988] ([#225](https://github.com/alloy-rs/chains/issues/225))
 - Add Stable Testnet [Chain ID 2201] ([#224](https://github.com/alloy-rs/chains/issues/224))
 
