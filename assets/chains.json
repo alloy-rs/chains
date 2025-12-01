@@ -1452,6 +1452,18 @@
       "etherscanBaseUrl": "https://explorer.emerald.oasis.dev",
       "etherscanApiKeyName": null
     },
+    "42429": {
+      "internalId": "TempoTestnet",
+      "name": "tempo-testnet",
+      "averageBlocktimeHint": 400,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://scout.tempo.xyz/api",
+      "etherscanBaseUrl": "https://scout.tempo.xyz",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "42793": {
       "internalId": "Etherlink",
       "name": "etherlink",
