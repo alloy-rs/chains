@@ -887,13 +887,13 @@ impl NamedChain {
 
             Sonic | SonicTestnet => 1_000,
 
-            TelosEvm | TelosEvmTestnet => 500,
+            TelosEvm | TelosEvmTestnet | TempoTestnet => 500,
 
             UnichainSepolia | Unichain => 1_000,
 
             BerachainBepolia | Berachain => 2_000,
 
-            Monad | MonadTestnet | TempoTestnet => 400,
+            Monad | MonadTestnet => 400,
 
             Hyperliquid => 2_000,
 
