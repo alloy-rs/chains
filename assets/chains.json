@@ -1455,7 +1455,7 @@
     "42429": {
       "internalId": "TempoTestnet",
       "name": "tempo-testnet",
-      "averageBlocktimeHint": 400,
+      "averageBlocktimeHint": 500,
       "isLegacy": false,
       "supportsShanghai": false,
       "isTestnet": true,
