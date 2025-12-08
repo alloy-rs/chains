@@ -548,6 +548,8 @@ pub enum NamedChain {
     #[strum(to_string = "insectarium", serialize = "memecore-insectarium")]
     #[cfg_attr(feature = "serde", serde(alias = "insectarium", alias = "memecore-insectarium"))]
     Insectarium = 43522,
+
+    TempoTestnet = 42429,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -754,6 +756,13 @@ impl NamedChain {
         )
     }
 
+    /// Returns true if the chain contains Tempo configuration.
+    pub const fn is_tempo(self) -> bool {
+        use NamedChain::*;
+
+        matches!(self, TempoTestnet)
+    }
+
     /// Returns the chain's average blocktime, if applicable.
     ///
     /// It can be beneficial to know the average blocktime to adjust the polling of an HTTP provider
@@ -884,7 +893,7 @@ impl NamedChain {
 
             BerachainBepolia | Berachain => 2_000,
 
-            Monad | MonadTestnet => 400,
+            Monad | MonadTestnet | TempoTestnet => 400,
 
             Hyperliquid => 2_000,
 
@@ -1094,7 +1103,8 @@ impl NamedChain {
             | SkaleBaseSepoliaTestnet
             | PolkadotTestnet
             | XdcMainnet
-            | XdcTestnet => false,
+            | XdcTestnet
+            | TempoTestnet => false,
         }
     }
 
@@ -1293,7 +1303,8 @@ impl NamedChain {
             | Formicarium
             | Insectarium
             | SkaleBaseSepoliaTestnet
-            | XdcTestnet => true,
+            | XdcTestnet
+            | TempoTestnet => true,
 
             // Dev chains.
             Dev | AnvilHardhat | Cannon => true,
@@ -1775,6 +1786,7 @@ impl NamedChain {
                 "https://base-sepolia-testnet-explorer.skalenodes.com/api",
                 "https://base-sepolia-testnet-explorer.skalenodes.com",
             ),
+            TempoTestnet => ("https://scout.tempo.xyz/api", "https://scout.tempo.xyz"),
 
             AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
             | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CronosTestnet | Dev
@@ -1920,7 +1932,8 @@ impl NamedChain {
             | InjectiveTestnet
             | SignetPecorino
             | SkaleBase
-            | SkaleBaseSepoliaTestnet => "BLOCKSCOUT_API_KEY",
+            | SkaleBaseSepoliaTestnet
+            | TempoTestnet => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 

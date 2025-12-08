@@ -667,6 +667,12 @@ impl Chain {
         Self::from_named(NamedChain::LensTestnet)
     }
 
+    /// Returns the Tempo testnet chain.
+    #[inline]
+    pub const fn tempo_testnet() -> Self {
+        Self::from_named(NamedChain::TempoTestnet)
+    }
+
     /// Returns the kind of this chain.
     #[inline]
     pub const fn kind(&self) -> &ChainKind {
@@ -713,6 +719,12 @@ impl Chain {
     #[inline]
     pub const fn is_elastic(self) -> bool {
         matches!(self.named(), Some(named) if named.is_elastic())
+    }
+
+    /// Returns true if the chain contains Tempo configuration.
+    #[inline]
+    pub const fn is_tempo(self) -> bool {
+        matches!(self.named(), Some(named) if named.is_tempo())
     }
 
     /// Attempts to convert the chain into a named chain.
