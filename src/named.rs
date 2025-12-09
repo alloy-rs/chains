@@ -1215,6 +1215,7 @@ impl NamedChain {
                 | MemeCore
                 | Formicarium
                 | Insectarium
+                | TempoTestnet
         )
     }
 

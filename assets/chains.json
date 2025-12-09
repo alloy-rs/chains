@@ -1457,7 +1457,7 @@
       "name": "tempo-testnet",
       "averageBlocktimeHint": 500,
       "isLegacy": false,
-      "supportsShanghai": false,
+      "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://scout.tempo.xyz/api",
