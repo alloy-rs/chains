@@ -531,7 +531,7 @@ pub enum NamedChain {
 
     #[strum(to_string = "skale-base")]
     #[cfg_attr(feature = "serde", serde(alias = "skale-base"))]
-    SkaleBase = 1562508942,
+    SkaleBase = 1187947933,
 
     #[strum(to_string = "skale-base-sepolia-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "skale-base-sepolia-testnet"))]

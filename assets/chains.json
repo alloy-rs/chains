@@ -2088,6 +2088,18 @@
       "etherscanBaseUrl": "https://sepolia.explorer.zora.energy",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "1187947933": {
+      "internalId": "SkaleBase",
+      "name": "skale-base",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://skale-base-explorer.skalenodes.com/api",
+      "etherscanBaseUrl": "https://skale-base-explorer.skalenodes.com",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "1313161554": {
       "internalId": "Aurora",
       "name": "aurora",
@@ -2111,18 +2123,6 @@
       "etherscanApiUrl": "https://testnet.aurorascan.dev/api",
       "etherscanBaseUrl": "https://testnet.aurorascan.dev",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
-    },
-    "1562508942": {
-      "internalId": "SkaleBase",
-      "name": "skale-base",
-      "averageBlocktimeHint": 1000,
-      "isLegacy": false,
-      "supportsShanghai": false,
-      "isTestnet": false,
-      "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://skale-base-explorer.skalenodes.com/api",
-      "etherscanBaseUrl": "https://skale-base-explorer.skalenodes.com",
-      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "37714555429": {
       "internalId": "XaiSepolia",
