@@ -2112,7 +2112,7 @@
       "etherscanBaseUrl": "https://testnet.aurorascan.dev",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
-    "1562508942": {
+    "1187947933": {
       "internalId": "SkaleBase",
       "name": "skale-base",
       "averageBlocktimeHint": 1000,
