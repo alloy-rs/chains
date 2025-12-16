@@ -836,7 +836,7 @@ impl NamedChain {
 
             Oasis => 5_500,
 
-            Emerald | Darwinia | Crab | Koi  => 6_000,
+            Emerald | Darwinia | Crab | Koi => 6_000,
 
             Dev | AnvilHardhat => 200,
 
