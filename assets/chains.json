@@ -2052,6 +2052,19 @@
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": null
     },
+    
+    "420420422": {
+      "internalId": "Paseo PassetHub",
+      "name": "paseo-passethub",
+      "averageBlocktimeHint": 6000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "PAS",
+      "etherscanApiUrl": "https://blockscout-passet-hub.parity-testnet.parity.io/api",
+      "etherscanBaseUrl": "https://blockscout-passet-hub.parity-testnet.parity.io",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "531050104": {
       "internalId": "SophonTestnet",
       "name": "sophon-testnet",
