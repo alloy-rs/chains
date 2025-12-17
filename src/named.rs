@@ -493,9 +493,9 @@ pub enum NamedChain {
     #[strum(to_string = "polkadot-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "polkadot-testnet"))]
     PolkadotTestnet = 420420417,
-   
+
     #[strum(to_string = "paseo-passethub")]
-    #[cfg_attr(feature = "serde", serde(alias = "paseo-passethub"))] 
+    #[cfg_attr(feature = "serde", serde(alias = "paseo-passethub"))]
     PaseoPassethub = 420420422,
 
     #[strum(to_string = "lens")]
@@ -915,13 +915,13 @@ impl NamedChain {
             MemeCore | Formicarium | Insectarium => 7_000,
 
             SkaleBase | SkaleBaseSepoliaTestnet => 1_000,
-            
+
             PolkadotTestnet | PaseoPassethub => 6_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi | Moonbase
             | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | Metis | Linea
             | LineaGoerli | LineaSepolia | Treasure | TreasureTopaz | Corn | CornTestnet
-            | Cannon  => {
+            | Cannon => {
                 return None;
             }
         }))
@@ -1798,7 +1798,10 @@ impl NamedChain {
                 "https://base-sepolia-testnet-explorer.skalenodes.com",
             ),
             TempoTestnet => ("https://scout.tempo.xyz/api", "https://scout.tempo.xyz"),
-            PaseoPassethub => ("https://blockscout-passet-hub.parity-testnet.parity.io/api", "https://blockscout-passet-hub.parity-testnet.parity.io"),
+            PaseoPassethub => (
+                "https://blockscout-passet-hub.parity-testnet.parity.io/api",
+                "https://blockscout-passet-hub.parity-testnet.parity.io",
+            ),
 
             AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
             | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CronosTestnet | Dev
