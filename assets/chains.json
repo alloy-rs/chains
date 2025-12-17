@@ -2043,7 +2043,7 @@
     "420420417": {
       "internalId": "PolkadotTestnet",
       "name": "polkadot-testnet",
-      "averageBlocktimeHint": null,
+      "averageBlocktimeHint": 6000,
       "isLegacy": false,
       "supportsShanghai": false,
       "isTestnet": true,
@@ -2052,9 +2052,8 @@
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": null
     },
-    
     "420420422": {
-      "internalId": "Paseo PassetHub",
+      "internalId": "PaseoPassethub",
       "name": "paseo-passethub",
       "averageBlocktimeHint": 6000,
       "isLegacy": false,

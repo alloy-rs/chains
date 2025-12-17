@@ -1223,6 +1223,7 @@ impl NamedChain {
                 | Formicarium
                 | Insectarium
                 | TempoTestnet
+                | PaseoPassethub
         )
     }
 
@@ -1429,6 +1430,7 @@ impl NamedChain {
             MemeCore => "M",
             Formicarium => "tM",
             Insectarium => "tM",
+            PaseoPassethub => "PAS",
 
             _ => return None,
         })
