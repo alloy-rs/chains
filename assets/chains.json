@@ -2043,7 +2043,7 @@
     "420420417": {
       "internalId": "PolkadotTestnet",
       "name": "polkadot-testnet",
-      "averageBlocktimeHint": null,
+      "averageBlocktimeHint": 6000,
       "isLegacy": false,
       "supportsShanghai": false,
       "isTestnet": true,
@@ -2051,6 +2051,18 @@
       "etherscanApiUrl": null,
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": null
+    },
+    "420420422": {
+      "internalId": "PaseoPassethub",
+      "name": "paseo-passethub",
+      "averageBlocktimeHint": 6000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "PAS",
+      "etherscanApiUrl": "https://blockscout-passet-hub.parity-testnet.parity.io/api",
+      "etherscanBaseUrl": "https://blockscout-passet-hub.parity-testnet.parity.io",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "531050104": {
       "internalId": "SophonTestnet",
