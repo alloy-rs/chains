@@ -399,10 +399,7 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "megaeth"))]
     MegaEth = 4326,
     #[strum(to_string = "megaeth-testnet")]
-    #[cfg_attr(
-        feature = "serde",
-        serde(alias = "megaeth-testnet", alias = "megaeth_testnet")
-    )]
+    #[cfg_attr(feature = "serde", serde(alias = "megaeth-testnet", alias = "megaeth_testnet"))]
     MegaEthTestnet = 6343,
 
     #[strum(to_string = "xdc-mainnet")]
