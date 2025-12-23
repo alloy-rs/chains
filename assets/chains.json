@@ -1020,6 +1020,18 @@
       "etherscanBaseUrl": "https://scan.merlinchain.io",
       "etherscanApiKeyName": "MERLINSCAN_API_KEY"
     },
+    "4326": {
+      "internalId": "MegaEth",
+      "name": "megaeth",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=4326",
+      "etherscanBaseUrl": "https://megascan.com",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "4352": {
       "internalId": "MemeCore",
       "name": "memecore",
@@ -1090,6 +1102,18 @@
       "nativeCurrencySymbol": "BNB",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=5611",
       "etherscanBaseUrl": "https://opbnb-testnet.bscscan.com",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "6343": {
+      "internalId": "MegaEthTestnet",
+      "name": "megaeth-testnet",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=6343",
+      "etherscanBaseUrl": "https://testnet.megascan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "7000": {

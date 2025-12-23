@@ -395,6 +395,12 @@ pub enum NamedChain {
     #[strum(to_string = "stable-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "stable-testnet"))]
     StableTestnet = 2201,
+    #[strum(to_string = "megaeth")]
+    #[cfg_attr(feature = "serde", serde(alias = "megaeth"))]
+    MegaEth = 4326,
+    #[strum(to_string = "megaeth-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "megaeth-testnet", alias = "megaeth_testnet"))]
+    MegaEthTestnet = 6343,
 
     #[strum(to_string = "xdc-mainnet")]
     #[cfg_attr(feature = "serde", serde(alias = "xdc-mainnet"))]
@@ -885,6 +891,7 @@ impl NamedChain {
             Story => 2_500,
             Sei | SeiTestnet => 500,
             StableMainnet | StableTestnet => 700,
+            MegaEth | MegaEthTestnet => 1_000,
 
             XdcMainnet => 2400,
             XdcTestnet => 2400,
@@ -1064,7 +1071,9 @@ impl NamedChain {
             | Plasma
             | MemeCore
             | Formicarium
-            | Insectarium => false,
+            | Insectarium
+            | MegaEth
+            | MegaEthTestnet => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev
@@ -1202,6 +1211,8 @@ impl NamedChain {
                 | SignetPecorino
                 | StableMainnet
                 | StableTestnet
+                | MegaEth
+                | MegaEthTestnet
                 | ApeChain
                 | Curtis
                 | SuperpositionTestnet
@@ -1309,6 +1320,7 @@ impl NamedChain {
             | FluentTestnet
             | SeiTestnet
             | StableTestnet
+            | MegaEthTestnet
             | CornTestnet
             | Formicarium
             | Insectarium
@@ -1329,8 +1341,8 @@ impl NamedChain {
             | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex | Core
             | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob | Soneium
             | Sonic | Superposition | Berachain | Monad | Unichain | TelosEvm | Story | Sei
-            | StableMainnet | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana | Lisk
-            | Fuse | Injective | MemeCore | SkaleBase | XdcMainnet => false,
+            | StableMainnet | MegaEth | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana
+            | Lisk | Fuse | Injective | MemeCore | SkaleBase | XdcMainnet => false,
         }
     }
 
@@ -1340,9 +1352,10 @@ impl NamedChain {
 
         Some(match self {
             Mainnet | Goerli | Holesky | Kovan | Sepolia | Morden | Ropsten | Rinkeby | Scroll
-            | ScrollSepolia | Taiko | TaikoHekla | Unichain | UnichainSepolia
-            | SuperpositionTestnet | Superposition | Abstract | ZkSync | ZkSyncTestnet | Katana
-            | Lisk | Base | BaseGoerli | BaseSepolia | Optimism | OptimismSepolia => "ETH",
+            | ScrollSepolia | Taiko | TaikoHekla | Unichain | UnichainSepolia | MegaEth
+            | MegaEthTestnet | SuperpositionTestnet | Superposition | Abstract | ZkSync
+            | ZkSyncTestnet | Katana | Lisk | Base | BaseGoerli | BaseSepolia | Optimism
+            | OptimismSepolia => "ETH",
 
             Mantle | MantleSepolia => "MNT",
 
@@ -1707,6 +1720,10 @@ impl NamedChain {
             StableTestnet => {
                 ("https://api.etherscan.io/v2/api?chainid=2201", "https://testnet.stablescan.xyz")
             }
+            MegaEth => ("https://api.etherscan.io/v2/api?chainid=4326", "https://megascan.com"),
+            MegaEthTestnet => {
+                ("https://api.etherscan.io/v2/api?chainid=6343", "https://testnet.megascan.com")
+            }
             XdcMainnet => ("https://api.etherscan.io/v2/api?chainid=50", "https://xdcscan.com"),
             XdcTestnet => {
                 ("https://api.etherscan.io/v2/api?chainid=51", "https://testnet.xdcscan.com")
@@ -1883,6 +1900,8 @@ impl NamedChain {
             | SeiTestnet
             | StableMainnet
             | StableTestnet
+            | MegaEth
+            | MegaEthTestnet
             | XdcMainnet
             | XdcTestnet
             | Sonic
@@ -2240,6 +2259,8 @@ mod tests {
             (XdcTestnet, &["xdc-testnet"]),
             (SeiTestnet, &["sei-testnet"]),
             (StableTestnet, &["stable-testnet"]),
+            (MegaEth, &["megaeth"]),
+            (MegaEthTestnet, &["megaeth-testnet"]),
             (Cannon, &["cannon"]),
             (MemeCore, &["memecore"]),
             (Formicarium, &["formicarium", "memecore-formicarium"]),
