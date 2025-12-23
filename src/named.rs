@@ -1108,8 +1108,6 @@ impl NamedChain {
             | SeiTestnet
             | StableMainnet
             | StableTestnet
-            | MegaEth
-            | MegaEthTestnet
             | Injective
             | InjectiveTestnet
             | Katana
