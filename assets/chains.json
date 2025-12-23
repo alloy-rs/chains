@@ -1104,6 +1104,18 @@
       "etherscanBaseUrl": "https://opbnb-testnet.bscscan.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "6343": {
+      "internalId": "MegaEthTestnet",
+      "name": "megaeth-testnet",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=6343",
+      "etherscanBaseUrl": "https://testnet.megascan.com",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
     "7000": {
       "internalId": "Zeta",
       "name": "zeta",
@@ -1643,18 +1655,6 @@
       "etherscanApiUrl": null,
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": null
-    },
-    "6343": {
-      "internalId": "MegaEthTestnet",
-      "name": "megaeth-testnet",
-      "averageBlocktimeHint": 1000,
-      "isLegacy": false,
-      "supportsShanghai": true,
-      "isTestnet": true,
-      "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=6343",
-      "etherscanBaseUrl": "https://testnet.megascan.com",
-      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "80002": {
       "internalId": "PolygonAmoy",

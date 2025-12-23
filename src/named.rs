@@ -399,7 +399,10 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "megaeth"))]
     MegaEth = 4326,
     #[strum(to_string = "megaeth-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "megaeth-testnet"))]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "megaeth-testnet", alias = "megaeth_testnet")
+    )]
     MegaEthTestnet = 6343,
 
     #[strum(to_string = "xdc-mainnet")]
@@ -1353,9 +1356,9 @@ impl NamedChain {
         Some(match self {
             Mainnet | Goerli | Holesky | Kovan | Sepolia | Morden | Ropsten | Rinkeby | Scroll
             | ScrollSepolia | Taiko | TaikoHekla | Unichain | UnichainSepolia | MegaEth
-            | MegaEthTestnet
-            | SuperpositionTestnet | Superposition | Abstract | ZkSync | ZkSyncTestnet | Katana
-            | Lisk | Base | BaseGoerli | BaseSepolia | Optimism | OptimismSepolia => "ETH",
+            | MegaEthTestnet | SuperpositionTestnet | Superposition | Abstract | ZkSync
+            | ZkSyncTestnet | Katana | Lisk | Base | BaseGoerli | BaseSepolia | Optimism
+            | OptimismSepolia => "ETH",
 
             Mantle | MantleSepolia => "MNT",
 
@@ -1721,10 +1724,9 @@ impl NamedChain {
                 ("https://api.etherscan.io/v2/api?chainid=2201", "https://testnet.stablescan.xyz")
             }
             MegaEth => ("https://api.etherscan.io/v2/api?chainid=4326", "https://megascan.com"),
-            MegaEthTestnet => (
-                "https://api.etherscan.io/v2/api?chainid=6343",
-                "https://testnet.megascan.com",
-            ),
+            MegaEthTestnet => {
+                ("https://api.etherscan.io/v2/api?chainid=6343", "https://testnet.megascan.com")
+            }
             XdcMainnet => ("https://api.etherscan.io/v2/api?chainid=50", "https://xdcscan.com"),
             XdcTestnet => {
                 ("https://api.etherscan.io/v2/api?chainid=51", "https://testnet.xdcscan.com")
