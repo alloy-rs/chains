@@ -5,12 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.23](https://github.com/alloy-rs/chains/releases/tag/v0.2.23) - 2025-12-09
+## [0.2.24](https://github.com/alloy-rs/chains/releases/tag/v0.2.24) - 2025-12-24
 
 ### Bug Fixes
 
 - T supports shanghai ([#235](https://github.com/alloy-rs/chains/issues/235))
 - T 500ms ([#234](https://github.com/alloy-rs/chains/issues/234))
+
+### Miscellaneous Tasks
+
+- Release 0.2.23 ([#236](https://github.com/alloy-rs/chains/issues/236))
+
+### Other
+
+- Add MegaETH and testnet ([#239](https://github.com/alloy-rs/chains/issues/239))
+- Add Paseo PassetHub ([#238](https://github.com/alloy-rs/chains/issues/238))
+- SKALE Base chain Id update ([#237](https://github.com/alloy-rs/chains/issues/237))
 
 ## [0.2.22](https://github.com/alloy-rs/chains/releases/tag/v0.2.22) - 2025-12-08
 
