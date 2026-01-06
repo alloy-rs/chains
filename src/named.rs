@@ -1121,7 +1121,8 @@ impl NamedChain {
             | PaseoPassethub
             | XdcMainnet
             | XdcTestnet
-            | TempoTestnet | TempoModerato => false,
+            | TempoTestnet
+            | TempoModerato => false,
         }
     }
 
@@ -1328,7 +1329,8 @@ impl NamedChain {
             | Insectarium
             | SkaleBaseSepoliaTestnet
             | XdcTestnet
-            | TempoTestnet | TempoModerato => true,
+            | TempoTestnet
+            | TempoModerato => true,
 
             // Dev chains.
             Dev | AnvilHardhat | Cannon => true,
@@ -1971,7 +1973,8 @@ impl NamedChain {
             | SkaleBase
             | SkaleBaseSepoliaTestnet
             | PaseoPassethub
-            | TempoTestnet | TempoModerato => "BLOCKSCOUT_API_KEY",
+            | TempoTestnet
+            | TempoModerato => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
