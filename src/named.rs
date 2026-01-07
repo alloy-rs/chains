@@ -4,7 +4,6 @@ use num_enum::TryFromPrimitiveError;
 
 #[allow(unused_imports)]
 use alloc::string::String;
-
 // When adding a new chain:
 //   1. add new variant to the NamedChain enum;
 //   2. add extra information in the last `impl` block (explorer URLs, block time) when applicable;
@@ -560,6 +559,8 @@ pub enum NamedChain {
     Insectarium = 43522,
 
     TempoTestnet = 42429,
+
+    TempoModerato = 42431,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -898,7 +899,7 @@ impl NamedChain {
 
             Sonic | SonicTestnet => 1_000,
 
-            TelosEvm | TelosEvmTestnet | TempoTestnet => 500,
+            TelosEvm | TelosEvmTestnet | TempoTestnet | TempoModerato => 500,
 
             UnichainSepolia | Unichain => 1_000,
 
@@ -1120,7 +1121,8 @@ impl NamedChain {
             | PaseoPassethub
             | XdcMainnet
             | XdcTestnet
-            | TempoTestnet => false,
+            | TempoTestnet
+            | TempoModerato => false,
         }
     }
 
@@ -1234,6 +1236,7 @@ impl NamedChain {
                 | Formicarium
                 | Insectarium
                 | TempoTestnet
+                | TempoModerato
                 | PaseoPassethub
         )
     }
@@ -1326,7 +1329,8 @@ impl NamedChain {
             | Insectarium
             | SkaleBaseSepoliaTestnet
             | XdcTestnet
-            | TempoTestnet => true,
+            | TempoTestnet
+            | TempoModerato => true,
 
             // Dev chains.
             Dev | AnvilHardhat | Cannon => true,
@@ -1815,6 +1819,7 @@ impl NamedChain {
                 "https://base-sepolia-testnet-explorer.skalenodes.com",
             ),
             TempoTestnet => ("https://scout.tempo.xyz/api", "https://scout.tempo.xyz"),
+            TempoModerato => ("https://scout.tempo.xyz/api", "https://scout.tempo.xyz"),
             PaseoPassethub => (
                 "https://blockscout-passet-hub.parity-testnet.parity.io/api",
                 "https://blockscout-passet-hub.parity-testnet.parity.io",
@@ -1968,7 +1973,8 @@ impl NamedChain {
             | SkaleBase
             | SkaleBaseSepoliaTestnet
             | PaseoPassethub
-            | TempoTestnet => "BLOCKSCOUT_API_KEY",
+            | TempoTestnet
+            | TempoModerato => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 

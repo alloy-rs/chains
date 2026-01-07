@@ -1488,6 +1488,18 @@
       "etherscanBaseUrl": "https://scout.tempo.xyz",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "42431": {
+      "internalId": "TempoModerato",
+      "name": "tempo-moderato",
+      "averageBlocktimeHint": 500,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://scout.tempo.xyz/api",
+      "etherscanBaseUrl": "https://scout.tempo.xyz",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "42793": {
       "internalId": "Etherlink",
       "name": "etherlink",
