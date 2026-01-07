@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.25](https://github.com/alloy-rs/chains/releases/tag/v0.2.25) - 2026-01-07
+
+### Features
+
+- Add tempo moderato ([#240](https://github.com/alloy-rs/chains/issues/240))
+
 ## [0.2.24](https://github.com/alloy-rs/chains/releases/tag/v0.2.24) - 2025-12-24
 
 ### Bug Fixes
@@ -14,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Miscellaneous Tasks
 
+- Release 0.2.24
 - Release 0.2.23 ([#236](https://github.com/alloy-rs/chains/issues/236))
 
 ### Other
