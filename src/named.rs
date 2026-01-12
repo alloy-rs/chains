@@ -558,9 +558,11 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "insectarium", alias = "memecore-insectarium"))]
     Insectarium = 43522,
 
-    TempoTestnet = 42429,
-    TempoModerato = 42431,
+    #[strum(to_string = "tempo", serialize = "tempo-mainnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "tempo", alias = "tempo-mainnet"))]
     Tempo = 4217,
+    TempoModerato = 42431,
+    TempoTestnet = 42429,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -899,7 +901,7 @@ impl NamedChain {
 
             Sonic | SonicTestnet => 1_000,
 
-            TelosEvm | TelosEvmTestnet | TempoTestnet | TempoModerato | Tempo => 500,
+            TelosEvm | TelosEvmTestnet | Tempo | TempoTestnet | TempoModerato => 500,
 
             UnichainSepolia | Unichain => 1_000,
 
@@ -1121,9 +1123,9 @@ impl NamedChain {
             | PaseoPassethub
             | XdcMainnet
             | XdcTestnet
+            | Tempo
             | TempoTestnet
-            | TempoModerato
-            | Tempo => false,
+            | TempoModerato => false,
         }
     }
 
@@ -1236,9 +1238,9 @@ impl NamedChain {
                 | MemeCore
                 | Formicarium
                 | Insectarium
+                | Tempo
                 | TempoTestnet
                 | TempoModerato
-                | Tempo
                 | PaseoPassethub
         )
     }
@@ -1820,9 +1822,9 @@ impl NamedChain {
                 "https://base-sepolia-testnet-explorer.skalenodes.com/api",
                 "https://base-sepolia-testnet-explorer.skalenodes.com",
             ),
-            TempoTestnet => ("https://contracts.tempo.xyz", "https://explore.testnet.tempo.xyz"),
+            Tempo => ("https://contracts.tempo.xyz", "https://explore.mainnet.tempo.xyz"),
             TempoModerato => ("https://contracts.tempo.xyz", "https://explore.moderato.tempo.xyz"),
-            Tempo => ("https://contracts.tempo.xyz", "https://explore.tempo.xyz"),
+            TempoTestnet => ("https://contracts.tempo.xyz", "https://explore.testnet.tempo.xyz"),
             PaseoPassethub => (
                 "https://blockscout-passet-hub.parity-testnet.parity.io/api",
                 "https://blockscout-passet-hub.parity-testnet.parity.io",
