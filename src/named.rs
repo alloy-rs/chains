@@ -1824,7 +1824,7 @@ impl NamedChain {
             ),
             Tempo => ("https://contracts.tempo.xyz", "https://explore.mainnet.tempo.xyz"),
             TempoModerato => ("https://contracts.tempo.xyz", "https://explore.moderato.tempo.xyz"),
-            TempoTestnet => ("https://contracts.tempo.xyz", "https://explore.testnet.tempo.xyz"),
+            TempoTestnet => ("https://contracts.tempo.xyz", "https://explore.andantino.tempo.xyz"),
             PaseoPassethub => (
                 "https://blockscout-passet-hub.parity-testnet.parity.io/api",
                 "https://blockscout-passet-hub.parity-testnet.parity.io",
