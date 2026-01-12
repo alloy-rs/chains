@@ -1020,6 +1020,18 @@
       "etherscanBaseUrl": "https://scan.merlinchain.io",
       "etherscanApiKeyName": "MERLINSCAN_API_KEY"
     },
+    "4217": {
+      "internalId": "Tempo",
+      "name": "tempo",
+      "averageBlocktimeHint": 500,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://contracts.tempo.xyz/v2/contract",
+      "etherscanBaseUrl": "https://explore.mainnet.tempo.xyz",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "4326": {
       "internalId": "MegaEth",
       "name": "megaeth",
