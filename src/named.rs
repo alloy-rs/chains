@@ -559,8 +559,8 @@ pub enum NamedChain {
     Insectarium = 43522,
 
     TempoTestnet = 42429,
-
     TempoModerato = 42431,
+    Tempo = 4217,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -771,7 +771,7 @@ impl NamedChain {
     pub const fn is_tempo(self) -> bool {
         use NamedChain::*;
 
-        matches!(self, TempoTestnet)
+        matches!(self, Tempo | TempoModerato | TempoTestnet)
     }
 
     /// Returns the chain's average blocktime, if applicable.
@@ -899,7 +899,7 @@ impl NamedChain {
 
             Sonic | SonicTestnet => 1_000,
 
-            TelosEvm | TelosEvmTestnet | TempoTestnet | TempoModerato => 500,
+            TelosEvm | TelosEvmTestnet | TempoTestnet | TempoModerato | Tempo => 500,
 
             UnichainSepolia | Unichain => 1_000,
 
@@ -1122,7 +1122,8 @@ impl NamedChain {
             | XdcMainnet
             | XdcTestnet
             | TempoTestnet
-            | TempoModerato => false,
+            | TempoModerato
+            | Tempo => false,
         }
     }
 
@@ -1237,6 +1238,7 @@ impl NamedChain {
                 | Insectarium
                 | TempoTestnet
                 | TempoModerato
+                | Tempo
                 | PaseoPassethub
         )
     }
@@ -1346,7 +1348,7 @@ impl NamedChain {
             | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob | Soneium
             | Sonic | Superposition | Berachain | Monad | Unichain | TelosEvm | Story | Sei
             | StableMainnet | MegaEth | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana
-            | Lisk | Fuse | Injective | MemeCore | SkaleBase | XdcMainnet => false,
+            | Lisk | Fuse | Injective | MemeCore | SkaleBase | XdcMainnet | Tempo => false,
         }
     }
 
@@ -1818,8 +1820,9 @@ impl NamedChain {
                 "https://base-sepolia-testnet-explorer.skalenodes.com/api",
                 "https://base-sepolia-testnet-explorer.skalenodes.com",
             ),
-            TempoTestnet => ("https://scout.tempo.xyz/api", "https://scout.tempo.xyz"),
-            TempoModerato => ("https://scout.tempo.xyz/api", "https://scout.tempo.xyz"),
+            TempoTestnet => ("https://contracts.tempo.xyz", "https://explore.testnet.tempo.xyz"),
+            TempoModerato => ("https://contracts.tempo.xyz", "https://explore.moderato.tempo.xyz"),
+            Tempo => ("https://contracts.tempo.xyz", "https://explore.tempo.xyz"),
             PaseoPassethub => (
                 "https://blockscout-passet-hub.parity-testnet.parity.io/api",
                 "https://blockscout-passet-hub.parity-testnet.parity.io",
@@ -1972,9 +1975,7 @@ impl NamedChain {
             | SignetPecorino
             | SkaleBase
             | SkaleBaseSepoliaTestnet
-            | PaseoPassethub
-            | TempoTestnet
-            | TempoModerato => "BLOCKSCOUT_API_KEY",
+            | PaseoPassethub => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
@@ -2030,7 +2031,10 @@ impl NamedChain {
             | FluentTestnet
             | Cannon
             | Insectarium
-            | PolkadotTestnet => return None,
+            | PolkadotTestnet
+            | TempoTestnet
+            | TempoModerato
+            | Tempo => return None,
         };
 
         Some(api_key_name)
