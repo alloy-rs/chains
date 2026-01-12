@@ -673,6 +673,18 @@ impl Chain {
         Self::from_named(NamedChain::TempoTestnet)
     }
 
+    /// Returns the Tempo moderato chain.
+    #[inline]
+    pub const fn tempo_moderato() -> Self {
+        Self::from_named(NamedChain::TempoModerato)
+    }
+
+    /// Returns the Tempo chain.
+    #[inline]
+    pub const fn tempo_mainnet() -> Self {
+        Self::from_named(NamedChain::Tempo)
+    }
+
     /// Returns the kind of this chain.
     #[inline]
     pub const fn kind(&self) -> &ChainKind {

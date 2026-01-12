@@ -561,10 +561,8 @@ pub enum NamedChain {
     #[strum(to_string = "tempo", serialize = "tempo-mainnet")]
     #[cfg_attr(feature = "serde", serde(alias = "tempo", alias = "tempo-mainnet"))]
     Tempo = 4217,
-
-    TempoTestnet = 42429,
-
     TempoModerato = 42431,
+    TempoTestnet = 42429,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -775,7 +773,7 @@ impl NamedChain {
     pub const fn is_tempo(self) -> bool {
         use NamedChain::*;
 
-        matches!(self, Tempo | TempoTestnet)
+        matches!(self, Tempo | TempoModerato | TempoTestnet)
     }
 
     /// Returns the chain's average blocktime, if applicable.
@@ -1824,11 +1822,9 @@ impl NamedChain {
                 "https://base-sepolia-testnet-explorer.skalenodes.com/api",
                 "https://base-sepolia-testnet-explorer.skalenodes.com",
             ),
-            Tempo => {
-                ("https://contracts.tempo.xyz/v2/contract", "https://explore.mainnet.tempo.xyz")
-            }
-            TempoTestnet => ("https://scout.tempo.xyz/api", "https://scout.tempo.xyz"),
-            TempoModerato => ("https://scout.tempo.xyz/api", "https://scout.tempo.xyz"),
+            Tempo => ("https://contracts.tempo.xyz", "https://explore.mainnet.tempo.xyz"),
+            TempoModerato => ("https://contracts.tempo.xyz", "https://explore.moderato.tempo.xyz"),
+            TempoTestnet => ("https://contracts.tempo.xyz", "https://explore.andantino.tempo.xyz"),
             PaseoPassethub => (
                 "https://blockscout-passet-hub.parity-testnet.parity.io/api",
                 "https://blockscout-passet-hub.parity-testnet.parity.io",
@@ -1981,10 +1977,7 @@ impl NamedChain {
             | SignetPecorino
             | SkaleBase
             | SkaleBaseSepoliaTestnet
-            | PaseoPassethub
-            | Tempo
-            | TempoTestnet
-            | TempoModerato => "BLOCKSCOUT_API_KEY",
+            | PaseoPassethub => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
@@ -2040,7 +2033,10 @@ impl NamedChain {
             | FluentTestnet
             | Cannon
             | Insectarium
-            | PolkadotTestnet => return None,
+            | PolkadotTestnet
+            | TempoTestnet
+            | TempoModerato
+            | Tempo => return None,
         };
 
         Some(api_key_name)

@@ -1028,9 +1028,9 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://contracts.tempo.xyz/v2/contract",
+      "etherscanApiUrl": "https://contracts.tempo.xyz",
       "etherscanBaseUrl": "https://explore.mainnet.tempo.xyz",
-      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+      "etherscanApiKeyName": null
     },
     "4326": {
       "internalId": "MegaEth",
@@ -1496,9 +1496,9 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://scout.tempo.xyz/api",
-      "etherscanBaseUrl": "https://scout.tempo.xyz",
-      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+      "etherscanApiUrl": "https://contracts.tempo.xyz",
+      "etherscanBaseUrl": "https://explore.andantino.tempo.xyz",
+      "etherscanApiKeyName": null
     },
     "42431": {
       "internalId": "TempoModerato",
@@ -1508,9 +1508,9 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://scout.tempo.xyz/api",
-      "etherscanBaseUrl": "https://scout.tempo.xyz",
-      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+      "etherscanApiUrl": "https://contracts.tempo.xyz",
+      "etherscanBaseUrl": "https://explore.moderato.tempo.xyz",
+      "etherscanApiKeyName": null
     },
     "42793": {
       "internalId": "Etherlink",
