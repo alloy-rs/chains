@@ -1497,7 +1497,7 @@
       "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://contracts.tempo.xyz",
-      "etherscanBaseUrl": "https://explore.testnet.tempo.xyz",
+      "etherscanBaseUrl": "https://explore.andantino.tempo.xyz",
       "etherscanApiKeyName": null
     },
     "42431": {
