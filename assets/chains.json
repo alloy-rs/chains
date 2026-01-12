@@ -1029,7 +1029,7 @@
       "isTestnet": false,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://contracts.tempo.xyz",
-      "etherscanBaseUrl": "https://explore.tempo.xyz",
+      "etherscanBaseUrl": "https://explore.mainnet.tempo.xyz",
       "etherscanApiKeyName": null
     },
     "4326": {
