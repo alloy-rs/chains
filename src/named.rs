@@ -1580,10 +1580,9 @@ impl NamedChain {
                 ("https://gnosis-chiado.blockscout.com/api", "https://gnosis-chiado.blockscout.com")
             }
             Plasma => ("https://api.etherscan.io/v2/api?chainid=9745", "https://plasmascan.to"),
-            PlasmaTestnet => (
-                "https://api.etherscan.io/v2/api?chainid=9746",
-                "https://testnet.plasmascan.to",
-            ),
+            PlasmaTestnet => {
+                ("https://api.etherscan.io/v2/api?chainid=9746", "https://testnet.plasmascan.to")
+            }
             FilecoinCalibrationTestnet => (
                 "https://api.calibration.node.glif.io/rpc/v1",
                 "https://calibration.filfox.info/en",
