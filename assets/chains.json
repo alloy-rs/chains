@@ -1208,9 +1208,21 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "XPL",
-      "etherscanApiUrl": "https://api.routescan.io/v2/network/mainnet/evm/9745/etherscan/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=9745",
       "etherscanBaseUrl": "https://plasmascan.to",
-      "etherscanApiKeyName": "ROUTESCAN_API_KEY"
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "9746": {
+      "internalId": "PlasmaTestnet",
+      "name": "plasma-testnet",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "XPL",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=9746",
+      "etherscanBaseUrl": "https://testnet.plasmascan.to",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "10143": {
       "internalId": "MonadTestnet",

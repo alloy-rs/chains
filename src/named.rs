@@ -187,6 +187,7 @@ pub enum NamedChain {
     EvmosTestnet = 9000,
 
     Plasma = 9745,
+    PlasmaTestnet = 9746,
 
     Chiado = 10200,
 
@@ -821,7 +822,7 @@ impl NamedChain {
             | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia | HappychainTestnet
             | Soneium | SoneiumMinatoTestnet | Bob | BobSepolia => 2_000,
 
-            Ink | InkSepolia | Odyssey | Plasma => 1_000,
+            Ink | InkSepolia | Odyssey | Plasma | PlasmaTestnet => 1_000,
 
             Viction => 2_000,
 
@@ -1072,6 +1073,7 @@ impl NamedChain {
             | FluentDevnet
             | FluentTestnet
             | Plasma
+            | PlasmaTestnet
             | MemeCore
             | Formicarium
             | Insectarium
@@ -1334,7 +1336,8 @@ impl NamedChain {
             | SkaleBaseSepoliaTestnet
             | XdcTestnet
             | TempoTestnet
-            | TempoModerato => true,
+            | TempoModerato
+            | PlasmaTestnet => true,
 
             // Dev chains.
             Dev | AnvilHardhat | Cannon => true,
@@ -1446,7 +1449,7 @@ impl NamedChain {
 
             Injective | InjectiveTestnet => "INJ",
 
-            Plasma => "XPL",
+            Plasma | PlasmaTestnet => "XPL",
 
             MemeCore => "M",
             Formicarium => "tM",
@@ -1576,10 +1579,10 @@ impl NamedChain {
             Chiado => {
                 ("https://gnosis-chiado.blockscout.com/api", "https://gnosis-chiado.blockscout.com")
             }
-            Plasma => (
-                "https://api.routescan.io/v2/network/mainnet/evm/9745/etherscan/api",
-                "https://plasmascan.to",
-            ),
+            Plasma => ("https://api.etherscan.io/v2/api?chainid=9745", "https://plasmascan.to"),
+            PlasmaTestnet => {
+                ("https://api.etherscan.io/v2/api?chainid=9746", "https://testnet.plasmascan.to")
+            }
             FilecoinCalibrationTestnet => (
                 "https://api.calibration.node.glif.io/rpc/v1",
                 "https://calibration.filfox.info/en",
@@ -1987,7 +1990,8 @@ impl NamedChain {
             Zeta => "ZETASCAN_API_KEY",
             Kaia => "KAIASCAN_API_KEY",
             Berachain | BerachainBepolia => "BERASCAN_API_KEY",
-            Corn | CornTestnet | Plasma => "ROUTESCAN_API_KEY",
+            Corn | CornTestnet => "ROUTESCAN_API_KEY",
+            Plasma | PlasmaTestnet => "ETHERSCAN_API_KEY",
             // Explicitly exhaustive. See NB above.
             Metis
             | Chiado
