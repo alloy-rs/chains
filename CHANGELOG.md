@@ -5,10 +5,179 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.27](https://github.com/alloy-rs/chains/releases/tag/v0.2.27) - 2026-01-12
+
+### Bug Fixes
+
+- Update Tempo contract verification URLs ([#242](https://github.com/alloy-rs/chains/issues/242))
+
+### Dependencies
+
+- Bump version ([#244](https://github.com/alloy-rs/chains/issues/244))
+
+### Features
+
+- Mainnet ([#241](https://github.com/alloy-rs/chains/issues/241))
+
+### Miscellaneous Tasks
+
+- Release 0.2.27
+
+## [0.2.25](https://github.com/alloy-rs/chains/releases/tag/v0.2.25) - 2026-01-07
+
+### Features
+
+- Add tempo moderato ([#240](https://github.com/alloy-rs/chains/issues/240))
+
+### Miscellaneous Tasks
+
+- Release 0.2.25
+
+## [0.2.24](https://github.com/alloy-rs/chains/releases/tag/v0.2.24) - 2025-12-24
+
+### Bug Fixes
+
+- T supports shanghai ([#235](https://github.com/alloy-rs/chains/issues/235))
+- T 500ms ([#234](https://github.com/alloy-rs/chains/issues/234))
+
+### Miscellaneous Tasks
+
+- Release 0.2.24
+- Release 0.2.23 ([#236](https://github.com/alloy-rs/chains/issues/236))
+
+### Other
+
+- Add MegaETH and testnet ([#239](https://github.com/alloy-rs/chains/issues/239))
+- Add Paseo PassetHub ([#238](https://github.com/alloy-rs/chains/issues/238))
+- SKALE Base chain Id update ([#237](https://github.com/alloy-rs/chains/issues/237))
+
+## [0.2.22](https://github.com/alloy-rs/chains/releases/tag/v0.2.22) - 2025-12-08
+
+### Features
+
+- Add tempo testnet ([#233](https://github.com/alloy-rs/chains/issues/233))
+- Add monad mainnet ([#227](https://github.com/alloy-rs/chains/issues/227))
+
+### Miscellaneous Tasks
+
+- Release 0.2.22
+- Release 0.2.21 ([#232](https://github.com/alloy-rs/chains/issues/232))
+- Release 0.2.20 ([#228](https://github.com/alloy-rs/chains/issues/228))
+- Release 0.2.19 ([#226](https://github.com/alloy-rs/chains/issues/226))
+
+### Other
+
+- Add XDC Mainnet + Testnet [Chain ID 50 + 51] ([#231](https://github.com/alloy-rs/chains/issues/231))
+- Add new SKALE Base chains: Sepolia Testnet and Mainnet ([#230](https://github.com/alloy-rs/chains/issues/230))
+- Add Stable Mainnet [Chain ID 988] ([#225](https://github.com/alloy-rs/chains/issues/225))
+- Add Stable Testnet [Chain ID 2201] ([#224](https://github.com/alloy-rs/chains/issues/224))
+
+## [0.2.18](https://github.com/alloy-rs/chains/releases/tag/v0.2.18) - 2025-11-12
+
+### Bug Fixes
+
+- Update celo sepolia api to etherscan ([#218](https://github.com/alloy-rs/chains/issues/218))
+
+### Features
+
+- Add is gnosis helper ([#221](https://github.com/alloy-rs/chains/issues/221))
+
+### Miscellaneous Tasks
+
+- Release 0.2.18
+- Add MemeCore ([#223](https://github.com/alloy-rs/chains/issues/223))
+- Release 0.2.17 ([#219](https://github.com/alloy-rs/chains/issues/219))
+
+### Other
+
+- Adds Polkadot Testnet ([#222](https://github.com/alloy-rs/chains/issues/222))
+
+## [0.2.16](https://github.com/alloy-rs/chains/releases/tag/v0.2.16) - 2025-10-28
+
+### Miscellaneous Tasks
+
+- Release 0.2.16
+- Add Cannon ([#216](https://github.com/alloy-rs/chains/issues/216))
+- Update code owners ([#215](https://github.com/alloy-rs/chains/issues/215))
+- Update MSRV in README ([#213](https://github.com/alloy-rs/chains/issues/213))
+- Release 0.2.15 ([#214](https://github.com/alloy-rs/chains/issues/214))
+
+### Other
+
+- Add sei-test net ([#212](https://github.com/alloy-rs/chains/issues/212))
+
+## [0.2.14](https://github.com/alloy-rs/chains/releases/tag/v0.2.14) - 2025-09-30
+
+### Miscellaneous Tasks
+
+- Release 0.2.14
+- Add plasma ([#210](https://github.com/alloy-rs/chains/issues/210))
+- Rm doc_auto_cfg ([#211](https://github.com/alloy-rs/chains/issues/211))
+
+## [0.2.13](https://github.com/alloy-rs/chains/releases/tag/v0.2.13) - 2025-09-26
+
+### Features
+
+- [chains] Add signet pecorino testnet ([#209](https://github.com/alloy-rs/chains/issues/209))
+
+### Miscellaneous Tasks
+
+- Release 0.2.13
+
+## [0.2.12](https://github.com/alloy-rs/chains/releases/tag/v0.2.12) - 2025-09-19
+
+### Bug Fixes
+
+- Katana now requires an `ETHERSCAN_API_KEY` ([#208](https://github.com/alloy-rs/chains/issues/208))
+
+### Miscellaneous Tasks
+
+- Release 0.2.12
+
+## [0.2.11](https://github.com/alloy-rs/chains/releases/tag/v0.2.11) - 2025-09-19
+
+### Bug Fixes
+
+- Update Katana URLs ([#207](https://github.com/alloy-rs/chains/issues/207))
+
+### Miscellaneous Tasks
+
+- Release 0.2.11
+
+## [0.2.10](https://github.com/alloy-rs/chains/releases/tag/v0.2.10) - 2025-09-18
+
+### Bug Fixes
+
+- Update Avalance URLs, now use Etherscan API key ([#203](https://github.com/alloy-rs/chains/issues/203))
+- Sonic Blaze deprecated, Sonic Testnet chain id update, explorer URL update ([#202](https://github.com/alloy-rs/chains/issues/202))
+- Use correct etherscan URL for bsc ([#197](https://github.com/alloy-rs/chains/issues/197))
+
+### Miscellaneous Tasks
+
+- Release 0.2.10
+- Deprecate Polygon Mumbai, Polygon ZKEvm and Polygon ZkEvm Testnet, fix `POLYGONSCAN_API_KEY` ([#204](https://github.com/alloy-rs/chains/issues/204))
+- Deprecate kakarot sepolia ([#200](https://github.com/alloy-rs/chains/issues/200))
+- Go through all verification API endpoints and deprecate / fix those that are down ([#196](https://github.com/alloy-rs/chains/issues/196))
+- Set native token for celo, smol match change ([#194](https://github.com/alloy-rs/chains/issues/194))
+- Remove hoodi etherscan todo ([#191](https://github.com/alloy-rs/chains/issues/191))
+
+### Other
+
+- Update Celo chains ([#206](https://github.com/alloy-rs/chains/issues/206))
+
+## [0.2.9](https://github.com/alloy-rs/chains/releases/tag/v0.2.9) - 2025-08-28
+
+### Miscellaneous Tasks
+
+- Release 0.2.9
+- Add base, optimism native token name ([#193](https://github.com/alloy-rs/chains/issues/193))
+- Use Option::unzip now that msrv is 1.81 ([#192](https://github.com/alloy-rs/chains/issues/192))
+
 ## [0.2.8](https://github.com/alloy-rs/chains/releases/tag/v0.2.8) - 2025-08-21
 
 ### Miscellaneous Tasks
 
+- Release 0.2.8
 - Remove deprecated functions ([#189](https://github.com/alloy-rs/chains/issues/189))
 - Tweak inline ([#188](https://github.com/alloy-rs/chains/issues/188))
 

@@ -4,7 +4,6 @@ use num_enum::TryFromPrimitiveError;
 
 #[allow(unused_imports)]
 use alloc::string::String;
-
 // When adding a new chain:
 //   1. add new variant to the NamedChain enum;
 //   2. add extra information in the last `impl` block (explorer URLs, block time) when applicable;
@@ -155,28 +154,9 @@ pub enum NamedChain {
     Gnosis = 100,
 
     Polygon = 137,
-    #[strum(to_string = "mumbai", serialize = "polygon-mumbai")]
-    #[cfg_attr(feature = "serde", serde(alias = "mumbai", alias = "polygon-mumbai"))]
-    PolygonMumbai = 80001,
     #[strum(to_string = "amoy", serialize = "polygon-amoy")]
     #[cfg_attr(feature = "serde", serde(alias = "amoy", alias = "polygon-amoy"))]
     PolygonAmoy = 80002,
-    #[strum(serialize = "polygon-zkevm", serialize = "zkevm")]
-    #[cfg_attr(
-        feature = "serde",
-        serde(alias = "zkevm", alias = "polygon_zkevm", alias = "polygon-zkevm")
-    )]
-    PolygonZkEvm = 1101,
-    #[strum(serialize = "polygon-zkevm-testnet", serialize = "zkevm-testnet")]
-    #[cfg_attr(
-        feature = "serde",
-        serde(
-            alias = "zkevm-testnet",
-            alias = "polygon_zkevm_testnet",
-            alias = "polygon-zkevm-testnet"
-        )
-    )]
-    PolygonZkEvmTestnet = 1442,
 
     Fantom = 250,
     FantomTestnet = 4002,
@@ -206,6 +186,9 @@ pub enum NamedChain {
     Evmos = 9001,
     EvmosTestnet = 9000,
 
+    Plasma = 9745,
+    PlasmaTestnet = 9746,
+
     Chiado = 10200,
 
     Oasis = 26863,
@@ -222,8 +205,7 @@ pub enum NamedChain {
     AvalancheFuji = 43113,
 
     Celo = 42220,
-    CeloAlfajores = 44787,
-    CeloBaklava = 62320,
+    CeloSepolia = 11142220,
 
     Aurora = 1313161554,
     AuroraTestnet = 1313161555,
@@ -276,9 +258,6 @@ pub enum NamedChain {
     #[strum(to_string = "mantle")]
     #[cfg_attr(feature = "serde", serde(alias = "mantle"))]
     Mantle = 5000,
-    #[strum(to_string = "mantle-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "mantle-testnet"))]
-    MantleTestnet = 5001,
     #[strum(to_string = "mantle-sepolia")]
     #[cfg_attr(feature = "serde", serde(alias = "mantle-sepolia"))]
     MantleSepolia = 5003,
@@ -309,12 +288,6 @@ pub enum NamedChain {
     ModeSepolia = 919,
 
     Elastos = 20,
-
-    #[cfg_attr(
-        feature = "serde",
-        serde(alias = "kakarot-sepolia", alias = "kakarot-starknet-sepolia")
-    )]
-    KakarotSepolia = 920637907288165,
 
     #[cfg_attr(feature = "serde", serde(alias = "etherlink"))]
     Etherlink = 42793,
@@ -380,6 +353,10 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "pulsechain-testnet"))]
     PulsechainTestnet = 943,
 
+    #[strum(to_string = "cannon")]
+    #[cfg_attr(feature = "serde", serde(alias = "cannon"))]
+    Cannon = 13370,
+
     #[strum(to_string = "immutable")]
     #[cfg_attr(feature = "serde", serde(alias = "immutable"))]
     Immutable = 13371,
@@ -409,11 +386,37 @@ pub enum NamedChain {
     Kaia = 8217,
     Story = 1514,
     Sei = 1329,
+    #[strum(to_string = "sei-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "sei-testnet"))]
+    SeiTestnet = 1328,
+    #[strum(to_string = "stable-mainnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "stable-mainnet"))]
+    StableMainnet = 988,
+    #[strum(to_string = "stable-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "stable-testnet"))]
+    StableTestnet = 2201,
+    #[strum(to_string = "megaeth")]
+    #[cfg_attr(feature = "serde", serde(alias = "megaeth"))]
+    MegaEth = 4326,
+    #[strum(to_string = "megaeth-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "megaeth-testnet", alias = "megaeth_testnet"))]
+    MegaEthTestnet = 6343,
+
+    #[strum(to_string = "xdc-mainnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "xdc-mainnet"))]
+    XdcMainnet = 50,
+    #[strum(to_string = "xdc-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "xdc-testnet"))]
+    XdcTestnet = 51,
 
     Unichain = 130,
     #[strum(to_string = "unichain-sepolia")]
     #[cfg_attr(feature = "serde", serde(alias = "unichain-sepolia"))]
     UnichainSepolia = 1301,
+
+    #[strum(to_string = "signet-pecorino")]
+    #[cfg_attr(feature = "serde", serde(alias = "signet-pecorino"))]
+    SignetPecorino = 14174,
 
     #[strum(to_string = "apechain")]
     #[cfg_attr(feature = "serde", serde(alias = "apechain"))]
@@ -422,15 +425,12 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "apechain-testnet", alias = "curtis"))]
     Curtis = 33111,
 
-    #[strum(to_string = "sonic-blaze")]
-    #[cfg_attr(feature = "serde", serde(alias = "sonic-blaze"))]
-    SonicBlaze = 57054,
-    #[strum(to_string = "sonic-testnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "sonic-testnet"))]
-    SonicTestnet = 64165,
     #[strum(to_string = "sonic")]
     #[cfg_attr(feature = "serde", serde(alias = "sonic"))]
     Sonic = 146,
+    #[strum(to_string = "sonic-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "sonic-testnet"))]
+    SonicTestnet = 14601,
 
     #[strum(to_string = "treasure")]
     #[cfg_attr(feature = "serde", serde(alias = "treasure"))]
@@ -459,6 +459,10 @@ pub enum NamedChain {
     #[strum(to_string = "superposition")]
     #[cfg_attr(feature = "serde", serde(alias = "superposition"))]
     Superposition = 55244,
+
+    #[strum(serialize = "monad")]
+    #[cfg_attr(feature = "serde", serde(alias = "monad"))]
+    Monad = 143,
 
     #[strum(serialize = "monad-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "monad-testnet"))]
@@ -491,6 +495,14 @@ pub enum NamedChain {
     #[strum(to_string = "sophon-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "sophon-testnet"))]
     SophonTestnet = 531050104,
+
+    #[strum(to_string = "polkadot-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "polkadot-testnet"))]
+    PolkadotTestnet = 420420417,
+
+    #[strum(to_string = "paseo-passethub")]
+    #[cfg_attr(feature = "serde", serde(alias = "paseo-passethub"))]
+    PaseoPassethub = 420420422,
 
     #[strum(to_string = "lens")]
     #[cfg_attr(feature = "serde", serde(alias = "lens"))]
@@ -526,6 +538,32 @@ pub enum NamedChain {
     #[strum(to_string = "fluent-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "fluent-testnet"))]
     FluentTestnet = 20994,
+
+    #[strum(to_string = "skale-base")]
+    #[cfg_attr(feature = "serde", serde(alias = "skale-base"))]
+    SkaleBase = 1187947933,
+
+    #[strum(to_string = "skale-base-sepolia-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "skale-base-sepolia-testnet"))]
+    SkaleBaseSepoliaTestnet = 324705682,
+
+    // === MemeCore chain ===
+    // Variants that belong to the MemeCore chain.
+    #[strum(to_string = "memecore")]
+    #[cfg_attr(feature = "serde", serde(alias = "memecore"))]
+    MemeCore = 4352,
+    #[strum(to_string = "formicarium", serialize = "memecore-formicarium")]
+    #[cfg_attr(feature = "serde", serde(alias = "formicairum", alias = "memecore-formicarium"))]
+    Formicarium = 43521,
+    #[strum(to_string = "insectarium", serialize = "memecore-insectarium")]
+    #[cfg_attr(feature = "serde", serde(alias = "insectarium", alias = "memecore-insectarium"))]
+    Insectarium = 43522,
+
+    #[strum(to_string = "tempo", serialize = "tempo-mainnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "tempo", alias = "tempo-mainnet"))]
+    Tempo = 4217,
+    TempoModerato = 42431,
+    TempoTestnet = 42429,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -694,11 +732,18 @@ impl NamedChain {
         )
     }
 
+    /// Returns true if the chain contains Gnosis configuration.
+    pub const fn is_gnosis(self) -> bool {
+        use NamedChain::*;
+
+        matches!(self, Gnosis | Chiado)
+    }
+
     /// Returns true if the chain contains Polygon configuration.
     pub const fn is_polygon(self) -> bool {
         use NamedChain::*;
 
-        matches!(self, Polygon | PolygonAmoy | PolygonZkEvm | PolygonMumbai | PolygonZkEvmTestnet)
+        matches!(self, Polygon | PolygonAmoy)
     }
 
     /// Returns true if the chain contains Arbitrum configuration.
@@ -725,6 +770,13 @@ impl NamedChain {
         )
     }
 
+    /// Returns true if the chain contains Tempo configuration.
+    pub const fn is_tempo(self) -> bool {
+        use NamedChain::*;
+
+        matches!(self, Tempo | TempoModerato | TempoTestnet)
+    }
+
     /// Returns the chain's average blocktime, if applicable.
     ///
     /// It can be beneficial to know the average blocktime to adjust the polling of an HTTP provider
@@ -747,7 +799,7 @@ impl NamedChain {
         use NamedChain::*;
 
         Some(Duration::from_millis(match self {
-            Mainnet | Taiko | TaikoHekla => 12_000,
+            Mainnet | Taiko | TaikoHekla | SignetPecorino => 12_000,
 
             Arbitrum
             | ArbitrumTestnet
@@ -770,14 +822,15 @@ impl NamedChain {
             | MantleSepolia | Mode | ModeSepolia | Pgn | PgnSepolia | HappychainTestnet
             | Soneium | SoneiumMinatoTestnet | Bob | BobSepolia => 2_000,
 
-            Ink | InkSepolia | Odyssey => 1_000,
+            Ink | InkSepolia | Odyssey | Plasma | PlasmaTestnet => 1_000,
 
             Viction => 2_000,
 
-            Polygon | PolygonMumbai | PolygonAmoy => 2_100,
+            Polygon | PolygonAmoy => 2_100,
 
-            Acala | AcalaMandalaTestnet | AcalaTestnet | Karura | KaruraTestnet | Moonbeam
-            | Moonriver => 12_500,
+            Acala | AcalaMandalaTestnet | AcalaTestnet | Karura | KaruraTestnet => 12_500,
+
+            Moonbeam | Moonriver => 6_500,
 
             BinanceSmartChain | BinanceSmartChainTestnet => 750,
 
@@ -797,7 +850,7 @@ impl NamedChain {
 
             Dev | AnvilHardhat => 200,
 
-            Celo | CeloAlfajores | CeloBaklava => 5_000,
+            Celo | CeloSepolia => 1_000,
 
             FilecoinCalibrationTestnet | FilecoinMainnet => 30_000,
 
@@ -840,17 +893,22 @@ impl NamedChain {
             Zeta => 6_000,
             Kaia => 1_000,
             Story => 2_500,
-            Sei => 500,
+            Sei | SeiTestnet => 500,
+            StableMainnet | StableTestnet => 700,
+            MegaEth | MegaEthTestnet => 1_000,
 
-            Sonic => 1_000,
+            XdcMainnet => 2400,
+            XdcTestnet => 2400,
 
-            TelosEvm | TelosEvmTestnet => 500,
+            Sonic | SonicTestnet => 1_000,
+
+            TelosEvm | TelosEvmTestnet | Tempo | TempoTestnet | TempoModerato => 500,
 
             UnichainSepolia | Unichain => 1_000,
 
             BerachainBepolia | Berachain => 2_000,
 
-            MonadTestnet => 500,
+            Monad | MonadTestnet => 400,
 
             Hyperliquid => 2_000,
 
@@ -865,12 +923,18 @@ impl NamedChain {
             Fuse => 5_000,
             FluentDevnet => 3_000,
             FluentTestnet => 1_000,
+            MemeCore | Formicarium | Insectarium => 7_000,
 
-            Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi
-            | MantleTestnet | Moonbase | MoonbeamDev | OptimismKovan | Poa | Sokol
-            | EmeraldTestnet | Boba | PolygonZkEvm | PolygonZkEvmTestnet | Metis | Linea
-            | LineaGoerli | LineaSepolia | KakarotSepolia | SonicBlaze | SonicTestnet
-            | Treasure | TreasureTopaz | Corn | CornTestnet => return None,
+            SkaleBase | SkaleBaseSepoliaTestnet => 1_000,
+
+            PolkadotTestnet | PaseoPassethub => 6_000,
+
+            Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi | Moonbase
+            | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | Metis | Linea
+            | LineaGoerli | LineaSepolia | Treasure | TreasureTopaz | Corn | CornTestnet
+            | Cannon => {
+                return None;
+            }
         }))
     }
 
@@ -889,10 +953,9 @@ impl NamedChain {
 
         match self {
             // Known legacy chains / non EIP-1559 compliant.
-            CeloAlfajores | CeloBaklava | Elastos | Emerald | EmeraldTestnet | Fantom
-            | FantomTestnet | MantleTestnet | OptimismKovan | PolygonZkEvm
-            | PolygonZkEvmTestnet | Ronin | RoninTestnet | Rsk | RskTestnet | Shimmer
-            | Treasure | TreasureTopaz | Viction | Sophon | SophonTestnet => true,
+            Elastos | Emerald | EmeraldTestnet | Fantom | FantomTestnet | OptimismKovan | Ronin
+            | RoninTestnet | Rsk | RskTestnet | Shimmer | Treasure | TreasureTopaz | Viction
+            | Sophon | SophonTestnet => true,
 
             // Known EIP-1559 chains.
             Mainnet
@@ -914,6 +977,7 @@ impl NamedChain {
             | Blast
             | BlastSepolia
             | Celo
+            | CeloSepolia
             | Fraxtal
             | FraxtalTestnet
             | Optimism
@@ -922,7 +986,6 @@ impl NamedChain {
             | Bob
             | BobSepolia
             | Polygon
-            | PolygonMumbai
             | PolygonAmoy
             | Avalanche
             | AvalancheFuji
@@ -954,7 +1017,6 @@ impl NamedChain {
             | ModeSepolia
             | Pgn
             | PgnSepolia
-            | KakarotSepolia
             | Etherlink
             | EtherlinkTestnet
             | Degen
@@ -979,16 +1041,19 @@ impl NamedChain {
             | Soneium
             | SoneiumMinatoTestnet
             | Sonic
+            | SonicTestnet
             | World
             | WorldSepolia
             | Unichain
             | UnichainSepolia
+            | SignetPecorino
             | ApeChain
             | BerachainBepolia
             | Berachain
             | Curtis
             | SuperpositionTestnet
             | Superposition
+            | Monad
             | MonadTestnet
             | Hyperliquid
             | Corn
@@ -1006,14 +1071,63 @@ impl NamedChain {
             | TelosEvm
             | TelosEvmTestnet
             | FluentDevnet
-            | FluentTestnet => false,
+            | FluentTestnet
+            | Plasma
+            | PlasmaTestnet
+            | MemeCore
+            | Formicarium
+            | Insectarium
+            | MegaEth
+            | MegaEthTestnet => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
-            Dev | AnvilHardhat | Morden | Ropsten | Rinkeby | Cronos | CronosTestnet | Kovan
-            | Sokol | Poa | Moonbeam | MoonbeamDev | Moonriver | Moonbase | Evmos
-            | EvmosTestnet | Aurora | AuroraTestnet | Canto | CantoTestnet | Iotex | Core
-            | Merlin | Bitlayer | SonicBlaze | SonicTestnet | Vana | Zeta | Kaia | Story | Sei
-            | Injective | InjectiveTestnet | Katana | Lisk | Fuse => false,
+            Dev
+            | AnvilHardhat
+            | Morden
+            | Ropsten
+            | Rinkeby
+            | Cronos
+            | CronosTestnet
+            | Kovan
+            | Sokol
+            | Poa
+            | Moonbeam
+            | MoonbeamDev
+            | Moonriver
+            | Moonbase
+            | Evmos
+            | EvmosTestnet
+            | Aurora
+            | AuroraTestnet
+            | Canto
+            | CantoTestnet
+            | Iotex
+            | Core
+            | Merlin
+            | Bitlayer
+            | Vana
+            | Zeta
+            | Kaia
+            | Story
+            | Sei
+            | SeiTestnet
+            | StableMainnet
+            | StableTestnet
+            | Injective
+            | InjectiveTestnet
+            | Katana
+            | Lisk
+            | Fuse
+            | Cannon
+            | SkaleBase
+            | SkaleBaseSepoliaTestnet
+            | PolkadotTestnet
+            | PaseoPassethub
+            | XdcMainnet
+            | XdcTestnet
+            | Tempo
+            | TempoTestnet
+            | TempoModerato => false,
         }
     }
 
@@ -1042,6 +1156,8 @@ impl NamedChain {
                 | BaseSepolia
                 | Blast
                 | BlastSepolia
+                | Celo
+                | CeloSepolia
                 | Fraxtal
                 | FraxtalTestnet
                 | Ink
@@ -1053,7 +1169,6 @@ impl NamedChain {
                 | MantleSepolia
                 | Mode
                 | ModeSepolia
-                | PolygonMumbai
                 | Polygon
                 | Arbitrum
                 | ArbitrumNova
@@ -1074,7 +1189,6 @@ impl NamedChain {
                 | BinanceSmartChainTestnet
                 | OpBNBMainnet
                 | OpBNBTestnet
-                | KakarotSepolia
                 | Taiko
                 | TaikoHekla
                 | Avalanche
@@ -1101,10 +1215,16 @@ impl NamedChain {
                 | Iotex
                 | Unichain
                 | UnichainSepolia
+                | SignetPecorino
+                | StableMainnet
+                | StableTestnet
+                | MegaEth
+                | MegaEthTestnet
                 | ApeChain
                 | Curtis
                 | SuperpositionTestnet
                 | Superposition
+                | Monad
                 | MonadTestnet
                 | Corn
                 | CornTestnet
@@ -1116,6 +1236,14 @@ impl NamedChain {
                 | InjectiveTestnet
                 | FluentDevnet
                 | FluentTestnet
+                | Cannon
+                | MemeCore
+                | Formicarium
+                | Insectarium
+                | Tempo
+                | TempoTestnet
+                | TempoModerato
+                | PaseoPassethub
         )
     }
 
@@ -1141,8 +1269,7 @@ impl NamedChain {
             | BinanceSmartChainTestnet
             | CantoTestnet
             | CronosTestnet
-            | CeloAlfajores
-            | CeloBaklava
+            | CeloSepolia
             | EmeraldTestnet
             | EvmosTestnet
             | FantomTestnet
@@ -1152,23 +1279,19 @@ impl NamedChain {
             | LineaGoerli
             | LineaSepolia
             | InkSepolia
-            | MantleTestnet
             | MantleSepolia
             | MoonbeamDev
             | OptimismGoerli
             | OptimismKovan
             | OptimismSepolia
             | BobSepolia
-            | PolygonMumbai
             | PolygonAmoy
-            | PolygonZkEvmTestnet
             | ScrollSepolia
             | Shimmer
             | ZkSyncTestnet
             | ZoraSepolia
             | ModeSepolia
             | PgnSepolia
-            | KakarotSepolia
             | EtherlinkTestnet
             | OpBNBTestnet
             | RoninTestnet
@@ -1187,9 +1310,9 @@ impl NamedChain {
             | SoneiumMinatoTestnet
             | WorldSepolia
             | UnichainSepolia
+            | SignetPecorino
             | Curtis
             | TreasureTopaz
-            | SonicBlaze
             | SonicTestnet
             | BerachainBepolia
             | SuperpositionTestnet
@@ -1199,27 +1322,38 @@ impl NamedChain {
             | AbstractTestnet
             | LensTestnet
             | SophonTestnet
+            | PolkadotTestnet
+            | PaseoPassethub
             | InjectiveTestnet
             | FluentDevnet
             | FluentTestnet
-            | CornTestnet => true,
+            | SeiTestnet
+            | StableTestnet
+            | MegaEthTestnet
+            | CornTestnet
+            | Formicarium
+            | Insectarium
+            | SkaleBaseSepoliaTestnet
+            | XdcTestnet
+            | TempoTestnet
+            | TempoModerato
+            | PlasmaTestnet => true,
 
             // Dev chains.
-            Dev | AnvilHardhat => true,
+            Dev | AnvilHardhat | Cannon => true,
 
             // Mainnets.
             Mainnet | Optimism | Arbitrum | ArbitrumNova | Blast | Syndr | Cronos | Rsk
-            | BinanceSmartChain | Poa | Sokol | Scroll | Metis | Gnosis | Polygon
-            | PolygonZkEvm | Fantom | Moonbeam | Moonriver | Moonbase | Evmos | Chiado | Oasis
-            | Emerald | FilecoinMainnet | Avalanche | Celo | Aurora | Canto | Boba | Base
-            | Fraxtal | Ink | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn
-            | Mode | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala
-            | Karura | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World
-            | Iotex | Core | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob
-            | Soneium | Sonic | Superposition | Berachain | Unichain | TelosEvm | Story | Sei
-            | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana | Lisk | Fuse | Injective => {
-                false
-            }
+            | BinanceSmartChain | Poa | Sokol | Scroll | Metis | Gnosis | Polygon | Fantom
+            | Moonbeam | Moonriver | Moonbase | Evmos | Chiado | Oasis | Emerald | Plasma
+            | FilecoinMainnet | Avalanche | Celo | Aurora | Canto | Boba | Base | Fraxtal | Ink
+            | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn | Mode | Viction
+            | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
+            | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex | Core
+            | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob | Soneium
+            | Sonic | Superposition | Berachain | Monad | Unichain | TelosEvm | Story | Sei
+            | StableMainnet | MegaEth | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana
+            | Lisk | Fuse | Injective | MemeCore | SkaleBase | XdcMainnet | Tempo => false,
         }
     }
 
@@ -1229,13 +1363,16 @@ impl NamedChain {
 
         Some(match self {
             Mainnet | Goerli | Holesky | Kovan | Sepolia | Morden | Ropsten | Rinkeby | Scroll
-            | ScrollSepolia | Taiko | TaikoHekla | Unichain | UnichainSepolia
-            | SuperpositionTestnet | Superposition | Abstract | ZkSync | ZkSyncTestnet | Katana
-            | Lisk => "ETH",
+            | ScrollSepolia | Taiko | TaikoHekla | Unichain | UnichainSepolia | MegaEth
+            | MegaEthTestnet | SuperpositionTestnet | Superposition | Abstract | ZkSync
+            | ZkSyncTestnet | Katana | Lisk | Base | BaseGoerli | BaseSepolia | Optimism
+            | OptimismSepolia => "ETH",
 
             Mantle | MantleSepolia => "MNT",
 
             GravityAlphaMainnet | GravityAlphaTestnetSepolia => "G",
+
+            Celo | CeloSepolia => "CELO",
 
             Xai | XaiSepolia => "XAI",
 
@@ -1277,20 +1414,28 @@ impl NamedChain {
             Zeta => "ZETA",
             Kaia => "KAIA",
             Story => "IP",
-            Sei => "SEI",
+            Sei | SeiTestnet => "SEI",
+            StableMainnet | StableTestnet => "gUSDT",
             ApeChain | Curtis => "APE",
+
+            XdcMainnet => "XDC",
+            XdcTestnet => "TXDC",
 
             Treasure | TreasureTopaz => "MAGIC",
 
             BerachainBepolia | Berachain => "BERA",
 
-            Sonic | SonicBlaze => "S",
+            Monad | MonadTestnet => "MON",
+
+            Sonic | SonicTestnet => "S",
 
             TelosEvm | TelosEvmTestnet => "TLOS",
 
             Hyperliquid => "HYPE",
 
-            Polygon | PolygonMumbai | PolygonZkEvm | PolygonZkEvmTestnet | PolygonAmoy => "POL",
+            SignetPecorino => "USDS",
+
+            Polygon | PolygonAmoy => "POL",
 
             Corn | CornTestnet => "BTCN",
 
@@ -1302,8 +1447,14 @@ impl NamedChain {
             Rsk => "RBTC",
             RskTestnet => "tRBTC",
 
-            Injective => "INJ",
-            InjectiveTestnet => "INJ",
+            Injective | InjectiveTestnet => "INJ",
+
+            Plasma | PlasmaTestnet => "XPL",
+
+            MemeCore => "M",
+            Formicarium => "tM",
+            Insectarium => "tM",
+            PaseoPassethub => "PAS",
 
             _ => return None,
         })
@@ -1324,10 +1475,6 @@ impl NamedChain {
     ///     NamedChain::Mainnet.etherscan_urls(),
     ///     Some(("https://api.etherscan.io/v2/api?chainid=1", "https://etherscan.io"))
     /// );
-    /// assert_eq!(
-    ///     NamedChain::Avalanche.etherscan_urls(),
-    ///     Some(("https://api.etherscan.io/v2/api?chainid=43114", "https://snowtrace.io"))
-    /// );
     /// assert_eq!(NamedChain::AnvilHardhat.etherscan_urls(), None);
     /// ```
     pub const fn etherscan_urls(self) -> Option<(&'static str, &'static str)> {
@@ -1335,10 +1482,6 @@ impl NamedChain {
 
         Some(match self {
             Mainnet => ("https://api.etherscan.io/v2/api?chainid=1", "https://etherscan.io"),
-            Ropsten => ("https://api-ropsten.etherscan.io/api", "https://ropsten.etherscan.io"),
-            Kovan => ("https://api-kovan.etherscan.io/api", "https://kovan.etherscan.io"),
-            Rinkeby => ("https://api-rinkeby.etherscan.io/api", "https://rinkeby.etherscan.io"),
-            Goerli => ("https://api-goerli.etherscan.io/api", "https://goerli.etherscan.io"),
             Sepolia => {
                 ("https://api.etherscan.io/v2/api?chainid=11155111", "https://sepolia.etherscan.io")
             }
@@ -1348,60 +1491,32 @@ impl NamedChain {
             Hoodi => {
                 ("https://api.etherscan.io/v2/api?chainid=560048", "https://hoodi.etherscan.io")
             }
-
             Polygon => ("https://api.etherscan.io/v2/api?chainid=137", "https://polygonscan.com"),
-            PolygonMumbai => {
-                ("https://api-testnet.polygonscan.com/api", "https://mumbai.polygonscan.com")
-            }
             PolygonAmoy => {
                 ("https://api.etherscan.io/v2/api?chainid=80002", "https://amoy.polygonscan.com")
             }
-
-            PolygonZkEvm => {
-                ("https://api.etherscan.io/v2/api?chainid=1101", "https://zkevm.polygonscan.com")
-            }
-            PolygonZkEvmTestnet => (
-                "https://api-testnet-zkevm.polygonscan.com/api",
-                "https://testnet-zkevm.polygonscan.com",
-            ),
-
-            Avalanche => ("https://api.etherscan.io/v2/api?chainid=43114", "https://snowtrace.io"),
+            Avalanche => ("https://api.etherscan.io/v2/api?chainid=43114", "https://snowscan.xyz"),
             AvalancheFuji => {
-                ("https://api.etherscan.io/v2/api?chainid=43113", "https://testnet.snowtrace.io")
+                ("https://api.etherscan.io/v2/api?chainid=43113", "https://testnet.snowscan.xyz")
             }
-
             Optimism => {
                 ("https://api.etherscan.io/v2/api?chainid=10", "https://optimistic.etherscan.io")
             }
-            OptimismGoerli => (
-                "https://api-goerli-optimistic.etherscan.io/api",
-                "https://goerli-optimism.etherscan.io",
-            ),
-            OptimismKovan => (
-                "https://api-kovan-optimistic.etherscan.io/api",
-                "https://kovan-optimistic.etherscan.io",
-            ),
             OptimismSepolia => (
                 "https://api.etherscan.io/v2/api?chainid=11155420",
                 "https://sepolia-optimism.etherscan.io",
             ),
-
             Bob => ("https://explorer.gobob.xyz/api", "https://explorer.gobob.xyz"),
             BobSepolia => (
                 "https://bob-sepolia.explorer.gobob.xyz/api",
                 "https://bob-sepolia.explorer.gobob.xyz",
             ),
-
-            Fantom => ("https://api.ftmscan.com/api", "https://ftmscan.com"),
-            FantomTestnet => ("https://api-testnet.ftmscan.com/api", "https://testnet.ftmscan.com"),
-
             BinanceSmartChain => {
-                ("https://api.etherscan.io/v2/api?chainid=52", "https://bscscan.com")
+                ("https://api.etherscan.io/v2/api?chainid=56", "https://bscscan.com")
             }
             BinanceSmartChainTestnet => {
                 ("https://api.etherscan.io/v2/api?chainid=97", "https://testnet.bscscan.com")
             }
-
             OpBNBMainnet => {
                 ("https://api.etherscan.io/v2/api?chainid=204", "https://opbnb.bscscan.com")
             }
@@ -1409,19 +1524,13 @@ impl NamedChain {
                 "https://api.etherscan.io/v2/api?chainid=5611",
                 "https://opbnb-testnet.bscscan.com",
             ),
-
             Arbitrum => ("https://api.etherscan.io/v2/api?chainid=42161", "https://arbiscan.io"),
-            ArbitrumTestnet => {
-                ("https://api-testnet.arbiscan.io/api", "https://testnet.arbiscan.io")
-            }
-            ArbitrumGoerli => ("https://api-goerli.arbiscan.io/api", "https://goerli.arbiscan.io"),
             ArbitrumSepolia => {
                 ("https://api.etherscan.io/v2/api?chainid=421614", "https://sepolia.arbiscan.io")
             }
             ArbitrumNova => {
                 ("https://api.etherscan.io/v2/api?chainid=42170", "https://nova.arbiscan.io")
             }
-
             GravityAlphaMainnet => {
                 ("https://explorer.gravity.xyz/api", "https://explorer.gravity.xyz")
             }
@@ -1431,23 +1540,16 @@ impl NamedChain {
             HappychainTestnet => {
                 ("https://explorer.testnet.happy.tech/api", "https://explorer.testnet.happy.tech")
             }
-
             XaiSepolia => (
                 "https://api.etherscan.io/v2/api?chainid=37714555429",
                 "https://sepolia.xaiscan.io",
             ),
             Xai => ("https://api.etherscan.io/v2/api?chainid=660279", "https://xaiscan.io"),
-
             Syndr => ("https://explorer.syndr.com/api", "https://explorer.syndr.com"),
             SyndrSepolia => {
                 ("https://sepolia-explorer.syndr.com/api", "https://sepolia-explorer.syndr.com")
             }
-
             Cronos => ("https://api.etherscan.io/v2/api?chainid=25", "https://cronoscan.com"),
-            CronosTestnet => {
-                ("https://api-testnet.cronoscan.com/api", "https://testnet.cronoscan.com")
-            }
-
             Moonbeam => {
                 ("https://api.etherscan.io/v2/api?chainid=1284", "https://moonbeam.moonscan.io")
             }
@@ -1457,50 +1559,39 @@ impl NamedChain {
             Moonriver => {
                 ("https://api.etherscan.io/v2/api?chainid=1285", "https://moonriver.moonscan.io")
             }
-
             Gnosis => ("https://api.etherscan.io/v2/api?chainid=100", "https://gnosisscan.io"),
-
             Scroll => ("https://api.etherscan.io/v2/api?chainid=534352", "https://scrollscan.com"),
             ScrollSepolia => {
                 ("https://api.etherscan.io/v2/api?chainid=534351", "https://sepolia.scrollscan.com")
             }
-
             Ink => ("https://explorer.inkonchain.com/api/v2", "https://explorer.inkonchain.com"),
             InkSepolia => (
                 "https://explorer-sepolia.inkonchain.com/api/v2",
                 "https://explorer-sepolia.inkonchain.com",
             ),
-
             Shimmer => {
                 ("https://explorer.evm.shimmer.network/api", "https://explorer.evm.shimmer.network")
             }
-
             Metis => (
                 "https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan",
                 "https://explorer.metis.io",
             ),
-
             Chiado => {
-                ("https://blockscout.chiadochain.net/api", "https://blockscout.chiadochain.net")
+                ("https://gnosis-chiado.blockscout.com/api", "https://gnosis-chiado.blockscout.com")
             }
-
+            Plasma => ("https://api.etherscan.io/v2/api?chainid=9745", "https://plasmascan.to"),
+            PlasmaTestnet => {
+                ("https://api.etherscan.io/v2/api?chainid=9746", "https://testnet.plasmascan.to")
+            }
             FilecoinCalibrationTestnet => (
                 "https://api.calibration.node.glif.io/rpc/v1",
                 "https://calibration.filfox.info/en",
             ),
-
-            Sokol => ("https://blockscout.com/poa/sokol/api", "https://blockscout.com/poa/sokol"),
-
-            Poa => ("https://blockscout.com/poa/core/api", "https://blockscout.com/poa/core"),
-
             Rsk => ("https://blockscout.com/rsk/mainnet/api", "https://blockscout.com/rsk/mainnet"),
             RskTestnet => (
                 "https://rootstock-testnet.blockscout.com/api",
                 "https://rootstock-testnet.blockscout.com",
             ),
-
-            Oasis => ("https://scan.oasischain.io/api", "https://scan.oasischain.io"),
-
             Emerald => {
                 ("https://explorer.emerald.oasis.dev/api", "https://explorer.emerald.oasis.dev")
             }
@@ -1508,103 +1599,56 @@ impl NamedChain {
                 "https://testnet.explorer.emerald.oasis.dev/api",
                 "https://testnet.explorer.emerald.oasis.dev",
             ),
-
             Aurora => ("https://api.aurorascan.dev/api", "https://aurorascan.dev"),
             AuroraTestnet => {
                 ("https://testnet.aurorascan.dev/api", "https://testnet.aurorascan.dev")
             }
-
-            Evmos => ("https://evm.evmos.org/api", "https://evm.evmos.org"),
-            EvmosTestnet => ("https://evm.evmos.dev/api", "https://evm.evmos.dev"),
-
             Celo => ("https://api.etherscan.io/v2/api?chainid=42220", "https://celoscan.io"),
-            CeloAlfajores => {
-                ("https://api.etherscan.io/v2/api?chainid=44787", "https://alfajores.celoscan.io")
+            CeloSepolia => {
+                ("https://api.etherscan.io/v2/api?chainid=11142220", "https://sepolia.celoscan.io")
             }
-            CeloBaklava => {
-                ("https://explorer.celo.org/baklava/api", "https://explorer.celo.org/baklava")
-            }
-
-            Canto => ("https://evm.explorer.canto.io/api", "https://evm.explorer.canto.io"),
-            CantoTestnet => (
-                "https://testnet-explorer.canto.neobase.one/api",
-                "https://testnet-explorer.canto.neobase.one",
-            ),
-
             Boba => ("https://api.bobascan.com/api", "https://bobascan.com"),
-
             Base => ("https://api.etherscan.io/v2/api?chainid=8453", "https://basescan.org"),
-            BaseGoerli => ("https://api-goerli.basescan.org/api", "https://goerli.basescan.org"),
             BaseSepolia => {
                 ("https://api.etherscan.io/v2/api?chainid=84532", "https://sepolia.basescan.org")
             }
-
             Fraxtal => ("https://api.etherscan.io/v2/api?chainid=252", "https://fraxscan.com"),
             FraxtalTestnet => {
                 ("https://api.etherscan.io/v2/api?chainid=2522", "https://holesky.fraxscan.com")
             }
-
             Blast => ("https://api.etherscan.io/v2/api?chainid=81457", "https://blastscan.io"),
             BlastSepolia => (
                 "https://api.etherscan.io/v2/api?chainid=168587773",
                 "https://sepolia.blastscan.io",
             ),
-
             ZkSync => ("https://api.etherscan.io/v2/api?chainid=324", "https://era.zksync.network"),
             ZkSyncTestnet => (
                 "https://api.etherscan.io/v2/api?chainid=300",
                 "https://sepolia-era.zksync.network",
             ),
-
             Linea => ("https://api.etherscan.io/v2/api?chainid=59144", "https://lineascan.build"),
-            LineaGoerli => {
-                ("https://explorer.goerli.linea.build/api", "https://explorer.goerli.linea.build")
-            }
             LineaSepolia => {
                 ("https://api.etherscan.io/v2/api?chainid=59141", "https://sepolia.lineascan.build")
             }
-
-            Mantle => {
-                ("https://api.etherscan.io/v2/api?chainid=5000", "https://explorer.mantle.xyz")
+            Mantle => ("https://api.etherscan.io/v2/api?chainid=5000", "https://mantlescan.xyz"),
+            MantleSepolia => {
+                ("https://api.etherscan.io/v2/api?chainid=5003", "https://sepolia.mantlescan.xyz")
             }
-            MantleTestnet => {
-                ("https://explorer.testnet.mantle.xyz/api", "https://explorer.testnet.mantle.xyz")
-            }
-            MantleSepolia => (
-                "https://api.etherscan.io/v2/api?chainid=5003",
-                "https://explorer.sepolia.mantle.xyz",
-            ),
-
             Viction => ("https://www.vicscan.xyz/api", "https://www.vicscan.xyz"),
-
             Zora => ("https://explorer.zora.energy/api", "https://explorer.zora.energy"),
             ZoraSepolia => {
                 ("https://sepolia.explorer.zora.energy/api", "https://sepolia.explorer.zora.energy")
             }
-
-            Pgn => {
-                ("https://explorer.publicgoods.network/api", "https://explorer.publicgoods.network")
-            }
-
-            PgnSepolia => (
-                "https://explorer.sepolia.publicgoods.network/api",
-                "https://explorer.sepolia.publicgoods.network",
-            ),
-
             Mode => ("https://explorer.mode.network/api", "https://explorer.mode.network"),
             ModeSepolia => (
                 "https://sepolia.explorer.mode.network/api",
                 "https://sepolia.explorer.mode.network",
             ),
-
             Elastos => ("https://esc.elastos.io/api", "https://esc.elastos.io"),
-            KakarotSepolia => {
-                ("https://sepolia.kakarotscan.org/api", "https://sepolia.kakarotscan.org")
-            }
             Etherlink => ("https://explorer.etherlink.com/api", "https://explorer.etherlink.com"),
             EtherlinkTestnet => (
-                "https://testnet-explorer.etherlink.com/api",
-                "https://testnet-explorer.etherlink.com",
+                "https://testnet.explorer.etherlink.com/api",
+                "https://testnet.explorer.etherlink.com",
             ),
             Degen => ("https://explorer.degen.tips/api", "https://explorer.degen.tips"),
             Ronin => ("https://skynet-api.roninchain.com/ronin", "https://app.roninchain.com"),
@@ -1628,25 +1672,15 @@ impl NamedChain {
                 "https://blockscout.mandala.aca-staging.network/api",
                 "https://blockscout.mandala.aca-staging.network",
             ),
-            AcalaTestnet => (
-                "https://blockscout.acala-testnet.aca-staging.network/api",
-                "https://blockscout.acala-testnet.aca-staging.network",
-            ),
             Karura => {
                 ("https://blockscout.karura.network/api", "https://blockscout.karura.network")
             }
-            KaruraTestnet => (
-                "https://blockscout.karura-testnet.aca-staging.network/api",
-                "https://blockscout.karura-testnet.aca-staging.network",
-            ),
-
             Darwinia => {
                 ("https://explorer.darwinia.network/api", "https://explorer.darwinia.network")
             }
             Crab => {
                 ("https://crab-scan.darwinia.network/api", "https://crab-scan.darwinia.network")
             }
-            Koi => ("https://koi-scan.darwinia.network/api", "https://koi-scan.darwinia.network"),
             Cfx => ("https://evmapi.confluxscan.net/api", "https://evm.confluxscan.io"),
             CfxTestnet => {
                 ("https://evmapi-testnet.confluxscan.net/api", "https://evmtestnet.confluxscan.io")
@@ -1656,7 +1690,6 @@ impl NamedChain {
                 "https://api.scan.v4.testnet.pulsechain.com",
                 "https://scan.v4.testnet.pulsechain.com",
             ),
-
             Immutable => ("https://explorer.immutable.com/api", "https://explorer.immutable.com"),
             ImmutableTestnet => (
                 "https://explorer.testnet.immutable.com/api",
@@ -1678,6 +1711,9 @@ impl NamedChain {
             UnichainSepolia => {
                 ("https://api.etherscan.io/v2/api?chainid=1301", "https://sepolia.uniscan.xyz")
             }
+            SignetPecorino => {
+                ("https://explorer.pecorino.signet.sh/api", "https://explorer.pecorino.signet.sh")
+            }
             Core => ("https://openapi.coredao.org/api", "https://scan.coredao.org"),
             Merlin => ("https://scan.merlinchain.io/api", "https://scan.merlinchain.io"),
             Bitlayer => ("https://api.btrscan.com/scan/api", "https://www.btrscan.com"),
@@ -1685,24 +1721,32 @@ impl NamedChain {
             Zeta => ("https://zetachain.blockscout.com/api", "https://zetachain.blockscout.com"),
             Kaia => ("https://mainnet-oapi.kaiascan.io/api", "https://kaiascan.io"),
             Story => ("https://www.storyscan.xyz/api/v2", "https://www.storyscan.xyz"),
-
+            Sei => ("https://api.etherscan.io/v2/api?chainid=1329", "https://seiscan.io"),
+            SeiTestnet => {
+                ("https://api.etherscan.io/v2/api?chainid=1328", "https://testnet.seiscan.io")
+            }
+            StableMainnet => {
+                ("https://api.etherscan.io/v2/api?chainid=988", "https://stablescan.xyz")
+            }
+            StableTestnet => {
+                ("https://api.etherscan.io/v2/api?chainid=2201", "https://testnet.stablescan.xyz")
+            }
+            MegaEth => ("https://api.etherscan.io/v2/api?chainid=4326", "https://megascan.com"),
+            MegaEthTestnet => {
+                ("https://api.etherscan.io/v2/api?chainid=6343", "https://testnet.megascan.com")
+            }
+            XdcMainnet => ("https://api.etherscan.io/v2/api?chainid=50", "https://xdcscan.com"),
+            XdcTestnet => {
+                ("https://api.etherscan.io/v2/api?chainid=51", "https://testnet.xdcscan.com")
+            }
             ApeChain => ("https://api.etherscan.io/v2/api?chainid=33139", "https://apescan.io"),
             Curtis => {
                 ("https://api.etherscan.io/v2/api?chainid=33111", "https://curtis.apescan.io")
             }
-            SonicBlaze => {
-                ("https://api.etherscan.io/v2/api?chainid=57054", "https://testnet.sonicscan.org")
-            }
-            SonicTestnet => (
-                "https://api.routescan.io/v2/network/testnet/evm/64165/etherscan/api",
-                "https://scan.soniclabs.com",
-            ),
             Sonic => ("https://api.etherscan.io/v2/api?chainid=146", "https://sonicscan.org"),
-            Treasure => ("https://block-explorer.treasurescan.io/api", "https://treasurescan.io"),
-            TreasureTopaz => (
-                "https://block-explorer.topaz.treasurescan.io/api",
-                "https://topaz.treasurescan.io",
-            ),
+            SonicTestnet => {
+                ("https://api.etherscan.io/v2/api?chainid=14601", "https://testnet.sonicscan.org")
+            }
             BerachainBepolia => {
                 ("https://api.etherscan.io/v2/api?chainid=80069", "https://testnet.berascan.com")
             }
@@ -1714,6 +1758,7 @@ impl NamedChain {
             Superposition => {
                 ("https://explorer.superposition.so/api", "https://explorer.superposition.so")
             }
+            Monad => ("https://api.etherscan.io/v2/api?chainid=143", "https://monadscan.com"),
             MonadTestnet => {
                 ("https://api.etherscan.io/v2/api?chainid=10143", "https://testnet.monadscan.com")
             }
@@ -1736,11 +1781,6 @@ impl NamedChain {
                 "https://api.routescan.io/v2/network/testnet/evm/21000001/etherscan/api",
                 "https://testnet.cornscan.io",
             ),
-            // TODO: add hoodi etherscan when live
-            AnvilHardhat | Dev | Morden | MoonbeamDev | FilecoinMainnet | AutonomysNovaTestnet
-            | Iotex | Sei => {
-                return None;
-            }
             Sophon => ("https://api.etherscan.io/v2/api?chainid=50104", "https://sophscan.xyz"),
             SophonTestnet => (
                 "https://api.etherscan.io/v2/api?chainid=531050104",
@@ -1751,7 +1791,7 @@ impl NamedChain {
                 "https://block-explorer-api.staging.lens.zksync.dev",
                 "https://explorer.testnet.lens.xyz",
             ),
-            Katana => ("https://explorer.katanarpc.com/api", "https://explorer.katanarpc.com"),
+            Katana => ("https://api.etherscan.io/v2/api?chainid=747474", "https://katanascan.com"),
             Lisk => ("https://blockscout.lisk.com/api", "https://blockscout.lisk.com"),
             Fuse => ("https://explorer.fuse.io/api", "https://explorer.fuse.io"),
             Injective => (
@@ -1767,6 +1807,39 @@ impl NamedChain {
             }
             FluentTestnet => {
                 ("https://testnet.fluentscan.xyz/api", "https://testnet.fluentscan.xyz")
+            }
+            MemeCore => ("https://api.etherscan.io/v2/api?chainid=4352", "https://memecorescan.io"),
+            Formicarium => (
+                "https://api.etherscan.io/v2/api?chainid=43521",
+                "https://formicarium.memecorescan.io",
+            ),
+            Insectarium => (
+                "https://insectarium.blockscout.memecore.com/api",
+                "https://insectarium.blockscout.memecore.com",
+            ),
+            SkaleBase => (
+                "https://skale-base-explorer.skalenodes.com/api",
+                "https://skale-base-explorer.skalenodes.com",
+            ),
+            SkaleBaseSepoliaTestnet => (
+                "https://base-sepolia-testnet-explorer.skalenodes.com/api",
+                "https://base-sepolia-testnet-explorer.skalenodes.com",
+            ),
+            Tempo => ("https://contracts.tempo.xyz", "https://explore.mainnet.tempo.xyz"),
+            TempoModerato => ("https://contracts.tempo.xyz", "https://explore.moderato.tempo.xyz"),
+            TempoTestnet => ("https://contracts.tempo.xyz", "https://explore.andantino.tempo.xyz"),
+            PaseoPassethub => (
+                "https://blockscout-passet-hub.parity-testnet.parity.io/api",
+                "https://blockscout-passet-hub.parity-testnet.parity.io",
+            ),
+
+            AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
+            | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CronosTestnet | Dev
+            | Evmos | EvmosTestnet | Fantom | FantomTestnet | FilecoinMainnet | Goerli | Iotex
+            | KaruraTestnet | Koi | Kovan | LineaGoerli | MoonbeamDev | Morden | Oasis
+            | OptimismGoerli | OptimismKovan | Pgn | PgnSepolia | Poa | Rinkeby | Ropsten
+            | Sokol | Treasure | TreasureTopaz | Cannon | PolkadotTestnet => {
+                return None;
             }
         })
     }
@@ -1785,83 +1858,129 @@ impl NamedChain {
         use NamedChain::*;
 
         let api_key_name = match self {
-            Mainnet
-            | Morden
-            | Ropsten
-            | Kovan
-            | Rinkeby
+            Abstract
+            | AbstractTestnet
+            | ApeChain
+            | Arbitrum
+            | ArbitrumGoerli
+            | ArbitrumNova
+            | ArbitrumSepolia
+            | ArbitrumTestnet
+            | Aurora
+            | AuroraTestnet
+            | Avalanche
+            | AvalancheFuji
+            | Base
+            | BaseGoerli
+            | BaseSepolia
+            | BinanceSmartChain
+            | BinanceSmartChainTestnet
+            | Blast
+            | BlastSepolia
+            | Celo
+            | Cronos
+            | CronosTestnet
+            | Fraxtal
+            | FraxtalTestnet
+            | Gnosis
             | Goerli
             | Holesky
             | Hoodi
+            | Hyperliquid
+            | Katana
+            | Kovan
+            | Linea
+            | LineaSepolia
+            | Mainnet
+            | Mantle
+            | MantleSepolia
+            | Monad
+            | MonadTestnet
+            | Morden
+            | OpBNBMainnet
+            | OpBNBTestnet
             | Optimism
             | OptimismGoerli
             | OptimismKovan
             | OptimismSepolia
-            | BinanceSmartChain
-            | BinanceSmartChainTestnet
-            | OpBNBMainnet
-            | OpBNBTestnet
-            | Arbitrum
-            | ArbitrumTestnet
-            | ArbitrumGoerli
-            | ArbitrumSepolia
-            | ArbitrumNova
-            | Syndr
-            | SyndrSepolia
-            | Cronos
-            | CronosTestnet
-            | Aurora
-            | AuroraTestnet
-            | Celo
-            | CeloAlfajores
-            | Base
-            | Linea
-            | LineaSepolia
-            | Mantle
-            | MantleTestnet
-            | MantleSepolia
-            | Xai
-            | XaiSepolia
-            | BaseGoerli
-            | BaseSepolia
-            | Fraxtal
-            | FraxtalTestnet
-            | Blast
-            | BlastSepolia
-            | Gnosis
+            | Polygon
+            | PolygonAmoy
+            | Rinkeby
+            | Ropsten
             | Scroll
             | ScrollSepolia
+            | Sei
+            | SeiTestnet
+            | StableMainnet
+            | StableTestnet
+            | MegaEth
+            | MegaEthTestnet
+            | XdcMainnet
+            | XdcTestnet
+            | Sonic
+            | SonicTestnet
+            | Sophon
+            | SophonTestnet
+            | Syndr
+            | SyndrSepolia
             | Taiko
             | TaikoHekla
             | Unichain
             | UnichainSepolia
-            | MonadTestnet
-            | ApeChain
-            | Abstract
-            | AbstractTestnet
-            | ZkSyncTestnet
+            | Xai
+            | XaiSepolia
             | ZkSync
-            | Hyperliquid
-            | Sophon
-            | SophonTestnet => "ETHERSCAN_API_KEY",
-
-            Avalanche | AvalancheFuji => "SNOWTRACE_API_KEY",
-
-            Polygon | PolygonMumbai | PolygonAmoy | PolygonZkEvm | PolygonZkEvmTestnet => {
-                "POLYGONSCAN_API_KEY"
-            }
+            | ZkSyncTestnet
+            | MemeCore
+            | Formicarium => "ETHERSCAN_API_KEY",
 
             Fantom | FantomTestnet => "FTMSCAN_API_KEY",
 
             Moonbeam | Moonbase | MoonbeamDev | Moonriver => "MOONSCAN_API_KEY",
 
-            Acala | AcalaMandalaTestnet | AcalaTestnet | Canto | CantoTestnet | CeloBaklava
-            | Etherlink | EtherlinkTestnet | Flare | FlareCoston2 | KakarotSepolia | Karura
-            | KaruraTestnet | Mode | ModeSepolia | Pgn | PgnSepolia | Shimmer | Zora
-            | ZoraSepolia | Darwinia | Crab | Koi | Immutable | ImmutableTestnet | Soneium
-            | SoneiumMinatoTestnet | World | WorldSepolia | Curtis | Ink | InkSepolia
-            | SuperpositionTestnet | Superposition | Vana | Story | Katana | Lisk | Fuse
-            | Injective | InjectiveTestnet => "BLOCKSCOUT_API_KEY",
+            Acala
+            | AcalaMandalaTestnet
+            | AcalaTestnet
+            | Canto
+            | CantoTestnet
+            | CeloSepolia
+            | Etherlink
+            | EtherlinkTestnet
+            | Flare
+            | FlareCoston2
+            | Karura
+            | KaruraTestnet
+            | Mode
+            | ModeSepolia
+            | Pgn
+            | PgnSepolia
+            | Shimmer
+            | Zora
+            | ZoraSepolia
+            | Darwinia
+            | Crab
+            | Koi
+            | Immutable
+            | ImmutableTestnet
+            | Soneium
+            | SoneiumMinatoTestnet
+            | World
+            | WorldSepolia
+            | Curtis
+            | Ink
+            | InkSepolia
+            | SuperpositionTestnet
+            | Superposition
+            | Vana
+            | Story
+            | Lisk
+            | Fuse
+            | Injective
+            | InjectiveTestnet
+            | SignetPecorino
+            | SkaleBase
+            | SkaleBaseSepoliaTestnet
+            | PaseoPassethub => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
@@ -1870,9 +1989,9 @@ impl NamedChain {
             Bitlayer => "BITLAYERSCAN_API_KEY",
             Zeta => "ZETASCAN_API_KEY",
             Kaia => "KAIASCAN_API_KEY",
-            Sonic => "SONICSCAN_API_KEY",
             Berachain | BerachainBepolia => "BERASCAN_API_KEY",
             Corn | CornTestnet => "ROUTESCAN_API_KEY",
+            Plasma | PlasmaTestnet => "ETHERSCAN_API_KEY",
             // Explicitly exhaustive. See NB above.
             Metis
             | Chiado
@@ -1908,17 +2027,20 @@ impl NamedChain {
             | AutonomysNovaTestnet
             | Iotex
             | HappychainTestnet
-            | SonicBlaze
-            | SonicTestnet
             | Treasure
             | TreasureTopaz
             | TelosEvm
             | TelosEvmTestnet
             | Lens
             | LensTestnet
-            | Sei
             | FluentDevnet
-            | FluentTestnet => return None,
+            | FluentTestnet
+            | Cannon
+            | Insectarium
+            | PolkadotTestnet
+            | TempoTestnet
+            | TempoModerato
+            | Tempo => return None,
         };
 
         Some(api_key_name)
@@ -2020,6 +2142,9 @@ impl NamedChain {
             ZkSync => address!("5aea5775959fbc2557cc8789bc1bf90a239d9a91"),
             Sophon => address!("f1f9e08a0818594fde4713ae0db1e46672ca960e"),
             Rsk => address!("967f8799af07df1534d48a95a5c9febe92c53ae0"),
+            MemeCore | Formicarium | Insectarium => {
+                address!("0x653e645e3d81a72e71328Bc01A04002945E3ef7A")
+            }
             _ => return None,
         };
 
@@ -2094,15 +2219,11 @@ mod tests {
                 &["bsc-testnet", "bnb-smart-chain-testnet", "binance-smart-chain-testnet"],
             ),
             (Gnosis, &["gnosis", "gnosis-chain"]),
-            (PolygonMumbai, &["mumbai"]),
-            (PolygonZkEvm, &["zkevm", "polygon-zkevm"]),
-            (PolygonZkEvmTestnet, &["zkevm-testnet", "polygon-zkevm-testnet"]),
             (AnvilHardhat, &["anvil", "hardhat"]),
             (AvalancheFuji, &["fuji"]),
             (ZkSync, &["zksync"]),
             (ZkSyncTestnet, &["zksync-testnet"]),
             (Mantle, &["mantle"]),
-            (MantleTestnet, &["mantle-testnet"]),
             (MantleSepolia, &["mantle-sepolia"]),
             (GravityAlphaMainnet, &["gravity-alpha-mainnet"]),
             (GravityAlphaTestnetSepolia, &["gravity-alpha-testnet-sepolia"]),
@@ -2149,6 +2270,17 @@ mod tests {
             (FluentTestnet, &["fluent-testnet"]),
             (Injective, &["injective"]),
             (InjectiveTestnet, &["injective-testnet"]),
+            (StableMainnet, &["stable-mainnet"]),
+            (XdcMainnet, &["xdc-mainnet"]),
+            (XdcTestnet, &["xdc-testnet"]),
+            (SeiTestnet, &["sei-testnet"]),
+            (StableTestnet, &["stable-testnet"]),
+            (MegaEth, &["megaeth"]),
+            (MegaEthTestnet, &["megaeth-testnet"]),
+            (Cannon, &["cannon"]),
+            (MemeCore, &["memecore"]),
+            (Formicarium, &["formicarium", "memecore-formicarium"]),
+            (Insectarium, &["insectarium", "memecore-insectarium"]),
         ];
 
         for &(chain, aliases) in ALIASES {

@@ -589,10 +589,10 @@ impl Chain {
         Self::from_named(NamedChain::Sonic)
     }
 
-    /// Returns the Sonic Blaze testnet chain.
+    /// Returns the Sonic testnet chain.
     #[inline]
-    pub const fn sonic_blaze() -> Self {
-        Self::from_named(NamedChain::SonicBlaze)
+    pub const fn sonic_testnet() -> Self {
+        Self::from_named(NamedChain::SonicTestnet)
     }
 
     /// Returns the Superposition testnet chain.
@@ -667,6 +667,24 @@ impl Chain {
         Self::from_named(NamedChain::LensTestnet)
     }
 
+    /// Returns the Tempo testnet chain.
+    #[inline]
+    pub const fn tempo_testnet() -> Self {
+        Self::from_named(NamedChain::TempoTestnet)
+    }
+
+    /// Returns the Tempo moderato chain.
+    #[inline]
+    pub const fn tempo_moderato() -> Self {
+        Self::from_named(NamedChain::TempoModerato)
+    }
+
+    /// Returns the Tempo chain.
+    #[inline]
+    pub const fn tempo_mainnet() -> Self {
+        Self::from_named(NamedChain::Tempo)
+    }
+
     /// Returns the kind of this chain.
     #[inline]
     pub const fn kind(&self) -> &ChainKind {
@@ -691,6 +709,12 @@ impl Chain {
         matches!(self.named(), Some(named) if named.is_optimism())
     }
 
+    /// Returns true if the chain contains Gnosis configuration.
+    #[inline]
+    pub const fn is_gnosis(self) -> bool {
+        matches!(self.named(), Some(named) if named.is_gnosis())
+    }
+
     /// Returns `true` if this chain is a Polygon chain.
     #[inline]
     pub const fn is_polygon(&self) -> bool {
@@ -707,6 +731,12 @@ impl Chain {
     #[inline]
     pub const fn is_elastic(self) -> bool {
         matches!(self.named(), Some(named) if named.is_elastic())
+    }
+
+    /// Returns true if the chain contains Tempo configuration.
+    #[inline]
+    pub const fn is_tempo(self) -> bool {
+        matches!(self.named(), Some(named) if named.is_tempo())
     }
 
     /// Attempts to convert the chain into a named chain.
@@ -872,14 +902,13 @@ mod tests {
     #[cfg(feature = "serde")]
     #[test]
     fn test_serde() {
-        let chains = r#"["mainnet",1,80001,80002,"mumbai"]"#;
-        let re = r#"["mainnet","mainnet","mumbai","amoy","mumbai"]"#;
+        let chains = r#"["mainnet",1,137,80002]"#;
+        let re = r#"["mainnet","mainnet","polygon","amoy"]"#;
         let expected = [
+            Chain::from_named(NamedChain::Mainnet),
             Chain::mainnet(),
-            Chain::mainnet(),
-            Chain::from_named(NamedChain::PolygonMumbai),
+            Chain::from_named(NamedChain::Polygon),
             Chain::from_id(80002),
-            Chain::from_named(NamedChain::PolygonMumbai),
         ];
         assert_eq!(serde_json::from_str::<alloc::vec::Vec<Chain>>(chains).unwrap(), expected);
         assert_eq!(serde_json::to_string(&expected).unwrap(), re);
