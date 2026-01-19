@@ -1415,7 +1415,8 @@ impl NamedChain {
             Kaia => "KAIA",
             Story => "IP",
             Sei | SeiTestnet => "SEI",
-            StableMainnet | StableTestnet => "gUSDT",
+            StableMainnet => "gUSDT",
+            StableTestnet => "USDT0",
             ApeChain | Curtis => "APE",
 
             XdcMainnet => "XDC",
