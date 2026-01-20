@@ -834,7 +834,7 @@ impl NamedChain {
 
             Acala | AcalaMandalaTestnet | AcalaTestnet | Karura | KaruraTestnet => 12_500,
 
-            Moonbeam | Moonriver => 6_500,
+            Moonbeam | Moonriver | Moonbase => 6_500,
 
             BinanceSmartChain | BinanceSmartChainTestnet => 750,
 
@@ -933,7 +933,7 @@ impl NamedChain {
 
             PolkadotTestnet | Kusama | Polkadot => 2_000,
 
-            Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi | Moonbase
+            Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi
             | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | Metis | Linea
             | LineaGoerli | LineaSepolia | Treasure | TreasureTopaz | Corn | CornTestnet
             | Cannon => {
@@ -1292,6 +1292,7 @@ impl NamedChain {
             | InkSepolia
             | MantleSepolia
             | MoonbeamDev
+            | Moonbase
             | OptimismGoerli
             | OptimismKovan
             | OptimismSepolia
@@ -1334,8 +1335,6 @@ impl NamedChain {
             | LensTestnet
             | SophonTestnet
             | PolkadotTestnet
-            | Kusama
-            | Polkadot
             | InjectiveTestnet
             | FluentDevnet
             | FluentTestnet
@@ -1357,7 +1356,7 @@ impl NamedChain {
             // Mainnets.
             Mainnet | Optimism | Arbitrum | ArbitrumNova | Blast | Syndr | Cronos | Rsk
             | BinanceSmartChain | Poa | Sokol | Scroll | Metis | Gnosis | Polygon | Fantom
-            | Moonbeam | Moonriver | Moonbase | Evmos | Chiado | Oasis | Emerald | Plasma
+            | Moonbeam | Moonriver | Evmos | Chiado | Oasis | Emerald | Plasma
             | FilecoinMainnet | Avalanche | Celo | Aurora | Canto | Boba | Base | Fraxtal | Ink
             | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn | Mode | Viction
             | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
@@ -1365,7 +1364,8 @@ impl NamedChain {
             | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob | Soneium
             | Sonic | Superposition | Berachain | Monad | Unichain | TelosEvm | Story | Sei
             | StableMainnet | MegaEth | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana
-            | Lisk | Fuse | Injective | MemeCore | SkaleBase | XdcMainnet | Tempo => false,
+            | Lisk | Fuse | Injective | MemeCore | SkaleBase | XdcMainnet | Tempo | Kusama
+            | Polkadot => false,
         }
     }
 
@@ -1855,12 +1855,7 @@ impl NamedChain {
                 "https://blockscout-kusama.polkadot.io/api",
                 "https://blockscout-kusama.polkadot.io",
             ),
-            PolkadotTestnet => {
-                ("https://blockscout.polkadot.io/api", "https://blockscout.polkadot.io")
-            }
-            Moonbase => ("https://moonbase.moonscan.io/api", "https://moonbase.moonscan.io"),
-            Moonriver => ("https://moonriver.moonscan.io/api", "https://moonriver.moonscan.io"),
-            Moonbeam => ("https://moonbeam.moonscan.io/api", "https://moonbeam.moonscan.io"),
+            Polkadot => ("https://blockscout.polkadot.io/api", "https://blockscout.polkadot.io"),
 
             AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
             | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CronosTestnet | Dev
