@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.28](https://github.com/alloy-rs/chains/releases/tag/v0.2.28) - 2026-01-20
+
+### Documentation
+
+- Changelog
+
+### Other
+
+- Adds Polkadot Kusama ([#249](https://github.com/alloy-rs/chains/issues/249))
+- Update nativeCurrencySymbol of Stable Testnet ([#248](https://github.com/alloy-rs/chains/issues/248))
+- Update to tempoxyz ([#247](https://github.com/alloy-rs/chains/issues/247))
+- Update Plasma (9745) and Added Plasma Testnet (9746) ([#245](https://github.com/alloy-rs/chains/issues/245))
+
 ## [0.2.27](https://github.com/alloy-rs/chains/releases/tag/v0.2.27) - 2026-01-12
 
 ### Bug Fixes
