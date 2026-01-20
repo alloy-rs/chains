@@ -763,7 +763,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "DEV",
       "etherscanApiUrl": null,
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": "MOONSCAN_API_KEY"
@@ -775,7 +775,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "GLMR",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=1284",
       "etherscanBaseUrl": "https://moonbeam.moonscan.io",
       "etherscanApiKeyName": "MOONSCAN_API_KEY"
@@ -787,7 +787,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "MOVR",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=1285",
       "etherscanBaseUrl": "https://moonriver.moonscan.io",
       "etherscanApiKeyName": "MOONSCAN_API_KEY"
@@ -795,11 +795,11 @@
     "1287": {
       "internalId": "Moonbase",
       "name": "moonbase",
-      "averageBlocktimeHint": null,
+      "averageBlocktimeHint": 6500,
       "isLegacy": false,
       "supportsShanghai": true,
-      "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "DEV",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=1287",
       "etherscanBaseUrl": "https://moonbase.moonscan.io",
       "etherscanApiKeyName": "MOONSCAN_API_KEY"
@@ -2107,10 +2107,10 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
-      "etherscanApiKeyName": null
+      "nativeCurrencySymbol": "PAS",
+      "etherscanApiUrl": "https://blockscout-testnet.polkadot.io/api",
+      "etherscanBaseUrl": "https://blockscout-testnet.polkadot.io",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "420420418": {
       "internalId": "Kusama",
@@ -2119,10 +2119,10 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
-      "etherscanApiKeyName": null
+      "nativeCurrencySymbol": "KSM",
+      "etherscanApiUrl": "https://blockscout-kusama.polkadot.io/api",
+      "etherscanBaseUrl": "https://blockscout-kusama.polkadot.io",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "420420419": {
       "internalId": "Polkadot",
@@ -2131,10 +2131,10 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
-      "etherscanApiKeyName": null
+      "nativeCurrencySymbol": "DOT",
+      "etherscanApiUrl": "https://blockscout.polkadot.io/api",
+      "etherscanBaseUrl": "https://blockscout.polkadot.io",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "531050104": {
       "internalId": "SophonTestnet",
