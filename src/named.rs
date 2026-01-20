@@ -1850,28 +1850,17 @@ impl NamedChain {
             PolkadotTestnet => (
                 "https://blockscout-testnet.polkadot.io/api",
                 "https://blockscout-testnet.polkadot.io",
-
             ),
             Kusama => (
                 "https://blockscout-kusama.polkadot.io/api",
                 "https://blockscout-kusama.polkadot.io",
             ),
-            PolkadotTestnet => (
-                "https://blockscout.polkadot.io/api",
-                "https://blockscout.polkadot.io",
-            ),
-            Moonbase => (
-                "https://moonbase.moonscan.io/api",
-                "https://moonbase.moonscan.io"
-            ),
-            Moonriver => (
-                "https://moonriver.moonscan.io/api",
-                "https://moonriver.moonscan.io"
-            ),
-            Moonbeam => (
-                "https://moonbeam.moonscan.io/api",
-                "https://moonbeam.moonscan.io"
-            ),
+            PolkadotTestnet => {
+                ("https://blockscout.polkadot.io/api", "https://blockscout.polkadot.io")
+            }
+            Moonbase => ("https://moonbase.moonscan.io/api", "https://moonbase.moonscan.io"),
+            Moonriver => ("https://moonriver.moonscan.io/api", "https://moonriver.moonscan.io"),
+            Moonbeam => ("https://moonbeam.moonscan.io/api", "https://moonbeam.moonscan.io"),
 
             AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
             | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CronosTestnet | Dev
