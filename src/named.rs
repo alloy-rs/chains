@@ -500,9 +500,13 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "polkadot-testnet"))]
     PolkadotTestnet = 420420417,
 
-    #[strum(to_string = "paseo-passethub")]
-    #[cfg_attr(feature = "serde", serde(alias = "paseo-passethub"))]
-    PaseoPassethub = 420420422,
+    #[strum(to_string = "kusama")]
+    #[cfg_attr(feature = "serde", serde(alias = "kusama"))]
+    Kusama = 420420418,
+
+    #[strum(to_string = "polkadot")]
+    #[cfg_attr(feature = "serde", serde(alias = "polkadot"))]
+    Polkadot = 420420419,
 
     #[strum(to_string = "lens")]
     #[cfg_attr(feature = "serde", serde(alias = "lens"))]
