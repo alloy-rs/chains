@@ -1850,8 +1850,7 @@ impl NamedChain {
             PolkadotTestnet => (
                 "https://blockscout-testnet.polkadot.io/api",
                 "https://blockscout-testnet.polkadot.io",
-                "https://api.routescan.io/v2/network/testnet/evm/420420417/etherscan/api",
-                "https://polkadot.testnet.routescan.io",
+
             ),
             Kusama => (
                 "https://blockscout-kusama.polkadot.io/api",
@@ -1860,8 +1859,6 @@ impl NamedChain {
             PolkadotTestnet => (
                 "https://blockscout.polkadot.io/api",
                 "https://blockscout.polkadot.io",
-                "https://api.routescan.io/v2/network/testnet/evm/420420419/etherscan/api",
-                "https://polkadot.routescan.io",
             ),
             Moonbase => (
                 "https://moonbase.moonscan.io/api",
@@ -2082,9 +2079,6 @@ impl NamedChain {
             | FluentTestnet
             | Cannon
             | Insectarium
-            | PolkadotTestnet
-            | Kusama
-            | Polkadot
             | TempoTestnet
             | TempoModerato
             | Tempo => return None,
