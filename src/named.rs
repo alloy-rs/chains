@@ -2023,7 +2023,9 @@ impl NamedChain {
             | SignetPecorino
             | SkaleBase
             | SkaleBaseSepoliaTestnet
-            | PaseoPassethub => "BLOCKSCOUT_API_KEY",
+            | PolkadotTestnet
+            | Kusama
+            | Polkadot => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
