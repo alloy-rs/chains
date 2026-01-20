@@ -931,7 +931,7 @@ impl NamedChain {
 
             SkaleBase | SkaleBaseSepoliaTestnet => 1_000,
 
-            PolkadotTestnet | PaseoPassethub => 6_000,
+            PolkadotTestnet | Kusama | Polkadot => 2_000,
 
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi | Moonbase
             | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | Metis | Linea
@@ -1126,7 +1126,8 @@ impl NamedChain {
             | SkaleBase
             | SkaleBaseSepoliaTestnet
             | PolkadotTestnet
-            | PaseoPassethub
+            | Kusama
+            | Polkadot
             | XdcMainnet
             | XdcTestnet
             | Tempo
@@ -1247,7 +1248,13 @@ impl NamedChain {
                 | Tempo
                 | TempoTestnet
                 | TempoModerato
-                | PaseoPassethub
+                | MoonbeamDev
+                | Moonbeam
+                | Moonriver
+                | Moonbase
+                | PolkadotTestnet
+                | Kusama
+                | Polkadot
         )
     }
 
@@ -1327,7 +1334,8 @@ impl NamedChain {
             | LensTestnet
             | SophonTestnet
             | PolkadotTestnet
-            | PaseoPassethub
+            | Kusama
+            | Polkadot
             | InjectiveTestnet
             | FluentDevnet
             | FluentTestnet
@@ -1459,7 +1467,9 @@ impl NamedChain {
             MemeCore => "M",
             Formicarium => "tM",
             Insectarium => "tM",
-            PaseoPassethub => "PAS",
+            PolkadotTestnet => "PAS",
+            Kusama => "KSM",
+            Polkadot => "DOT",
 
             _ => return None,
         })
@@ -1833,9 +1843,33 @@ impl NamedChain {
             Tempo => ("https://contracts.tempo.xyz", "https://explore.mainnet.tempo.xyz"),
             TempoModerato => ("https://contracts.tempo.xyz", "https://explore.moderato.tempo.xyz"),
             TempoTestnet => ("https://contracts.tempo.xyz", "https://explore.andantino.tempo.xyz"),
-            PaseoPassethub => (
-                "https://blockscout-passet-hub.parity-testnet.parity.io/api",
-                "https://blockscout-passet-hub.parity-testnet.parity.io",
+            PolkadotTestnet => (
+                "https://blockscout-testnet.polkadot.io/api",
+                "https://blockscout-testnet.polkadot.io",
+                "https://api.routescan.io/v2/network/testnet/evm/420420417/etherscan/api",
+                "https://polkadot.testnet.routescan.io",
+            ),
+            Kusama => (
+                "https://blockscout-kusama.polkadot.io/api",
+                "https://blockscout-kusama.polkadot.io",
+            ),
+            PolkadotTestnet => (
+                "https://blockscout.polkadot.io/api",
+                "https://blockscout.polkadot.io",
+                "https://api.routescan.io/v2/network/testnet/evm/420420419/etherscan/api",
+                "https://polkadot.routescan.io",
+            ),
+            Moonbase => (
+                "https://moonbase.moonscan.io/api",
+                "https://moonbase.moonscan.io"
+            ),
+            Moonriver => (
+                "https://moonriver.moonscan.io/api",
+                "https://moonriver.moonscan.io"
+            ),
+            Moonbeam => (
+                "https://moonbeam.moonscan.io/api",
+                "https://moonbeam.moonscan.io"
             ),
 
             AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
@@ -1843,7 +1877,7 @@ impl NamedChain {
             | Evmos | EvmosTestnet | Fantom | FantomTestnet | FilecoinMainnet | Goerli | Iotex
             | KaruraTestnet | Koi | Kovan | LineaGoerli | MoonbeamDev | Morden | Oasis
             | OptimismGoerli | OptimismKovan | Pgn | PgnSepolia | Poa | Rinkeby | Ropsten
-            | Sokol | Treasure | TreasureTopaz | Cannon | PolkadotTestnet => {
+            | Sokol | Treasure | TreasureTopaz | Cannon => {
                 return None;
             }
         })
@@ -2043,6 +2077,8 @@ impl NamedChain {
             | Cannon
             | Insectarium
             | PolkadotTestnet
+            | Kusama
+            | Polkadot
             | TempoTestnet
             | TempoModerato
             | Tempo => return None,
