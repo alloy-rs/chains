@@ -500,9 +500,13 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "polkadot-testnet"))]
     PolkadotTestnet = 420420417,
 
-    #[strum(to_string = "paseo-passethub")]
-    #[cfg_attr(feature = "serde", serde(alias = "paseo-passethub"))]
-    PaseoPassethub = 420420422,
+    #[strum(to_string = "kusama")]
+    #[cfg_attr(feature = "serde", serde(alias = "kusama"))]
+    Kusama = 420420418,
+
+    #[strum(to_string = "polkadot")]
+    #[cfg_attr(feature = "serde", serde(alias = "polkadot"))]
+    Polkadot = 420420419,
 
     #[strum(to_string = "lens")]
     #[cfg_attr(feature = "serde", serde(alias = "lens"))]
@@ -830,7 +834,7 @@ impl NamedChain {
 
             Acala | AcalaMandalaTestnet | AcalaTestnet | Karura | KaruraTestnet => 12_500,
 
-            Moonbeam | Moonriver => 6_500,
+            Moonbeam | Moonriver | Moonbase => 6_500,
 
             BinanceSmartChain | BinanceSmartChainTestnet => 750,
 
@@ -927,9 +931,9 @@ impl NamedChain {
 
             SkaleBase | SkaleBaseSepoliaTestnet => 1_000,
 
-            PolkadotTestnet | PaseoPassethub => 6_000,
+            PolkadotTestnet | Kusama | Polkadot => 2_000,
 
-            Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi | Moonbase
+            Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi
             | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | Metis | Linea
             | LineaGoerli | LineaSepolia | Treasure | TreasureTopaz | Corn | CornTestnet
             | Cannon => {
@@ -1122,7 +1126,8 @@ impl NamedChain {
             | SkaleBase
             | SkaleBaseSepoliaTestnet
             | PolkadotTestnet
-            | PaseoPassethub
+            | Kusama
+            | Polkadot
             | XdcMainnet
             | XdcTestnet
             | Tempo
@@ -1243,7 +1248,13 @@ impl NamedChain {
                 | Tempo
                 | TempoTestnet
                 | TempoModerato
-                | PaseoPassethub
+                | MoonbeamDev
+                | Moonbeam
+                | Moonriver
+                | Moonbase
+                | PolkadotTestnet
+                | Kusama
+                | Polkadot
         )
     }
 
@@ -1281,6 +1292,7 @@ impl NamedChain {
             | InkSepolia
             | MantleSepolia
             | MoonbeamDev
+            | Moonbase
             | OptimismGoerli
             | OptimismKovan
             | OptimismSepolia
@@ -1323,7 +1335,6 @@ impl NamedChain {
             | LensTestnet
             | SophonTestnet
             | PolkadotTestnet
-            | PaseoPassethub
             | InjectiveTestnet
             | FluentDevnet
             | FluentTestnet
@@ -1345,7 +1356,7 @@ impl NamedChain {
             // Mainnets.
             Mainnet | Optimism | Arbitrum | ArbitrumNova | Blast | Syndr | Cronos | Rsk
             | BinanceSmartChain | Poa | Sokol | Scroll | Metis | Gnosis | Polygon | Fantom
-            | Moonbeam | Moonriver | Moonbase | Evmos | Chiado | Oasis | Emerald | Plasma
+            | Moonbeam | Moonriver | Evmos | Chiado | Oasis | Emerald | Plasma
             | FilecoinMainnet | Avalanche | Celo | Aurora | Canto | Boba | Base | Fraxtal | Ink
             | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn | Mode | Viction
             | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
@@ -1353,7 +1364,8 @@ impl NamedChain {
             | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob | Soneium
             | Sonic | Superposition | Berachain | Monad | Unichain | TelosEvm | Story | Sei
             | StableMainnet | MegaEth | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana
-            | Lisk | Fuse | Injective | MemeCore | SkaleBase | XdcMainnet | Tempo => false,
+            | Lisk | Fuse | Injective | MemeCore | SkaleBase | XdcMainnet | Tempo | Kusama
+            | Polkadot => false,
         }
     }
 
@@ -1455,7 +1467,13 @@ impl NamedChain {
             MemeCore => "M",
             Formicarium => "tM",
             Insectarium => "tM",
-            PaseoPassethub => "PAS",
+            MoonbeamDev => "DEV",
+            Moonbase => "DEV",
+            Moonriver => "MOVR",
+            Moonbeam => "GLMR",
+            PolkadotTestnet => "PAS",
+            Kusama => "KSM",
+            Polkadot => "DOT",
 
             _ => return None,
         })
@@ -1829,17 +1847,22 @@ impl NamedChain {
             Tempo => ("https://contracts.tempo.xyz", "https://explore.mainnet.tempo.xyz"),
             TempoModerato => ("https://contracts.tempo.xyz", "https://explore.moderato.tempo.xyz"),
             TempoTestnet => ("https://contracts.tempo.xyz", "https://explore.andantino.tempo.xyz"),
-            PaseoPassethub => (
-                "https://blockscout-passet-hub.parity-testnet.parity.io/api",
-                "https://blockscout-passet-hub.parity-testnet.parity.io",
+            PolkadotTestnet => (
+                "https://blockscout-testnet.polkadot.io/api",
+                "https://blockscout-testnet.polkadot.io",
             ),
+            Kusama => (
+                "https://blockscout-kusama.polkadot.io/api",
+                "https://blockscout-kusama.polkadot.io",
+            ),
+            Polkadot => ("https://blockscout.polkadot.io/api", "https://blockscout.polkadot.io"),
 
             AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
             | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CronosTestnet | Dev
             | Evmos | EvmosTestnet | Fantom | FantomTestnet | FilecoinMainnet | Goerli | Iotex
             | KaruraTestnet | Koi | Kovan | LineaGoerli | MoonbeamDev | Morden | Oasis
             | OptimismGoerli | OptimismKovan | Pgn | PgnSepolia | Poa | Rinkeby | Ropsten
-            | Sokol | Treasure | TreasureTopaz | Cannon | PolkadotTestnet => {
+            | Sokol | Treasure | TreasureTopaz | Cannon => {
                 return None;
             }
         })
@@ -1981,7 +2004,9 @@ impl NamedChain {
             | SignetPecorino
             | SkaleBase
             | SkaleBaseSepoliaTestnet
-            | PaseoPassethub => "BLOCKSCOUT_API_KEY",
+            | PolkadotTestnet
+            | Kusama
+            | Polkadot => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
@@ -2038,7 +2063,6 @@ impl NamedChain {
             | FluentTestnet
             | Cannon
             | Insectarium
-            | PolkadotTestnet
             | TempoTestnet
             | TempoModerato
             | Tempo => return None,
