@@ -781,6 +781,15 @@ impl NamedChain {
         matches!(self, Tempo | TempoModerato | TempoTestnet)
     }
 
+    /// Returns true if the chain uses a custom Sourcify-compatible API for contract verification.
+    ///
+    /// These chains have their verification URL registered in
+    /// [`etherscan_urls`](Self::etherscan_urls) but the API is Sourcify-compatible rather than
+    /// Etherscan-compatible.
+    pub const fn is_custom_sourcify(self) -> bool {
+        self.is_tempo()
+    }
+
     /// Returns the chain's average blocktime, if applicable.
     ///
     /// It can be beneficial to know the average blocktime to adjust the polling of an HTTP provider

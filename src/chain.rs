@@ -739,6 +739,16 @@ impl Chain {
         matches!(self.named(), Some(named) if named.is_tempo())
     }
 
+    /// Returns true if the chain uses a custom Sourcify-compatible API for contract verification.
+    ///
+    /// These chains have their verification URL registered in
+    /// [`etherscan_urls`](Self::etherscan_urls) but the API is Sourcify-compatible rather than
+    /// Etherscan-compatible.
+    #[inline]
+    pub const fn is_custom_sourcify(self) -> bool {
+        matches!(self.named(), Some(named) if named.is_custom_sourcify())
+    }
+
     /// Attempts to convert the chain into a named chain.
     #[inline]
     pub const fn named(self) -> Option<NamedChain> {
