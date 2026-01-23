@@ -568,6 +568,8 @@ pub enum NamedChain {
     Tempo = 4217,
     TempoModerato = 42431,
     TempoTestnet = 42429,
+
+    ArcTestnet = 5042002,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -942,6 +944,8 @@ impl NamedChain {
 
             PolkadotTestnet | Kusama | Polkadot => 2_000,
 
+            ArcTestnet => 500,
+
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi
             | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | Metis | Linea
             | LineaGoerli | LineaSepolia | Treasure | TreasureTopaz | Corn | CornTestnet
@@ -1141,7 +1145,8 @@ impl NamedChain {
             | XdcTestnet
             | Tempo
             | TempoTestnet
-            | TempoModerato => false,
+            | TempoModerato
+            | ArcTestnet => false,
         }
     }
 
@@ -1264,6 +1269,7 @@ impl NamedChain {
                 | PolkadotTestnet
                 | Kusama
                 | Polkadot
+                | ArcTestnet
         )
     }
 
@@ -1357,7 +1363,8 @@ impl NamedChain {
             | XdcTestnet
             | TempoTestnet
             | TempoModerato
-            | PlasmaTestnet => true,
+            | PlasmaTestnet
+            | ArcTestnet => true,
 
             // Dev chains.
             Dev | AnvilHardhat | Cannon => true,
@@ -1483,6 +1490,8 @@ impl NamedChain {
             PolkadotTestnet => "PAS",
             Kusama => "KSM",
             Polkadot => "DOT",
+
+            ArcTestnet => "USDC",
 
             _ => return None,
         })
@@ -1865,6 +1874,7 @@ impl NamedChain {
                 "https://blockscout-kusama.polkadot.io",
             ),
             Polkadot => ("https://blockscout.polkadot.io/api", "https://blockscout.polkadot.io"),
+            ArcTestnet => ("https://testnet.arcscan.app/api", "https://testnet.arcscan.app"),
 
             AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
             | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CronosTestnet | Dev
@@ -2015,7 +2025,8 @@ impl NamedChain {
             | SkaleBaseSepoliaTestnet
             | PolkadotTestnet
             | Kusama
-            | Polkadot => "BLOCKSCOUT_API_KEY",
+            | Polkadot
+            | ArcTestnet => "BLOCKSCOUT_API_KEY",
 
             Boba => "BOBASCAN_API_KEY",
 
