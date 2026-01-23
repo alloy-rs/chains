@@ -2004,6 +2004,18 @@
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": null
     },
+    "5042002": {
+      "internalId": "ArcTestnet",
+      "name": "arc-testnet",
+      "averageBlocktimeHint": 500,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "USDC",
+      "etherscanApiUrl": "https://testnet.arcscan.app/api",
+      "etherscanBaseUrl": "https://testnet.arcscan.app",
+      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+    },
     "7777777": {
       "internalId": "Zora",
       "name": "zora",
