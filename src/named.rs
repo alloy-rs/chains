@@ -1866,8 +1866,8 @@ impl NamedChain {
             TempoModerato => ("https://contracts.tempo.xyz", "https://explore.moderato.tempo.xyz"),
             TempoTestnet => ("https://contracts.tempo.xyz", "https://explore.andantino.tempo.xyz"),
             PolkadotTestnet => (
-                "https://blockscout-testnet.polkadot.io/api",
-                "https://blockscout-testnet.polkadot.io",
+                "https://api.routescan.io/v2/network/testnet/evm/420420417/etherscan/api",
+                "https://polkadot.testnet.routescan.io",
             ),
             Kusama => (
                 "https://blockscout-kusama.polkadot.io/api",
@@ -2023,7 +2023,6 @@ impl NamedChain {
             | SignetPecorino
             | SkaleBase
             | SkaleBaseSepoliaTestnet
-            | PolkadotTestnet
             | Kusama
             | Polkadot
             | ArcTestnet => "BLOCKSCOUT_API_KEY",
@@ -2036,7 +2035,7 @@ impl NamedChain {
             Zeta => "ZETASCAN_API_KEY",
             Kaia => "KAIASCAN_API_KEY",
             Berachain | BerachainBepolia => "BERASCAN_API_KEY",
-            Corn | CornTestnet => "ROUTESCAN_API_KEY",
+            Corn | CornTestnet | PolkadotTestnet => "ROUTESCAN_API_KEY",
             Plasma | PlasmaTestnet => "ETHERSCAN_API_KEY",
             // Explicitly exhaustive. See NB above.
             Metis

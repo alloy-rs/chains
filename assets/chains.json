@@ -2120,9 +2120,9 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "PAS",
-      "etherscanApiUrl": "https://blockscout-testnet.polkadot.io/api",
-      "etherscanBaseUrl": "https://blockscout-testnet.polkadot.io",
-      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
+      "etherscanApiUrl": "https://api.routescan.io/v2/network/testnet/evm/420420417/etherscan/api",
+      "etherscanBaseUrl": "https://polkadot.testnet.routescan.io",
+      "etherscanApiKeyName": "ROUTESCAN_API_KEY"
     },
     "420420418": {
       "internalId": "Kusama",
