@@ -476,7 +476,7 @@
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=300",
+      "etherscanApiUrl": "https://block-explorer-api.sepolia.zksync.dev/api",
       "etherscanBaseUrl": "https://sepolia-era.zksync.network",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
@@ -500,7 +500,7 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=324",
+      "etherscanApiUrl": "https://block-explorer-api.mainnet.zksync.io/api",
       "etherscanBaseUrl": "https://era.zksync.network",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
