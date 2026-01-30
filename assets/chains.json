@@ -477,7 +477,7 @@
       "isTestnet": true,
       "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://block-explorer-api.sepolia.zksync.dev/api",
-      "etherscanBaseUrl": "https://sepolia-era.zksync.network",
+      "etherscanBaseUrl": "https://sepolia.explorer.zksync.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "314": {
@@ -501,7 +501,7 @@
       "isTestnet": false,
       "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://block-explorer-api.mainnet.zksync.io/api",
-      "etherscanBaseUrl": "https://era.zksync.network",
+      "etherscanBaseUrl": "https://explorer.zksync.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "338": {
