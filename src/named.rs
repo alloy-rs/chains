@@ -1658,10 +1658,13 @@ impl NamedChain {
                 "https://api.etherscan.io/v2/api?chainid=168587773",
                 "https://sepolia.blastscan.io",
             ),
-            ZkSync => ("https://api.etherscan.io/v2/api?chainid=324", "https://era.zksync.network"),
+            // ZkSync uses its own block explorer API (Etherscan v2 is deprecated/unavailable)
+            ZkSync => {
+                ("https://block-explorer-api.mainnet.zksync.io/api", "https://explorer.zksync.io")
+            }
             ZkSyncTestnet => (
-                "https://api.etherscan.io/v2/api?chainid=300",
-                "https://sepolia-era.zksync.network",
+                "https://block-explorer-api.sepolia.zksync.dev/api",
+                "https://sepolia.explorer.zksync.io",
             ),
             Linea => ("https://api.etherscan.io/v2/api?chainid=59144", "https://lineascan.build"),
             LineaSepolia => {
