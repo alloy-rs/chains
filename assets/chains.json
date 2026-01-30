@@ -1447,7 +1447,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=42161",
       "etherscanBaseUrl": "https://arbiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
@@ -1459,7 +1459,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=42170",
       "etherscanBaseUrl": "https://nova.arbiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
@@ -1615,7 +1615,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://explorer.inkonchain.com/api/v2",
       "etherscanBaseUrl": "https://explorer.inkonchain.com",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
@@ -1663,7 +1663,7 @@
       "isLegacy": false,
       "supportsShanghai": false,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=59144",
       "etherscanBaseUrl": "https://lineascan.build",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
@@ -1675,7 +1675,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://explorer.gobob.xyz/api",
       "etherscanBaseUrl": "https://explorer.gobob.xyz",
       "etherscanApiKeyName": null

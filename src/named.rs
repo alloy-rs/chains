@@ -1394,7 +1394,7 @@ impl NamedChain {
             | ScrollSepolia | Taiko | TaikoHekla | Unichain | UnichainSepolia | MegaEth
             | MegaEthTestnet | SuperpositionTestnet | Superposition | Abstract | ZkSync
             | ZkSyncTestnet | Katana | Lisk | Base | BaseGoerli | BaseSepolia | Optimism
-            | OptimismSepolia => "ETH",
+            | OptimismSepolia | Arbitrum | ArbitrumNova | Bob | Ink | Linea => "ETH",
 
             Mantle | MantleSepolia => "MNT",
 
