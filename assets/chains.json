@@ -691,7 +691,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
-      "nativeCurrencySymbol": "gUSDT",
+      "nativeCurrencySymbol": "USDT0",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=988",
       "etherscanBaseUrl": "https://stablescan.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
