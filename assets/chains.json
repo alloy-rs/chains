@@ -248,8 +248,8 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "CFX",
-      "etherscanApiUrl": "https://evmapi-testnet.confluxscan.net/api",
-      "etherscanBaseUrl": "https://evmtestnet.confluxscan.io",
+      "etherscanApiUrl": "https://evmapi-testnet.confluxscan.org/api",
+      "etherscanBaseUrl": "https://evmtestnet.confluxscan.org",
       "etherscanApiKeyName": null
     },
     "77": {
@@ -716,8 +716,8 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "CFX",
-      "etherscanApiUrl": "https://evmapi.confluxscan.net/api",
-      "etherscanBaseUrl": "https://evm.confluxscan.io",
+      "etherscanApiUrl": "https://evmapi.confluxscan.org/api",
+      "etherscanBaseUrl": "https://evm.confluxscan.org",
       "etherscanApiKeyName": null
     },
     "1088": {
