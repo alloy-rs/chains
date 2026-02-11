@@ -1720,9 +1720,9 @@ impl NamedChain {
             Crab => {
                 ("https://crab-scan.darwinia.network/api", "https://crab-scan.darwinia.network")
             }
-            Cfx => ("https://evmapi.confluxscan.net/api", "https://evm.confluxscan.io"),
+            Cfx => ("https://evmapi.confluxscan.org/api", "https://evm.confluxscan.org"),
             CfxTestnet => {
-                ("https://evmapi-testnet.confluxscan.net/api", "https://evmtestnet.confluxscan.io")
+                ("https://evmapi-testnet.confluxscan.org/api", "https://evmtestnet.confluxscan.org")
             }
             Pulsechain => ("https://api.scan.pulsechain.com", "https://scan.pulsechain.com"),
             PulsechainTestnet => (
