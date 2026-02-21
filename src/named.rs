@@ -1954,6 +1954,7 @@ impl NamedChain {
             | Ropsten
             | Scroll
             | ScrollSepolia
+            | Sepolia
             | Sei
             | SeiTestnet
             | StableMainnet
@@ -2044,7 +2045,6 @@ impl NamedChain {
             Metis
             | Chiado
             | Odyssey
-            | Sepolia
             | Rsk
             | RskTestnet
             | Sokol
