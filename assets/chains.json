@@ -2050,7 +2050,7 @@
       "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=11155111",
       "etherscanBaseUrl": "https://sepolia.etherscan.io",
-      "etherscanApiKeyName": null
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "11155420": {
       "internalId": "OptimismSepolia",
