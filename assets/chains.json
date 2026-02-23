@@ -1776,16 +1776,16 @@
       "etherscanBaseUrl": "https://testnet-explorer.superposition.so",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
-    "128123": {
-      "internalId": "EtherlinkTestnet",
-      "name": "etherlink-testnet",
+    "127823": {
+      "internalId": "EtherlinkShadownet",
+      "name": "etherlink-shadownet",
       "averageBlocktimeHint": 5000,
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "XTZ",
-      "etherscanApiUrl": "https://testnet.explorer.etherlink.com/api",
-      "etherscanBaseUrl": "https://testnet.explorer.etherlink.com",
+      "etherscanApiUrl": "https://shadownet.explorer.etherlink.com/api",
+      "etherscanBaseUrl": "https://shadownet.explorer.etherlink.com",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "167000": {
