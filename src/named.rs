@@ -292,8 +292,8 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "etherlink"))]
     Etherlink = 42793,
 
-    #[cfg_attr(feature = "serde", serde(alias = "etherlink-testnet"))]
-    EtherlinkTestnet = 128123,
+    #[cfg_attr(feature = "serde", serde(alias = "etherlink-shadownet"))]
+    EtherlinkShadownet = 127823,
 
     Degen = 666666666,
 
@@ -879,7 +879,7 @@ impl NamedChain {
 
             Etherlink => 5_000,
 
-            EtherlinkTestnet => 5_000,
+            EtherlinkShadownet => 5_000,
 
             Degen => 600,
 
@@ -1035,7 +1035,7 @@ impl NamedChain {
             | Pgn
             | PgnSepolia
             | Etherlink
-            | EtherlinkTestnet
+            | EtherlinkShadownet
             | Degen
             | OpBNBMainnet
             | OpBNBTestnet
@@ -1199,7 +1199,7 @@ impl NamedChain {
                 | Syndr
                 | SyndrSepolia
                 | Etherlink
-                | EtherlinkTestnet
+                | EtherlinkShadownet
                 | Scroll
                 | ScrollSepolia
                 | HappychainTestnet
@@ -1319,7 +1319,7 @@ impl NamedChain {
             | ZoraSepolia
             | ModeSepolia
             | PgnSepolia
-            | EtherlinkTestnet
+            | EtherlinkShadownet
             | OpBNBTestnet
             | RoninTestnet
             | TaikoHekla
@@ -1408,7 +1408,7 @@ impl NamedChain {
 
             BinanceSmartChain | BinanceSmartChainTestnet | OpBNBMainnet | OpBNBTestnet => "BNB",
 
-            Etherlink | EtherlinkTestnet => "XTZ",
+            Etherlink | EtherlinkShadownet => "XTZ",
 
             Degen => "DEGEN",
 
@@ -1685,9 +1685,9 @@ impl NamedChain {
             ),
             Elastos => ("https://esc.elastos.io/api", "https://esc.elastos.io"),
             Etherlink => ("https://explorer.etherlink.com/api", "https://explorer.etherlink.com"),
-            EtherlinkTestnet => (
-                "https://testnet.explorer.etherlink.com/api",
-                "https://testnet.explorer.etherlink.com",
+            EtherlinkShadownet => (
+                "https://shadownet.explorer.etherlink.com/api",
+                "https://shadownet.explorer.etherlink.com",
             ),
             Degen => ("https://explorer.degen.tips/api", "https://explorer.degen.tips"),
             Ronin => ("https://skynet-api.roninchain.com/ronin", "https://app.roninchain.com"),
@@ -1991,7 +1991,7 @@ impl NamedChain {
             | CantoTestnet
             | CeloSepolia
             | Etherlink
-            | EtherlinkTestnet
+            | EtherlinkShadownet
             | Flare
             | FlareCoston2
             | Karura
