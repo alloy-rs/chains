@@ -1759,7 +1759,7 @@ impl NamedChain {
             Vana => ("https://api.vanascan.io/api", "https://vanascan.io"),
             Zeta => ("https://zetachain.blockscout.com/api", "https://zetachain.blockscout.com"),
             Kaia => ("https://mainnet-oapi.kaiascan.io/api", "https://kaiascan.io"),
-            Story => ("https://www.storyscan.xyz/api/v2", "https://www.storyscan.xyz"),
+            Story => ("https://www.storyscan.xyz/api", "https://www.storyscan.xyz"),
             Sei => ("https://api.etherscan.io/v2/api?chainid=1329", "https://seiscan.io"),
             SeiTestnet => {
                 ("https://api.etherscan.io/v2/api?chainid=1328", "https://testnet.seiscan.io")
