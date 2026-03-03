@@ -884,7 +884,7 @@
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "IP",
-      "etherscanApiUrl": "https://www.storyscan.xyz/api/v2",
+      "etherscanApiUrl": "https://www.storyscan.xyz/api",
       "etherscanBaseUrl": "https://www.storyscan.xyz",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
