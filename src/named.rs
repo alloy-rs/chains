@@ -1270,6 +1270,10 @@ impl NamedChain {
                 | Kusama
                 | Polkadot
                 | ArcTestnet
+                | Sonic
+                | Katana
+                | Linea
+                | Sei
         )
     }
 
