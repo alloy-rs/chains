@@ -570,6 +570,10 @@ pub enum NamedChain {
     TempoTestnet = 42429,
 
     ArcTestnet = 5042002,
+
+    #[strum(to_string = "robinhood-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "robinhood-testnet"))]
+    RobinhoodTestnet = 46630,
 }
 
 // This must be implemented manually so we avoid a conflict with `TryFromPrimitive` where it treats
@@ -949,7 +953,7 @@ impl NamedChain {
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi
             | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | Metis | Linea
             | LineaGoerli | LineaSepolia | Treasure | TreasureTopaz | Corn | CornTestnet
-            | Cannon => {
+            | Cannon | RobinhoodTestnet => {
                 return None;
             }
         }))
@@ -1146,7 +1150,8 @@ impl NamedChain {
             | Tempo
             | TempoTestnet
             | TempoModerato
-            | ArcTestnet => false,
+            | ArcTestnet
+            | RobinhoodTestnet => false,
         }
     }
 
@@ -1368,7 +1373,8 @@ impl NamedChain {
             | TempoTestnet
             | TempoModerato
             | PlasmaTestnet
-            | ArcTestnet => true,
+            | ArcTestnet
+            | RobinhoodTestnet => true,
 
             // Dev chains.
             Dev | AnvilHardhat | Cannon => true,
@@ -1881,6 +1887,10 @@ impl NamedChain {
             ),
             Polkadot => ("https://blockscout.polkadot.io/api", "https://blockscout.polkadot.io"),
             ArcTestnet => ("https://testnet.arcscan.app/api", "https://testnet.arcscan.app"),
+            RobinhoodTestnet => (
+                "https://explorer.testnet.chain.robinhood.com/api",
+                "https://explorer.testnet.chain.robinhood.com",
+            ),
 
             AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
             | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CronosTestnet | Dev
@@ -2091,7 +2101,8 @@ impl NamedChain {
             | Insectarium
             | TempoTestnet
             | TempoModerato
-            | Tempo => return None,
+            | Tempo
+            | RobinhoodTestnet => return None,
         };
 
         Some(api_key_name)
@@ -2332,6 +2343,7 @@ mod tests {
             (MemeCore, &["memecore"]),
             (Formicarium, &["formicarium", "memecore-formicarium"]),
             (Insectarium, &["insectarium", "memecore-insectarium"]),
+            (RobinhoodTestnet, &["robinhood-testnet"]),
         ];
 
         for &(chain, aliases) in ALIASES {

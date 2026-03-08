@@ -1584,6 +1584,18 @@
       "etherscanBaseUrl": "https://insectarium.blockscout.memecore.com",
       "etherscanApiKeyName": null
     },
+    "46630": {
+      "internalId": "RobinhoodTestnet",
+      "name": "robinhood-testnet",
+      "averageBlocktimeHint": null,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://explorer.testnet.chain.robinhood.com/api",
+      "etherscanBaseUrl": "https://explorer.testnet.chain.robinhood.com",
+      "etherscanApiKeyName": null
+    },
     "50104": {
       "internalId": "Sophon",
       "name": "sophon",
