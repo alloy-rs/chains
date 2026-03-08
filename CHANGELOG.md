@@ -5,7 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.31](https://github.com/alloy-rs/chains/releases/tag/v0.2.31) - 2026-03-08
+
+### Bug Fixes
+
+- Storyscan doesn't support /v2 api ([#260](https://github.com/alloy-rs/chains/issues/260))
+- Add Sepolia to etherscan_api_key_name ([#257](https://github.com/alloy-rs/chains/issues/257))
+- Update zkSync explorer URLs to use native block explorer API ([#253](https://github.com/alloy-rs/chains/issues/253))
+
+### Features
+
+- Add Robinhood Testnet chain (ID 46630) ([#262](https://github.com/alloy-rs/chains/issues/262))
+- Add Etherlink Shadownet for gas calculation via RPC ([#258](https://github.com/alloy-rs/chains/issues/258))
+
+### Other
+
+- Update List of chains which support Shanghai ([#261](https://github.com/alloy-rs/chains/issues/261))
+- Update conflux scan link ([#256](https://github.com/alloy-rs/chains/issues/256))
+- Update nativeCurrencySymbol of Stable Mainnet ([#255](https://github.com/alloy-rs/chains/issues/255))
+- Add some missing chains with ETH as native currency ([#254](https://github.com/alloy-rs/chains/issues/254))
+
 ## [0.2.30](https://github.com/alloy-rs/chains/releases/tag/v0.2.30) - 2026-01-23
+
+### Miscellaneous Tasks
+
+- Release 0.2.30
 
 ### Other
 
