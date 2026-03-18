@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.32](https://github.com/alloy-rs/chains/releases/tag/v0.2.32) - 2026-03-18
+
+### Bug Fixes
+
+- Update Tempo mainnet explorer URL ([#263](https://github.com/alloy-rs/chains/issues/263))
+
+### Miscellaneous Tasks
+
+- Release 0.2.32
+
 ## [0.2.31](https://github.com/alloy-rs/chains/releases/tag/v0.2.31) - 2026-03-08
 
 ### Bug Fixes
@@ -17,6 +27,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add Robinhood Testnet chain (ID 46630) ([#262](https://github.com/alloy-rs/chains/issues/262))
 - Add Etherlink Shadownet for gas calculation via RPC ([#258](https://github.com/alloy-rs/chains/issues/258))
+
+### Miscellaneous Tasks
+
+- Release 0.2.31
 
 ### Other
 
