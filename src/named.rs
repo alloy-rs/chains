@@ -1874,7 +1874,7 @@ impl NamedChain {
                 "https://base-sepolia-testnet-explorer.skalenodes.com/api",
                 "https://base-sepolia-testnet-explorer.skalenodes.com",
             ),
-            Tempo => ("https://contracts.tempo.xyz", "https://explore.mainnet.tempo.xyz"),
+            Tempo => ("https://contracts.tempo.xyz", "https://explore.tempo.xyz"),
             TempoModerato => ("https://contracts.tempo.xyz", "https://explore.moderato.tempo.xyz"),
             TempoTestnet => ("https://contracts.tempo.xyz", "https://explore.andantino.tempo.xyz"),
             PolkadotTestnet => (
