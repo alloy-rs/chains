@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update Tempo mainnet explorer URL ([#263](https://github.com/alloy-rs/chains/issues/263))
 
+### Miscellaneous Tasks
+
+- Release 0.2.32
+
 ## [0.2.31](https://github.com/alloy-rs/chains/releases/tag/v0.2.31) - 2026-03-08
 
 ### Bug Fixes
