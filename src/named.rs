@@ -313,7 +313,7 @@ pub enum NamedChain {
     Ronin = 2020,
 
     #[cfg_attr(feature = "serde", serde(alias = "ronin-testnet"))]
-    RoninTestnet = 2021,
+    RoninTestnet = 202601,
 
     Taiko = 167000,
     #[cfg_attr(feature = "serde", serde(alias = "taiko-hekla"))]
