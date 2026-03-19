@@ -940,7 +940,7 @@
       "internalId": "Ronin",
       "name": "ronin",
       "averageBlocktimeHint": 3000,
-      "isLegacy": true,
+      "isLegacy": false,
       "supportsShanghai": false,
       "isTestnet": false,
       "nativeCurrencySymbol": "RON",
@@ -948,11 +948,11 @@
       "etherscanBaseUrl": "https://app.roninchain.com",
       "etherscanApiKeyName": null
     },
-    "2021": {
+    "202601": {
       "internalId": "RoninTestnet",
       "name": "ronin-testnet",
       "averageBlocktimeHint": 3000,
-      "isLegacy": true,
+      "isLegacy": false,
       "supportsShanghai": false,
       "isTestnet": true,
       "nativeCurrencySymbol": "RON",
