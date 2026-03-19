@@ -974,8 +974,7 @@ impl NamedChain {
 
         match self {
             // Known legacy chains / non EIP-1559 compliant.
-            Elastos | Emerald | EmeraldTestnet | Fantom | FantomTestnet | OptimismKovan | Ronin
-            | RoninTestnet | Rsk | RskTestnet | Shimmer | Treasure | TreasureTopaz | Viction
+            Elastos | Emerald | EmeraldTestnet | Fantom | FantomTestnet | OptimismKovan | Rsk | RskTestnet | Shimmer | Treasure | TreasureTopaz | Viction
             | Sophon | SophonTestnet => true,
 
             // Known EIP-1559 chains.
@@ -1043,6 +1042,8 @@ impl NamedChain {
             | Degen
             | OpBNBMainnet
             | OpBNBTestnet
+            | Ronin
+            | RoninTestnet
             | Taiko
             | TaikoHekla
             | AutonomysNovaTestnet
