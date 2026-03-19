@@ -948,18 +948,6 @@
       "etherscanBaseUrl": "https://app.roninchain.com",
       "etherscanApiKeyName": null
     },
-    "202601": {
-      "internalId": "RoninTestnet",
-      "name": "ronin-testnet",
-      "averageBlocktimeHint": 3000,
-      "isLegacy": false,
-      "supportsShanghai": false,
-      "isTestnet": true,
-      "nativeCurrencySymbol": "RON",
-      "etherscanApiUrl": "https://api-gateway.skymavis.com/rpc/testnet",
-      "etherscanBaseUrl": "https://saigon-app.roninchain.com",
-      "etherscanApiKeyName": null
-    },
     "2201": {
       "internalId": "StableTestnet",
       "name": "stable-testnet",
@@ -1835,6 +1823,18 @@
       "etherscanApiUrl": "https://api.btrscan.com/scan/api",
       "etherscanBaseUrl": "https://www.btrscan.com",
       "etherscanApiKeyName": "BITLAYERSCAN_API_KEY"
+    },
+    "202601": {
+      "internalId": "RoninTestnet",
+      "name": "ronin-testnet",
+      "averageBlocktimeHint": 3000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "RON",
+      "etherscanApiUrl": "https://api-gateway.skymavis.com/rpc/testnet",
+      "etherscanBaseUrl": "https://saigon-explorer.roninchain.com",
+      "etherscanApiKeyName": null
     },
     "314159": {
       "internalId": "FilecoinCalibrationTestnet",

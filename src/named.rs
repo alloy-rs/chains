@@ -974,8 +974,9 @@ impl NamedChain {
 
         match self {
             // Known legacy chains / non EIP-1559 compliant.
-            Elastos | Emerald | EmeraldTestnet | Fantom | FantomTestnet | OptimismKovan | Rsk | RskTestnet | Shimmer | Treasure | TreasureTopaz | Viction
-            | Sophon | SophonTestnet => true,
+            Elastos | Emerald | EmeraldTestnet | Fantom | FantomTestnet | OptimismKovan | Rsk
+            | RskTestnet | Shimmer | Treasure | TreasureTopaz | Viction | Sophon
+            | SophonTestnet => true,
 
             // Known EIP-1559 chains.
             Mainnet
@@ -1704,7 +1705,7 @@ impl NamedChain {
             Ronin => ("https://skynet-api.roninchain.com/ronin", "https://app.roninchain.com"),
             RoninTestnet => (
                 "https://api-gateway.skymavis.com/rpc/testnet",
-                "https://saigon-app.roninchain.com",
+                "https://saigon-explorer.roninchain.com",
             ),
             Taiko => ("https://api.etherscan.io/v2/api?chainid=167000", "https://taikoscan.io"),
             TaikoHekla => {
