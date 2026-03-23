@@ -1504,6 +1504,8 @@ impl NamedChain {
 
             ArcTestnet => "USDC",
 
+            Tempo | TempoModerato | TempoTestnet => "USDC",
+
             _ => return None,
         })
     }
