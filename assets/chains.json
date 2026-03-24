@@ -1015,7 +1015,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "USD",
       "etherscanApiUrl": "https://contracts.tempo.xyz",
       "etherscanBaseUrl": "https://explore.tempo.xyz",
       "etherscanApiKeyName": null
@@ -1495,7 +1495,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "USD",
       "etherscanApiUrl": "https://contracts.tempo.xyz",
       "etherscanBaseUrl": "https://explore.andantino.tempo.xyz",
       "etherscanApiKeyName": null
@@ -1507,7 +1507,7 @@
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "USD",
       "etherscanApiUrl": "https://contracts.tempo.xyz",
       "etherscanBaseUrl": "https://explore.moderato.tempo.xyz",
       "etherscanApiKeyName": null
