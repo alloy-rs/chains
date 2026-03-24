@@ -571,6 +571,13 @@ pub enum NamedChain {
 
     ArcTestnet = 5042002,
 
+    #[strum(to_string = "battlechain-testnet")]
+    #[cfg_attr(
+        feature = "serde",
+        serde(alias = "battlechain-testnet", alias = "battlechain_testnet")
+    )]
+    BattleChainTestnet = 627,
+
     #[strum(to_string = "robinhood-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "robinhood-testnet"))]
     RobinhoodTestnet = 46630,
@@ -777,6 +784,7 @@ impl NamedChain {
                 | SophonTestnet
                 | Lens
                 | LensTestnet
+                | BattleChainTestnet
         )
     }
 
@@ -935,6 +943,7 @@ impl NamedChain {
             ZkSync | ZkSyncTestnet => 1_000,
             Sophon | SophonTestnet => 1_000,
             Lens | LensTestnet => 1_000,
+            BattleChainTestnet => 250,
             Rsk | RskTestnet => 25_000,
             Injective | InjectiveTestnet => 700,
             Katana => 1_000,
@@ -976,7 +985,7 @@ impl NamedChain {
             // Known legacy chains / non EIP-1559 compliant.
             Elastos | Emerald | EmeraldTestnet | Fantom | FantomTestnet | OptimismKovan | Rsk
             | RskTestnet | Shimmer | Treasure | TreasureTopaz | Viction | Sophon
-            | SophonTestnet => true,
+            | SophonTestnet | BattleChainTestnet => true,
 
             // Known EIP-1559 chains.
             Mainnet
@@ -1277,6 +1286,7 @@ impl NamedChain {
                 | Kusama
                 | Polkadot
                 | ArcTestnet
+                | BattleChainTestnet
                 | Sonic
                 | Katana
                 | Linea
@@ -1376,6 +1386,7 @@ impl NamedChain {
             | TempoModerato
             | PlasmaTestnet
             | ArcTestnet
+            | BattleChainTestnet
             | RobinhoodTestnet => true,
 
             // Dev chains.
@@ -1406,7 +1417,8 @@ impl NamedChain {
             | ScrollSepolia | Taiko | TaikoHekla | Unichain | UnichainSepolia | MegaEth
             | MegaEthTestnet | SuperpositionTestnet | Superposition | Abstract | ZkSync
             | ZkSyncTestnet | Katana | Lisk | Base | BaseGoerli | BaseSepolia | Optimism
-            | OptimismSepolia | Arbitrum | ArbitrumNova | Bob | Ink | Linea => "ETH",
+            | OptimismSepolia | Arbitrum | ArbitrumNova | Bob | Ink | Linea
+            | BattleChainTestnet => "ETH",
 
             Mantle | MantleSepolia => "MNT",
 
@@ -1891,6 +1903,10 @@ impl NamedChain {
             ),
             Polkadot => ("https://blockscout.polkadot.io/api", "https://blockscout.polkadot.io"),
             ArcTestnet => ("https://testnet.arcscan.app/api", "https://testnet.arcscan.app"),
+            BattleChainTestnet => (
+                "https://block-explorer-api.testnet.battlechain.com/api",
+                "https://explorer.testnet.battlechain.com",
+            ),
             RobinhoodTestnet => (
                 "https://explorer.testnet.chain.robinhood.com/api",
                 "https://explorer.testnet.chain.robinhood.com",
@@ -2106,6 +2122,7 @@ impl NamedChain {
             | TempoTestnet
             | TempoModerato
             | Tempo
+            | BattleChainTestnet
             | RobinhoodTestnet => return None,
         };
 
@@ -2348,6 +2365,7 @@ mod tests {
             (Formicarium, &["formicarium", "memecore-formicarium"]),
             (Insectarium, &["insectarium", "memecore-insectarium"]),
             (RobinhoodTestnet, &["robinhood-testnet"]),
+            (BattleChainTestnet, &["battlechain-testnet"]),
         ];
 
         for &(chain, aliases) in ALIASES {

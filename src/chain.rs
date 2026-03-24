@@ -691,6 +691,12 @@ impl Chain {
         Self::from_named(NamedChain::ArcTestnet)
     }
 
+    /// Returns the BattleChain testnet chain.
+    #[inline]
+    pub const fn battlechain_testnet() -> Self {
+        Self::from_named(NamedChain::BattleChainTestnet)
+    }
+
     /// Returns the kind of this chain.
     #[inline]
     pub const fn kind(&self) -> &ChainKind {

@@ -612,6 +612,18 @@
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "627": {
+      "internalId": "BattleChainTestnet",
+      "name": "battlechain-testnet",
+      "averageBlocktimeHint": 250,
+      "isLegacy": true,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://block-explorer-api.testnet.battlechain.com/api",
+      "etherscanBaseUrl": "https://explorer.testnet.battlechain.com",
+      "etherscanApiKeyName": null
+    },
     "686": {
       "internalId": "Karura",
       "name": "karura",
