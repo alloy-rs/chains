@@ -5,15 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.32](https://github.com/alloy-rs/chains/releases/tag/v0.2.32) - 2026-03-18
+## [0.2.33](https://github.com/alloy-rs/chains/releases/tag/v0.2.33) - 2026-03-24
 
 ### Bug Fixes
 
 - Update Tempo mainnet explorer URL ([#263](https://github.com/alloy-rs/chains/issues/263))
 
+### Features
+
+- Battlechain testnet ([#267](https://github.com/alloy-rs/chains/issues/267))
+- Add native currency symbol for Tempo chains ([#266](https://github.com/alloy-rs/chains/issues/266))
+
 ### Miscellaneous Tasks
 
-- Release 0.2.32
+- [release] V0.2.32 ([#264](https://github.com/alloy-rs/chains/issues/264))
+
+### Other
+
+- Update ronin config ([#265](https://github.com/alloy-rs/chains/issues/265))
 
 ## [0.2.31](https://github.com/alloy-rs/chains/releases/tag/v0.2.31) - 2026-03-08
 
