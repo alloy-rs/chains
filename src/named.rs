@@ -432,12 +432,12 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "sonic-testnet"))]
     SonicTestnet = 14601,
 
-    #[strum(to_string = "plume-devnet")]
-    #[cfg_attr(feature = "serde", serde(alias = "plume-devnet"))]
-    PlumeDevnet = 98864,
+    #[strum(to_string = "plume-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "plume-testnet"))]
+    PlumeTestnet = 98867,
     #[strum(to_string = "plume")]
     #[cfg_attr(feature = "serde", serde(alias = "plume"))]
-    Plume = 98865,
+    Plume = 98866,
 
     #[strum(to_string = "treasure")]
     #[cfg_attr(feature = "serde", serde(alias = "treasure"))]
@@ -848,7 +848,7 @@ impl NamedChain {
             | ApeChain
             | Curtis
             | Plume
-            | PlumeDevnet
+            | PlumeTestnet
             | SuperpositionTestnet
             | Superposition => 260,
 
@@ -1092,7 +1092,7 @@ impl NamedChain {
             | Berachain
             | Curtis
             | Plume
-            | PlumeDevnet
+            | PlumeTestnet
             | SuperpositionTestnet
             | Superposition
             | Monad
@@ -1370,7 +1370,7 @@ impl NamedChain {
             | UnichainSepolia
             | SignetPecorino
             | Curtis
-            | PlumeDevnet
+            | PlumeTestnet
             | TreasureTopaz
             | SonicTestnet
             | BerachainBepolia
@@ -1428,8 +1428,10 @@ impl NamedChain {
             | ScrollSepolia | Taiko | TaikoHekla | Unichain | UnichainSepolia | MegaEth
             | MegaEthTestnet | SuperpositionTestnet | Superposition | Abstract | ZkSync
             | ZkSyncTestnet | Katana | Lisk | Base | BaseGoerli | BaseSepolia | Optimism
-            | OptimismSepolia | Arbitrum | ArbitrumNova | Bob | Ink | Linea | Plume
-            | PlumeDevnet | BattleChainTestnet => "ETH",
+            | OptimismSepolia | Arbitrum | ArbitrumNova | Bob | Ink | Linea
+            | BattleChainTestnet => "ETH",
+
+            Plume | PlumeTestnet => "PLUME",
 
             Mantle | MantleSepolia => "MNT",
 
@@ -1831,11 +1833,10 @@ impl NamedChain {
                 "https://testnet-explorer.superposition.so/api",
                 "https://testnet-explorer.superposition.so",
             ),
-            Plume => ("https://explorer.plumenetwork.xyz/api", "https://explorer.plumenetwork.xyz"),
-            PlumeDevnet => (
-                "https://test-explorer.plumenetwork.xyz/api",
-                "https://test-explorer.plumenetwork.xyz",
-            ),
+            Plume => ("https://explorer.plume.org/api", "https://explorer.plume.org"),
+            PlumeTestnet => {
+                ("https://testnet-explorer.plume.org/api", "https://testnet-explorer.plume.org")
+            }
             Superposition => {
                 ("https://explorer.superposition.so/api", "https://explorer.superposition.so")
             }
@@ -2125,10 +2126,23 @@ impl NamedChain {
             | AutonomysNovaTestnet
             | Iotex
             | Plume
-            | PlumeDevnet => return None,
-            HappychainTestnet | Treasure | TreasureTopaz | TelosEvm | TelosEvmTestnet | Lens
-            | LensTestnet | FluentDevnet | FluentTestnet | Cannon | Insectarium | TempoTestnet
-            | TempoModerato | Tempo | BattleChainTestnet | RobinhoodTestnet => return None,
+            | PlumeTestnet
+            | HappychainTestnet
+            | Treasure
+            | TreasureTopaz
+            | TelosEvm
+            | TelosEvmTestnet
+            | Lens
+            | LensTestnet
+            | FluentDevnet
+            | FluentTestnet
+            | Cannon
+            | Insectarium
+            | TempoTestnet
+            | TempoModerato
+            | Tempo
+            | BattleChainTestnet
+            | RobinhoodTestnet => return None,
         };
 
         Some(api_key_name)
@@ -2339,7 +2353,7 @@ mod tests {
             (SoneiumMinatoTestnet, &["soneium-minato-testnet"]),
             (ApeChain, &["apechain"]),
             (Curtis, &["apechain-testnet", "curtis"]),
-            (PlumeDevnet, &["plume-devnet"]),
+            (PlumeTestnet, &["plume-testnet"]),
             (Plume, &["plume"]),
             (Treasure, &["treasure"]),
             (TreasureTopaz, &["treasure-topaz-testnet", "treasure-topaz"]),
