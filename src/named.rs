@@ -1301,6 +1301,8 @@ impl NamedChain {
                 | Katana
                 | Linea
                 | Sei
+                | Plume
+                | PlumeTestnet
         )
     }
 
