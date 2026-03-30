@@ -1776,6 +1776,30 @@
       "etherscanBaseUrl": "https://sepolia.basescan.org",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "98866": {
+      "internalId": "Plume",
+      "name": "plume",
+      "averageBlocktimeHint": 260,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "PLUME",
+      "etherscanApiUrl": "https://explorer.plume.org/api",
+      "etherscanBaseUrl": "https://explorer.plume.org",
+      "etherscanApiKeyName": null
+    },
+    "98867": {
+      "internalId": "PlumeTestnet",
+      "name": "plume-testnet",
+      "averageBlocktimeHint": 260,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "PLUME",
+      "etherscanApiUrl": "https://testnet-explorer.plume.org/api",
+      "etherscanBaseUrl": "https://testnet-explorer.plume.org",
+      "etherscanApiKeyName": null
+    },
     "98985": {
       "internalId": "SuperpositionTestnet",
       "name": "superposition-testnet",

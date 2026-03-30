@@ -432,6 +432,13 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "sonic-testnet"))]
     SonicTestnet = 14601,
 
+    #[strum(to_string = "plume-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "plume-testnet"))]
+    PlumeTestnet = 98867,
+    #[strum(to_string = "plume")]
+    #[cfg_attr(feature = "serde", serde(alias = "plume"))]
+    Plume = 98866,
+
     #[strum(to_string = "treasure")]
     #[cfg_attr(feature = "serde", serde(alias = "treasure"))]
     Treasure = 61166,
@@ -459,7 +466,6 @@ pub enum NamedChain {
     #[strum(to_string = "superposition")]
     #[cfg_attr(feature = "serde", serde(alias = "superposition"))]
     Superposition = 55244,
-
     #[strum(serialize = "monad")]
     #[cfg_attr(feature = "serde", serde(alias = "monad"))]
     Monad = 143,
@@ -841,6 +847,8 @@ impl NamedChain {
             | ArbitrumNova
             | ApeChain
             | Curtis
+            | Plume
+            | PlumeTestnet
             | SuperpositionTestnet
             | Superposition => 260,
 
@@ -1083,6 +1091,8 @@ impl NamedChain {
             | BerachainBepolia
             | Berachain
             | Curtis
+            | Plume
+            | PlumeTestnet
             | SuperpositionTestnet
             | Superposition
             | Monad
@@ -1291,6 +1301,8 @@ impl NamedChain {
                 | Katana
                 | Linea
                 | Sei
+                | Plume
+                | PlumeTestnet
         )
     }
 
@@ -1360,6 +1372,7 @@ impl NamedChain {
             | UnichainSepolia
             | SignetPecorino
             | Curtis
+            | PlumeTestnet
             | TreasureTopaz
             | SonicTestnet
             | BerachainBepolia
@@ -1402,9 +1415,9 @@ impl NamedChain {
             | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex | Core
             | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob | Soneium
             | Sonic | Superposition | Berachain | Monad | Unichain | TelosEvm | Story | Sei
-            | StableMainnet | MegaEth | Hyperliquid | Abstract | Sophon | Lens | Corn | Katana
-            | Lisk | Fuse | Injective | MemeCore | SkaleBase | XdcMainnet | Tempo | Kusama
-            | Polkadot => false,
+            | Plume | StableMainnet | MegaEth | Hyperliquid | Abstract | Sophon | Lens | Corn
+            | Katana | Lisk | Fuse | Injective | MemeCore | SkaleBase | XdcMainnet | Tempo
+            | Kusama | Polkadot => false,
         }
     }
 
@@ -1419,6 +1432,8 @@ impl NamedChain {
             | ZkSyncTestnet | Katana | Lisk | Base | BaseGoerli | BaseSepolia | Optimism
             | OptimismSepolia | Arbitrum | ArbitrumNova | Bob | Ink | Linea
             | BattleChainTestnet => "ETH",
+
+            Plume | PlumeTestnet => "PLUME",
 
             Mantle | MantleSepolia => "MNT",
 
@@ -1820,6 +1835,10 @@ impl NamedChain {
                 "https://testnet-explorer.superposition.so/api",
                 "https://testnet-explorer.superposition.so",
             ),
+            Plume => ("https://explorer.plume.org/api", "https://explorer.plume.org"),
+            PlumeTestnet => {
+                ("https://testnet-explorer.plume.org/api", "https://testnet-explorer.plume.org")
+            }
             Superposition => {
                 ("https://explorer.superposition.so/api", "https://explorer.superposition.so")
             }
@@ -2108,6 +2127,8 @@ impl NamedChain {
             | PulsechainTestnet
             | AutonomysNovaTestnet
             | Iotex
+            | Plume
+            | PlumeTestnet
             | HappychainTestnet
             | Treasure
             | TreasureTopaz
@@ -2334,6 +2355,8 @@ mod tests {
             (SoneiumMinatoTestnet, &["soneium-minato-testnet"]),
             (ApeChain, &["apechain"]),
             (Curtis, &["apechain-testnet", "curtis"]),
+            (PlumeTestnet, &["plume-testnet"]),
+            (Plume, &["plume"]),
             (Treasure, &["treasure"]),
             (TreasureTopaz, &["treasure-topaz-testnet", "treasure-topaz"]),
             (BerachainBepolia, &["berachain-bepolia-testnet", "berachain-bepolia"]),
