@@ -25,6 +25,18 @@ pub enum ChainKind {
     Id(u64),
 }
 
+impl ChainKind {
+    /// Returns true if this a named variant.
+    pub const fn is_named(self) -> bool {
+        matches!(self, Self::Named(_))
+    }
+
+    /// Returns true if this an Id variant.
+    pub const fn is_id(self) -> bool {
+        matches!(self, Self::Id(_))
+    }
+}
+
 impl fmt::Debug for Chain {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.write_str("Chain::")?;
@@ -75,7 +87,6 @@ impl TryFrom<Chain> for NamedChain {
 impl FromStr for Chain {
     type Err = core::num::ParseIntError;
 
-    #[inline]
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         if let Ok(chain) = NamedChain::from_str(s) {
             Ok(Self::from_named(chain))
@@ -86,7 +97,6 @@ impl FromStr for Chain {
 }
 
 impl fmt::Display for Chain {
-    #[inline]
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self.kind() {
             ChainKind::Named(chain) => chain.fmt(f),
@@ -99,6 +109,13 @@ impl PartialEq<u64> for Chain {
     #[inline]
     fn eq(&self, other: &u64) -> bool {
         self.id().eq(other)
+    }
+}
+
+impl PartialEq<Chain> for u64 {
+    #[inline]
+    fn eq(&self, other: &Chain) -> bool {
+        other.eq(self)
     }
 }
 
@@ -204,22 +221,6 @@ impl proptest::arbitrary::Arbitrary for Chain {
 }
 
 impl Chain {
-    #[allow(non_snake_case)]
-    #[doc(hidden)]
-    #[deprecated(since = "0.1.0", note = "use `Self::from_named()` instead")]
-    #[inline]
-    pub const fn Named(named: NamedChain) -> Self {
-        Self::from_named(named)
-    }
-
-    #[allow(non_snake_case)]
-    #[doc(hidden)]
-    #[deprecated(since = "0.1.0", note = "use `Self::from_id()` instead")]
-    #[inline]
-    pub const fn Id(id: u64) -> Self {
-        Self::from_id_unchecked(id)
-    }
-
     /// Creates a new [`Chain`] by wrapping a [`NamedChain`].
     #[inline]
     pub const fn from_named(named: NamedChain) -> Self {
@@ -234,6 +235,18 @@ impl Chain {
         } else {
             Self::from_id_unchecked(id)
         }
+    }
+
+    /// Returns true if this a named variant.
+    #[inline]
+    pub const fn is_named(self) -> bool {
+        self.kind().is_named()
+    }
+
+    /// Returns true if this an Id variant.
+    #[inline]
+    pub const fn is_id(self) -> bool {
+        self.kind().is_id()
     }
 
     /// Creates a new [`Chain`] from the given ID, without checking if an associated [`NamedChain`]
@@ -262,6 +275,12 @@ impl Chain {
     #[inline]
     pub const fn holesky() -> Self {
         Self::from_named(NamedChain::Holesky)
+    }
+
+    /// Returns the hoodi chain.
+    #[inline]
+    pub const fn hoodi() -> Self {
+        Self::from_named(NamedChain::Hoodi)
     }
 
     /// Returns the sepolia chain.
@@ -304,6 +323,36 @@ impl Chain {
     #[inline]
     pub const fn base_sepolia() -> Self {
         Self::from_named(NamedChain::BaseSepolia)
+    }
+
+    /// Returns the arbitrum mainnet chain.
+    #[inline]
+    pub const fn arbitrum_mainnet() -> Self {
+        Self::from_named(NamedChain::Arbitrum)
+    }
+
+    /// Returns the arbitrum nova chain.
+    #[inline]
+    pub const fn arbitrum_nova() -> Self {
+        Self::from_named(NamedChain::ArbitrumNova)
+    }
+
+    /// Returns the arbitrum goerli chain.
+    #[inline]
+    pub const fn arbitrum_goerli() -> Self {
+        Self::from_named(NamedChain::ArbitrumGoerli)
+    }
+
+    /// Returns the arbitrum sepolia chain.
+    #[inline]
+    pub const fn arbitrum_sepolia() -> Self {
+        Self::from_named(NamedChain::ArbitrumSepolia)
+    }
+
+    /// Returns the arbitrum testnet chain.
+    #[inline]
+    pub const fn arbitrum_testnet() -> Self {
+        Self::from_named(NamedChain::ArbitrumTestnet)
     }
 
     /// Returns the syndr l3 mainnet chain.
@@ -486,7 +535,7 @@ impl Chain {
         Self::from_named(NamedChain::ImmutableTestnet)
     }
 
-    /// Returns the koi testnet chain.
+    /// Returns the ink sepolia chain.
     #[inline]
     pub const fn ink_sepolia() -> Self {
         Self::from_named(NamedChain::InkSepolia)
@@ -508,6 +557,144 @@ impl Chain {
     #[inline]
     pub const fn scroll_sepolia() -> Self {
         Self::from_named(NamedChain::ScrollSepolia)
+    }
+
+    /// Returns the Treasure mainnet chain.
+    #[inline]
+    pub const fn treasure() -> Self {
+        Self::from_named(NamedChain::Treasure)
+    }
+
+    /// Returns the Treasure Topaz testnet chain.
+    #[inline]
+    pub const fn treasure_topaz_testnet() -> Self {
+        Self::from_named(NamedChain::TreasureTopaz)
+    }
+
+    /// Returns the Berachain mainnet chain.
+    #[inline]
+    pub const fn berachain() -> Self {
+        Self::from_named(NamedChain::Berachain)
+    }
+
+    /// Returns the Berachain Bepolia testnet chain.
+    #[inline]
+    pub const fn berachain_bepolia() -> Self {
+        Self::from_named(NamedChain::BerachainBepolia)
+    }
+
+    /// Returns the Sonic mainnet chain.
+    #[inline]
+    pub const fn sonic() -> Self {
+        Self::from_named(NamedChain::Sonic)
+    }
+
+    /// Returns the Sonic testnet chain.
+    #[inline]
+    pub const fn sonic_testnet() -> Self {
+        Self::from_named(NamedChain::SonicTestnet)
+    }
+
+    /// Returns the Superposition testnet chain.
+    #[inline]
+    pub const fn superposition_testnet() -> Self {
+        Self::from_named(NamedChain::SuperpositionTestnet)
+    }
+
+    /// Returns the Superposition mainnet chain.
+    #[inline]
+    pub const fn superposition() -> Self {
+        Self::from_named(NamedChain::Superposition)
+    }
+
+    /// Returns the Unichain mainnet chain.
+    #[inline]
+    pub const fn unichain_mainnet() -> Self {
+        Self::from_named(NamedChain::Unichain)
+    }
+
+    /// Returns the Unichain sepolia chain.
+    #[inline]
+    pub const fn unichain_sepolia() -> Self {
+        Self::from_named(NamedChain::UnichainSepolia)
+    }
+
+    /// Returns the ZKSync mainnet chain.
+    #[inline]
+    pub const fn zksync() -> Self {
+        Self::from_named(NamedChain::ZkSync)
+    }
+
+    /// Returns the ZKSync testnet chain.
+    #[inline]
+    pub const fn zksync_testnet() -> Self {
+        Self::from_named(NamedChain::ZkSyncTestnet)
+    }
+
+    /// Returns the Abstract mainnet chain.
+    #[inline]
+    pub const fn abs() -> Self {
+        Self::from_named(NamedChain::Abstract)
+    }
+
+    /// Returns the Abstract testnet chain.
+    #[inline]
+    pub const fn abstract_testnet() -> Self {
+        Self::from_named(NamedChain::AbstractTestnet)
+    }
+
+    /// Returns the Sophon mainnet chain.
+    #[inline]
+    pub const fn sophon() -> Self {
+        Self::from_named(NamedChain::Sophon)
+    }
+
+    /// Returns the Sophon testnet chain.
+    #[inline]
+    pub const fn sophon_testnet() -> Self {
+        Self::from_named(NamedChain::SophonTestnet)
+    }
+
+    /// Returns the Lens mainnet chain.
+    #[inline]
+    pub const fn lens() -> Self {
+        Self::from_named(NamedChain::Lens)
+    }
+
+    /// Returns the Lens testnet chain.
+    #[inline]
+    pub const fn lens_testnet() -> Self {
+        Self::from_named(NamedChain::LensTestnet)
+    }
+
+    /// Returns the Tempo testnet chain.
+    #[inline]
+    pub const fn tempo_testnet() -> Self {
+        Self::from_named(NamedChain::TempoTestnet)
+    }
+
+    /// Returns the Tempo moderato chain.
+    #[inline]
+    pub const fn tempo_moderato() -> Self {
+        Self::from_named(NamedChain::TempoModerato)
+    }
+
+    /// Returns the Tempo chain.
+    #[inline]
+    pub const fn tempo_mainnet() -> Self {
+        Self::from_named(NamedChain::Tempo)
+    }
+
+    /// Returns the Arc testnet chain.
+    #[inline]
+    pub const fn arc_testnet() -> Self {
+        Self::from_named(NamedChain::ArcTestnet)
+    }
+
+    /// Returns the BattleChain testnet chain.
+    #[inline]
+    pub const fn battlechain_testnet() -> Self {
+        Self::from_named(NamedChain::BattleChainTestnet)
     }
 
     /// Returns the kind of this chain.
@@ -534,10 +721,44 @@ impl Chain {
         matches!(self.named(), Some(named) if named.is_optimism())
     }
 
+    /// Returns true if the chain contains Gnosis configuration.
+    #[inline]
+    pub const fn is_gnosis(self) -> bool {
+        matches!(self.named(), Some(named) if named.is_gnosis())
+    }
+
+    /// Returns `true` if this chain is a Polygon chain.
+    #[inline]
+    pub const fn is_polygon(&self) -> bool {
+        matches!(self.named(), Some(named) if named.is_polygon())
+    }
+
     /// Returns true if the chain contains Arbitrum configuration.
     #[inline]
     pub const fn is_arbitrum(self) -> bool {
         matches!(self.named(), Some(named) if named.is_arbitrum())
+    }
+
+    /// Returns true if the chain contains Elastic Network configuration.
+    #[inline]
+    pub const fn is_elastic(self) -> bool {
+        matches!(self.named(), Some(named) if named.is_elastic())
+    }
+
+    /// Returns true if the chain contains Tempo configuration.
+    #[inline]
+    pub const fn is_tempo(self) -> bool {
+        matches!(self.named(), Some(named) if named.is_tempo())
+    }
+
+    /// Returns true if the chain uses a custom Sourcify-compatible API for contract verification.
+    ///
+    /// These chains have their verification URL registered in
+    /// [`etherscan_urls`](Self::etherscan_urls) but the API is Sourcify-compatible rather than
+    /// Etherscan-compatible.
+    #[inline]
+    pub const fn is_custom_sourcify(self) -> bool {
+        matches!(self.named(), Some(named) if named.is_custom_sourcify())
     }
 
     /// Attempts to convert the chain into a named chain.
@@ -592,12 +813,6 @@ impl Chain {
             ChainKind::Named(named) => named.supports_shanghai(),
             ChainKind::Id(_) => false,
         }
-    }
-
-    #[doc(hidden)]
-    #[deprecated(since = "0.1.3", note = "use `supports_shanghai` instead")]
-    pub const fn supports_push0(self) -> bool {
-        self.supports_shanghai()
     }
 
     /// Returns the chain's blockchain explorer and its API (Etherscan and Etherscan-like) URLs.
@@ -709,14 +924,13 @@ mod tests {
     #[cfg(feature = "serde")]
     #[test]
     fn test_serde() {
-        let chains = r#"["mainnet",1,80001,80002,"mumbai"]"#;
-        let re = r#"["mainnet","mainnet","mumbai","amoy","mumbai"]"#;
+        let chains = r#"["mainnet",1,137,80002]"#;
+        let re = r#"["mainnet","mainnet","polygon","amoy"]"#;
         let expected = [
+            Chain::from_named(NamedChain::Mainnet),
             Chain::mainnet(),
-            Chain::mainnet(),
-            Chain::from_named(NamedChain::PolygonMumbai),
+            Chain::from_named(NamedChain::Polygon),
             Chain::from_id(80002),
-            Chain::from_named(NamedChain::PolygonMumbai),
         ];
         assert_eq!(serde_json::from_str::<alloc::vec::Vec<Chain>>(chains).unwrap(), expected);
         assert_eq!(serde_json::to_string(&expected).unwrap(), re);

@@ -1,9 +1,9 @@
 [package]
 name = "alloy-chains"
 description = "Canonical type definitions for EIP-155 chains"
-version = "0.1.51"
-edition = "2021"
-rust-version = "1.81"
+version = "0.2.33"
+edition = "2024"
+rust-version = "1.85"
 authors = ["Alloy Contributors"]
 license = "MIT OR Apache-2.0"
 keywords = ["ethers", "primitives", "ethereum", "revm", "reth"]
@@ -13,8 +13,8 @@ repository = "https://github.com/alloy-rs/chains"
 
 [dependencies]
 num_enum = { version = "0.7", default-features = false }
-strum = { version = "0.26", default-features = false, features = ["derive"] }
-alloy-primitives = { version = "0.8", default-features = false }
+strum = { version = "0.27", default-features = false, features = ["derive"] }
+alloy-primitives = { version = "1.0", default-features = false }
 
 # serde
 serde = { version = "1.0", default-features = false, features = [

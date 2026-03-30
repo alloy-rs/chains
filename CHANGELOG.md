@@ -5,7 +5,603 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.33](https://github.com/alloy-rs/chains/releases/tag/v0.2.33) - 2026-03-24
+
+### Bug Fixes
+
+- Update Tempo mainnet explorer URL ([#263](https://github.com/alloy-rs/chains/issues/263))
+
+### Features
+
+- Battlechain testnet ([#267](https://github.com/alloy-rs/chains/issues/267))
+- Add native currency symbol for Tempo chains ([#266](https://github.com/alloy-rs/chains/issues/266))
+
+### Miscellaneous Tasks
+
+- [release] V0.2.32 ([#264](https://github.com/alloy-rs/chains/issues/264))
+
+### Other
+
+- Update ronin config ([#265](https://github.com/alloy-rs/chains/issues/265))
+
+## [0.2.31](https://github.com/alloy-rs/chains/releases/tag/v0.2.31) - 2026-03-08
+
+### Bug Fixes
+
+- Storyscan doesn't support /v2 api ([#260](https://github.com/alloy-rs/chains/issues/260))
+- Add Sepolia to etherscan_api_key_name ([#257](https://github.com/alloy-rs/chains/issues/257))
+- Update zkSync explorer URLs to use native block explorer API ([#253](https://github.com/alloy-rs/chains/issues/253))
+
+### Features
+
+- Add Robinhood Testnet chain (ID 46630) ([#262](https://github.com/alloy-rs/chains/issues/262))
+- Add Etherlink Shadownet for gas calculation via RPC ([#258](https://github.com/alloy-rs/chains/issues/258))
+
+### Miscellaneous Tasks
+
+- Release 0.2.31
+
+### Other
+
+- Update List of chains which support Shanghai ([#261](https://github.com/alloy-rs/chains/issues/261))
+- Update conflux scan link ([#256](https://github.com/alloy-rs/chains/issues/256))
+- Update nativeCurrencySymbol of Stable Mainnet ([#255](https://github.com/alloy-rs/chains/issues/255))
+- Add some missing chains with ETH as native currency ([#254](https://github.com/alloy-rs/chains/issues/254))
+
+## [0.2.30](https://github.com/alloy-rs/chains/releases/tag/v0.2.30) - 2026-01-23
+
+### Miscellaneous Tasks
+
+- Release 0.2.30
+
+### Other
+
+- Add Arc testsnet ([#251](https://github.com/alloy-rs/chains/issues/251))
+
+## [0.2.29](https://github.com/alloy-rs/chains/releases/tag/v0.2.29) - 2026-01-21
+
+### Features
+
+- Add is_custom_sourcify for chains with Sourcify-compatible APIs ([#250](https://github.com/alloy-rs/chains/issues/250))
+
+### Miscellaneous Tasks
+
+- Release 0.2.29
+
+## [0.2.28](https://github.com/alloy-rs/chains/releases/tag/v0.2.28) - 2026-01-20
+
+### Documentation
+
+- Changelog
+
+### Miscellaneous Tasks
+
+- Release 0.2.28
+
+### Other
+
+- Adds Polkadot Kusama ([#249](https://github.com/alloy-rs/chains/issues/249))
+- Update nativeCurrencySymbol of Stable Testnet ([#248](https://github.com/alloy-rs/chains/issues/248))
+- Update to tempoxyz ([#247](https://github.com/alloy-rs/chains/issues/247))
+- Update Plasma (9745) and Added Plasma Testnet (9746) ([#245](https://github.com/alloy-rs/chains/issues/245))
+
+## [0.2.27](https://github.com/alloy-rs/chains/releases/tag/v0.2.27) - 2026-01-12
+
+### Bug Fixes
+
+- Update Tempo contract verification URLs ([#242](https://github.com/alloy-rs/chains/issues/242))
+
+### Dependencies
+
+- Bump version ([#244](https://github.com/alloy-rs/chains/issues/244))
+
+### Features
+
+- Mainnet ([#241](https://github.com/alloy-rs/chains/issues/241))
+
+### Miscellaneous Tasks
+
+- Release 0.2.27
+
+## [0.2.25](https://github.com/alloy-rs/chains/releases/tag/v0.2.25) - 2026-01-07
+
+### Features
+
+- Add tempo moderato ([#240](https://github.com/alloy-rs/chains/issues/240))
+
+### Miscellaneous Tasks
+
+- Release 0.2.25
+
+## [0.2.24](https://github.com/alloy-rs/chains/releases/tag/v0.2.24) - 2025-12-24
+
+### Bug Fixes
+
+- T supports shanghai ([#235](https://github.com/alloy-rs/chains/issues/235))
+- T 500ms ([#234](https://github.com/alloy-rs/chains/issues/234))
+
+### Miscellaneous Tasks
+
+- Release 0.2.24
+- Release 0.2.23 ([#236](https://github.com/alloy-rs/chains/issues/236))
+
+### Other
+
+- Add MegaETH and testnet ([#239](https://github.com/alloy-rs/chains/issues/239))
+- Add Paseo PassetHub ([#238](https://github.com/alloy-rs/chains/issues/238))
+- SKALE Base chain Id update ([#237](https://github.com/alloy-rs/chains/issues/237))
+
+## [0.2.22](https://github.com/alloy-rs/chains/releases/tag/v0.2.22) - 2025-12-08
+
+### Features
+
+- Add tempo testnet ([#233](https://github.com/alloy-rs/chains/issues/233))
+- Add monad mainnet ([#227](https://github.com/alloy-rs/chains/issues/227))
+
+### Miscellaneous Tasks
+
+- Release 0.2.22
+- Release 0.2.21 ([#232](https://github.com/alloy-rs/chains/issues/232))
+- Release 0.2.20 ([#228](https://github.com/alloy-rs/chains/issues/228))
+- Release 0.2.19 ([#226](https://github.com/alloy-rs/chains/issues/226))
+
+### Other
+
+- Add XDC Mainnet + Testnet [Chain ID 50 + 51] ([#231](https://github.com/alloy-rs/chains/issues/231))
+- Add new SKALE Base chains: Sepolia Testnet and Mainnet ([#230](https://github.com/alloy-rs/chains/issues/230))
+- Add Stable Mainnet [Chain ID 988] ([#225](https://github.com/alloy-rs/chains/issues/225))
+- Add Stable Testnet [Chain ID 2201] ([#224](https://github.com/alloy-rs/chains/issues/224))
+
+## [0.2.18](https://github.com/alloy-rs/chains/releases/tag/v0.2.18) - 2025-11-12
+
+### Bug Fixes
+
+- Update celo sepolia api to etherscan ([#218](https://github.com/alloy-rs/chains/issues/218))
+
+### Features
+
+- Add is gnosis helper ([#221](https://github.com/alloy-rs/chains/issues/221))
+
+### Miscellaneous Tasks
+
+- Release 0.2.18
+- Add MemeCore ([#223](https://github.com/alloy-rs/chains/issues/223))
+- Release 0.2.17 ([#219](https://github.com/alloy-rs/chains/issues/219))
+
+### Other
+
+- Adds Polkadot Testnet ([#222](https://github.com/alloy-rs/chains/issues/222))
+
+## [0.2.16](https://github.com/alloy-rs/chains/releases/tag/v0.2.16) - 2025-10-28
+
+### Miscellaneous Tasks
+
+- Release 0.2.16
+- Add Cannon ([#216](https://github.com/alloy-rs/chains/issues/216))
+- Update code owners ([#215](https://github.com/alloy-rs/chains/issues/215))
+- Update MSRV in README ([#213](https://github.com/alloy-rs/chains/issues/213))
+- Release 0.2.15 ([#214](https://github.com/alloy-rs/chains/issues/214))
+
+### Other
+
+- Add sei-test net ([#212](https://github.com/alloy-rs/chains/issues/212))
+
+## [0.2.14](https://github.com/alloy-rs/chains/releases/tag/v0.2.14) - 2025-09-30
+
+### Miscellaneous Tasks
+
+- Release 0.2.14
+- Add plasma ([#210](https://github.com/alloy-rs/chains/issues/210))
+- Rm doc_auto_cfg ([#211](https://github.com/alloy-rs/chains/issues/211))
+
+## [0.2.13](https://github.com/alloy-rs/chains/releases/tag/v0.2.13) - 2025-09-26
+
+### Features
+
+- [chains] Add signet pecorino testnet ([#209](https://github.com/alloy-rs/chains/issues/209))
+
+### Miscellaneous Tasks
+
+- Release 0.2.13
+
+## [0.2.12](https://github.com/alloy-rs/chains/releases/tag/v0.2.12) - 2025-09-19
+
+### Bug Fixes
+
+- Katana now requires an `ETHERSCAN_API_KEY` ([#208](https://github.com/alloy-rs/chains/issues/208))
+
+### Miscellaneous Tasks
+
+- Release 0.2.12
+
+## [0.2.11](https://github.com/alloy-rs/chains/releases/tag/v0.2.11) - 2025-09-19
+
+### Bug Fixes
+
+- Update Katana URLs ([#207](https://github.com/alloy-rs/chains/issues/207))
+
+### Miscellaneous Tasks
+
+- Release 0.2.11
+
+## [0.2.10](https://github.com/alloy-rs/chains/releases/tag/v0.2.10) - 2025-09-18
+
+### Bug Fixes
+
+- Update Avalance URLs, now use Etherscan API key ([#203](https://github.com/alloy-rs/chains/issues/203))
+- Sonic Blaze deprecated, Sonic Testnet chain id update, explorer URL update ([#202](https://github.com/alloy-rs/chains/issues/202))
+- Use correct etherscan URL for bsc ([#197](https://github.com/alloy-rs/chains/issues/197))
+
+### Miscellaneous Tasks
+
+- Release 0.2.10
+- Deprecate Polygon Mumbai, Polygon ZKEvm and Polygon ZkEvm Testnet, fix `POLYGONSCAN_API_KEY` ([#204](https://github.com/alloy-rs/chains/issues/204))
+- Deprecate kakarot sepolia ([#200](https://github.com/alloy-rs/chains/issues/200))
+- Go through all verification API endpoints and deprecate / fix those that are down ([#196](https://github.com/alloy-rs/chains/issues/196))
+- Set native token for celo, smol match change ([#194](https://github.com/alloy-rs/chains/issues/194))
+- Remove hoodi etherscan todo ([#191](https://github.com/alloy-rs/chains/issues/191))
+
+### Other
+
+- Update Celo chains ([#206](https://github.com/alloy-rs/chains/issues/206))
+
+## [0.2.9](https://github.com/alloy-rs/chains/releases/tag/v0.2.9) - 2025-08-28
+
+### Miscellaneous Tasks
+
+- Release 0.2.9
+- Add base, optimism native token name ([#193](https://github.com/alloy-rs/chains/issues/193))
+- Use Option::unzip now that msrv is 1.81 ([#192](https://github.com/alloy-rs/chains/issues/192))
+
+## [0.2.8](https://github.com/alloy-rs/chains/releases/tag/v0.2.8) - 2025-08-21
+
+### Miscellaneous Tasks
+
+- Release 0.2.8
+- Remove deprecated functions ([#189](https://github.com/alloy-rs/chains/issues/189))
+- Tweak inline ([#188](https://github.com/alloy-rs/chains/issues/188))
+
+## [0.2.7](https://github.com/alloy-rs/chains/releases/tag/v0.2.7) - 2025-08-19
+
+### Features
+
+- Add is_polygon ([#185](https://github.com/alloy-rs/chains/issues/185))
+- Add Injective ([#184](https://github.com/alloy-rs/chains/issues/184))
+
+### Miscellaneous Tasks
+
+- Release 0.2.7
+- Make katana opstack ([#187](https://github.com/alloy-rs/chains/issues/187))
+- Make celo opstack ([#186](https://github.com/alloy-rs/chains/issues/186))
+- Update BSC poll interval to reflect BSC block time ([#181](https://github.com/alloy-rs/chains/issues/181))
+
+### Other
+
+- Adds fluent devnet and testnet ([#179](https://github.com/alloy-rs/chains/issues/179))
+- Support Fuse chain ([#180](https://github.com/alloy-rs/chains/issues/180))
+
+## [0.2.6](https://github.com/alloy-rs/chains/releases/tag/v0.2.6) - 2025-07-19
+
+### Features
+
+- Adds katana and lisk ([#178](https://github.com/alloy-rs/chains/issues/178))
+
+### Miscellaneous Tasks
+
+- Release 0.2.6
+
+### Other
+
+- Add Hyperevmscan.io ([#177](https://github.com/alloy-rs/chains/issues/177))
+
+## [0.2.5](https://github.com/alloy-rs/chains/releases/tag/v0.2.5) - 2025-07-02
+
+### Dependencies
+
+- Bump edition 2024 and msrv 1.85 ([#172](https://github.com/alloy-rs/chains/issues/172))
+
+### Features
+
+- Implement arbitrary for NamedChain ([#171](https://github.com/alloy-rs/chains/issues/171))
+
+### Miscellaneous Tasks
+
+- Release 0.2.5
+- Update etherscan api urls to v2 ([#174](https://github.com/alloy-rs/chains/issues/174))
+
+### Styling
+
+- Update monad testnet explorer ([#175](https://github.com/alloy-rs/chains/issues/175))
+
+## [0.2.4](https://github.com/alloy-rs/chains/releases/tag/v0.2.4) - 2025-06-09
+
+### Features
+
+- Add InjectiveTestnet ([#168](https://github.com/alloy-rs/chains/issues/168))
+
+### Miscellaneous Tasks
+
+- Release 0.2.4
+
+## [0.2.3](https://github.com/alloy-rs/chains/releases/tag/v0.2.3) - 2025-06-03
+
+### Features
+
+- Update berachain ([#167](https://github.com/alloy-rs/chains/issues/167))
+
+### Miscellaneous Tasks
+
+- Release 0.2.3
+
+### Other
+
+- Update `Rootstock` (rsk) chain ([#166](https://github.com/alloy-rs/chains/issues/166))
+
+## [0.2.2](https://github.com/alloy-rs/chains/releases/tag/v0.2.2) - 2025-05-25
+
+### Miscellaneous Tasks
+
+- Release 0.2.2
+- Update outdated legacy chains ([#165](https://github.com/alloy-rs/chains/issues/165))
+
+## [0.2.1](https://github.com/alloy-rs/chains/releases/tag/v0.2.1) - 2025-05-16
+
+### Features
+
+- Introduces elastic network named chains ([#164](https://github.com/alloy-rs/chains/issues/164))
+
+### Miscellaneous Tasks
+
+- Release 0.2.1
+- Add is_ helper fns ([#163](https://github.com/alloy-rs/chains/issues/163))
+
+### Other
+
+- Add corn chain ([#162](https://github.com/alloy-rs/chains/issues/162))
+
+### Styling
+
+- Add `Rootstock` testnet chain ([#161](https://github.com/alloy-rs/chains/issues/161))
+
+## [0.2.0](https://github.com/alloy-rs/chains/releases/tag/v0.2.0) - 2025-04-09
+
+### Dependencies
+
+- [deps] Primitives 1.0 ([#157](https://github.com/alloy-rs/chains/issues/157))
+
+### Miscellaneous Tasks
+
+- Release 0.2.0
+
+### Other
+
+- Add sei ([#160](https://github.com/alloy-rs/chains/issues/160))
+
+## [0.1.69](https://github.com/alloy-rs/chains/releases/tag/v0.1.69) - 2025-03-28
+
+### Features
+
+- Update sonic blaze ([#159](https://github.com/alloy-rs/chains/issues/159))
+
+### Miscellaneous Tasks
+
+- Release 0.1.69
+
+## [0.1.68](https://github.com/alloy-rs/chains/releases/tag/v0.1.68) - 2025-03-27
+
+### Features
+
+- Etherscan URLs for Hoodi ([#156](https://github.com/alloy-rs/chains/issues/156))
+
+### Miscellaneous Tasks
+
+- Release 0.1.68
+
+## [0.1.67](https://github.com/alloy-rs/chains/releases/tag/v0.1.67) - 2025-03-25
+
+### Bug Fixes
+
+- Update happychain testnet explorer url ([#154](https://github.com/alloy-rs/chains/issues/154))
+
+### Features
+
+- Update berachain bepolia ([#155](https://github.com/alloy-rs/chains/issues/155))
+
+### Miscellaneous Tasks
+
+- Release 0.1.67
+
+## [0.1.66](https://github.com/alloy-rs/chains/releases/tag/v0.1.66) - 2025-03-17
+
+### Features
+
+- Add hoodi fn ([#153](https://github.com/alloy-rs/chains/issues/153))
+
+### Miscellaneous Tasks
+
+- Release 0.1.66
+- Allow paste ([#151](https://github.com/alloy-rs/chains/issues/151))
+
+## [0.1.65](https://github.com/alloy-rs/chains/releases/tag/v0.1.65) - 2025-03-17
+
+### Features
+
+- Add hoodi ([#150](https://github.com/alloy-rs/chains/issues/150))
+- Add polygon symbol ([#149](https://github.com/alloy-rs/chains/issues/149))
+- Add abstract ([#147](https://github.com/alloy-rs/chains/issues/147))
+
+### Miscellaneous Tasks
+
+- Release 0.1.65
+
+## [0.1.64](https://github.com/alloy-rs/chains/releases/tag/v0.1.64) - 2025-03-06
+
+### Bug Fixes
+
+- Add BSC chain id to supports_shanghai ([#146](https://github.com/alloy-rs/chains/issues/146))
+
+### Miscellaneous Tasks
+
+- Release 0.1.64
+
+## [0.1.63](https://github.com/alloy-rs/chains/releases/tag/v0.1.63) - 2025-02-24
+
+### Miscellaneous Tasks
+
+- Release 0.1.63
+- Add hyperliquid ([#145](https://github.com/alloy-rs/chains/issues/145))
+- Add monad testnet ([#144](https://github.com/alloy-rs/chains/issues/144))
+
+## [0.1.62](https://github.com/alloy-rs/chains/releases/tag/v0.1.62) - 2025-02-18
+
+### Dependencies
+
+- [deps] Bump strum
+
+### Features
+
+- Add methods for Unichain mainnet and sepolia ([#143](https://github.com/alloy-rs/chains/issues/143))
+
+### Miscellaneous Tasks
+
+- Release 0.1.62
+
+### Other
+
+- Add story ([#142](https://github.com/alloy-rs/chains/issues/142))
+
+## [0.1.61](https://github.com/alloy-rs/chains/releases/tag/v0.1.61) - 2025-02-13
+
+### Features
+
+- Add telos aliases ([#141](https://github.com/alloy-rs/chains/issues/141))
+
+### Miscellaneous Tasks
+
+- Release 0.1.61
+
+## [0.1.60](https://github.com/alloy-rs/chains/releases/tag/v0.1.60) - 2025-02-12
+
+### Features
+
+- Add unichain ([#139](https://github.com/alloy-rs/chains/issues/139))
+
+### Miscellaneous Tasks
+
+- Release 0.1.60
+
+## [0.1.59](https://github.com/alloy-rs/chains/releases/tag/v0.1.59) - 2025-02-07
+
+### Miscellaneous Tasks
+
+- Release 0.1.59
+
+### Other
+
+- Add berachain ([#138](https://github.com/alloy-rs/chains/issues/138))
+
+## [0.1.58](https://github.com/alloy-rs/chains/releases/tag/v0.1.58) - 2025-02-01
+
+### Features
+
+- Add inverse partialeq for chainid ([#136](https://github.com/alloy-rs/chains/issues/136))
+
+### Miscellaneous Tasks
+
+- Release 0.1.58
+
+### Other
+
+- Rustfmt
+- Add Superposition testnet/mainnet ([#137](https://github.com/alloy-rs/chains/issues/137))
+
+## [0.1.57](https://github.com/alloy-rs/chains/releases/tag/v0.1.57) - 2025-01-22
+
+### Features
+
+- Add sonic mainnet ([#135](https://github.com/alloy-rs/chains/issues/135))
+
+### Miscellaneous Tasks
+
+- Release 0.1.57
+
+## [0.1.56](https://github.com/alloy-rs/chains/releases/tag/v0.1.56) - 2025-01-16
+
+### Bug Fixes
+
+- Berachain chain information ([#133](https://github.com/alloy-rs/chains/issues/133))
+
+### Features
+
+- Added berachain ([#132](https://github.com/alloy-rs/chains/issues/132))
+
+### Miscellaneous Tasks
+
+- Release 0.1.56
+
+### Other
+
+- Added Soneium chain, updated Minato explorer ([#134](https://github.com/alloy-rs/chains/issues/134))
+
+## [0.1.55](https://github.com/alloy-rs/chains/releases/tag/v0.1.55) - 2025-01-10
+
+### Features
+
+- Add kaia ([#131](https://github.com/alloy-rs/chains/issues/131))
+
+### Miscellaneous Tasks
+
+- Release 0.1.55
+
+## [0.1.54](https://github.com/alloy-rs/chains/releases/tag/v0.1.54) - 2025-01-08
+
+### Bug Fixes
+
+- Ink network info ([#130](https://github.com/alloy-rs/chains/issues/130))
+
+### Dependencies
+
+- [deps] Bump alloy-primitives 0.8.18 ([#129](https://github.com/alloy-rs/chains/issues/129))
+
+### Features
+
+- Add bob and bob sepolia ([#128](https://github.com/alloy-rs/chains/issues/128))
+
+### Miscellaneous Tasks
+
+- Release 0.1.54
+
+### Other
+
+- Remove 0x prefix from hex literal string to fix build ([#127](https://github.com/alloy-rs/chains/issues/127))
+
+## [0.1.53](https://github.com/alloy-rs/chains/releases/tag/v0.1.53) - 2025-01-06
+
+### Features
+
+- Add treasure mainnet and topaz testnet ([#126](https://github.com/alloy-rs/chains/issues/126))
+
+### Miscellaneous Tasks
+
+- Release 0.1.53
+
+## [0.1.52](https://github.com/alloy-rs/chains/releases/tag/v0.1.52) - 2025-01-04
+
+### Features
+
+- Add happychain testnet ([#125](https://github.com/alloy-rs/chains/issues/125))
+- Add arbitrum chain methods to `Chain` ([#123](https://github.com/alloy-rs/chains/issues/123))
+
+### Miscellaneous Tasks
+
+- Release 0.1.52
+- Update codeowners ([#124](https://github.com/alloy-rs/chains/issues/124))
+
 ## [0.1.51](https://github.com/alloy-rs/chains/releases/tag/v0.1.51) - 2024-12-23
+
+### Miscellaneous Tasks
+
+- Release 0.1.51
 
 ### Other
 
