@@ -1947,11 +1947,18 @@ impl NamedChain {
                 "https://explorer.testnet.chain.robinhood.com",
             ),
 
+            Radius => {
+                ("https://network.radiustech.xyz/api", "https://network.radiustech.xyz")
+            }
+            RadiusTestnet => {
+                ("https://testnet.radiustech.xyz/api", "https://testnet.radiustech.xyz")
+            }
+
             AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
             | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CronosTestnet | Dev
             | Evmos | EvmosTestnet | Fantom | FantomTestnet | FilecoinMainnet | Goerli | Iotex
             | KaruraTestnet | Koi | Kovan | LineaGoerli | MoonbeamDev | Morden | Oasis
-            | OptimismGoerli | OptimismKovan | Pgn | PgnSepolia | Poa | Radius | RadiusTestnet
+            | OptimismGoerli | OptimismKovan | Pgn | PgnSepolia | Poa
             | Rinkeby | Ropsten | Sokol | Treasure | TreasureTopaz | Cannon => {
                 return None;
             }

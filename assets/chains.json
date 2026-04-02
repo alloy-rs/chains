@@ -1712,8 +1712,8 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "RUSD",
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
+      "etherscanApiUrl": "https://testnet.radiustech.xyz/api",
+      "etherscanBaseUrl": "https://testnet.radiustech.xyz",
       "etherscanApiKeyName": null
     },
     "80002": {
@@ -2012,8 +2012,8 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "RUSD",
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
+      "etherscanApiUrl": "https://network.radiustech.xyz/api",
+      "etherscanBaseUrl": "https://network.radiustech.xyz",
       "etherscanApiKeyName": null
     },
     "747474": {
