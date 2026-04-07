@@ -616,7 +616,7 @@
       "internalId": "BattleChainTestnet",
       "name": "battlechain-testnet",
       "averageBlocktimeHint": 250,
-      "isLegacy": true,
+      "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "ETH",
