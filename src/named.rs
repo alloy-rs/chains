@@ -993,7 +993,7 @@ impl NamedChain {
             // Known legacy chains / non EIP-1559 compliant.
             Elastos | Emerald | EmeraldTestnet | Fantom | FantomTestnet | OptimismKovan | Rsk
             | RskTestnet | Shimmer | Treasure | TreasureTopaz | Viction | Sophon
-            | SophonTestnet | BattleChainTestnet => true,
+            | SophonTestnet => true,
 
             // Known EIP-1559 chains.
             Mainnet
@@ -1106,6 +1106,7 @@ impl NamedChain {
             | Abstract
             | Lens
             | LensTestnet
+            | BattleChainTestnet
             | BinanceSmartChain
             | BinanceSmartChainTestnet
             | Karura
