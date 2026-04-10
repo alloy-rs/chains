@@ -1380,6 +1380,18 @@
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": null
     },
+    "31318": {
+      "internalId": "TempoDevnet",
+      "name": "tempo-devnet",
+      "averageBlocktimeHint": 500,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "USD",
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
+      "etherscanApiKeyName": null
+    },
     "31337": {
       "internalId": "AnvilHardhat",
       "name": "anvil-hardhat",
