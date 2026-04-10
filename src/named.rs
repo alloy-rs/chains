@@ -574,6 +574,7 @@ pub enum NamedChain {
     Tempo = 4217,
     TempoModerato = 42431,
     TempoTestnet = 42429,
+    TempoDevnet = 31318,
 
     ArcTestnet = 5042002,
 
@@ -798,7 +799,7 @@ impl NamedChain {
     pub const fn is_tempo(self) -> bool {
         use NamedChain::*;
 
-        matches!(self, Tempo | TempoModerato | TempoTestnet)
+        matches!(self, Tempo | TempoModerato | TempoTestnet | TempoDevnet)
     }
 
     /// Returns true if the chain uses a custom Sourcify-compatible API for contract verification.
@@ -807,7 +808,9 @@ impl NamedChain {
     /// [`etherscan_urls`](Self::etherscan_urls) but the API is Sourcify-compatible rather than
     /// Etherscan-compatible.
     pub const fn is_custom_sourcify(self) -> bool {
-        self.is_tempo()
+        use NamedChain::*;
+
+        matches!(self, Tempo | TempoModerato | TempoTestnet)
     }
 
     /// Returns the chain's average blocktime, if applicable.
@@ -937,7 +940,7 @@ impl NamedChain {
 
             Sonic | SonicTestnet => 1_000,
 
-            TelosEvm | TelosEvmTestnet | Tempo | TempoTestnet | TempoModerato => 500,
+            TelosEvm | TelosEvmTestnet | Tempo | TempoTestnet | TempoModerato | TempoDevnet => 500,
 
             UnichainSepolia | Unichain => 1_000,
 
@@ -1172,6 +1175,7 @@ impl NamedChain {
             | Tempo
             | TempoTestnet
             | TempoModerato
+            | TempoDevnet
             | ArcTestnet
             | RobinhoodTestnet => false,
         }
@@ -1289,6 +1293,7 @@ impl NamedChain {
                 | Tempo
                 | TempoTestnet
                 | TempoModerato
+                | TempoDevnet
                 | MoonbeamDev
                 | Moonbeam
                 | Moonriver
@@ -1398,6 +1403,7 @@ impl NamedChain {
             | XdcTestnet
             | TempoTestnet
             | TempoModerato
+            | TempoDevnet
             | PlasmaTestnet
             | ArcTestnet
             | BattleChainTestnet
@@ -1532,7 +1538,7 @@ impl NamedChain {
 
             ArcTestnet => "USDC",
 
-            Tempo | TempoModerato | TempoTestnet => "USD",
+            Tempo | TempoModerato | TempoTestnet | TempoDevnet => "USD",
 
             _ => return None,
         })
@@ -1937,7 +1943,7 @@ impl NamedChain {
             | Evmos | EvmosTestnet | Fantom | FantomTestnet | FilecoinMainnet | Goerli | Iotex
             | KaruraTestnet | Koi | Kovan | LineaGoerli | MoonbeamDev | Morden | Oasis
             | OptimismGoerli | OptimismKovan | Pgn | PgnSepolia | Poa | Rinkeby | Ropsten
-            | Sokol | Treasure | TreasureTopaz | Cannon => {
+            | Sokol | TempoDevnet | Treasure | TreasureTopaz | Cannon => {
                 return None;
             }
         })
@@ -2143,6 +2149,7 @@ impl NamedChain {
             | Insectarium
             | TempoTestnet
             | TempoModerato
+            | TempoDevnet
             | Tempo
             | BattleChainTestnet
             | RobinhoodTestnet => return None,

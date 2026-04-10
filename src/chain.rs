@@ -685,6 +685,12 @@ impl Chain {
         Self::from_named(NamedChain::Tempo)
     }
 
+    /// Returns the Tempo devnet chain.
+    #[inline]
+    pub const fn tempo_devnet() -> Self {
+        Self::from_named(NamedChain::TempoDevnet)
+    }
+
     /// Returns the Arc testnet chain.
     #[inline]
     pub const fn arc_testnet() -> Self {
