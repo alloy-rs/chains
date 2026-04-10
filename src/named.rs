@@ -315,6 +315,13 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "ronin-testnet"))]
     RoninTestnet = 202601,
 
+    #[strum(to_string = "radius")]
+    #[cfg_attr(feature = "serde", serde(alias = "radius"))]
+    Radius = 723_487,
+    #[strum(to_string = "radius-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "radius-testnet"))]
+    RadiusTestnet = 72_344,
+
     Taiko = 167000,
     #[cfg_attr(feature = "serde", serde(alias = "taiko-hekla"))]
     TaikoHekla = 167009,
@@ -970,6 +977,8 @@ impl NamedChain {
 
             ArcTestnet => 500,
 
+            Radius | RadiusTestnet => 500,
+
             Morden | Ropsten | Rinkeby | Goerli | Kovan | Sepolia | Holesky | Hoodi
             | MoonbeamDev | OptimismKovan | Poa | Sokol | EmeraldTestnet | Boba | Metis | Linea
             | LineaGoerli | LineaSepolia | Treasure | TreasureTopaz | Corn | CornTestnet
@@ -1124,7 +1133,9 @@ impl NamedChain {
             | Formicarium
             | Insectarium
             | MegaEth
-            | MegaEthTestnet => false,
+            | MegaEthTestnet
+            | Radius
+            | RadiusTestnet => false,
 
             // Unknown / not applicable, default to false for backwards compatibility.
             Dev
@@ -1309,6 +1320,8 @@ impl NamedChain {
                 | Sei
                 | Plume
                 | PlumeTestnet
+                | Radius
+                | RadiusTestnet
         )
     }
 
@@ -1407,6 +1420,7 @@ impl NamedChain {
             | PlasmaTestnet
             | ArcTestnet
             | BattleChainTestnet
+            | RadiusTestnet
             | RobinhoodTestnet => true,
 
             // Dev chains.
@@ -1424,7 +1438,7 @@ impl NamedChain {
             | Sonic | Superposition | Berachain | Monad | Unichain | TelosEvm | Story | Sei
             | Plume | StableMainnet | MegaEth | Hyperliquid | Abstract | Sophon | Lens | Corn
             | Katana | Lisk | Fuse | Injective | MemeCore | SkaleBase | XdcMainnet | Tempo
-            | Kusama | Polkadot => false,
+            | Kusama | Polkadot | Radius => false,
         }
     }
 
@@ -1539,6 +1553,8 @@ impl NamedChain {
             ArcTestnet => "USDC",
 
             Tempo | TempoModerato | TempoTestnet | TempoDevnet => "USD",
+
+            Radius | RadiusTestnet => "RUSD",
 
             _ => return None,
         })
@@ -1938,6 +1954,11 @@ impl NamedChain {
                 "https://explorer.testnet.chain.robinhood.com",
             ),
 
+            Radius => ("https://network.radiustech.xyz/api", "https://network.radiustech.xyz"),
+            RadiusTestnet => {
+                ("https://testnet.radiustech.xyz/api", "https://testnet.radiustech.xyz")
+            }
+
             AcalaTestnet | AnvilHardhat | ArbitrumGoerli | ArbitrumTestnet
             | AutonomysNovaTestnet | BaseGoerli | Canto | CantoTestnet | CronosTestnet | Dev
             | Evmos | EvmosTestnet | Fantom | FantomTestnet | FilecoinMainnet | Goerli | Iotex
@@ -2151,6 +2172,8 @@ impl NamedChain {
             | TempoModerato
             | TempoDevnet
             | Tempo
+            | Radius
+            | RadiusTestnet
             | BattleChainTestnet
             | RobinhoodTestnet => return None,
         };
@@ -2395,6 +2418,8 @@ mod tests {
             (MemeCore, &["memecore"]),
             (Formicarium, &["formicarium", "memecore-formicarium"]),
             (Insectarium, &["insectarium", "memecore-insectarium"]),
+            (Radius, &["radius"]),
+            (RadiusTestnet, &["radius-testnet"]),
             (RobinhoodTestnet, &["robinhood-testnet"]),
             (BattleChainTestnet, &["battlechain-testnet"]),
         ];

@@ -1716,6 +1716,18 @@
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": null
     },
+    "72344": {
+      "internalId": "RadiusTestnet",
+      "name": "radius-testnet",
+      "averageBlocktimeHint": 500,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "RUSD",
+      "etherscanApiUrl": "https://testnet.radiustech.xyz/api",
+      "etherscanBaseUrl": "https://testnet.radiustech.xyz",
+      "etherscanApiKeyName": null
+    },
     "80002": {
       "internalId": "PolygonAmoy",
       "name": "amoy",
@@ -2003,6 +2015,18 @@
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=660279",
       "etherscanBaseUrl": "https://xaiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "723487": {
+      "internalId": "Radius",
+      "name": "radius",
+      "averageBlocktimeHint": 500,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "RUSD",
+      "etherscanApiUrl": "https://network.radiustech.xyz/api",
+      "etherscanBaseUrl": "https://network.radiustech.xyz",
+      "etherscanApiKeyName": null
     },
     "747474": {
       "internalId": "Katana",
