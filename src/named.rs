@@ -439,6 +439,13 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "sonic-testnet"))]
     SonicTestnet = 14601,
 
+    #[strum(to_string = "redbelly")]
+    #[cfg_attr(feature = "serde", serde(alias = "redbelly"))]
+    Redbelly = 151,
+    #[strum(to_string = "redbelly-testnet")]
+    #[cfg_attr(feature = "serde", serde(alias = "redbelly-testnet"))]
+    RedbellyTestnet = 153,
+
     #[strum(to_string = "plume-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "plume-testnet"))]
     PlumeTestnet = 98867,
@@ -947,6 +954,8 @@ impl NamedChain {
 
             Sonic | SonicTestnet => 1_000,
 
+            Redbelly | RedbellyTestnet => 60_000,
+
             TelosEvm | TelosEvmTestnet | Tempo | TempoTestnet | TempoModerato | TempoDevnet => 500,
 
             UnichainSepolia | Unichain => 1_000,
@@ -1094,6 +1103,8 @@ impl NamedChain {
             | SoneiumMinatoTestnet
             | Sonic
             | SonicTestnet
+            | Redbelly
+            | RedbellyTestnet
             | World
             | WorldSepolia
             | Unichain
@@ -1315,6 +1326,8 @@ impl NamedChain {
                 | ArcTestnet
                 | BattleChainTestnet
                 | Sonic
+                | Redbelly
+                | RedbellyTestnet
                 | Katana
                 | Linea
                 | Sei
@@ -1394,6 +1407,7 @@ impl NamedChain {
             | PlumeTestnet
             | TreasureTopaz
             | SonicTestnet
+            | RedbellyTestnet
             | BerachainBepolia
             | SuperpositionTestnet
             | MonadTestnet
@@ -1435,10 +1449,10 @@ impl NamedChain {
             | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
             | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex | Core
             | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob | Soneium
-            | Sonic | Superposition | Berachain | Monad | Unichain | TelosEvm | Story | Sei
-            | Plume | StableMainnet | MegaEth | Hyperliquid | Abstract | Sophon | Lens | Corn
-            | Katana | Lisk | Fuse | Injective | MemeCore | SkaleBase | XdcMainnet | Tempo
-            | Kusama | Polkadot | Radius => false,
+            | Sonic | Redbelly | Superposition | Berachain | Monad | Unichain | TelosEvm
+            | Story | Sei | Plume | StableMainnet | MegaEth | Hyperliquid | Abstract | Sophon
+            | Lens | Corn | Katana | Lisk | Fuse | Injective | MemeCore | SkaleBase
+            | XdcMainnet | Tempo | Kusama | Polkadot | Radius => false,
         }
     }
 
@@ -1516,6 +1530,8 @@ impl NamedChain {
             Monad | MonadTestnet => "MON",
 
             Sonic | SonicTestnet => "S",
+
+            Redbelly | RedbellyTestnet => "RBNT",
 
             TelosEvm | TelosEvmTestnet => "TLOS",
 
@@ -1850,6 +1866,14 @@ impl NamedChain {
             SonicTestnet => {
                 ("https://api.etherscan.io/v2/api?chainid=14601", "https://testnet.sonicscan.org")
             }
+            Redbelly => (
+                "https://api.routescan.io/v2/network/mainnet/evm/151/etherscan",
+                "https://redbelly.routescan.io",
+            ),
+            RedbellyTestnet => (
+                "https://api.routescan.io/v2/network/testnet/evm/153/etherscan",
+                "https://redbelly.testnet.routescan.io",
+            ),
             BerachainBepolia => {
                 ("https://api.etherscan.io/v2/api?chainid=80069", "https://testnet.berascan.com")
             }
@@ -2121,6 +2145,7 @@ impl NamedChain {
             Kaia => "KAIASCAN_API_KEY",
             Berachain | BerachainBepolia => "BERASCAN_API_KEY",
             Corn | CornTestnet => "ROUTESCAN_API_KEY",
+            Redbelly | RedbellyTestnet => "ROUTESCAN_API_KEY",
             Plasma | PlasmaTestnet => "ETHERSCAN_API_KEY",
             // Explicitly exhaustive. See NB above.
             Metis
@@ -2270,6 +2295,7 @@ impl NamedChain {
             Treasure => address!("263d8f36bb8d0d9526255e205868c26690b04b88"),
             Superposition => address!("1fB719f10b56d7a85DCD32f27f897375fB21cfdd"),
             Sonic => address!("039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38"),
+            Redbelly => address!("6ed1f491e2d31536d6561f6bdb2adc8f092a6076"),
             Berachain => address!("6969696969696969696969696969696969696969"),
             Hyperliquid => address!("5555555555555555555555555555555555555555"),
             Abstract => address!("3439153EB7AF838Ad19d56E1571FBD09333C2809"),
@@ -2422,6 +2448,8 @@ mod tests {
             (RadiusTestnet, &["radius-testnet"]),
             (RobinhoodTestnet, &["robinhood-testnet"]),
             (BattleChainTestnet, &["battlechain-testnet"]),
+            (Redbelly, &["redbelly"]),
+            (RedbellyTestnet, &["redbelly-testnet"]),
         ];
 
         for &(chain, aliases) in ALIASES {

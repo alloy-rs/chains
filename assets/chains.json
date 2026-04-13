@@ -396,6 +396,30 @@
       "etherscanBaseUrl": "https://explorer.evm.shimmer.network",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "151": {
+      "internalId": "Redbelly",
+      "name": "redbelly",
+      "averageBlocktimeHint": 60000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "RBNT",
+      "etherscanApiUrl": "https://api.routescan.io/v2/network/mainnet/evm/151/etherscan",
+      "etherscanBaseUrl": "https://redbelly.routescan.io",
+      "etherscanApiKeyName": "ROUTESCAN_API_KEY"
+    },
+    "153": {
+      "internalId": "RedbellyTestnet",
+      "name": "redbelly-testnet",
+      "averageBlocktimeHint": 60000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "RBNT",
+      "etherscanApiUrl": "https://api.routescan.io/v2/network/testnet/evm/153/etherscan",
+      "etherscanBaseUrl": "https://redbelly.testnet.routescan.io",
+      "etherscanApiKeyName": "ROUTESCAN_API_KEY"
+    },
     "204": {
       "internalId": "OpBNBMainnet",
       "name": "opbnb-mainnet",
