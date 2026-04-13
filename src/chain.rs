@@ -595,6 +595,18 @@ impl Chain {
         Self::from_named(NamedChain::SonicTestnet)
     }
 
+    /// Returns the Redbelly Network mainnet chain.
+    #[inline]
+    pub const fn redbelly() -> Self {
+        Self::from_named(NamedChain::Redbelly)
+    }
+
+    /// Returns the Redbelly Network testnet chain.
+    #[inline]
+    pub const fn redbelly_testnet() -> Self {
+        Self::from_named(NamedChain::RedbellyTestnet)
+    }
+
     /// Returns the Superposition testnet chain.
     #[inline]
     pub const fn superposition_testnet() -> Self {
