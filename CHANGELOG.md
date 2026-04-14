@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Redbelly Network and Redbelly Testnet ([#273](https://github.com/alloy-rs/chains/issues/273))
 - Add Radius Network and Radius Testnet ([#269](https://github.com/alloy-rs/chains/issues/269))
 - Add Tempo Devnet ([#272](https://github.com/alloy-rs/chains/issues/272))
+- Add Plume support ([#268](https://github.com/alloy-rs/chains/issues/268))
+
+### Other
+
+- Move BattleChainTestnet from legacy -> EIP-1559 supporting chains ([#270](https://github.com/alloy-rs/chains/issues/270))
 
 ## [0.2.33](https://github.com/alloy-rs/chains/releases/tag/v0.2.33) - 2026-03-24
 
