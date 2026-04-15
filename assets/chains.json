@@ -1860,6 +1860,18 @@
       "etherscanBaseUrl": "https://testnet-explorer.superposition.so",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "127001": {
+      "internalId": "Gravity",
+      "name": "grav",
+      "averageBlocktimeHint": 260,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "G",
+      "etherscanApiUrl": "https://mainnet-explorer.gravity.xyz/api",
+      "etherscanBaseUrl": "https://mainnet-explorer.gravity.xyz",
+      "etherscanApiKeyName": null
+    },
     "127823": {
       "internalId": "EtherlinkShadownet",
       "name": "etherlink-shadownet",

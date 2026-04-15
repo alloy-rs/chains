@@ -183,6 +183,10 @@ pub enum NamedChain {
     #[cfg_attr(feature = "serde", serde(alias = "gravity-alpha-testnet-sepolia"))]
     GravityAlphaTestnetSepolia = 13505,
 
+    #[strum(to_string = "grav")]
+    #[cfg_attr(feature = "serde", serde(alias = "grav"))]
+    Gravity = 127001,
+
     Evmos = 9001,
     EvmosTestnet = 9000,
 
@@ -857,6 +861,7 @@ impl NamedChain {
             | ArbitrumSepolia
             | GravityAlphaMainnet
             | GravityAlphaTestnetSepolia
+            | Gravity
             | Xai
             | XaiSepolia
             | Syndr
@@ -1054,6 +1059,7 @@ impl NamedChain {
             | ArbitrumNova
             | GravityAlphaMainnet
             | GravityAlphaTestnetSepolia
+            | Gravity
             | Xai
             | XaiSepolia
             | HappychainTestnet
@@ -1247,6 +1253,7 @@ impl NamedChain {
                 | ArbitrumSepolia
                 | GravityAlphaMainnet
                 | GravityAlphaTestnetSepolia
+                | Gravity
                 | Xai
                 | XaiSepolia
                 | Syndr
@@ -1445,8 +1452,8 @@ impl NamedChain {
             | BinanceSmartChain | Poa | Sokol | Scroll | Metis | Gnosis | Polygon | Fantom
             | Moonbeam | Moonriver | Evmos | Chiado | Oasis | Emerald | Plasma
             | FilecoinMainnet | Avalanche | Celo | Aurora | Canto | Boba | Base | Fraxtal | Ink
-            | Linea | ZkSync | Mantle | GravityAlphaMainnet | Xai | Zora | Pgn | Mode | Viction
-            | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
+            | Linea | ZkSync | Mantle | GravityAlphaMainnet | Gravity | Xai | Zora | Pgn | Mode
+            | Viction | Elastos | Degen | OpBNBMainnet | Ronin | Taiko | Flare | Acala | Karura
             | Darwinia | Cfx | Crab | Pulsechain | Etherlink | Immutable | World | Iotex | Core
             | Merlin | Bitlayer | ApeChain | Vana | Zeta | Kaia | Treasure | Bob | Soneium
             | Sonic | Redbelly | Superposition | Berachain | Monad | Unichain | TelosEvm
@@ -1472,7 +1479,7 @@ impl NamedChain {
 
             Mantle | MantleSepolia => "MNT",
 
-            GravityAlphaMainnet | GravityAlphaTestnetSepolia => "G",
+            GravityAlphaMainnet | GravityAlphaTestnetSepolia | Gravity => "G",
 
             Celo | CeloSepolia => "CELO",
 
@@ -1652,6 +1659,9 @@ impl NamedChain {
             }
             GravityAlphaTestnetSepolia => {
                 ("https://explorer-sepolia.gravity.xyz/api", "https://explorer-sepolia.gravity.xyz")
+            }
+            Gravity => {
+                ("https://mainnet-explorer.gravity.xyz/api", "https://mainnet-explorer.gravity.xyz")
             }
             HappychainTestnet => {
                 ("https://explorer.testnet.happy.tech/api", "https://explorer.testnet.happy.tech")
@@ -2164,6 +2174,7 @@ impl NamedChain {
             | Dev
             | GravityAlphaMainnet
             | GravityAlphaTestnetSepolia
+            | Gravity
             | Bob
             | BobSepolia
             | FilecoinMainnet
@@ -2388,6 +2399,7 @@ mod tests {
             (MantleSepolia, &["mantle-sepolia"]),
             (GravityAlphaMainnet, &["gravity-alpha-mainnet"]),
             (GravityAlphaTestnetSepolia, &["gravity-alpha-testnet-sepolia"]),
+            (Gravity, &["grav"]),
             (Bob, &["bob"]),
             (BobSepolia, &["bob-sepolia"]),
             (HappychainTestnet, &["happychain-testnet"]),
