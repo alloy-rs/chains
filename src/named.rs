@@ -1950,8 +1950,12 @@ impl NamedChain {
                 "https://testnet.blockscout.injective.network",
             ),
             Fluent => ("https://api.fluentscan.xyz/api", "https://fluentscan.xyz"),
-            FluentDevnet => ("https://api-devnet.fluentscan.xyz/api", "https://devnet.fluentscan.xyz"),
-            FluentTestnet => ("https://api-testnet.fluentscan.xyz/api", "https://testnet.fluentscan.xyz"),
+            FluentDevnet => {
+                ("https://api-devnet.fluentscan.xyz/api", "https://devnet.fluentscan.xyz")
+            }
+            FluentTestnet => {
+                ("https://api-testnet.fluentscan.xyz/api", "https://testnet.fluentscan.xyz")
+            }
             MemeCore => ("https://api.etherscan.io/v2/api?chainid=4352", "https://memecorescan.io"),
             Formicarium => (
                 "https://api.etherscan.io/v2/api?chainid=43521",

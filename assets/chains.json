@@ -1376,8 +1376,8 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://blockscout.dev.gblend.xyz/api",
-      "etherscanBaseUrl": "https://blockscout.dev.gblend.xyz",
+      "etherscanApiUrl": "https://api-devnet.fluentscan.xyz/api",
+      "etherscanBaseUrl": "https://devnet.fluentscan.xyz",
       "etherscanApiKeyName": null
     },
     "20994": {
@@ -1388,8 +1388,20 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": null,
-      "etherscanApiUrl": "https://testnet.fluentscan.xyz/api",
+      "etherscanApiUrl": "https://api-testnet.fluentscan.xyz/api",
       "etherscanBaseUrl": "https://testnet.fluentscan.xyz",
+      "etherscanApiKeyName": null
+    },
+    "25363": {
+      "internalId": "Fluent",
+      "name": "fluent",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": null,
+      "etherscanApiUrl": "https://api.fluentscan.xyz/api",
+      "etherscanBaseUrl": "https://fluentscan.xyz",
       "etherscanApiKeyName": null
     },
     "26863": {
