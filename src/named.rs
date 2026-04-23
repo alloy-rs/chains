@@ -559,10 +559,14 @@ pub enum NamedChain {
     #[strum(to_string = "fuse")]
     #[cfg_attr(feature = "serde", serde(alias = "fuse"))]
     Fuse = 122,
+
+    #[strum(to_string = "fluent")]
+    #[cfg_attr(feature = "serde", serde(alias = "fluent"))]
+    Fluent = 25363,
+
     #[strum(to_string = "fluent-devnet")]
     #[cfg_attr(feature = "serde", serde(alias = "fluent-devnet"))]
     FluentDevnet = 20993,
-
     #[strum(to_string = "fluent-testnet")]
     #[cfg_attr(feature = "serde", serde(alias = "fluent-testnet"))]
     FluentTestnet = 20994,
@@ -981,6 +985,7 @@ impl NamedChain {
             Katana => 1_000,
             Lisk => 2_000,
             Fuse => 5_000,
+            Fluent => 1_000,
             FluentDevnet => 3_000,
             FluentTestnet => 1_000,
             MemeCore | Formicarium | Insectarium => 7_000,
@@ -1142,6 +1147,7 @@ impl NamedChain {
             | KaruraTestnet
             | TelosEvm
             | TelosEvmTestnet
+            | Fluent
             | FluentDevnet
             | FluentTestnet
             | Plasma
@@ -1459,7 +1465,7 @@ impl NamedChain {
             | Sonic | Redbelly | Superposition | Berachain | Monad | Unichain | TelosEvm
             | Story | Sei | Plume | StableMainnet | MegaEth | Hyperliquid | Abstract | Sophon
             | Lens | Corn | Katana | Lisk | Fuse | Injective | MemeCore | SkaleBase
-            | XdcMainnet | Tempo | Kusama | Polkadot | Radius => false,
+            | XdcMainnet | Tempo | Kusama | Polkadot | Radius | Fluent => false,
         }
     }
 
@@ -1943,11 +1949,12 @@ impl NamedChain {
                 "https://testnet.blockscout-api.injective.network/api",
                 "https://testnet.blockscout.injective.network",
             ),
+            Fluent => ("https://api.fluentscan.xyz/api", "https://fluentscan.xyz"),
             FluentDevnet => {
-                ("https://blockscout.dev.gblend.xyz/api", "https://blockscout.dev.gblend.xyz")
+                ("https://api-devnet.fluentscan.xyz/api", "https://devnet.fluentscan.xyz")
             }
             FluentTestnet => {
-                ("https://testnet.fluentscan.xyz/api", "https://testnet.fluentscan.xyz")
+                ("https://api-testnet.fluentscan.xyz/api", "https://testnet.fluentscan.xyz")
             }
             MemeCore => ("https://api.etherscan.io/v2/api?chainid=4352", "https://memecorescan.io"),
             Formicarium => (
@@ -2200,6 +2207,7 @@ impl NamedChain {
             | TelosEvmTestnet
             | Lens
             | LensTestnet
+            | Fluent
             | FluentDevnet
             | FluentTestnet
             | Cannon
