@@ -1065,7 +1065,7 @@
       "isTestnet": false,
       "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=4326",
-      "etherscanBaseUrl": "https://megascan.com",
+      "etherscanBaseUrl": "https://mega.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "4352": {
@@ -1149,7 +1149,7 @@
       "isTestnet": true,
       "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=6343",
-      "etherscanBaseUrl": "https://testnet.megascan.com",
+      "etherscanBaseUrl": "https://megaeth-testnet-v2.blockscout.com",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "7000": {
