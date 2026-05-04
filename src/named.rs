@@ -1866,10 +1866,13 @@ impl NamedChain {
             StableTestnet => {
                 ("https://api.etherscan.io/v2/api?chainid=2201", "https://testnet.stablescan.xyz")
             }
-            MegaEth => ("https://api.etherscan.io/v2/api?chainid=4326", "https://megascan.com"),
-            MegaEthTestnet => {
-                ("https://api.etherscan.io/v2/api?chainid=6343", "https://testnet.megascan.com")
+            MegaEth => {
+                ("https://api.etherscan.io/v2/api?chainid=4326", "https://mega.etherscan.io")
             }
+            MegaEthTestnet => (
+                "https://api.etherscan.io/v2/api?chainid=6343",
+                "https://megaeth-testnet-v2.blockscout.com",
+            ),
             XdcMainnet => ("https://api.etherscan.io/v2/api?chainid=50", "https://xdcscan.com"),
             XdcTestnet => {
                 ("https://api.etherscan.io/v2/api?chainid=51", "https://testnet.xdcscan.com")
