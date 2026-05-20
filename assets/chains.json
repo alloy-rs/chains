@@ -636,6 +636,18 @@
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "626": {
+      "internalId": "BattleChain",
+      "name": "battlechain",
+      "averageBlocktimeHint": 250,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://block-explorer-api.battlechain.com/api",
+      "etherscanBaseUrl": "https://explorer.battlechain.com",
+      "etherscanApiKeyName": null
+    },
     "627": {
       "internalId": "BattleChainTestnet",
       "name": "battlechain-testnet",

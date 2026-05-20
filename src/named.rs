@@ -600,6 +600,10 @@ pub enum NamedChain {
 
     ArcTestnet = 5042002,
 
+    #[strum(to_string = "battlechain")]
+    #[cfg_attr(feature = "serde", serde(alias = "battlechain"))]
+    BattleChain = 626,
+
     #[strum(to_string = "battlechain-testnet")]
     #[cfg_attr(
         feature = "serde",
@@ -813,6 +817,7 @@ impl NamedChain {
                 | SophonTestnet
                 | Lens
                 | LensTestnet
+                | BattleChain
                 | BattleChainTestnet
         )
     }
@@ -979,7 +984,7 @@ impl NamedChain {
             ZkSync | ZkSyncTestnet => 1_000,
             Sophon | SophonTestnet => 1_000,
             Lens | LensTestnet => 1_000,
-            BattleChainTestnet => 250,
+            BattleChain | BattleChainTestnet => 250,
             Rsk | RskTestnet => 25_000,
             Injective | InjectiveTestnet => 700,
             Katana => 1_000,
@@ -1140,6 +1145,7 @@ impl NamedChain {
             | Abstract
             | Lens
             | LensTestnet
+            | BattleChain
             | BattleChainTestnet
             | BinanceSmartChain
             | BinanceSmartChainTestnet
@@ -1337,6 +1343,7 @@ impl NamedChain {
                 | Kusama
                 | Polkadot
                 | ArcTestnet
+                | BattleChain
                 | BattleChainTestnet
                 | Sonic
                 | Redbelly
@@ -1465,7 +1472,7 @@ impl NamedChain {
             | Sonic | Redbelly | Superposition | Berachain | Monad | Unichain | TelosEvm
             | Story | Sei | Plume | StableMainnet | MegaEth | Hyperliquid | Abstract | Sophon
             | Lens | Corn | Katana | Lisk | Fuse | Injective | MemeCore | SkaleBase
-            | XdcMainnet | Tempo | Kusama | Polkadot | Radius | Fluent => false,
+            | XdcMainnet | Tempo | Kusama | Polkadot | Radius | Fluent | BattleChain => false,
         }
     }
 
@@ -1479,7 +1486,7 @@ impl NamedChain {
             | MegaEthTestnet | SuperpositionTestnet | Superposition | Abstract | ZkSync
             | ZkSyncTestnet | Katana | Lisk | Base | BaseGoerli | BaseSepolia | Optimism
             | OptimismSepolia | Arbitrum | ArbitrumNova | Bob | Ink | Linea
-            | BattleChainTestnet => "ETH",
+            | BattleChain | BattleChainTestnet => "ETH",
 
             Plume | PlumeTestnet => "PLUME",
 
@@ -1989,6 +1996,10 @@ impl NamedChain {
             ),
             Polkadot => ("https://blockscout.polkadot.io/api", "https://blockscout.polkadot.io"),
             ArcTestnet => ("https://testnet.arcscan.app/api", "https://testnet.arcscan.app"),
+            BattleChain => (
+                "https://block-explorer-api.battlechain.com/api",
+                "https://explorer.battlechain.com",
+            ),
             BattleChainTestnet => (
                 "https://block-explorer-api.testnet.battlechain.com/api",
                 "https://explorer.testnet.battlechain.com",
@@ -2221,6 +2232,7 @@ impl NamedChain {
             | Tempo
             | Radius
             | RadiusTestnet
+            | BattleChain
             | BattleChainTestnet
             | RobinhoodTestnet => return None,
         };
@@ -2470,6 +2482,7 @@ mod tests {
             (Radius, &["radius"]),
             (RadiusTestnet, &["radius-testnet"]),
             (RobinhoodTestnet, &["robinhood-testnet"]),
+            (BattleChain, &["battlechain"]),
             (BattleChainTestnet, &["battlechain-testnet"]),
             (Redbelly, &["redbelly"]),
             (RedbellyTestnet, &["redbelly-testnet"]),
