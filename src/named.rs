@@ -893,7 +893,7 @@ impl NamedChain {
 
             Moonbeam | Moonriver | Moonbase => 6_500,
 
-            BinanceSmartChain | BinanceSmartChainTestnet => 750,
+            BinanceSmartChain | BinanceSmartChainTestnet => 450,
 
             Avalanche | AvalancheFuji => 2_000,
 
