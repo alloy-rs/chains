@@ -1,4 +1,4 @@
-pub use crate::generated::named::{NamedChain, NamedChainIter, TryFromChainIdError};
+pub use crate::generated::named::{NamedChain, NamedChainIter};
 
 #[cfg(test)]
 mod tests {

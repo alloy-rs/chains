@@ -212,35 +212,6 @@ pub enum NamedChain {
     RobinhoodTestnet = 46630,
 }
 
-/// Error returned when a chain ID does not have a named chain.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-pub struct TryFromChainIdError {
-    id: u64,
-}
-
-impl TryFromChainIdError {
-    /// Creates a new chain ID conversion error.
-    #[inline]
-    pub const fn new(id: u64) -> Self {
-        Self { id }
-    }
-
-    /// Returns the unknown chain ID.
-    #[inline]
-    pub const fn chain_id(self) -> u64 {
-        self.id
-    }
-}
-
-impl fmt::Display for TryFromChainIdError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "No named chain matches the chain ID `{}`", self.id)
-    }
-}
-
-#[cfg(feature = "std")]
-impl std::error::Error for TryFromChainIdError {}
-
 /// Iterator over all named chains.
 #[derive(Clone, Debug)]
 pub struct NamedChainIter {
@@ -2768,12 +2739,24 @@ impl_into_numeric!(u64 i64 u128 i128);
 #[cfg(target_pointer_width = "64")]
 impl_into_numeric!(usize isize);
 
+impl num_enum::TryFromPrimitive for NamedChain {
+    type Primitive = u64;
+    type Error = num_enum::TryFromPrimitiveError<Self>;
+
+    const NAME: &'static str = "NamedChain";
+
+    #[inline]
+    fn try_from_primitive(number: Self::Primitive) -> Result<Self, Self::Error> {
+        Self::from_chain_id(number).ok_or_else(|| num_enum::TryFromPrimitiveError::new(number))
+    }
+}
+
 impl TryFrom<u64> for NamedChain {
-    type Error = TryFromChainIdError;
+    type Error = num_enum::TryFromPrimitiveError<Self>;
 
     #[inline]
     fn try_from(value: u64) -> Result<Self, Self::Error> {
-        Self::from_chain_id(value).ok_or_else(|| TryFromChainIdError::new(value))
+        num_enum::TryFromPrimitive::try_from_primitive(value)
     }
 }
 
@@ -2781,7 +2764,7 @@ macro_rules! impl_try_from_numeric {
     ($($native:ty)+) => {
         $(
             impl TryFrom<$native> for NamedChain {
-                type Error = TryFromChainIdError;
+                type Error = num_enum::TryFromPrimitiveError<NamedChain>;
 
                 #[inline]
                 fn try_from(value: $native) -> Result<Self, Self::Error> {

@@ -26,6 +26,6 @@ mod chain;
 pub use chain::{Chain, ChainKind};
 
 mod named;
-pub use named::{NamedChain, NamedChainIter, TryFromChainIdError};
+pub use named::{NamedChain, NamedChainIter};
 
 pub mod spec;
