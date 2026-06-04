@@ -20,7 +20,17 @@ release.
 
 ## Adding a new chain
 
-Check `src/named.rs`'s comment for the guidelines on how to add a new chain.
+Add or update the chain in `registry/manual.json`, then run:
+
+```bash
+uv run python scripts/update-registry.py
+```
+
+The script downloads the Chainlist registry, merges it with our manual data,
+updates `assets/chains.json`, and regenerates `src/generated/`. Do not edit
+generated files directly. Chainlist-backed fields can be omitted when the
+upstream value is correct; use `manualOnly: true` only for compatibility or
+local entries that are intentionally absent from Chainlist.
 
 ## Note on `no_std`
 
