@@ -333,6 +333,10 @@ def generated_named(chains: list[Chain]) -> str:
     chain_id_arms = "\n".join(
         f"            {chain.chain_id} => Some(Self::{chain.internal_id})," for chain in chains
     )
+    chain_data_arms = "\n".join(
+        f"            Self::{chain.internal_id} => CHAIN_DATA[{index}],"
+        for index, chain in enumerate(chains)
+    )
     stored_tag_flags = stored_chain_tag_flags(chains)
     flag_type, flag_consts = generated_flag_consts(stored_tag_flags)
     chain_data = "\n".join(
@@ -578,20 +582,10 @@ impl NamedChain {{
     }}
 
     #[inline]
-    const fn variant_index(self) -> usize {{
-        let mut index = 0;
-        while index < Self::VARIANTS.len() {{
-            if Self::VARIANTS[index] as u64 == self as u64 {{
-                return index;
-            }}
-            index += 1;
-        }}
-        unreachable!()
-    }}
-
-    #[inline]
     const fn data(self) -> ChainData {{
-        CHAIN_DATA[self.variant_index()]
+        match self {{
+{chain_data_arms}
+        }}
     }}
 
     #[inline]
