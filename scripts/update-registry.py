@@ -47,11 +47,16 @@ def main() -> int:
     parser.add_argument("--manual", type=Path, default=MANUAL_PATH)
     parser.add_argument("--chainlist-url", default=DEFAULT_CHAINLIST_URL)
     parser.add_argument("--chainlist-path", type=Path)
+    parser.add_argument(
+        "--no-fetch",
+        action="store_true",
+        help="Use checked-in assets/chains.json defaults instead of fetching Chainlist.",
+    )
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
 
     manual = load_json(args.manual)
-    chainlist = load_chainlist(args.chainlist_url, args.chainlist_path)
+    chainlist = load_chainlist(args.chainlist_url, args.chainlist_path, args.no_fetch)
     chains = load_manual_chains(manual, chainlist)
     validate_chains(chains, chainlist)
 
@@ -75,13 +80,15 @@ def main() -> int:
     return 0
 
 
-def load_chainlist(url: str, path: Path | None) -> dict[int, dict]:
-    if path is None:
+def load_chainlist(url: str, path: Path | None, no_fetch: bool) -> dict[int, dict]:
+    if path is not None:
+        data = load_json(path)
+    elif no_fetch:
+        return load_asset_chainlist()
+    else:
         request = urllib.request.Request(url, headers={"User-Agent": "alloy-chains-codegen"})
         with urllib.request.urlopen(request) as response:
             data = json.load(response)
-    else:
-        data = load_json(path)
 
     if not isinstance(data, list):
         raise ValueError("Chainlist registry must be a JSON array")
@@ -91,6 +98,40 @@ def load_chainlist(url: str, path: Path | None) -> dict[int, dict]:
         chain_id = entry.get("chainId")
         if not isinstance(chain_id, int):
             raise ValueError(f"Chainlist entry has invalid chainId: {entry!r}")
+        chainlist[chain_id] = entry
+    return chainlist
+
+
+def load_asset_chainlist() -> dict[int, dict]:
+    data = load_json(ASSET_CHAINS_PATH)
+    chains = data.get("chains") if isinstance(data, dict) else None
+    if not isinstance(chains, dict):
+        raise ValueError("Asset chain registry must contain a JSON object at `chains`")
+
+    chainlist = {}
+    for raw_chain_id, chain in chains.items():
+        if not isinstance(chain, dict):
+            raise ValueError(f"Asset chain entry has invalid data: {chain!r}")
+
+        try:
+            chain_id = int(raw_chain_id)
+        except ValueError as error:
+            raise ValueError(f"Asset chain entry has invalid chain ID: {raw_chain_id!r}") from error
+
+        entry = {"chainId": chain_id}
+
+        symbol = chain.get("nativeCurrencySymbol")
+        if symbol is not None:
+            if not isinstance(symbol, str):
+                raise ValueError(f"Asset chain {raw_chain_id} has invalid native currency symbol")
+            entry["nativeCurrency"] = {"symbol": symbol}
+
+        explorer_url = chain.get("etherscanBaseUrl")
+        if explorer_url is not None:
+            if not isinstance(explorer_url, str):
+                raise ValueError(f"Asset chain {raw_chain_id} has invalid explorer URL")
+            entry["explorers"] = [{"url": explorer_url}]
+
         chainlist[chain_id] = entry
     return chainlist
 

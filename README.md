@@ -32,6 +32,9 @@ generated files directly. Chainlist-backed fields can be omitted when the
 upstream value is correct; use `manualOnly: true` only for compatibility or
 local entries that are intentionally absent from Chainlist.
 
+Use `--no-fetch` to regenerate from the checked-in `assets/chains.json` snapshot
+without downloading Chainlist.
+
 ## Note on `no_std`
 
 All crates in this workspace should support `no_std` environments, with the
