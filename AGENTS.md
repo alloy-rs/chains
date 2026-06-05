@@ -1,6 +1,16 @@
-# AGENTS.md
+# alloy-chains
 
-## Chain Registry Workflow
+Canonical type definitions for EIP-155 chains.
+
+## Commands
+
+```bash
+cargo fmt --all               # format
+cargo cl                      # lint
+cargo nextest run --workspace # test
+```
+
+## Chain Registry
 
 - The source registry is `registry/manual.json`. Add or update chains there.
 - Do not edit `src/generated/` or `assets/chains.json` by hand.
@@ -8,10 +18,3 @@
 - Use `uv run python scripts/update-registry.py --no-fetch` to regenerate from the checked-in `assets/chains.json` snapshot without downloading Chainlist.
 - Set `manualOnly: true` only for compatibility or local entries that are intentionally absent from Chainlist.
 - Keep generated outputs committed with the manual registry change.
-
-## Verification
-
-- Run `cargo fmt --all`.
-- Run `cargo cl`.
-- Run `cargo nextest run --workspace`.
-- Do not pass `+nightly` to any command.
