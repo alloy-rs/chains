@@ -25,14 +25,7 @@
       "required": [
         "chainId",
         "internalId",
-        "name",
-        "aliases",
-        "averageBlocktimeHint",
-        "isLegacy",
-        "supportsShanghai",
-        "isTestnet",
-        "etherscanApiUrl",
-        "etherscanApiKeyName"
+        "name"
       ],
       "additionalProperties": false,
       "properties": {
