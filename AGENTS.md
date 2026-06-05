@@ -5,8 +5,8 @@ Canonical type definitions for EIP-155 chains.
 ## Commands
 
 ```bash
-cargo fmt --all               # format
-cargo cl                      # lint
+cargo +nightly fmt --all      # format
+cargo clippy --workspace      # lint
 cargo nextest run --workspace # test
 ```
 
