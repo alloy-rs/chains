@@ -4,7 +4,7 @@
 edition = "2024"
 
 [dependencies]
-phf_codegen = "0.13.1"
+phf_codegen = "0.13"
 ---
 
 use std::{
