@@ -3,15 +3,10 @@
   "title": "alloy-chains manual registry",
   "type": "object",
   "required": [
-    "chainListUrl",
     "chains"
   ],
   "additionalProperties": false,
   "properties": {
-    "chainListUrl": {
-      "type": "string",
-      "format": "uri"
-    },
     "chains": {
       "type": "array",
       "items": {
@@ -40,9 +35,6 @@
         "name": {
           "type": "string",
           "pattern": "^[a-z0-9][a-z0-9-]*$"
-        },
-        "manualOnly": {
-          "type": "boolean"
         },
         "aliases": {
           "type": "array",

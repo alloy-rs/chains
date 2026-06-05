@@ -26,14 +26,8 @@ Add or update the chain in `registry/manual.json`, then run:
 uv run python scripts/update-registry.py
 ```
 
-The script downloads the Chainlist registry, merges it with our manual data,
-updates `assets/chains.json`, and regenerates `src/generated/`. Do not edit
-generated files directly. Chainlist-backed fields can be omitted when the
-upstream value is correct; use `manualOnly: true` only for compatibility or
-local entries that are intentionally absent from Chainlist.
-
-Use `--no-fetch` to regenerate from the checked-in `assets/chains.json` snapshot
-without downloading Chainlist.
+The script updates `assets/chains.json` and regenerates `src/generated/` from
+the manual registry. Do not edit generated files directly.
 
 ## Note on `no_std`
 

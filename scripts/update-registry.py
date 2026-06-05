@@ -7,13 +7,11 @@ import argparse
 import json
 import subprocess
 import sys
-import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_CHAINLIST_URL = "https://chainid.network/chains.json"
 MANUAL_PATH = ROOT / "registry" / "manual.json"
 ASSET_CHAINS_PATH = ROOT / "assets" / "chains.json"
 GENERATED_MOD_PATH = ROOT / "src" / "generated" / "mod.rs"
@@ -63,7 +61,6 @@ class Chain:
     etherscan_api_key_name: str | None
     tags: frozenset[str]
     wrapped_native_token: str | None
-    manual_only: bool
 
 
 class StaticStringTable:
@@ -96,20 +93,12 @@ class StaticStringTable:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--manual", type=Path, default=MANUAL_PATH)
-    parser.add_argument("--chainlist-url", default=DEFAULT_CHAINLIST_URL)
-    parser.add_argument("--chainlist-path", type=Path)
-    parser.add_argument(
-        "--no-fetch",
-        action="store_true",
-        help="Use checked-in assets/chains.json defaults instead of fetching Chainlist.",
-    )
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
 
     manual = load_json(args.manual)
-    chainlist = load_chainlist(args.chainlist_url, args.chainlist_path, args.no_fetch)
-    chains = load_manual_chains(manual, chainlist)
-    validate_chains(chains, chainlist)
+    chains = load_manual_chains(manual)
+    validate_chains(chains)
 
     outputs = {
         ASSET_CHAINS_PATH: json_dump(asset_chains(chains)),
@@ -131,62 +120,6 @@ def main() -> int:
     return 0
 
 
-def load_chainlist(url: str, path: Path | None, no_fetch: bool) -> dict[int, dict]:
-    if path is not None:
-        data = load_json(path)
-    elif no_fetch:
-        return load_asset_chainlist()
-    else:
-        request = urllib.request.Request(url, headers={"User-Agent": "alloy-chains-codegen"})
-        with urllib.request.urlopen(request) as response:
-            data = json.load(response)
-
-    if not isinstance(data, list):
-        raise ValueError("Chainlist registry must be a JSON array")
-
-    chainlist = {}
-    for entry in data:
-        chain_id = entry.get("chainId")
-        if not isinstance(chain_id, int):
-            raise ValueError(f"Chainlist entry has invalid chainId: {entry!r}")
-        chainlist[chain_id] = entry
-    return chainlist
-
-
-def load_asset_chainlist() -> dict[int, dict]:
-    data = load_json(ASSET_CHAINS_PATH)
-    chains = data.get("chains") if isinstance(data, dict) else None
-    if not isinstance(chains, dict):
-        raise ValueError("Asset chain registry must contain a JSON object at `chains`")
-
-    chainlist = {}
-    for raw_chain_id, chain in chains.items():
-        if not isinstance(chain, dict):
-            raise ValueError(f"Asset chain entry has invalid data: {chain!r}")
-
-        try:
-            chain_id = int(raw_chain_id)
-        except ValueError as error:
-            raise ValueError(f"Asset chain entry has invalid chain ID: {raw_chain_id!r}") from error
-
-        entry = {"chainId": chain_id}
-
-        symbol = chain.get("nativeCurrencySymbol")
-        if symbol is not None:
-            if not isinstance(symbol, str):
-                raise ValueError(f"Asset chain {raw_chain_id} has invalid native currency symbol")
-            entry["nativeCurrency"] = {"symbol": symbol}
-
-        explorer_url = chain.get("etherscanBaseUrl")
-        if explorer_url is not None:
-            if not isinstance(explorer_url, str):
-                raise ValueError(f"Asset chain {raw_chain_id} has invalid explorer URL")
-            entry["explorers"] = [{"url": explorer_url}]
-
-        chainlist[chain_id] = entry
-    return chainlist
-
-
 def load_json(path: Path):
     return json.loads(path.read_text())
 
@@ -198,11 +131,10 @@ def read_text(path: Path) -> str | None:
         return None
 
 
-def load_manual_chains(manual: dict, chainlist: dict[int, dict]) -> list[Chain]:
+def load_manual_chains(manual: dict) -> list[Chain]:
     chains = []
     for raw in manual["chains"]:
         chain_id = raw["chainId"]
-        chainlist_entry = chainlist.get(chain_id)
         chains.append(
             Chain(
                 chain_id=chain_id,
@@ -215,41 +147,18 @@ def load_manual_chains(manual: dict, chainlist: dict[int, dict]) -> list[Chain]:
                 is_legacy=raw.get("isLegacy", False),
                 supports_shanghai=raw.get("supportsShanghai", False),
                 is_testnet=raw.get("isTestnet", False),
-                native_currency_symbol=raw.get(
-                    "nativeCurrencySymbol", chainlist_native_currency_symbol(chainlist_entry)
-                ),
+                native_currency_symbol=raw.get("nativeCurrencySymbol"),
                 etherscan_api_url=raw.get("etherscanApiUrl"),
-                etherscan_base_url=raw.get("etherscanBaseUrl", chainlist_explorer_url(chainlist_entry)),
+                etherscan_base_url=raw.get("etherscanBaseUrl"),
                 etherscan_api_key_name=raw.get("etherscanApiKeyName"),
                 tags=frozenset(raw.get("tags", [])),
                 wrapped_native_token=raw.get("wrappedNativeToken"),
-                manual_only=raw.get("manualOnly", False),
             )
         )
     return chains
 
 
-def chainlist_native_currency_symbol(entry: dict | None) -> str | None:
-    if entry is None:
-        return None
-    native_currency = entry.get("nativeCurrency")
-    if not isinstance(native_currency, dict):
-        return None
-    symbol = native_currency.get("symbol")
-    return symbol if isinstance(symbol, str) else None
-
-
-def chainlist_explorer_url(entry: dict | None) -> str | None:
-    if entry is None:
-        return None
-    explorers = entry.get("explorers")
-    if not isinstance(explorers, list) or not explorers:
-        return None
-    url = explorers[0].get("url")
-    return url.rstrip("/") if isinstance(url, str) else None
-
-
-def validate_chains(chains: list[Chain], chainlist: dict[int, dict]) -> None:
+def validate_chains(chains: list[Chain]) -> None:
     seen_ids = set()
     seen_variants = set()
     parse_names = {}
@@ -262,12 +171,6 @@ def validate_chains(chains: list[Chain], chainlist: dict[int, dict]) -> None:
             raise ValueError(f"Duplicate internal ID {chain.internal_id}")
         seen_ids.add(chain.chain_id)
         seen_variants.add(chain.internal_id)
-
-        if chain.chain_id not in chainlist and not chain.manual_only:
-            raise ValueError(
-                f"{chain.internal_id} ({chain.chain_id}) is missing from Chainlist; "
-                "set manualOnly when this compatibility entry is intentionally local"
-            )
 
         for name in [chain.name, *chain.aliases]:
             previous = parse_names.setdefault(name, chain.internal_id)
@@ -301,7 +204,7 @@ def asset_chains(chains: list[Chain]) -> dict:
 
 
 def generated_mod() -> str:
-    return """//! Generated chain registry.
+    return """// @generated by scripts/update-registry.py. Do NOT modify manually.
 
 pub(crate) mod named;
 """
@@ -390,8 +293,7 @@ def generated_named(chains: list[Chain]) -> str:
         for tag, _flag in CHAIN_TAG_FLAGS
     }
 
-    return f"""// @generated by scripts/update-registry.py.
-// Do not edit manually. Update registry/manual.json instead.
+    return f"""// @generated by scripts/update-registry.py. Do NOT modify manually.
 
 use alloy_primitives::{{Address, address}};
 use alloc::string::String;
