@@ -70,7 +70,6 @@ class StaticStringTable:
     def __init__(self):
         self.data = bytearray()
         self.offsets: dict[bytes, int] = {}
-        self.chunks: list[str] = []
 
     def add(self, value: str | None) -> StaticStr | None:
         if value is None:
@@ -88,7 +87,6 @@ class StaticStringTable:
             offset = len(self.data)
             self.data.extend(encoded)
             self.offsets[encoded] = offset
-            self.chunks.append(value)
 
         if offset > 0xFFFF_FFFF:
             raise ValueError("Static string table is too large for compact storage")
@@ -353,7 +351,7 @@ def generated_named(chains: list[Chain]) -> str:
         "),"
         for chain in chains
     )
-    string_data = "\n".join(f"    {rs_str(chunk)}," for chunk in string_table.chunks)
+    string_data = rs_byte_str(string_table.data)
     wrapped_native_token_data = "\n".join(
         f"    address!({rs_str(token)})," for token in wrapped_native_tokens
     )
@@ -943,10 +941,7 @@ pub(crate) const SERDE_ALIASES: &[(NamedChain, &str)] = &[
 {serde_aliases}
 ];
 
-static STRING_DATA: &[u8] = concat!(
-{string_data}
-)
-.as_bytes();
+static STRING_DATA: &[u8] = {string_data};
 
 static CHAIN_DATA: [ChainData; {chain_data_len}] = [
 {chain_data}
@@ -1118,6 +1113,27 @@ def unique(items: list[str]) -> list[str]:
 
 def rs_str(value: str) -> str:
     return json.dumps(value)
+
+
+def rs_byte_str(value: bytes | bytearray) -> str:
+    output = ['b"']
+    for byte in value:
+        if byte == 0x09:
+            output.append(r"\t")
+        elif byte == 0x0A:
+            output.append(r"\n")
+        elif byte == 0x0D:
+            output.append(r"\r")
+        elif byte == 0x22:
+            output.append(r'\"')
+        elif byte == 0x5C:
+            output.append(r"\\")
+        elif 0x20 <= byte <= 0x7E:
+            output.append(chr(byte))
+        else:
+            output.append(f"\\x{byte:02x}")
+    output.append('"')
+    return "".join(output)
 
 
 def json_dump(value) -> str:
