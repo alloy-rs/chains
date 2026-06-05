@@ -5,6 +5,2006 @@ use alloc::string::String;
 use alloy_primitives::{Address, address};
 use core::{cmp::Ordering, fmt, str::FromStr, time::Duration};
 
+type ChainIndex = u8;
+
+const FLAG_LEGACY: u16 = 1 << 0;
+const FLAG_SUPPORTS_SHANGHAI: u16 = 1 << 1;
+const FLAG_TESTNET: u16 = 1 << 2;
+const FLAG_ETHEREUM: u16 = 1 << 3;
+const FLAG_OPTIMISM: u16 = 1 << 4;
+const FLAG_GNOSIS: u16 = 1 << 5;
+const FLAG_POLYGON: u16 = 1 << 6;
+const FLAG_ARBITRUM: u16 = 1 << 7;
+const FLAG_ELASTIC: u16 = 1 << 8;
+const FLAG_TEMPO: u16 = 1 << 9;
+const FLAG_CUSTOM_SOURCIFY: u16 = 1 << 10;
+const NO_WRAPPED_NATIVE_TOKEN: u8 = u8::MAX;
+const N: StaticStr = StaticStr::NONE;
+
+#[derive(Clone, Copy)]
+#[repr(C, packed)]
+struct StaticStr {
+    offset: u32,
+    len: u8,
+}
+
+impl StaticStr {
+    const NONE: Self = Self { offset: u32::MAX, len: 0 };
+
+    #[inline]
+    const fn get(self) -> Option<&'static str> {
+        if self.offset == u32::MAX { None } else { Some(self.get_unchecked()) }
+    }
+
+    #[inline]
+    const fn get_unchecked(self) -> &'static str {
+        let ptr = unsafe { STRING_DATA.as_ptr().add(self.offset as usize) };
+        let bytes = unsafe { core::slice::from_raw_parts(ptr, self.len as usize) };
+        unsafe { core::str::from_utf8_unchecked(bytes) }
+    }
+}
+
+#[derive(Clone, Copy)]
+#[repr(C, packed)]
+struct ChainData {
+    name: StaticStr,
+    average_blocktime_millis: u16,
+    flags: u16,
+    native_currency_symbol: StaticStr,
+    etherscan_api_url: StaticStr,
+    etherscan_base_url: StaticStr,
+    etherscan_api_key_name: StaticStr,
+    wrapped_native_token: u8,
+}
+
+const fn s(offset: u32, len: u8) -> StaticStr {
+    StaticStr { offset, len }
+}
+
+const fn d(
+    strings: [StaticStr; 5],
+    average_blocktime_millis: u16,
+    flags: u16,
+    wrapped_native_token: u8,
+) -> ChainData {
+    let [
+        name,
+        native_currency_symbol,
+        etherscan_api_url,
+        etherscan_base_url,
+        etherscan_api_key_name,
+    ] = strings;
+    ChainData {
+        name,
+        average_blocktime_millis,
+        flags,
+        native_currency_symbol,
+        etherscan_api_url,
+        etherscan_base_url,
+        etherscan_api_key_name,
+        wrapped_native_token,
+    }
+}
+
+static STRING_DATA: &[u8] = concat!(
+    "mainnet",
+    "ETH",
+    "https://api.etherscan.io/v2/api?chainid=1",
+    "https://etherscan.io",
+    "ETHERSCAN_API_KEY",
+    "morden",
+    "ropsten",
+    "rinkeby",
+    "goerli",
+    "kovan",
+    "holesky",
+    "https://api.etherscan.io/v2/api?chainid=17000",
+    "https://holesky.etherscan.io",
+    "hoodi",
+    "https://api.etherscan.io/v2/api?chainid=560048",
+    "https://hoodi.etherscan.io",
+    "sepolia",
+    "https://api.etherscan.io/v2/api?chainid=11155111",
+    "https://sepolia.etherscan.io",
+    "odyssey",
+    "https://odyssey-explorer.ithaca.xyz/api",
+    "optimism",
+    "https://api.etherscan.io/v2/api?chainid=10",
+    "https://optimistic.etherscan.io",
+    "optimism-kovan",
+    "optimism-goerli",
+    "optimism-sepolia",
+    "https://api.etherscan.io/v2/api?chainid=11155420",
+    "https://sepolia-optimism.etherscan.io",
+    "bob",
+    "https://explorer.gobob.xyz/api",
+    "bob-sepolia",
+    "https://bob-sepolia.explorer.gobob.xyz/api",
+    "arbitrum",
+    "https://api.etherscan.io/v2/api?chainid=42161",
+    "https://arbiscan.io",
+    "arbitrum-testnet",
+    "arbitrum-goerli",
+    "arbitrum-sepolia",
+    "https://api.etherscan.io/v2/api?chainid=421614",
+    "https://sepolia.arbiscan.io",
+    "arbitrum-nova",
+    "https://api.etherscan.io/v2/api?chainid=42170",
+    "https://nova.arbiscan.io",
+    "cronos",
+    "https://api.etherscan.io/v2/api?chainid=25",
+    "https://cronoscan.com",
+    "cronos-testnet",
+    "rsk",
+    "RBTC",
+    "https://blockscout.com/rsk/mainnet/api",
+    "rsk-testnet",
+    "tRBTC",
+    "https://rootstock-testnet.blockscout.com/api",
+    "telos",
+    "TLOS",
+    "https://api.teloscan.io/api",
+    "https://teloscan.io",
+    "telos-testnet",
+    "https://api.testnet.teloscan.io/api",
+    "https://testnet.teloscan.io",
+    "crab",
+    "CRAB",
+    "https://crab-scan.darwinia.network/api",
+    "BLOCKSCOUT_API_KEY",
+    "RING",
+    "https://explorer.darwinia.network/api",
+    "koi",
+    "KRING",
+    "bsc",
+    "BNB",
+    "https://bscscan.com",
+    "bsc-testnet",
+    "https://api.etherscan.io/v2/api?chainid=97",
+    "https://testnet.bscscan.com",
+    "poa",
+    "sokol",
+    "scroll",
+    "https://api.etherscan.io/v2/api?chainid=534352",
+    "https://scrollscan.com",
+    "scroll-sepolia",
+    "https://api.etherscan.io/v2/api?chainid=534351",
+    "https://sepolia.scrollscan.com",
+    "metis",
+    "https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan",
+    "https://explorer.metis.io",
+    "cfx-testnet",
+    "CFX",
+    "https://evmapi-testnet.confluxscan.org/api",
+    "https://evmtestnet.confluxscan.org",
+    "https://evmapi.confluxscan.org/api",
+    "https://evm.confluxscan.org",
+    "xdai",
+    "https://api.etherscan.io/v2/api?chainid=100",
+    "https://gnosisscan.io",
+    "polygon",
+    "POL",
+    "https://api.etherscan.io/v2/api?chainid=137",
+    "https://polygonscan.com",
+    "amoy",
+    "https://api.etherscan.io/v2/api?chainid=80002",
+    "https://amoy.polygonscan.com",
+    "fantom",
+    "FTMSCAN_API_KEY",
+    "fantom-testnet",
+    "moonbeam",
+    "GLMR",
+    "https://api.etherscan.io/v2/api?chainid=1284",
+    "https://moonbeam.moonscan.io",
+    "MOONSCAN_API_KEY",
+    "moonbeam-dev",
+    "DEV",
+    "moonriver",
+    "MOVR",
+    "https://api.etherscan.io/v2/api?chainid=1285",
+    "https://moonriver.moonscan.io",
+    "moonbase",
+    "https://api.etherscan.io/v2/api?chainid=1287",
+    "https://moonbase.moonscan.io",
+    "anvil-hardhat",
+    "gravity-alpha-mainnet",
+    "https://explorer.gravity.xyz/api",
+    "gravity-alpha-testnet-sepolia",
+    "https://explorer-sepolia.gravity.xyz/api",
+    "https://mainnet-explorer.gravity.xyz/api",
+    "evmos",
+    "evmos-testnet",
+    "plasma",
+    "XPL",
+    "https://api.etherscan.io/v2/api?chainid=9745",
+    "https://plasmascan.to",
+    "plasma-testnet",
+    "https://api.etherscan.io/v2/api?chainid=9746",
+    "https://testnet.plasmascan.to",
+    "chiado",
+    "https://gnosis-chiado.blockscout.com/api",
+    "oasis",
+    "emerald",
+    "https://explorer.emerald.oasis.dev/api",
+    "emerald-testnet",
+    "https://testnet.explorer.emerald.oasis.dev/api",
+    "filecoin-mainnet",
+    "filecoin-calibration-testnet",
+    "https://api.calibration.node.glif.io/rpc/v1",
+    "https://calibration.filfox.info/en",
+    "avalanche",
+    "https://api.etherscan.io/v2/api?chainid=43114",
+    "https://snowscan.xyz",
+    "fuji",
+    "https://api.etherscan.io/v2/api?chainid=43113",
+    "https://testnet.snowscan.xyz",
+    "celo",
+    "CELO",
+    "https://api.etherscan.io/v2/api?chainid=42220",
+    "https://celoscan.io",
+    "celo-sepolia",
+    "https://api.etherscan.io/v2/api?chainid=11142220",
+    "https://sepolia.celoscan.io",
+    "aurora",
+    "https://api.aurorascan.dev/api",
+    "https://aurorascan.dev",
+    "aurora-testnet",
+    "https://testnet.aurorascan.dev/api",
+    "canto",
+    "canto-testnet",
+    "boba",
+    "https://api.bobascan.com/api",
+    "https://bobascan.com",
+    "BOBASCAN_API_KEY",
+    "https://api.etherscan.io/v2/api?chainid=8453",
+    "https://basescan.org",
+    "base-goerli",
+    "base-sepolia",
+    "https://api.etherscan.io/v2/api?chainid=84532",
+    "https://sepolia.basescan.org",
+    "syndr",
+    "https://explorer.syndr.com/api",
+    "syndr-sepolia",
+    "https://sepolia-explorer.syndr.com/api",
+    "shimmer",
+    "SMR",
+    "https://explorer.evm.shimmer.network/api",
+    "https://explorer.inkonchain.com/api/v2",
+    "ink-sepolia",
+    "https://explorer-sepolia.inkonchain.com/api/v2",
+    "fraxtal",
+    "https://api.etherscan.io/v2/api?chainid=252",
+    "https://fraxscan.com",
+    "fraxtal-testnet",
+    "https://api.etherscan.io/v2/api?chainid=2522",
+    "https://holesky.fraxscan.com",
+    "blast",
+    "https://api.etherscan.io/v2/api?chainid=81457",
+    "https://blastscan.io",
+    "blast-sepolia",
+    "https://api.etherscan.io/v2/api?chainid=168587773",
+    "https://sepolia.blastscan.io",
+    "linea",
+    "https://api.etherscan.io/v2/api?chainid=59144",
+    "https://lineascan.build",
+    "linea-goerli",
+    "linea-sepolia",
+    "https://api.etherscan.io/v2/api?chainid=59141",
+    "https://sepolia.lineascan.build",
+    "zksync",
+    "https://block-explorer-api.mainnet.zksync.io/api",
+    "https://explorer.zksync.io",
+    "zksync-testnet",
+    "https://block-explorer-api.sepolia.zksync.dev/api",
+    "https://sepolia.explorer.zksync.io",
+    "mantle",
+    "MNT",
+    "https://api.etherscan.io/v2/api?chainid=5000",
+    "https://mantlescan.xyz",
+    "mantle-sepolia",
+    "https://api.etherscan.io/v2/api?chainid=5003",
+    "https://sepolia.mantlescan.xyz",
+    "xai",
+    "XAI",
+    "https://api.etherscan.io/v2/api?chainid=660279",
+    "https://xaiscan.io",
+    "xai-sepolia",
+    "https://api.etherscan.io/v2/api?chainid=37714555429",
+    "https://sepolia.xaiscan.io",
+    "happychain-testnet",
+    "HAPPY",
+    "https://explorer.testnet.happy.tech/api",
+    "viction",
+    "https://www.vicscan.xyz/api",
+    "zora",
+    "https://explorer.zora.energy/api",
+    "zora-sepolia",
+    "https://sepolia.explorer.zora.energy/api",
+    "pgn",
+    "pgn-sepolia",
+    "mode",
+    "https://explorer.mode.network/api",
+    "mode-sepolia",
+    "https://sepolia.explorer.mode.network/api",
+    "elastos",
+    "https://esc.elastos.io/api",
+    "etherlink",
+    "XTZ",
+    "https://explorer.etherlink.com/api",
+    "etherlink-shadownet",
+    "https://shadownet.explorer.etherlink.com/api",
+    "degen",
+    "DEGEN",
+    "https://explorer.degen.tips/api",
+    "opbnb-mainnet",
+    "https://api.etherscan.io/v2/api?chainid=204",
+    "https://opbnb.bscscan.com",
+    "opbnb-testnet",
+    "https://api.etherscan.io/v2/api?chainid=5611",
+    "https://opbnb-testnet.bscscan.com",
+    "ronin",
+    "RON",
+    "https://skynet-api.roninchain.com/ronin",
+    "https://app.roninchain.com",
+    "ronin-testnet",
+    "https://api-gateway.skymavis.com/rpc/testnet",
+    "https://saigon-explorer.roninchain.com",
+    "radius",
+    "RUSD",
+    "https://network.radiustech.xyz/api",
+    "radius-testnet",
+    "https://testnet.radiustech.xyz/api",
+    "taiko",
+    "https://api.etherscan.io/v2/api?chainid=167000",
+    "https://taikoscan.io",
+    "taiko-hekla",
+    "https://api.etherscan.io/v2/api?chainid=167009",
+    "https://hekla.taikoscan.io",
+    "autonomys-nova-testnet",
+    "flare",
+    "FLR",
+    "https://flare-explorer.flare.network/api",
+    "flare-coston2",
+    "C2FLR",
+    "https://coston2-explorer.flare.network/api",
+    "acala",
+    "https://blockscout.acala.network/api",
+    "acala-mandala-testnet",
+    "https://blockscout.mandala.aca-staging.network/api",
+    "acala-testnet",
+    "karura",
+    "https://blockscout.karura.network/api",
+    "karura-testnet",
+    "pulsechain",
+    "PLS",
+    "https://api.scan.pulsechain.com",
+    "https://scan.pulsechain.com",
+    "pulsechain-testnet",
+    "https://api.scan.v4.testnet.pulsechain.com",
+    "https://scan.v4.testnet.pulsechain.com",
+    "cannon",
+    "immutable",
+    "IMX",
+    "https://explorer.immutable.com/api",
+    "immutable-testnet",
+    "tIMX",
+    "https://explorer.testnet.immutable.com/api",
+    "soneium",
+    "https://soneium.blockscout.com/api",
+    "soneium-minato-testnet",
+    "https://soneium-minato.blockscout.com/api",
+    "world",
+    "WRLD",
+    "https://api.etherscan.io/v2/api?chainid=480",
+    "https://worldscan.org",
+    "world-sepolia",
+    "https://api.etherscan.io/v2/api?chainid=4801",
+    "https://sepolia.worldscan.org",
+    "iotex",
+    "IOTX",
+    "core",
+    "CORE",
+    "https://openapi.coredao.org/api",
+    "https://scan.coredao.org",
+    "CORESCAN_API_KEY",
+    "merlin",
+    "https://scan.merlinchain.io/api",
+    "MERLINSCAN_API_KEY",
+    "bitlayer",
+    "https://api.btrscan.com/scan/api",
+    "https://www.btrscan.com",
+    "BITLAYERSCAN_API_KEY",
+    "vana",
+    "VANA",
+    "https://api.vanascan.io/api",
+    "https://vanascan.io",
+    "zeta",
+    "ZETA",
+    "https://zetachain.blockscout.com/api",
+    "ZETASCAN_API_KEY",
+    "kaia",
+    "KAIA",
+    "https://mainnet-oapi.kaiascan.io/api",
+    "https://kaiascan.io",
+    "KAIASCAN_API_KEY",
+    "story",
+    "IP",
+    "https://www.storyscan.xyz/api",
+    "sei",
+    "SEI",
+    "https://api.etherscan.io/v2/api?chainid=1329",
+    "https://seiscan.io",
+    "sei-testnet",
+    "https://api.etherscan.io/v2/api?chainid=1328",
+    "https://testnet.seiscan.io",
+    "stable-mainnet",
+    "USDT0",
+    "https://api.etherscan.io/v2/api?chainid=988",
+    "https://stablescan.xyz",
+    "stable-testnet",
+    "https://api.etherscan.io/v2/api?chainid=2201",
+    "https://testnet.stablescan.xyz",
+    "megaeth",
+    "https://api.etherscan.io/v2/api?chainid=4326",
+    "https://mega.etherscan.io",
+    "megaeth-testnet",
+    "https://api.etherscan.io/v2/api?chainid=6343",
+    "https://megaeth-testnet-v2.blockscout.com",
+    "xdc-mainnet",
+    "XDC",
+    "https://xdcscan.com",
+    "xdc-testnet",
+    "TXDC",
+    "https://api.etherscan.io/v2/api?chainid=51",
+    "https://testnet.xdcscan.com",
+    "unichain",
+    "https://api.etherscan.io/v2/api?chainid=130",
+    "https://uniscan.xyz",
+    "unichain-sepolia",
+    "https://api.etherscan.io/v2/api?chainid=1301",
+    "https://sepolia.uniscan.xyz",
+    "signet-pecorino",
+    "USDS",
+    "https://explorer.pecorino.signet.sh/api",
+    "apechain",
+    "APE",
+    "https://api.etherscan.io/v2/api?chainid=33139",
+    "https://apescan.io",
+    "curtis",
+    "https://api.etherscan.io/v2/api?chainid=33111",
+    "https://curtis.apescan.io",
+    "sonic",
+    "https://api.etherscan.io/v2/api?chainid=146",
+    "https://sonicscan.org",
+    "sonic-testnet",
+    "https://api.etherscan.io/v2/api?chainid=14601",
+    "https://testnet.sonicscan.org",
+    "redbelly",
+    "RBNT",
+    "https://api.routescan.io/v2/network/mainnet/evm/151/etherscan",
+    "https://redbelly.routescan.io",
+    "ROUTESCAN_API_KEY",
+    "redbelly-testnet",
+    "https://api.routescan.io/v2/network/testnet/evm/153/etherscan",
+    "https://redbelly.testnet.routescan.io",
+    "plume-testnet",
+    "PLUME",
+    "https://testnet-explorer.plume.org/api",
+    "https://explorer.plume.org/api",
+    "treasure",
+    "MAGIC",
+    "treasure-topaz",
+    "berachain-bepolia",
+    "BERA",
+    "https://api.etherscan.io/v2/api?chainid=80069",
+    "https://testnet.berascan.com",
+    "BERASCAN_API_KEY",
+    "https://api.etherscan.io/v2/api?chainid=80094",
+    "https://berascan.com",
+    "superposition-testnet",
+    "https://testnet-explorer.superposition.so/api",
+    "https://explorer.superposition.so/api",
+    "monad",
+    "MON",
+    "https://api.etherscan.io/v2/api?chainid=143",
+    "https://monadscan.com",
+    "monad-testnet",
+    "https://api.etherscan.io/v2/api?chainid=10143",
+    "https://testnet.monadscan.com",
+    "hyperliquid",
+    "HYPE",
+    "https://api.etherscan.io/v2/api?chainid=999",
+    "https://hyperevmscan.io",
+    "abstract",
+    "https://api.etherscan.io/v2/api?chainid=2741",
+    "https://abscan.org",
+    "abstract-testnet",
+    "https://api.etherscan.io/v2/api?chainid=11124",
+    "https://sepolia.abscan.org",
+    "corn",
+    "BTCN",
+    "https://api.routescan.io/v2/network/mainnet/evm/21000000/etherscan/api",
+    "https://cornscan.io",
+    "corn-testnet",
+    "https://api.routescan.io/v2/network/testnet/evm/21000001/etherscan/api",
+    "https://testnet.cornscan.io",
+    "sophon",
+    "SOPH",
+    "https://api.etherscan.io/v2/api?chainid=50104",
+    "https://sophscan.xyz",
+    "sophon-testnet",
+    "https://api.etherscan.io/v2/api?chainid=531050104",
+    "https://testnet.sophscan.xyz",
+    "polkadot-testnet",
+    "PAS",
+    "https://blockscout-testnet.polkadot.io/api",
+    "kusama",
+    "KSM",
+    "https://blockscout-kusama.polkadot.io/api",
+    "DOT",
+    "https://blockscout.polkadot.io/api",
+    "lens",
+    "GHO",
+    "https://explorer-api.lens.xyz",
+    "https://explorer.lens.xyz",
+    "lens-testnet",
+    "GRASS",
+    "https://block-explorer-api.staging.lens.zksync.dev",
+    "https://explorer.testnet.lens.xyz",
+    "injective",
+    "INJ",
+    "https://blockscout-api.injective.network/api",
+    "https://blockscout.injective.network",
+    "injective-testnet",
+    "https://testnet.blockscout-api.injective.network/api",
+    "https://testnet.blockscout.injective.network",
+    "katana",
+    "https://api.etherscan.io/v2/api?chainid=747474",
+    "https://katanascan.com",
+    "lisk",
+    "https://blockscout.lisk.com/api",
+    "fuse",
+    "https://explorer.fuse.io/api",
+    "fluent",
+    "https://api.fluentscan.xyz/api",
+    "https://fluentscan.xyz",
+    "fluent-devnet",
+    "https://api-devnet.fluentscan.xyz/api",
+    "https://devnet.fluentscan.xyz",
+    "fluent-testnet",
+    "https://api-testnet.fluentscan.xyz/api",
+    "https://testnet.fluentscan.xyz",
+    "skale-base",
+    "https://skale-base-explorer.skalenodes.com/api",
+    "skale-base-sepolia-testnet",
+    "https://base-sepolia-testnet-explorer.skalenodes.com/api",
+    "memecore",
+    "https://api.etherscan.io/v2/api?chainid=4352",
+    "https://memecorescan.io",
+    "formicarium",
+    "tM",
+    "https://api.etherscan.io/v2/api?chainid=43521",
+    "https://formicarium.memecorescan.io",
+    "insectarium",
+    "https://insectarium.blockscout.memecore.com/api",
+    "tempo",
+    "https://contracts.tempo.xyz",
+    "https://explore.tempo.xyz",
+    "tempo-moderato",
+    "https://explore.moderato.tempo.xyz",
+    "tempo-testnet",
+    "https://explore.andantino.tempo.xyz",
+    "tempo-devnet",
+    "arc-testnet",
+    "USDC",
+    "https://testnet.arcscan.app/api",
+    "battlechain-testnet",
+    "https://block-explorer-api.testnet.battlechain.com/api",
+    "https://explorer.testnet.battlechain.com",
+    "robinhood-testnet",
+    "https://explorer.testnet.chain.robinhood.com/api",
+)
+.as_bytes();
+
+static CHAIN_DATA: [ChainData; 197] = [
+    d(
+        [s(0, 7), s(7, 3), s(10, 41), s(51, 20), s(71, 17)],
+        12000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_ETHEREUM,
+        0,
+    ),
+    d(
+        [s(88, 6), s(7, 3), N, N, s(71, 17)],
+        0,
+        FLAG_TESTNET | FLAG_ETHEREUM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(94, 7), s(7, 3), N, N, s(71, 17)],
+        0,
+        FLAG_TESTNET | FLAG_ETHEREUM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(101, 7), s(7, 3), N, N, s(71, 17)],
+        0,
+        FLAG_TESTNET | FLAG_ETHEREUM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(108, 6), s(7, 3), N, N, s(71, 17)],
+        0,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_ETHEREUM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(114, 5), s(7, 3), N, N, s(71, 17)],
+        0,
+        FLAG_TESTNET | FLAG_ETHEREUM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(119, 7), s(7, 3), s(126, 45), s(171, 28), s(71, 17)],
+        0,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_ETHEREUM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(199, 5), N, s(204, 46), s(250, 26), s(71, 17)],
+        0,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(276, 7), s(7, 3), s(283, 48), s(331, 28), s(71, 17)],
+        0,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_ETHEREUM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(359, 7), N, s(366, 39), s(366, 35), N],
+        1000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(405, 8), s(7, 3), s(413, 42), s(455, 31), s(71, 17)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
+        1,
+    ),
+    d(
+        [s(486, 14), N, N, N, s(71, 17)],
+        0,
+        FLAG_LEGACY | FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(500, 15), N, N, N, s(71, 17)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(515, 16), s(7, 3), s(531, 48), s(579, 37), s(71, 17)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(616, 3), s(7, 3), s(619, 30), s(619, 26), N],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(649, 11), N, s(660, 42), s(660, 38), N],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(702, 8), s(7, 3), s(710, 45), s(755, 19), s(71, 17)],
+        260,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_ARBITRUM,
+        2,
+    ),
+    d([s(774, 16), N, N, N, s(71, 17)], 260, FLAG_TESTNET | FLAG_ARBITRUM, NO_WRAPPED_NATIVE_TOKEN),
+    d([s(790, 15), N, N, N, s(71, 17)], 260, FLAG_TESTNET | FLAG_ARBITRUM, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(805, 16), N, s(821, 46), s(867, 27), s(71, 17)],
+        260,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_ARBITRUM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(894, 13), s(7, 3), s(907, 45), s(952, 24), s(71, 17)],
+        260,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_ARBITRUM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(976, 6), N, s(982, 42), s(1024, 21), s(71, 17)], 5700, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d([s(1045, 14), N, N, N, s(71, 17)], 5700, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(1059, 3), s(1062, 4), s(1066, 38), s(1066, 34), N],
+        25000,
+        FLAG_LEGACY | FLAG_SUPPORTS_SHANGHAI,
+        3,
+    ),
+    d(
+        [s(1104, 11), s(1115, 5), s(1120, 44), s(1120, 40), N],
+        25000,
+        FLAG_LEGACY | FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(1164, 5), s(1169, 4), s(1173, 27), s(1200, 19), N], 500, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(1219, 13), s(1169, 4), s(1232, 35), s(1267, 27), N],
+        500,
+        FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(1294, 4), s(1298, 4), s(1302, 38), s(1302, 34), s(1340, 18)],
+        6000,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(1320, 8), s(1358, 4), s(1362, 37), s(1362, 33), s(1340, 18)],
+        6000,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(1399, 3), s(1402, 5), N, N, s(1340, 18)],
+        6000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(1407, 3), s(1410, 3), s(204, 42), s(1413, 19), s(71, 17)], 450, FLAG_SUPPORTS_SHANGHAI, 4),
+    d(
+        [s(1432, 11), s(1410, 3), s(1443, 42), s(1485, 27), s(71, 17)],
+        450,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(1512, 3), N, N, N, N], 0, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d([s(1515, 5), N, N, N, N], 0, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d([s(1520, 6), s(7, 3), s(1526, 46), s(1572, 22), s(71, 17)], 3000, FLAG_SUPPORTS_SHANGHAI, 5),
+    d(
+        [s(1594, 14), s(7, 3), s(1608, 46), s(1654, 30), s(71, 17)],
+        3000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(1684, 5), N, s(1689, 62), s(1751, 25), N], 0, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(1776, 11), s(1787, 3), s(1790, 42), s(1832, 34), N],
+        500,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(1776, 3), s(1787, 3), s(1866, 34), s(1900, 27), N],
+        500,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(1927, 4), N, s(1931, 43), s(1974, 21), s(71, 17)],
+        5000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_GNOSIS,
+        6,
+    ),
+    d(
+        [s(1995, 7), s(2002, 3), s(2005, 43), s(2048, 23), s(71, 17)],
+        2100,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_POLYGON,
+        7,
+    ),
+    d(
+        [s(2071, 4), s(2002, 3), s(2075, 45), s(2120, 28), s(71, 17)],
+        2100,
+        FLAG_TESTNET | FLAG_POLYGON,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(2148, 6), N, N, N, s(2154, 15)], 1200, FLAG_LEGACY, 8),
+    d(
+        [s(2169, 14), N, N, N, s(2154, 15)],
+        1200,
+        FLAG_LEGACY | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(2183, 8), s(2191, 4), s(2195, 44), s(2239, 28), s(2267, 16)],
+        6500,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(2283, 12), s(2295, 3), N, N, s(2267, 16)],
+        0,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(2298, 9), s(2307, 4), s(2311, 44), s(2355, 29), s(2267, 16)],
+        6500,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(2384, 8), s(2295, 3), s(2392, 44), s(2436, 28), s(2267, 16)],
+        6500,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(2292, 3), N, N, N, N], 200, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(2464, 13), N, N, N, N],
+        200,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(2477, 21), s(1361, 1), s(2498, 32), s(2498, 28), N],
+        260,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(2530, 29), s(1361, 1), s(2559, 40), s(2559, 36), N],
+        260,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(2477, 4), s(1361, 1), s(2599, 40), s(2599, 36), N],
+        260,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(2639, 5), N, N, N, N], 1900, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d([s(2644, 13), N, N, N, N], 1900, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(2657, 6), s(2663, 3), s(2666, 44), s(2710, 21), s(71, 17)],
+        1000,
+        0,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(2731, 14), s(2663, 3), s(2745, 44), s(2789, 29), s(71, 17)],
+        1000,
+        FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(2818, 6), N, s(2824, 40), s(2824, 36), N],
+        5000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_GNOSIS,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(2864, 5), N, N, N, N], 5500, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d([s(2869, 7), N, s(2876, 38), s(2876, 34), N], 6000, FLAG_LEGACY, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(2914, 15), N, s(2929, 46), s(2929, 42), N],
+        0,
+        FLAG_LEGACY | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(2975, 16), N, N, N, N], 30000, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d([s(2991, 28), N, s(3019, 43), s(3062, 34), N], 30000, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d([s(3096, 9), N, s(3105, 45), s(3150, 20), s(71, 17)], 2000, FLAG_SUPPORTS_SHANGHAI, 9),
+    d(
+        [s(3170, 4), N, s(3174, 45), s(3219, 28), s(71, 17)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(3247, 4), s(3251, 4), s(3255, 45), s(3300, 19), s(71, 17)],
+        1000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(3319, 12), s(3251, 4), s(3331, 48), s(3379, 27), s(1340, 18)],
+        1000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(3406, 6), N, s(3412, 30), s(3442, 22), s(71, 17)], 1100, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(3464, 14), N, s(3478, 34), s(3478, 30), s(71, 17)],
+        1100,
+        FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(3512, 5), N, N, N, s(1340, 18)], 5700, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d([s(3517, 13), N, N, N, s(1340, 18)], 5700, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d([s(3530, 4), N, s(3534, 28), s(3562, 20), s(3582, 16)], 0, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(2388, 4), s(7, 3), s(3598, 44), s(3642, 20), s(71, 17)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
+        1,
+    ),
+    d(
+        [s(3662, 11), s(7, 3), N, N, s(71, 17)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(3673, 12), s(7, 3), s(3685, 45), s(3730, 28), s(71, 17)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(3758, 5), N, s(3763, 30), s(3763, 26), s(71, 17)],
+        260,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(3793, 13), N, s(3806, 38), s(3806, 34), s(71, 17)],
+        260,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(3844, 7), s(3851, 3), s(3854, 40), s(3854, 36), s(1340, 18)],
+        5000,
+        FLAG_LEGACY | FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(102, 3), s(7, 3), s(3894, 38), s(3894, 31), s(1340, 18)],
+        1000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(3932, 11), N, s(3943, 46), s(3943, 39), s(1340, 18)],
+        1000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(3989, 7), N, s(3996, 43), s(4039, 20), s(71, 17)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(4059, 15), N, s(4074, 44), s(4118, 28), s(71, 17)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(4146, 5), N, s(4151, 45), s(4196, 20), s(71, 17)], 2000, FLAG_SUPPORTS_SHANGHAI, 10),
+    d(
+        [s(4216, 13), N, s(4229, 49), s(4278, 28), s(71, 17)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(4306, 5), s(7, 3), s(4311, 45), s(4356, 23), s(71, 17)], 0, FLAG_SUPPORTS_SHANGHAI, 11),
+    d([s(4379, 12), N, N, N, N], 0, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(4391, 13), N, s(4404, 45), s(4449, 31), s(71, 17)],
+        0,
+        FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(4480, 6), s(7, 3), s(4486, 48), s(4534, 26), s(71, 17)], 1000, FLAG_ELASTIC, 12),
+    d(
+        [s(4560, 14), s(7, 3), s(4574, 49), s(4623, 34), s(71, 17)],
+        1000,
+        FLAG_TESTNET | FLAG_ELASTIC,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(4657, 6), s(4663, 3), s(4666, 44), s(4710, 22), s(71, 17)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI,
+        13,
+    ),
+    d(
+        [s(4732, 14), s(4663, 3), s(4746, 44), s(4790, 30), s(71, 17)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(4820, 3), s(4823, 3), s(4826, 46), s(4872, 18), s(71, 17)],
+        260,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(4890, 11), s(4823, 3), s(4901, 51), s(4952, 26), s(71, 17)],
+        260,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(4978, 18), s(4996, 5), s(5001, 39), s(5001, 35), N],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(5040, 7), N, s(5047, 27), s(5047, 23), N], 2000, FLAG_LEGACY, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(5074, 4), N, s(5078, 32), s(5078, 28), s(1340, 18)],
+        2000,
+        FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(5110, 12), N, s(5122, 40), s(5122, 36), s(1340, 18)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(5162, 3), N, N, N, s(1340, 18)], 2000, FLAG_OPTIMISM, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(5165, 11), N, N, N, s(1340, 18)],
+        2000,
+        FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(5176, 4), N, s(5180, 33), s(5180, 29), s(1340, 18)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(5213, 12), N, s(5225, 41), s(5225, 37), s(1340, 18)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(5266, 7), N, s(5273, 26), s(5273, 22), N], 5000, FLAG_LEGACY, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(5299, 9), s(5308, 3), s(5311, 34), s(5311, 30), s(1340, 18)],
+        5000,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(5345, 19), s(5308, 3), s(5364, 44), s(5364, 40), s(1340, 18)],
+        5000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(5408, 5), s(5413, 5), s(5418, 31), s(5418, 27), N], 600, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(5449, 13), s(1410, 3), s(5462, 43), s(5505, 25), s(71, 17)],
+        1000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
+        1,
+    ),
+    d(
+        [s(5530, 13), s(1410, 3), s(5543, 44), s(5587, 33), s(71, 17)],
+        1000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(5620, 5), s(5625, 3), s(5628, 39), s(5667, 26), N], 3000, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(5693, 13), s(5625, 3), s(5706, 44), s(5750, 38), N],
+        3000,
+        FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(5788, 6), s(5794, 4), s(5798, 34), s(5798, 30), N],
+        500,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(5832, 14), s(5794, 4), s(5846, 34), s(5846, 30), N],
+        500,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(5880, 5), s(7, 3), s(5885, 46), s(5931, 20), s(71, 17)],
+        12000,
+        FLAG_SUPPORTS_SHANGHAI,
+        14,
+    ),
+    d(
+        [s(5951, 11), s(7, 3), s(5962, 46), s(6008, 26), s(71, 17)],
+        12000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(6034, 22), N, N, N, N],
+        1000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(6056, 5), s(6061, 3), s(6064, 40), s(6064, 36), s(1340, 18)],
+        1800,
+        0,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(6104, 13), s(6117, 5), s(6122, 42), s(6122, 38), s(1340, 18)],
+        2500,
+        FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(6164, 5), N, s(6169, 36), s(6169, 32), s(1340, 18)],
+        12500,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(6205, 21), N, s(6226, 50), s(6226, 46), s(1340, 18)],
+        12500,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(6276, 13), N, N, N, s(1340, 18)],
+        12500,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(6289, 6), N, s(6295, 37), s(6295, 33), s(1340, 18)],
+        12500,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(6332, 14), N, N, N, s(1340, 18)],
+        12500,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(6346, 10), s(6356, 3), s(6359, 31), s(6390, 27), N],
+        10000,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(6417, 18), s(6356, 3), s(6435, 42), s(6477, 38), N],
+        10101,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(6515, 6), N, N, N, N], 0, FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(6521, 9), s(6530, 3), s(6533, 34), s(6533, 30), s(1340, 18)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(6567, 17), s(6584, 4), s(6588, 42), s(6588, 38), s(1340, 18)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(6630, 7), N, s(6637, 34), s(6637, 30), s(1340, 18)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(6671, 22), N, s(6693, 41), s(6693, 37), s(1340, 18)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(6734, 5), s(6739, 4), s(6743, 43), s(6786, 21), s(1340, 18)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(6807, 13), s(6739, 4), s(6820, 44), s(6864, 29), s(1340, 18)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(6893, 5), s(6898, 4), N, N, N], 5000, FLAG_SUPPORTS_SHANGHAI, 15),
+    d([s(6902, 4), s(6906, 4), s(6910, 31), s(6941, 24), s(6965, 16)], 3000, 0, 16),
+    d([s(6981, 6), s(1063, 3), s(6987, 31), s(6987, 27), s(7018, 18)], 3000, 0, 17),
+    d([s(7036, 8), s(1063, 3), s(7044, 32), s(7076, 23), s(7099, 20)], 3000, 0, 18),
+    d([s(7119, 4), s(7123, 4), s(7127, 27), s(7154, 19), s(1340, 18)], 6000, 0, 19),
+    d([s(7173, 4), s(7177, 4), s(7181, 36), s(7181, 32), s(7217, 16)], 6000, 0, 20),
+    d([s(7233, 4), s(7237, 4), s(7241, 36), s(7277, 19), s(7296, 16)], 1000, 0, 21),
+    d([s(7312, 5), s(7317, 2), s(7319, 29), s(7319, 25), s(1340, 18)], 2500, 0, 22),
+    d(
+        [s(7348, 3), s(7351, 3), s(7354, 44), s(7398, 18), s(71, 17)],
+        500,
+        FLAG_SUPPORTS_SHANGHAI,
+        23,
+    ),
+    d(
+        [s(7416, 11), s(7351, 3), s(7427, 44), s(7471, 26), s(71, 17)],
+        500,
+        FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(7497, 14), s(7511, 5), s(7516, 43), s(7559, 22), s(71, 17)],
+        700,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(7581, 14), s(7511, 5), s(7595, 44), s(7639, 30), s(71, 17)],
+        700,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(7669, 7), s(7, 3), s(7676, 44), s(7720, 25), s(71, 17)],
+        1000,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(7745, 15), s(7, 3), s(7760, 44), s(7804, 41), s(71, 17)],
+        1000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(7845, 11), s(7856, 3), s(4666, 42), s(7859, 19), s(71, 17)],
+        2400,
+        0,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(7878, 11), s(7889, 4), s(7893, 42), s(7935, 27), s(71, 17)],
+        2400,
+        FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(7962, 8), s(7, 3), s(7970, 43), s(8013, 19), s(71, 17)],
+        1000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(8032, 16), s(7, 3), s(8048, 44), s(8092, 27), s(71, 17)],
+        1000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(8119, 15), s(8134, 4), s(8138, 39), s(8138, 35), s(1340, 18)],
+        12000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(8177, 8), s(8185, 3), s(8188, 45), s(8233, 18), s(71, 17)],
+        260,
+        FLAG_SUPPORTS_SHANGHAI,
+        24,
+    ),
+    d(
+        [s(8251, 6), s(8185, 3), s(8257, 45), s(8302, 25), s(1340, 18)],
+        260,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(8327, 5), s(76, 1), s(8332, 43), s(8375, 21), s(71, 17)],
+        1000,
+        FLAG_SUPPORTS_SHANGHAI,
+        25,
+    ),
+    d(
+        [s(8396, 13), s(76, 1), s(8409, 45), s(8454, 29), s(71, 17)],
+        1000,
+        FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(8483, 8), s(8491, 4), s(8495, 61), s(8556, 29), s(8585, 17)],
+        60000,
+        FLAG_SUPPORTS_SHANGHAI,
+        26,
+    ),
+    d(
+        [s(8602, 16), s(8491, 4), s(8618, 61), s(8679, 37), s(8585, 17)],
+        60000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(8716, 13), s(8729, 5), s(8734, 38), s(8734, 34), N],
+        260,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(8716, 5), s(8729, 5), s(8772, 30), s(8772, 26), N],
+        260,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(8802, 8), s(8810, 5), N, N, N], 0, FLAG_LEGACY, 27),
+    d([s(8815, 14), s(8810, 5), N, N, N], 0, FLAG_LEGACY | FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(8829, 17), s(8846, 4), s(8850, 45), s(8895, 28), s(8923, 16)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(8829, 9), s(8846, 4), s(8939, 45), s(8984, 20), s(8923, 16)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI,
+        28,
+    ),
+    d(
+        [s(9004, 21), s(7, 3), s(9025, 45), s(9025, 41), s(1340, 18)],
+        260,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(9004, 13), s(7, 3), s(9070, 37), s(9070, 33), s(1340, 18)],
+        260,
+        FLAG_SUPPORTS_SHANGHAI,
+        29,
+    ),
+    d(
+        [s(9107, 5), s(9112, 3), s(9115, 43), s(9158, 21), s(71, 17)],
+        400,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(9179, 13), s(9112, 3), s(9192, 45), s(9237, 29), s(71, 17)],
+        400,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(9266, 11), s(9277, 4), s(9281, 43), s(9324, 23), s(71, 17)], 2000, 0, 30),
+    d([s(9347, 8), s(7, 3), s(9355, 44), s(9399, 18), s(71, 17)], 1000, FLAG_ELASTIC, 31),
+    d(
+        [s(9417, 16), N, s(9433, 45), s(9478, 26), s(71, 17)],
+        1000,
+        FLAG_TESTNET | FLAG_ELASTIC,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(9504, 4), s(9508, 4), s(9512, 70), s(9582, 19), s(8585, 17)],
+        0,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(9601, 12), s(9508, 4), s(9613, 70), s(9683, 27), s(8585, 17)],
+        0,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(9710, 6), s(9716, 4), s(9720, 45), s(9765, 20), s(71, 17)],
+        1000,
+        FLAG_LEGACY | FLAG_ELASTIC,
+        32,
+    ),
+    d(
+        [s(9785, 14), s(9716, 4), s(9799, 49), s(9848, 28), s(71, 17)],
+        1000,
+        FLAG_LEGACY | FLAG_TESTNET | FLAG_ELASTIC,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(9876, 16), s(9892, 3), s(9895, 42), s(9895, 38), s(1340, 18)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(9937, 6), s(9943, 3), s(9946, 41), s(9946, 37), s(1340, 18)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(9876, 8), s(9987, 3), s(9990, 34), s(9990, 30), s(1340, 18)],
+        2000,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(10024, 4), s(10028, 3), s(10031, 29), s(10060, 25), N],
+        1000,
+        FLAG_ELASTIC,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(10085, 12), s(10097, 5), s(10102, 50), s(10152, 33), N],
+        1000,
+        FLAG_TESTNET | FLAG_ELASTIC,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(10185, 9), s(10194, 3), s(10197, 44), s(10241, 36), s(1340, 18)],
+        700,
+        FLAG_SUPPORTS_SHANGHAI,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(10277, 17), s(10194, 3), s(10294, 52), s(10346, 44), s(1340, 18)],
+        700,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(10390, 6), s(7, 3), s(10396, 46), s(10442, 22), s(71, 17)],
+        1000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(10464, 4), s(7, 3), s(10468, 31), s(10468, 27), s(1340, 18)],
+        2000,
+        FLAG_OPTIMISM,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(10499, 4), N, s(10503, 28), s(10503, 24), s(1340, 18)], 5000, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d([s(10531, 6), N, s(10537, 30), s(10567, 22), N], 1000, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(10589, 13), N, s(10602, 37), s(10639, 29), N],
+        3000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(10668, 14), N, s(10682, 38), s(10720, 30), N],
+        1000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(10750, 10), N, s(10760, 46), s(10760, 42), s(1340, 18)], 1000, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        [s(10806, 26), N, s(10832, 56), s(10832, 52), s(1340, 18)],
+        1000,
+        FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(10888, 8), s(2156, 1), s(10896, 44), s(10940, 23), s(71, 17)],
+        7000,
+        FLAG_SUPPORTS_SHANGHAI,
+        33,
+    ),
+    d(
+        [s(10963, 11), s(10974, 2), s(10976, 45), s(11021, 35), s(71, 17)],
+        7000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        33,
+    ),
+    d(
+        [s(11056, 11), s(10974, 2), s(11067, 47), s(11067, 43), N],
+        7000,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        33,
+    ),
+    d(
+        [s(11114, 5), s(5795, 3), s(11119, 27), s(11146, 25), N],
+        500,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TEMPO | FLAG_CUSTOM_SOURCIFY,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(11171, 14), s(5795, 3), s(11119, 27), s(11185, 34), N],
+        500,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_TEMPO | FLAG_CUSTOM_SOURCIFY,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(11219, 13), s(5795, 3), s(11119, 27), s(11232, 35), N],
+        500,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_TEMPO | FLAG_CUSTOM_SOURCIFY,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(11267, 12), s(5795, 3), N, N, N],
+        500,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_TEMPO,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(11279, 11), s(11290, 4), s(11294, 31), s(11294, 27), s(1340, 18)],
+        500,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(
+        [s(11325, 19), s(7, 3), s(11344, 54), s(11398, 40), N],
+        250,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_ELASTIC,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d([s(11438, 17), N, s(11455, 48), s(11455, 44), N], 0, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+];
+
+static WRAPPED_NATIVE_TOKENS: [Address; 34] = [
+    address!("0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"),
+    address!("0x4200000000000000000000000000000000000006"),
+    address!("0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"),
+    address!("0x967F8799aF07dF1534d48A95a5C9FEBE92c53AE0"),
+    address!("0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"),
+    address!("0x5300000000000000000000000000000000000004"),
+    address!("0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d"),
+    address!("0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270"),
+    address!("0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83"),
+    address!("0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7"),
+    address!("0x4300000000000000000000000000000000000004"),
+    address!("0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f"),
+    address!("0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91"),
+    address!("0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111"),
+    address!("0xA51894664A773981C6C112C43ce576f315d5b1B6"),
+    address!("0xA00744882684C3e4747faEFD68D283eA44099D03"),
+    address!("0x40375C92d9FAf44d2f9db9Bd9ba41a3317a2404f"),
+    address!("0xF6D226f9Dc15d9bB51182815b320D3fBE324e1bA"),
+    address!("0xfF204e2681A6fA0e2C3FaDe68a1B28fb90E4Fc5F"),
+    address!("0x00EDdD9621Fb08436d0331c149D1690909a5906d"),
+    address!("0x5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf"),
+    address!("0x19Aac5f612f524B754CA7e7c41cbFa2E981A4432"),
+    address!("0x1514000000000000000000000000000000000000"),
+    address!("0xE30feDd158A2e3b13e9badaeABaFc5516e95e8C7"),
+    address!("0x48b62137EdfA95a428D35C09E44256a739F6B557"),
+    address!("0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38"),
+    address!("0x6ed1F491e2d31536D6561f6bdB2AdC8F092a6076"),
+    address!("0x263D8f36Bb8d0d9526255E205868C26690b04B88"),
+    address!("0x6969696969696969696969696969696969696969"),
+    address!("0x1fB719f10b56d7a85DCD32f27f897375fB21cfdd"),
+    address!("0x5555555555555555555555555555555555555555"),
+    address!("0x3439153EB7AF838Ad19d56E1571FBD09333C2809"),
+    address!("0xF1f9E08a0818594FDe4713AE0Db1E46672Ca960E"),
+    address!("0x653e645e3d81a72e71328Bc01A04002945E3ef7A"),
+];
+
+static VARIANT_NAMES_DATA: [&str; 197] = variant_names();
+
+static PARSE_NAMES: phf::Map<&'static str, ChainIndex> = ::phf::Map {
+    key: 16287231350648472473,
+    disps: &[
+        (0, 50),
+        (0, 2),
+        (2, 8),
+        (0, 3),
+        (0, 54),
+        (1, 9),
+        (2, 5),
+        (2, 70),
+        (1, 66),
+        (0, 2),
+        (0, 25),
+        (3, 53),
+        (16, 159),
+        (1, 4),
+        (0, 0),
+        (0, 34),
+        (6, 137),
+        (0, 60),
+        (2, 164),
+        (0, 57),
+        (47, 154),
+        (0, 87),
+        (22, 67),
+        (48, 66),
+        (0, 6),
+        (0, 0),
+        (1, 3),
+        (64, 211),
+        (0, 84),
+        (5, 137),
+        (3, 35),
+        (1, 0),
+        (19, 177),
+        (0, 69),
+        (0, 115),
+        (1, 0),
+        (12, 11),
+        (2, 11),
+        (0, 9),
+        (0, 52),
+        (92, 174),
+        (0, 1),
+        (0, 65),
+    ],
+    entries: &[
+        ("fluent", 182),
+        ("monad-testnet", 164),
+        ("cfx", 38),
+        ("arbitrum-sepolia", 19),
+        ("zksync", 87),
+        ("koi", 29),
+        ("aurora", 67),
+        ("fluent-devnet", 183),
+        ("kaia", 136),
+        ("oasis", 58),
+        ("memecore", 187),
+        ("filecoin-calibration-testnet", 62),
+        ("fantom-testnet", 43),
+        ("flare-coston2", 115),
+        ("ronin-testnet", 108),
+        ("cfx-testnet", 37),
+        ("bitlayer", 133),
+        ("berachain-bepolia", 159),
+        ("filecoin-mainnet", 61),
+        ("redbelly", 153),
+        ("fluent-testnet", 184),
+        ("vana", 134),
+        ("stable-mainnet", 140),
+        ("acala-mandala-testnet", 117),
+        ("xdc-mainnet", 144),
+        ("ethlive", 0),
+        ("zksync-testnet", 88),
+        ("zora", 95),
+        ("poa", 32),
+        ("tempo-devnet", 193),
+        ("abstract", 166),
+        ("formicarium", 188),
+        ("plume-testnet", 155),
+        ("soneium-minato-testnet", 127),
+        ("telos", 25),
+        ("xai", 91),
+        ("goerli", 4),
+        ("emerald", 59),
+        ("anvil-hardhat", 49),
+        ("plasma", 55),
+        ("polkadot-testnet", 172),
+        ("hoodi", 7),
+        ("signet-pecorino", 148),
+        ("taiko-hekla", 112),
+        ("bsc-testnet", 31),
+        ("zora-sepolia", 96),
+        ("degen", 104),
+        ("gravity-alpha-mainnet", 50),
+        ("sophon-testnet", 171),
+        ("optimism-goerli", 12),
+        ("opbnb-mainnet", 105),
+        ("insectarium", 189),
+        ("superposition-testnet", 161),
+        ("sei", 138),
+        ("injective", 177),
+        ("linea-sepolia", 86),
+        ("corn", 168),
+        ("optimism", 10),
+        ("blast-sepolia", 83),
+        ("odyssey", 9),
+        ("scroll-sepolia", 35),
+        ("autonomys-nova-testnet", 113),
+        ("radius", 109),
+        ("celo", 65),
+        ("pulsechain-testnet", 122),
+        ("linea-goerli", 85),
+        ("unichain-sepolia", 147),
+        ("fraxtal-testnet", 81),
+        ("bob", 14),
+        ("polkadot", 174),
+        ("ink-sepolia", 79),
+        ("redbelly-testnet", 154),
+        ("etherlink-shadownet", 103),
+        ("pulsechain", 121),
+        ("grav", 52),
+        ("ropsten", 2),
+        ("scroll", 34),
+        ("kovan", 5),
+        ("metis", 36),
+        ("cronos", 21),
+        ("canto-testnet", 70),
+        ("avalanche-fuji", 64),
+        ("hardhat", 49),
+        ("lens-testnet", 176),
+        ("tempo", 190),
+        ("merlin", 132),
+        ("polygon-amoy", 41),
+        ("opbnb-testnet", 106),
+        ("optimism-kovan", 11),
+        ("binance-smart-chain-testnet", 31),
+        ("fuse", 181),
+        ("holesky", 6),
+        ("sonic", 151),
+        ("corn-testnet", 169),
+        ("morden", 1),
+        ("aurora-testnet", 68),
+        ("moonbase", 47),
+        ("core", 131),
+        ("arbitrum-testnet", 17),
+        ("soneium", 126),
+        ("berachain", 160),
+        ("gravity-alpha-testnet-sepolia", 51),
+        ("megaeth-testnet", 143),
+        ("zeta", 135),
+        ("lens", 175),
+        ("celo-sepolia", 66),
+        ("bsc", 30),
+        ("gnosis-chain", 39),
+        ("bob-sepolia", 15),
+        ("megaeth", 142),
+        ("immutable", 124),
+        ("hyperliquid", 165),
+        ("bnb-smart-chain", 30),
+        ("katana", 179),
+        ("sonic-testnet", 152),
+        ("apechain-testnet", 150),
+        ("xai-sepolia", 92),
+        ("treasure-topaz", 158),
+        ("sokol", 33),
+        ("immutable-testnet", 125),
+        ("canto", 69),
+        ("unichain", 146),
+        ("syndr-sepolia", 76),
+        ("crab", 27),
+        ("moonbeam-dev", 45),
+        ("plasma-testnet", 56),
+        ("berachain-bepolia-testnet", 159),
+        ("arbitrum-goerli", 18),
+        ("happychain-testnet", 93),
+        ("mainnet", 0),
+        ("arc-testnet", 194),
+        ("base-sepolia", 74),
+        ("karura", 119),
+        ("abstract-testnet", 167),
+        ("stable-testnet", 141),
+        ("elastos", 101),
+        ("arbitrum-nova", 20),
+        ("pgn", 97),
+        ("lisk", 180),
+        ("mantle-sepolia", 90),
+        ("memecore-insectarium", 189),
+        ("evmos-testnet", 54),
+        ("optimism-sepolia", 13),
+        ("chiado", 57),
+        ("world-sepolia", 129),
+        ("skale-base-sepolia-testnet", 186),
+        ("base", 72),
+        ("polygon", 40),
+        ("ink", 78),
+        ("world", 128),
+        ("robinhood-testnet", 196),
+        ("treasure", 157),
+        ("monad", 163),
+        ("treasure-topaz-testnet", 158),
+        ("bnb-smart-chain-testnet", 31),
+        ("mantle", 89),
+        ("rinkeby", 3),
+        ("linea", 84),
+        ("amoy", 41),
+        ("mode-sepolia", 100),
+        ("arbitrum", 16),
+        ("anvil", 49),
+        ("tempo-testnet", 192),
+        ("taiko", 111),
+        ("evmos", 53),
+        ("gnosis", 39),
+        ("moonbeam", 44),
+        ("rsk", 23),
+        ("ronin", 107),
+        ("moonriver", 46),
+        ("boba", 71),
+        ("tempo-mainnet", 190),
+        ("curtis", 150),
+        ("radius-testnet", 110),
+        ("cannon", 123),
+        ("syndr", 75),
+        ("blast", 82),
+        ("skale-base", 185),
+        ("dev", 48),
+        ("xdai", 39),
+        ("sei-testnet", 139),
+        ("apechain", 149),
+        ("memecore-formicarium", 188),
+        ("fantom", 42),
+        ("iotex", 130),
+        ("cronos-testnet", 22),
+        ("base-goerli", 73),
+        ("fraxtal", 80),
+        ("story", 137),
+        ("tempo-moderato", 191),
+        ("flare", 114),
+        ("xdc-testnet", 145),
+        ("etherlink", 102),
+        ("fuji", 64),
+        ("emerald-testnet", 60),
+        ("binance-smart-chain", 30),
+        ("darwinia", 28),
+        ("shimmer", 77),
+        ("kusama", 173),
+        ("viction", 94),
+        ("pgn-sepolia", 98),
+        ("avalanche", 63),
+        ("superposition", 162),
+        ("karura-testnet", 120),
+        ("mode", 99),
+        ("acala-testnet", 118),
+        ("rsk-testnet", 24),
+        ("sophon", 170),
+        ("sepolia", 8),
+        ("acala", 116),
+        ("plume", 156),
+        ("battlechain-testnet", 195),
+        ("injective-testnet", 178),
+        ("telos-testnet", 26),
+    ],
+};
+#[cfg(feature = "serde")]
+static SERDE_NAMES: phf::Map<&'static str, ChainIndex> = ::phf::Map {
+    key: 16263683158343804936,
+    disps: &[
+        (0, 87),
+        (0, 10),
+        (2, 51),
+        (0, 0),
+        (1, 6),
+        (0, 2),
+        (1, 34),
+        (1, 2),
+        (5, 61),
+        (0, 15),
+        (4, 21),
+        (0, 96),
+        (0, 4),
+        (0, 7),
+        (1, 112),
+        (0, 46),
+        (20, 16),
+        (0, 23),
+        (2, 41),
+        (0, 86),
+        (0, 1),
+        (11, 48),
+        (3, 29),
+    ],
+    entries: &[
+        ("radius_testnet", 110),
+        ("meme_core", 187),
+        ("canto_testnet", 70),
+        ("immutable_testnet", 125),
+        ("battlechain_testnet", 195),
+        ("linea_sepolia", 86),
+        ("blast_sepolia", 83),
+        ("optimism_sepolia", 13),
+        ("zksync_testnet", 88),
+        ("conflux-espace", 38),
+        ("xdc_mainnet", 144),
+        ("arbitrum-one", 16),
+        ("fantom_testnet", 43),
+        ("formicairum", 188),
+        ("skale_base_sepolia_testnet", 186),
+        ("karura_testnet", 120),
+        ("injective_testnet", 178),
+        ("treasure_topaz", 158),
+        ("mantle_sepolia", 90),
+        ("battle_chain_testnet", 195),
+        ("optimism_goerli", 12),
+        ("linea_goerli", 85),
+        ("filecoin_mainnet", 61),
+        ("acala_testnet", 118),
+        ("evmos_testnet", 54),
+        ("rsk_testnet", 24),
+        ("base_goerli", 73),
+        ("stable_mainnet", 140),
+        ("gravity_alpha_mainnet", 50),
+        ("optimism_kovan", 11),
+        ("base_sepolia", 74),
+        ("bsc_testnet", 31),
+        ("op-bnb-testnet", 106),
+        ("moonbeam_dev", 45),
+        ("scroll_sepolia", 35),
+        ("stable_testnet", 141),
+        ("avalanche_fuji", 64),
+        ("taiko_hekla", 112),
+        ("robinhood_testnet", 196),
+        ("zk_sync", 87),
+        ("scroll_sepolia_testnet", 35),
+        ("ape_chain", 149),
+        ("tempo_devnet", 193),
+        ("arbitrum_goerli", 18),
+        ("arbitrum_sepolia", 19),
+        ("unichain_sepolia", 147),
+        ("fluent_devnet", 183),
+        ("skale_base", 185),
+        ("telos_evm", 25),
+        ("arbitrum_nova", 20),
+        ("opbnb_testnet", 106),
+        ("ronin_testnet", 108),
+        ("fluent_testnet", 184),
+        ("zk_sync_testnet", 88),
+        ("megaeth_testnet", 143),
+        ("pgn_sepolia", 98),
+        ("telos_testnet", 26),
+        ("etherlink_shadownet", 103),
+        ("aurora_testnet", 68),
+        ("xai_sepolia", 92),
+        ("filecoin_calibration_testnet", 62),
+        ("mega_eth", 142),
+        ("gravity", 52),
+        ("berachain_bepolia", 159),
+        ("worldchain-sepolia", 129),
+        ("polygon_amoy", 41),
+        ("plume_testnet", 155),
+        ("syndr_sepolia", 76),
+        ("cfx_testnet", 37),
+        ("binance_smart_chain", 30),
+        ("opbnb_mainnet", 105),
+        ("tempo_testnet", 192),
+        ("redbelly_testnet", 154),
+        ("abstract_testnet", 167),
+        ("bob_sepolia", 15),
+        ("gravity_alpha_testnet_sepolia", 51),
+        ("acala_mandala_testnet", 117),
+        ("plasma_testnet", 56),
+        ("sonic_testnet", 152),
+        ("ink_sepolia", 79),
+        ("worldchain", 128),
+        ("autonomys_nova_testnet", 113),
+        ("mode_sepolia", 100),
+        ("flare_coston2", 115),
+        ("emerald_testnet", 60),
+        ("telos_evm_testnet", 26),
+        ("telos-evm-testnet", 26),
+        ("conflux-espace-testnet", 37),
+        ("anvil_hardhat", 49),
+        ("arbitrum_testnet", 17),
+        ("happychain_testnet", 93),
+        ("xdc_testnet", 145),
+        ("fraxtal_testnet", 81),
+        ("pulsechain_testnet", 122),
+        ("cronos_testnet", 22),
+        ("zora_sepolia", 96),
+        ("signet_pecorino", 148),
+        ("arc_testnet", 194),
+        ("corn_testnet", 169),
+        ("soneium_minato_testnet", 127),
+        ("sei_testnet", 139),
+        ("op-bnb-mainnet", 105),
+        ("world_sepolia", 129),
+        ("ink_sepolia_testnet", 79),
+        ("superposition_testnet", 161),
+        ("celo_sepolia", 66),
+        ("tempo_moderato", 191),
+        ("polkadot_testnet", 172),
+        ("sophon_testnet", 171),
+        ("binance_smart_chain_testnet", 31),
+        ("monad_testnet", 164),
+        ("lens_testnet", 176),
+        ("arbitrum_one", 16),
+        ("mega_eth_testnet", 143),
+    ],
+};
+
+const fn variant_names() -> [&'static str; 197] {
+    let mut names = [""; 197];
+    let mut index = 0;
+    while index < CHAIN_DATA.len() {
+        names[index] = CHAIN_DATA[index].name.get_unchecked();
+        index += 1;
+    }
+    names
+}
+
 /// An Ethereum EIP-155 chain.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
@@ -455,210 +2455,39 @@ impl NamedChain {
     ];
 
     /// All named chain string representations in declaration order.
-    pub const VARIANT_NAMES: &'static [&'static str] = &[
-        "mainnet",
-        "morden",
-        "ropsten",
-        "rinkeby",
-        "goerli",
-        "kovan",
-        "holesky",
-        "hoodi",
-        "sepolia",
-        "odyssey",
-        "optimism",
-        "optimism-kovan",
-        "optimism-goerli",
-        "optimism-sepolia",
-        "bob",
-        "bob-sepolia",
-        "arbitrum",
-        "arbitrum-testnet",
-        "arbitrum-goerli",
-        "arbitrum-sepolia",
-        "arbitrum-nova",
-        "cronos",
-        "cronos-testnet",
-        "rsk",
-        "rsk-testnet",
-        "telos",
-        "telos-testnet",
-        "crab",
-        "darwinia",
-        "koi",
-        "bsc",
-        "bsc-testnet",
-        "poa",
-        "sokol",
-        "scroll",
-        "scroll-sepolia",
-        "metis",
-        "cfx-testnet",
-        "cfx",
-        "xdai",
-        "polygon",
-        "amoy",
-        "fantom",
-        "fantom-testnet",
-        "moonbeam",
-        "moonbeam-dev",
-        "moonriver",
-        "moonbase",
-        "dev",
-        "anvil-hardhat",
-        "gravity-alpha-mainnet",
-        "gravity-alpha-testnet-sepolia",
-        "grav",
-        "evmos",
-        "evmos-testnet",
-        "plasma",
-        "plasma-testnet",
-        "chiado",
-        "oasis",
-        "emerald",
-        "emerald-testnet",
-        "filecoin-mainnet",
-        "filecoin-calibration-testnet",
-        "avalanche",
-        "fuji",
-        "celo",
-        "celo-sepolia",
-        "aurora",
-        "aurora-testnet",
-        "canto",
-        "canto-testnet",
-        "boba",
-        "base",
-        "base-goerli",
-        "base-sepolia",
-        "syndr",
-        "syndr-sepolia",
-        "shimmer",
-        "ink",
-        "ink-sepolia",
-        "fraxtal",
-        "fraxtal-testnet",
-        "blast",
-        "blast-sepolia",
-        "linea",
-        "linea-goerli",
-        "linea-sepolia",
-        "zksync",
-        "zksync-testnet",
-        "mantle",
-        "mantle-sepolia",
-        "xai",
-        "xai-sepolia",
-        "happychain-testnet",
-        "viction",
-        "zora",
-        "zora-sepolia",
-        "pgn",
-        "pgn-sepolia",
-        "mode",
-        "mode-sepolia",
-        "elastos",
-        "etherlink",
-        "etherlink-shadownet",
-        "degen",
-        "opbnb-mainnet",
-        "opbnb-testnet",
-        "ronin",
-        "ronin-testnet",
-        "radius",
-        "radius-testnet",
-        "taiko",
-        "taiko-hekla",
-        "autonomys-nova-testnet",
-        "flare",
-        "flare-coston2",
-        "acala",
-        "acala-mandala-testnet",
-        "acala-testnet",
-        "karura",
-        "karura-testnet",
-        "pulsechain",
-        "pulsechain-testnet",
-        "cannon",
-        "immutable",
-        "immutable-testnet",
-        "soneium",
-        "soneium-minato-testnet",
-        "world",
-        "world-sepolia",
-        "iotex",
-        "core",
-        "merlin",
-        "bitlayer",
-        "vana",
-        "zeta",
-        "kaia",
-        "story",
-        "sei",
-        "sei-testnet",
-        "stable-mainnet",
-        "stable-testnet",
-        "megaeth",
-        "megaeth-testnet",
-        "xdc-mainnet",
-        "xdc-testnet",
-        "unichain",
-        "unichain-sepolia",
-        "signet-pecorino",
-        "apechain",
-        "curtis",
-        "sonic",
-        "sonic-testnet",
-        "redbelly",
-        "redbelly-testnet",
-        "plume-testnet",
-        "plume",
-        "treasure",
-        "treasure-topaz",
-        "berachain-bepolia",
-        "berachain",
-        "superposition-testnet",
-        "superposition",
-        "monad",
-        "monad-testnet",
-        "hyperliquid",
-        "abstract",
-        "abstract-testnet",
-        "corn",
-        "corn-testnet",
-        "sophon",
-        "sophon-testnet",
-        "polkadot-testnet",
-        "kusama",
-        "polkadot",
-        "lens",
-        "lens-testnet",
-        "injective",
-        "injective-testnet",
-        "katana",
-        "lisk",
-        "fuse",
-        "fluent",
-        "fluent-devnet",
-        "fluent-testnet",
-        "skale-base",
-        "skale-base-sepolia-testnet",
-        "memecore",
-        "formicarium",
-        "insectarium",
-        "tempo",
-        "tempo-moderato",
-        "tempo-testnet",
-        "tempo-devnet",
-        "arc-testnet",
-        "battlechain-testnet",
-        "robinhood-testnet",
-    ];
+    pub const VARIANT_NAMES: &'static [&'static str] = &VARIANT_NAMES_DATA;
 
     /// Returns an iterator over all named chains.
     #[inline]
     pub fn iter() -> NamedChainIter {
         NamedChainIter { inner: Self::VARIANTS.iter().copied() }
+    }
+
+    #[inline]
+    const fn from_index(index: ChainIndex) -> Self {
+        Self::VARIANTS[index as usize]
+    }
+
+    #[inline]
+    const fn variant_index(self) -> usize {
+        let mut index = 0;
+        while index < Self::VARIANTS.len() {
+            if Self::VARIANTS[index] as u64 == self as u64 {
+                return index;
+            }
+            index += 1;
+        }
+        unreachable!()
+    }
+
+    #[inline]
+    const fn data(self) -> ChainData {
+        CHAIN_DATA[self.variant_index()]
+    }
+
+    #[inline]
+    const fn has_flag(self, flag: u16) -> bool {
+        self.data().flags & flag != 0
     }
 
     /// Returns the chain for the given EIP-155 chain ID.
@@ -869,1382 +2698,94 @@ impl NamedChain {
     /// Returns the string representation of the chain.
     #[inline]
     pub const fn as_str(&self) -> &'static str {
-        match self {
-            Self::Mainnet => "mainnet",
-            Self::Morden => "morden",
-            Self::Ropsten => "ropsten",
-            Self::Rinkeby => "rinkeby",
-            Self::Goerli => "goerli",
-            Self::Kovan => "kovan",
-            Self::Holesky => "holesky",
-            Self::Hoodi => "hoodi",
-            Self::Sepolia => "sepolia",
-            Self::Odyssey => "odyssey",
-            Self::Optimism => "optimism",
-            Self::OptimismKovan => "optimism-kovan",
-            Self::OptimismGoerli => "optimism-goerli",
-            Self::OptimismSepolia => "optimism-sepolia",
-            Self::Bob => "bob",
-            Self::BobSepolia => "bob-sepolia",
-            Self::Arbitrum => "arbitrum",
-            Self::ArbitrumTestnet => "arbitrum-testnet",
-            Self::ArbitrumGoerli => "arbitrum-goerli",
-            Self::ArbitrumSepolia => "arbitrum-sepolia",
-            Self::ArbitrumNova => "arbitrum-nova",
-            Self::Cronos => "cronos",
-            Self::CronosTestnet => "cronos-testnet",
-            Self::Rsk => "rsk",
-            Self::RskTestnet => "rsk-testnet",
-            Self::TelosEvm => "telos",
-            Self::TelosEvmTestnet => "telos-testnet",
-            Self::Crab => "crab",
-            Self::Darwinia => "darwinia",
-            Self::Koi => "koi",
-            Self::BinanceSmartChain => "bsc",
-            Self::BinanceSmartChainTestnet => "bsc-testnet",
-            Self::Poa => "poa",
-            Self::Sokol => "sokol",
-            Self::Scroll => "scroll",
-            Self::ScrollSepolia => "scroll-sepolia",
-            Self::Metis => "metis",
-            Self::CfxTestnet => "cfx-testnet",
-            Self::Cfx => "cfx",
-            Self::Gnosis => "xdai",
-            Self::Polygon => "polygon",
-            Self::PolygonAmoy => "amoy",
-            Self::Fantom => "fantom",
-            Self::FantomTestnet => "fantom-testnet",
-            Self::Moonbeam => "moonbeam",
-            Self::MoonbeamDev => "moonbeam-dev",
-            Self::Moonriver => "moonriver",
-            Self::Moonbase => "moonbase",
-            Self::Dev => "dev",
-            Self::AnvilHardhat => "anvil-hardhat",
-            Self::GravityAlphaMainnet => "gravity-alpha-mainnet",
-            Self::GravityAlphaTestnetSepolia => "gravity-alpha-testnet-sepolia",
-            Self::Gravity => "grav",
-            Self::Evmos => "evmos",
-            Self::EvmosTestnet => "evmos-testnet",
-            Self::Plasma => "plasma",
-            Self::PlasmaTestnet => "plasma-testnet",
-            Self::Chiado => "chiado",
-            Self::Oasis => "oasis",
-            Self::Emerald => "emerald",
-            Self::EmeraldTestnet => "emerald-testnet",
-            Self::FilecoinMainnet => "filecoin-mainnet",
-            Self::FilecoinCalibrationTestnet => "filecoin-calibration-testnet",
-            Self::Avalanche => "avalanche",
-            Self::AvalancheFuji => "fuji",
-            Self::Celo => "celo",
-            Self::CeloSepolia => "celo-sepolia",
-            Self::Aurora => "aurora",
-            Self::AuroraTestnet => "aurora-testnet",
-            Self::Canto => "canto",
-            Self::CantoTestnet => "canto-testnet",
-            Self::Boba => "boba",
-            Self::Base => "base",
-            Self::BaseGoerli => "base-goerli",
-            Self::BaseSepolia => "base-sepolia",
-            Self::Syndr => "syndr",
-            Self::SyndrSepolia => "syndr-sepolia",
-            Self::Shimmer => "shimmer",
-            Self::Ink => "ink",
-            Self::InkSepolia => "ink-sepolia",
-            Self::Fraxtal => "fraxtal",
-            Self::FraxtalTestnet => "fraxtal-testnet",
-            Self::Blast => "blast",
-            Self::BlastSepolia => "blast-sepolia",
-            Self::Linea => "linea",
-            Self::LineaGoerli => "linea-goerli",
-            Self::LineaSepolia => "linea-sepolia",
-            Self::ZkSync => "zksync",
-            Self::ZkSyncTestnet => "zksync-testnet",
-            Self::Mantle => "mantle",
-            Self::MantleSepolia => "mantle-sepolia",
-            Self::Xai => "xai",
-            Self::XaiSepolia => "xai-sepolia",
-            Self::HappychainTestnet => "happychain-testnet",
-            Self::Viction => "viction",
-            Self::Zora => "zora",
-            Self::ZoraSepolia => "zora-sepolia",
-            Self::Pgn => "pgn",
-            Self::PgnSepolia => "pgn-sepolia",
-            Self::Mode => "mode",
-            Self::ModeSepolia => "mode-sepolia",
-            Self::Elastos => "elastos",
-            Self::Etherlink => "etherlink",
-            Self::EtherlinkShadownet => "etherlink-shadownet",
-            Self::Degen => "degen",
-            Self::OpBNBMainnet => "opbnb-mainnet",
-            Self::OpBNBTestnet => "opbnb-testnet",
-            Self::Ronin => "ronin",
-            Self::RoninTestnet => "ronin-testnet",
-            Self::Radius => "radius",
-            Self::RadiusTestnet => "radius-testnet",
-            Self::Taiko => "taiko",
-            Self::TaikoHekla => "taiko-hekla",
-            Self::AutonomysNovaTestnet => "autonomys-nova-testnet",
-            Self::Flare => "flare",
-            Self::FlareCoston2 => "flare-coston2",
-            Self::Acala => "acala",
-            Self::AcalaMandalaTestnet => "acala-mandala-testnet",
-            Self::AcalaTestnet => "acala-testnet",
-            Self::Karura => "karura",
-            Self::KaruraTestnet => "karura-testnet",
-            Self::Pulsechain => "pulsechain",
-            Self::PulsechainTestnet => "pulsechain-testnet",
-            Self::Cannon => "cannon",
-            Self::Immutable => "immutable",
-            Self::ImmutableTestnet => "immutable-testnet",
-            Self::Soneium => "soneium",
-            Self::SoneiumMinatoTestnet => "soneium-minato-testnet",
-            Self::World => "world",
-            Self::WorldSepolia => "world-sepolia",
-            Self::Iotex => "iotex",
-            Self::Core => "core",
-            Self::Merlin => "merlin",
-            Self::Bitlayer => "bitlayer",
-            Self::Vana => "vana",
-            Self::Zeta => "zeta",
-            Self::Kaia => "kaia",
-            Self::Story => "story",
-            Self::Sei => "sei",
-            Self::SeiTestnet => "sei-testnet",
-            Self::StableMainnet => "stable-mainnet",
-            Self::StableTestnet => "stable-testnet",
-            Self::MegaEth => "megaeth",
-            Self::MegaEthTestnet => "megaeth-testnet",
-            Self::XdcMainnet => "xdc-mainnet",
-            Self::XdcTestnet => "xdc-testnet",
-            Self::Unichain => "unichain",
-            Self::UnichainSepolia => "unichain-sepolia",
-            Self::SignetPecorino => "signet-pecorino",
-            Self::ApeChain => "apechain",
-            Self::Curtis => "curtis",
-            Self::Sonic => "sonic",
-            Self::SonicTestnet => "sonic-testnet",
-            Self::Redbelly => "redbelly",
-            Self::RedbellyTestnet => "redbelly-testnet",
-            Self::PlumeTestnet => "plume-testnet",
-            Self::Plume => "plume",
-            Self::Treasure => "treasure",
-            Self::TreasureTopaz => "treasure-topaz",
-            Self::BerachainBepolia => "berachain-bepolia",
-            Self::Berachain => "berachain",
-            Self::SuperpositionTestnet => "superposition-testnet",
-            Self::Superposition => "superposition",
-            Self::Monad => "monad",
-            Self::MonadTestnet => "monad-testnet",
-            Self::Hyperliquid => "hyperliquid",
-            Self::Abstract => "abstract",
-            Self::AbstractTestnet => "abstract-testnet",
-            Self::Corn => "corn",
-            Self::CornTestnet => "corn-testnet",
-            Self::Sophon => "sophon",
-            Self::SophonTestnet => "sophon-testnet",
-            Self::PolkadotTestnet => "polkadot-testnet",
-            Self::Kusama => "kusama",
-            Self::Polkadot => "polkadot",
-            Self::Lens => "lens",
-            Self::LensTestnet => "lens-testnet",
-            Self::Injective => "injective",
-            Self::InjectiveTestnet => "injective-testnet",
-            Self::Katana => "katana",
-            Self::Lisk => "lisk",
-            Self::Fuse => "fuse",
-            Self::Fluent => "fluent",
-            Self::FluentDevnet => "fluent-devnet",
-            Self::FluentTestnet => "fluent-testnet",
-            Self::SkaleBase => "skale-base",
-            Self::SkaleBaseSepoliaTestnet => "skale-base-sepolia-testnet",
-            Self::MemeCore => "memecore",
-            Self::Formicarium => "formicarium",
-            Self::Insectarium => "insectarium",
-            Self::Tempo => "tempo",
-            Self::TempoModerato => "tempo-moderato",
-            Self::TempoTestnet => "tempo-testnet",
-            Self::TempoDevnet => "tempo-devnet",
-            Self::ArcTestnet => "arc-testnet",
-            Self::BattleChainTestnet => "battlechain-testnet",
-            Self::RobinhoodTestnet => "robinhood-testnet",
-        }
+        (*self).data().name.get_unchecked()
     }
 
     /// Returns `true` if this chain is Ethereum or an Ethereum testnet.
     #[inline]
     pub const fn is_ethereum(&self) -> bool {
-        matches!(
-            *self,
-            Self::Mainnet
-                | Self::Morden
-                | Self::Ropsten
-                | Self::Rinkeby
-                | Self::Goerli
-                | Self::Kovan
-                | Self::Holesky
-                | Self::Sepolia
-        )
+        (*self).has_flag(FLAG_ETHEREUM)
     }
 
     /// Returns true if the chain contains Optimism configuration.
     #[inline]
     pub const fn is_optimism(self) -> bool {
-        matches!(
-            self,
-            Self::Odyssey
-                | Self::Optimism
-                | Self::OptimismKovan
-                | Self::OptimismGoerli
-                | Self::OptimismSepolia
-                | Self::Celo
-                | Self::Base
-                | Self::BaseGoerli
-                | Self::BaseSepolia
-                | Self::Ink
-                | Self::InkSepolia
-                | Self::Fraxtal
-                | Self::FraxtalTestnet
-                | Self::BlastSepolia
-                | Self::HappychainTestnet
-                | Self::Zora
-                | Self::ZoraSepolia
-                | Self::Pgn
-                | Self::PgnSepolia
-                | Self::Mode
-                | Self::ModeSepolia
-                | Self::OpBNBMainnet
-                | Self::OpBNBTestnet
-                | Self::Soneium
-                | Self::SoneiumMinatoTestnet
-                | Self::World
-                | Self::WorldSepolia
-                | Self::Unichain
-                | Self::UnichainSepolia
-                | Self::Katana
-                | Self::Lisk
-        )
+        self.has_flag(FLAG_OPTIMISM)
     }
 
     /// Returns true if the chain contains Gnosis configuration.
     #[inline]
     pub const fn is_gnosis(self) -> bool {
-        matches!(self, Self::Gnosis | Self::Chiado)
+        self.has_flag(FLAG_GNOSIS)
     }
 
     /// Returns true if the chain contains Polygon configuration.
     #[inline]
     pub const fn is_polygon(self) -> bool {
-        matches!(self, Self::Polygon | Self::PolygonAmoy)
+        self.has_flag(FLAG_POLYGON)
     }
 
     /// Returns true if the chain contains Arbitrum configuration.
     #[inline]
     pub const fn is_arbitrum(self) -> bool {
-        matches!(
-            self,
-            Self::Arbitrum
-                | Self::ArbitrumTestnet
-                | Self::ArbitrumGoerli
-                | Self::ArbitrumSepolia
-                | Self::ArbitrumNova
-        )
+        self.has_flag(FLAG_ARBITRUM)
     }
 
     /// Returns true if the chain contains Elastic Network configuration.
     #[inline]
     pub const fn is_elastic(self) -> bool {
-        matches!(
-            self,
-            Self::ZkSync
-                | Self::ZkSyncTestnet
-                | Self::Abstract
-                | Self::AbstractTestnet
-                | Self::Sophon
-                | Self::SophonTestnet
-                | Self::Lens
-                | Self::LensTestnet
-                | Self::BattleChainTestnet
-        )
+        self.has_flag(FLAG_ELASTIC)
     }
 
     /// Returns true if the chain contains Tempo configuration.
     #[inline]
     pub const fn is_tempo(self) -> bool {
-        matches!(self, Self::Tempo | Self::TempoModerato | Self::TempoTestnet | Self::TempoDevnet)
+        self.has_flag(FLAG_TEMPO)
     }
 
     /// Returns true if the chain uses a custom Sourcify-compatible API.
     #[inline]
     pub const fn is_custom_sourcify(self) -> bool {
-        matches!(self, Self::Tempo | Self::TempoModerato | Self::TempoTestnet)
+        self.has_flag(FLAG_CUSTOM_SOURCIFY)
     }
 
     /// Returns the chain's average blocktime, if applicable.
     #[inline]
     pub const fn average_blocktime_hint(self) -> Option<Duration> {
-        match self {
-            Self::Dev | Self::AnvilHardhat => Some(Duration::from_millis(200)),
-            Self::BattleChainTestnet => Some(Duration::from_millis(250)),
-            Self::Arbitrum
-            | Self::ArbitrumTestnet
-            | Self::ArbitrumGoerli
-            | Self::ArbitrumSepolia
-            | Self::ArbitrumNova
-            | Self::GravityAlphaMainnet
-            | Self::GravityAlphaTestnetSepolia
-            | Self::Gravity
-            | Self::Syndr
-            | Self::SyndrSepolia
-            | Self::Xai
-            | Self::XaiSepolia
-            | Self::ApeChain
-            | Self::Curtis
-            | Self::PlumeTestnet
-            | Self::Plume
-            | Self::SuperpositionTestnet
-            | Self::Superposition => Some(Duration::from_millis(260)),
-            Self::Monad | Self::MonadTestnet => Some(Duration::from_millis(400)),
-            Self::BinanceSmartChain | Self::BinanceSmartChainTestnet => {
-                Some(Duration::from_millis(450))
-            }
-            Self::TelosEvm
-            | Self::TelosEvmTestnet
-            | Self::CfxTestnet
-            | Self::Cfx
-            | Self::Radius
-            | Self::RadiusTestnet
-            | Self::Sei
-            | Self::SeiTestnet
-            | Self::Tempo
-            | Self::TempoModerato
-            | Self::TempoTestnet
-            | Self::TempoDevnet
-            | Self::ArcTestnet => Some(Duration::from_millis(500)),
-            Self::Degen => Some(Duration::from_millis(600)),
-            Self::StableMainnet
-            | Self::StableTestnet
-            | Self::Injective
-            | Self::InjectiveTestnet => Some(Duration::from_millis(700)),
-            Self::Odyssey
-            | Self::Plasma
-            | Self::PlasmaTestnet
-            | Self::Celo
-            | Self::CeloSepolia
-            | Self::Ink
-            | Self::InkSepolia
-            | Self::ZkSync
-            | Self::ZkSyncTestnet
-            | Self::OpBNBMainnet
-            | Self::OpBNBTestnet
-            | Self::AutonomysNovaTestnet
-            | Self::Kaia
-            | Self::MegaEth
-            | Self::MegaEthTestnet
-            | Self::Unichain
-            | Self::UnichainSepolia
-            | Self::Sonic
-            | Self::SonicTestnet
-            | Self::Abstract
-            | Self::AbstractTestnet
-            | Self::Sophon
-            | Self::SophonTestnet
-            | Self::Lens
-            | Self::LensTestnet
-            | Self::Katana
-            | Self::Fluent
-            | Self::FluentTestnet
-            | Self::SkaleBase
-            | Self::SkaleBaseSepoliaTestnet => Some(Duration::from_millis(1000)),
-            Self::Aurora | Self::AuroraTestnet => Some(Duration::from_millis(1100)),
-            Self::Fantom | Self::FantomTestnet => Some(Duration::from_millis(1200)),
-            Self::Flare => Some(Duration::from_millis(1800)),
-            Self::Evmos | Self::EvmosTestnet => Some(Duration::from_millis(1900)),
-            Self::Optimism
-            | Self::OptimismGoerli
-            | Self::OptimismSepolia
-            | Self::Bob
-            | Self::BobSepolia
-            | Self::Avalanche
-            | Self::AvalancheFuji
-            | Self::Base
-            | Self::BaseGoerli
-            | Self::BaseSepolia
-            | Self::Fraxtal
-            | Self::FraxtalTestnet
-            | Self::Blast
-            | Self::BlastSepolia
-            | Self::Mantle
-            | Self::MantleSepolia
-            | Self::HappychainTestnet
-            | Self::Viction
-            | Self::Zora
-            | Self::ZoraSepolia
-            | Self::Pgn
-            | Self::PgnSepolia
-            | Self::Mode
-            | Self::ModeSepolia
-            | Self::Immutable
-            | Self::ImmutableTestnet
-            | Self::Soneium
-            | Self::SoneiumMinatoTestnet
-            | Self::World
-            | Self::WorldSepolia
-            | Self::BerachainBepolia
-            | Self::Berachain
-            | Self::Hyperliquid
-            | Self::PolkadotTestnet
-            | Self::Kusama
-            | Self::Polkadot
-            | Self::Lisk => Some(Duration::from_millis(2000)),
-            Self::Polygon | Self::PolygonAmoy => Some(Duration::from_millis(2100)),
-            Self::XdcMainnet | Self::XdcTestnet => Some(Duration::from_millis(2400)),
-            Self::FlareCoston2 | Self::Story => Some(Duration::from_millis(2500)),
-            Self::Scroll
-            | Self::ScrollSepolia
-            | Self::Ronin
-            | Self::RoninTestnet
-            | Self::Core
-            | Self::Merlin
-            | Self::Bitlayer
-            | Self::FluentDevnet => Some(Duration::from_millis(3000)),
-            Self::Gnosis
-            | Self::Chiado
-            | Self::Shimmer
-            | Self::Elastos
-            | Self::Etherlink
-            | Self::EtherlinkShadownet
-            | Self::Iotex
-            | Self::Fuse => Some(Duration::from_millis(5000)),
-            Self::Oasis => Some(Duration::from_millis(5500)),
-            Self::Cronos | Self::CronosTestnet | Self::Canto | Self::CantoTestnet => {
-                Some(Duration::from_millis(5700))
-            }
-            Self::Crab | Self::Darwinia | Self::Koi | Self::Emerald | Self::Vana | Self::Zeta => {
-                Some(Duration::from_millis(6000))
-            }
-            Self::Moonbeam | Self::Moonriver | Self::Moonbase => Some(Duration::from_millis(6500)),
-            Self::MemeCore | Self::Formicarium | Self::Insectarium => {
-                Some(Duration::from_millis(7000))
-            }
-            Self::Pulsechain => Some(Duration::from_millis(10000)),
-            Self::PulsechainTestnet => Some(Duration::from_millis(10101)),
-            Self::Mainnet | Self::Taiko | Self::TaikoHekla | Self::SignetPecorino => {
-                Some(Duration::from_millis(12000))
-            }
-            Self::Acala
-            | Self::AcalaMandalaTestnet
-            | Self::AcalaTestnet
-            | Self::Karura
-            | Self::KaruraTestnet => Some(Duration::from_millis(12500)),
-            Self::Rsk | Self::RskTestnet => Some(Duration::from_millis(25000)),
-            Self::FilecoinMainnet | Self::FilecoinCalibrationTestnet => {
-                Some(Duration::from_millis(30000))
-            }
-            Self::Redbelly | Self::RedbellyTestnet => Some(Duration::from_millis(60000)),
-            _ => None,
-        }
+        let millis = self.data().average_blocktime_millis;
+        if millis == 0 { None } else { Some(Duration::from_millis(millis as u64)) }
     }
 
     /// Returns whether the chain implements EIP-1559.
     #[inline]
     pub const fn is_legacy(self) -> bool {
-        matches!(
-            self,
-            Self::OptimismKovan
-                | Self::Rsk
-                | Self::RskTestnet
-                | Self::Fantom
-                | Self::FantomTestnet
-                | Self::Emerald
-                | Self::EmeraldTestnet
-                | Self::Shimmer
-                | Self::Viction
-                | Self::Elastos
-                | Self::Treasure
-                | Self::TreasureTopaz
-                | Self::Sophon
-                | Self::SophonTestnet
-        )
+        self.has_flag(FLAG_LEGACY)
     }
 
     /// Returns whether the chain supports the Shanghai hardfork.
     #[inline]
     pub const fn supports_shanghai(self) -> bool {
-        matches!(
-            self,
-            Self::Mainnet
-                | Self::Goerli
-                | Self::Holesky
-                | Self::Hoodi
-                | Self::Sepolia
-                | Self::Odyssey
-                | Self::Optimism
-                | Self::OptimismGoerli
-                | Self::OptimismSepolia
-                | Self::Bob
-                | Self::BobSepolia
-                | Self::Arbitrum
-                | Self::ArbitrumSepolia
-                | Self::ArbitrumNova
-                | Self::Rsk
-                | Self::RskTestnet
-                | Self::Crab
-                | Self::Darwinia
-                | Self::Koi
-                | Self::BinanceSmartChain
-                | Self::BinanceSmartChainTestnet
-                | Self::Scroll
-                | Self::ScrollSepolia
-                | Self::CfxTestnet
-                | Self::Cfx
-                | Self::Gnosis
-                | Self::Polygon
-                | Self::Moonbeam
-                | Self::MoonbeamDev
-                | Self::Moonriver
-                | Self::Moonbase
-                | Self::AnvilHardhat
-                | Self::GravityAlphaMainnet
-                | Self::GravityAlphaTestnetSepolia
-                | Self::Gravity
-                | Self::Chiado
-                | Self::Avalanche
-                | Self::AvalancheFuji
-                | Self::Celo
-                | Self::CeloSepolia
-                | Self::Base
-                | Self::BaseGoerli
-                | Self::BaseSepolia
-                | Self::Syndr
-                | Self::SyndrSepolia
-                | Self::Shimmer
-                | Self::Ink
-                | Self::InkSepolia
-                | Self::Fraxtal
-                | Self::FraxtalTestnet
-                | Self::Blast
-                | Self::BlastSepolia
-                | Self::Linea
-                | Self::Mantle
-                | Self::MantleSepolia
-                | Self::Xai
-                | Self::XaiSepolia
-                | Self::HappychainTestnet
-                | Self::ZoraSepolia
-                | Self::Mode
-                | Self::ModeSepolia
-                | Self::Etherlink
-                | Self::EtherlinkShadownet
-                | Self::OpBNBMainnet
-                | Self::OpBNBTestnet
-                | Self::Radius
-                | Self::RadiusTestnet
-                | Self::Taiko
-                | Self::TaikoHekla
-                | Self::AutonomysNovaTestnet
-                | Self::Acala
-                | Self::AcalaMandalaTestnet
-                | Self::AcalaTestnet
-                | Self::Karura
-                | Self::KaruraTestnet
-                | Self::Pulsechain
-                | Self::PulsechainTestnet
-                | Self::Cannon
-                | Self::Immutable
-                | Self::ImmutableTestnet
-                | Self::Soneium
-                | Self::SoneiumMinatoTestnet
-                | Self::World
-                | Self::WorldSepolia
-                | Self::Iotex
-                | Self::Sei
-                | Self::StableMainnet
-                | Self::StableTestnet
-                | Self::MegaEth
-                | Self::MegaEthTestnet
-                | Self::Unichain
-                | Self::UnichainSepolia
-                | Self::SignetPecorino
-                | Self::ApeChain
-                | Self::Curtis
-                | Self::Sonic
-                | Self::Redbelly
-                | Self::RedbellyTestnet
-                | Self::PlumeTestnet
-                | Self::Plume
-                | Self::BerachainBepolia
-                | Self::Berachain
-                | Self::SuperpositionTestnet
-                | Self::Superposition
-                | Self::Monad
-                | Self::MonadTestnet
-                | Self::Corn
-                | Self::CornTestnet
-                | Self::PolkadotTestnet
-                | Self::Kusama
-                | Self::Polkadot
-                | Self::Injective
-                | Self::InjectiveTestnet
-                | Self::Katana
-                | Self::FluentDevnet
-                | Self::FluentTestnet
-                | Self::MemeCore
-                | Self::Formicarium
-                | Self::Insectarium
-                | Self::Tempo
-                | Self::TempoModerato
-                | Self::TempoTestnet
-                | Self::TempoDevnet
-                | Self::ArcTestnet
-                | Self::BattleChainTestnet
-        )
+        self.has_flag(FLAG_SUPPORTS_SHANGHAI)
     }
 
     /// Returns whether the chain is a testnet.
     #[inline]
     pub const fn is_testnet(self) -> bool {
-        matches!(
-            self,
-            Self::Morden
-                | Self::Ropsten
-                | Self::Rinkeby
-                | Self::Goerli
-                | Self::Kovan
-                | Self::Holesky
-                | Self::Hoodi
-                | Self::Sepolia
-                | Self::Odyssey
-                | Self::OptimismKovan
-                | Self::OptimismGoerli
-                | Self::OptimismSepolia
-                | Self::BobSepolia
-                | Self::ArbitrumTestnet
-                | Self::ArbitrumGoerli
-                | Self::ArbitrumSepolia
-                | Self::CronosTestnet
-                | Self::RskTestnet
-                | Self::TelosEvmTestnet
-                | Self::Koi
-                | Self::BinanceSmartChainTestnet
-                | Self::ScrollSepolia
-                | Self::CfxTestnet
-                | Self::PolygonAmoy
-                | Self::FantomTestnet
-                | Self::MoonbeamDev
-                | Self::Moonbase
-                | Self::Dev
-                | Self::AnvilHardhat
-                | Self::GravityAlphaTestnetSepolia
-                | Self::EvmosTestnet
-                | Self::PlasmaTestnet
-                | Self::EmeraldTestnet
-                | Self::FilecoinCalibrationTestnet
-                | Self::AvalancheFuji
-                | Self::CeloSepolia
-                | Self::AuroraTestnet
-                | Self::CantoTestnet
-                | Self::BaseGoerli
-                | Self::BaseSepolia
-                | Self::SyndrSepolia
-                | Self::Shimmer
-                | Self::InkSepolia
-                | Self::FraxtalTestnet
-                | Self::BlastSepolia
-                | Self::LineaGoerli
-                | Self::LineaSepolia
-                | Self::ZkSyncTestnet
-                | Self::MantleSepolia
-                | Self::XaiSepolia
-                | Self::HappychainTestnet
-                | Self::ZoraSepolia
-                | Self::PgnSepolia
-                | Self::ModeSepolia
-                | Self::EtherlinkShadownet
-                | Self::OpBNBTestnet
-                | Self::RoninTestnet
-                | Self::RadiusTestnet
-                | Self::TaikoHekla
-                | Self::AutonomysNovaTestnet
-                | Self::FlareCoston2
-                | Self::AcalaMandalaTestnet
-                | Self::AcalaTestnet
-                | Self::KaruraTestnet
-                | Self::PulsechainTestnet
-                | Self::Cannon
-                | Self::ImmutableTestnet
-                | Self::SoneiumMinatoTestnet
-                | Self::WorldSepolia
-                | Self::SeiTestnet
-                | Self::StableTestnet
-                | Self::MegaEthTestnet
-                | Self::XdcTestnet
-                | Self::UnichainSepolia
-                | Self::SignetPecorino
-                | Self::Curtis
-                | Self::SonicTestnet
-                | Self::RedbellyTestnet
-                | Self::PlumeTestnet
-                | Self::TreasureTopaz
-                | Self::BerachainBepolia
-                | Self::SuperpositionTestnet
-                | Self::MonadTestnet
-                | Self::AbstractTestnet
-                | Self::CornTestnet
-                | Self::SophonTestnet
-                | Self::PolkadotTestnet
-                | Self::LensTestnet
-                | Self::InjectiveTestnet
-                | Self::FluentDevnet
-                | Self::FluentTestnet
-                | Self::SkaleBaseSepoliaTestnet
-                | Self::Formicarium
-                | Self::Insectarium
-                | Self::TempoModerato
-                | Self::TempoTestnet
-                | Self::TempoDevnet
-                | Self::ArcTestnet
-                | Self::BattleChainTestnet
-                | Self::RobinhoodTestnet
-        )
+        self.has_flag(FLAG_TESTNET)
     }
 
     /// Returns the symbol of the chain's native currency.
     #[inline]
     pub const fn native_currency_symbol(self) -> Option<&'static str> {
-        match self {
-            Self::ApeChain | Self::Curtis => Some("APE"),
-            Self::BerachainBepolia | Self::Berachain => Some("BERA"),
-            Self::BinanceSmartChain
-            | Self::BinanceSmartChainTestnet
-            | Self::OpBNBMainnet
-            | Self::OpBNBTestnet => Some("BNB"),
-            Self::Merlin | Self::Bitlayer => Some("BTC"),
-            Self::Corn | Self::CornTestnet => Some("BTCN"),
-            Self::FlareCoston2 => Some("C2FLR"),
-            Self::Celo | Self::CeloSepolia => Some("CELO"),
-            Self::CfxTestnet | Self::Cfx => Some("CFX"),
-            Self::Core => Some("CORE"),
-            Self::Crab => Some("CRAB"),
-            Self::Degen => Some("DEGEN"),
-            Self::MoonbeamDev | Self::Moonbase => Some("DEV"),
-            Self::Polkadot => Some("DOT"),
-            Self::Mainnet
-            | Self::Morden
-            | Self::Ropsten
-            | Self::Rinkeby
-            | Self::Goerli
-            | Self::Kovan
-            | Self::Holesky
-            | Self::Sepolia
-            | Self::Optimism
-            | Self::OptimismSepolia
-            | Self::Bob
-            | Self::Arbitrum
-            | Self::ArbitrumNova
-            | Self::Scroll
-            | Self::ScrollSepolia
-            | Self::Base
-            | Self::BaseGoerli
-            | Self::BaseSepolia
-            | Self::Ink
-            | Self::Linea
-            | Self::ZkSync
-            | Self::ZkSyncTestnet
-            | Self::Taiko
-            | Self::TaikoHekla
-            | Self::MegaEth
-            | Self::MegaEthTestnet
-            | Self::Unichain
-            | Self::UnichainSepolia
-            | Self::SuperpositionTestnet
-            | Self::Superposition
-            | Self::Abstract
-            | Self::Katana
-            | Self::Lisk
-            | Self::BattleChainTestnet => Some("ETH"),
-            Self::Flare => Some("FLR"),
-            Self::GravityAlphaMainnet | Self::GravityAlphaTestnetSepolia | Self::Gravity => {
-                Some("G")
-            }
-            Self::Lens => Some("GHO"),
-            Self::Moonbeam => Some("GLMR"),
-            Self::LensTestnet => Some("GRASS"),
-            Self::HappychainTestnet => Some("HAPPY"),
-            Self::Hyperliquid => Some("HYPE"),
-            Self::Immutable => Some("IMX"),
-            Self::Injective | Self::InjectiveTestnet => Some("INJ"),
-            Self::Iotex => Some("IOTX"),
-            Self::Story => Some("IP"),
-            Self::Kaia => Some("KAIA"),
-            Self::Koi => Some("KRING"),
-            Self::Kusama => Some("KSM"),
-            Self::MemeCore => Some("M"),
-            Self::Treasure | Self::TreasureTopaz => Some("MAGIC"),
-            Self::Mantle | Self::MantleSepolia => Some("MNT"),
-            Self::Monad | Self::MonadTestnet => Some("MON"),
-            Self::Moonriver => Some("MOVR"),
-            Self::PolkadotTestnet => Some("PAS"),
-            Self::Pulsechain | Self::PulsechainTestnet => Some("PLS"),
-            Self::PlumeTestnet | Self::Plume => Some("PLUME"),
-            Self::Polygon | Self::PolygonAmoy => Some("POL"),
-            Self::Redbelly | Self::RedbellyTestnet => Some("RBNT"),
-            Self::Rsk => Some("RBTC"),
-            Self::Darwinia => Some("RING"),
-            Self::Ronin | Self::RoninTestnet => Some("RON"),
-            Self::Radius | Self::RadiusTestnet => Some("RUSD"),
-            Self::Sonic | Self::SonicTestnet => Some("S"),
-            Self::Sei | Self::SeiTestnet => Some("SEI"),
-            Self::Shimmer => Some("SMR"),
-            Self::Sophon | Self::SophonTestnet => Some("SOPH"),
-            Self::TelosEvm | Self::TelosEvmTestnet => Some("TLOS"),
-            Self::XdcTestnet => Some("TXDC"),
-            Self::Tempo | Self::TempoModerato | Self::TempoTestnet | Self::TempoDevnet => {
-                Some("USD")
-            }
-            Self::ArcTestnet => Some("USDC"),
-            Self::SignetPecorino => Some("USDS"),
-            Self::StableMainnet | Self::StableTestnet => Some("USDT0"),
-            Self::Vana => Some("VANA"),
-            Self::World | Self::WorldSepolia => Some("WRLD"),
-            Self::Xai | Self::XaiSepolia => Some("XAI"),
-            Self::XdcMainnet => Some("XDC"),
-            Self::Plasma | Self::PlasmaTestnet => Some("XPL"),
-            Self::Etherlink | Self::EtherlinkShadownet => Some("XTZ"),
-            Self::Zeta => Some("ZETA"),
-            Self::ImmutableTestnet => Some("tIMX"),
-            Self::Formicarium | Self::Insectarium => Some("tM"),
-            Self::RskTestnet => Some("tRBTC"),
-            _ => None,
-        }
+        self.data().native_currency_symbol.get()
     }
 
     /// Returns the chain's blockchain explorer and its API URLs.
     #[inline]
     pub const fn etherscan_urls(self) -> Option<(&'static str, &'static str)> {
-        match self {
-            Self::Mainnet => {
-                Some(("https://api.etherscan.io/v2/api?chainid=1", "https://etherscan.io"))
-            }
-            Self::Holesky => Some((
-                "https://api.etherscan.io/v2/api?chainid=17000",
-                "https://holesky.etherscan.io",
-            )),
-            Self::Hoodi => Some((
-                "https://api.etherscan.io/v2/api?chainid=560048",
-                "https://hoodi.etherscan.io",
-            )),
-            Self::Sepolia => Some((
-                "https://api.etherscan.io/v2/api?chainid=11155111",
-                "https://sepolia.etherscan.io",
-            )),
-            Self::Odyssey => Some((
-                "https://odyssey-explorer.ithaca.xyz/api",
-                "https://odyssey-explorer.ithaca.xyz",
-            )),
-            Self::Optimism => Some((
-                "https://api.etherscan.io/v2/api?chainid=10",
-                "https://optimistic.etherscan.io",
-            )),
-            Self::OptimismSepolia => Some((
-                "https://api.etherscan.io/v2/api?chainid=11155420",
-                "https://sepolia-optimism.etherscan.io",
-            )),
-            Self::Bob => Some(("https://explorer.gobob.xyz/api", "https://explorer.gobob.xyz")),
-            Self::BobSepolia => Some((
-                "https://bob-sepolia.explorer.gobob.xyz/api",
-                "https://bob-sepolia.explorer.gobob.xyz",
-            )),
-            Self::Arbitrum => {
-                Some(("https://api.etherscan.io/v2/api?chainid=42161", "https://arbiscan.io"))
-            }
-            Self::ArbitrumSepolia => Some((
-                "https://api.etherscan.io/v2/api?chainid=421614",
-                "https://sepolia.arbiscan.io",
-            )),
-            Self::ArbitrumNova => {
-                Some(("https://api.etherscan.io/v2/api?chainid=42170", "https://nova.arbiscan.io"))
-            }
-            Self::Cronos => {
-                Some(("https://api.etherscan.io/v2/api?chainid=25", "https://cronoscan.com"))
-            }
-            Self::Rsk => Some((
-                "https://blockscout.com/rsk/mainnet/api",
-                "https://blockscout.com/rsk/mainnet",
-            )),
-            Self::RskTestnet => Some((
-                "https://rootstock-testnet.blockscout.com/api",
-                "https://rootstock-testnet.blockscout.com",
-            )),
-            Self::TelosEvm => Some(("https://api.teloscan.io/api", "https://teloscan.io")),
-            Self::TelosEvmTestnet => {
-                Some(("https://api.testnet.teloscan.io/api", "https://testnet.teloscan.io"))
-            }
-            Self::Crab => Some((
-                "https://crab-scan.darwinia.network/api",
-                "https://crab-scan.darwinia.network",
-            )),
-            Self::Darwinia => {
-                Some(("https://explorer.darwinia.network/api", "https://explorer.darwinia.network"))
-            }
-            Self::BinanceSmartChain => {
-                Some(("https://api.etherscan.io/v2/api?chainid=56", "https://bscscan.com"))
-            }
-            Self::BinanceSmartChainTestnet => {
-                Some(("https://api.etherscan.io/v2/api?chainid=97", "https://testnet.bscscan.com"))
-            }
-            Self::Scroll => {
-                Some(("https://api.etherscan.io/v2/api?chainid=534352", "https://scrollscan.com"))
-            }
-            Self::ScrollSepolia => Some((
-                "https://api.etherscan.io/v2/api?chainid=534351",
-                "https://sepolia.scrollscan.com",
-            )),
-            Self::Metis => Some((
-                "https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan",
-                "https://explorer.metis.io",
-            )),
-            Self::CfxTestnet => Some((
-                "https://evmapi-testnet.confluxscan.org/api",
-                "https://evmtestnet.confluxscan.org",
-            )),
-            Self::Cfx => {
-                Some(("https://evmapi.confluxscan.org/api", "https://evm.confluxscan.org"))
-            }
-            Self::Gnosis => {
-                Some(("https://api.etherscan.io/v2/api?chainid=100", "https://gnosisscan.io"))
-            }
-            Self::Polygon => {
-                Some(("https://api.etherscan.io/v2/api?chainid=137", "https://polygonscan.com"))
-            }
-            Self::PolygonAmoy => Some((
-                "https://api.etherscan.io/v2/api?chainid=80002",
-                "https://amoy.polygonscan.com",
-            )),
-            Self::Moonbeam => Some((
-                "https://api.etherscan.io/v2/api?chainid=1284",
-                "https://moonbeam.moonscan.io",
-            )),
-            Self::Moonriver => Some((
-                "https://api.etherscan.io/v2/api?chainid=1285",
-                "https://moonriver.moonscan.io",
-            )),
-            Self::Moonbase => Some((
-                "https://api.etherscan.io/v2/api?chainid=1287",
-                "https://moonbase.moonscan.io",
-            )),
-            Self::GravityAlphaMainnet => {
-                Some(("https://explorer.gravity.xyz/api", "https://explorer.gravity.xyz"))
-            }
-            Self::GravityAlphaTestnetSepolia => Some((
-                "https://explorer-sepolia.gravity.xyz/api",
-                "https://explorer-sepolia.gravity.xyz",
-            )),
-            Self::Gravity => Some((
-                "https://mainnet-explorer.gravity.xyz/api",
-                "https://mainnet-explorer.gravity.xyz",
-            )),
-            Self::Plasma => {
-                Some(("https://api.etherscan.io/v2/api?chainid=9745", "https://plasmascan.to"))
-            }
-            Self::PlasmaTestnet => Some((
-                "https://api.etherscan.io/v2/api?chainid=9746",
-                "https://testnet.plasmascan.to",
-            )),
-            Self::Chiado => Some((
-                "https://gnosis-chiado.blockscout.com/api",
-                "https://gnosis-chiado.blockscout.com",
-            )),
-            Self::Emerald => Some((
-                "https://explorer.emerald.oasis.dev/api",
-                "https://explorer.emerald.oasis.dev",
-            )),
-            Self::EmeraldTestnet => Some((
-                "https://testnet.explorer.emerald.oasis.dev/api",
-                "https://testnet.explorer.emerald.oasis.dev",
-            )),
-            Self::FilecoinCalibrationTestnet => Some((
-                "https://api.calibration.node.glif.io/rpc/v1",
-                "https://calibration.filfox.info/en",
-            )),
-            Self::Avalanche => {
-                Some(("https://api.etherscan.io/v2/api?chainid=43114", "https://snowscan.xyz"))
-            }
-            Self::AvalancheFuji => Some((
-                "https://api.etherscan.io/v2/api?chainid=43113",
-                "https://testnet.snowscan.xyz",
-            )),
-            Self::Celo => {
-                Some(("https://api.etherscan.io/v2/api?chainid=42220", "https://celoscan.io"))
-            }
-            Self::CeloSepolia => Some((
-                "https://api.etherscan.io/v2/api?chainid=11142220",
-                "https://sepolia.celoscan.io",
-            )),
-            Self::Aurora => Some(("https://api.aurorascan.dev/api", "https://aurorascan.dev")),
-            Self::AuroraTestnet => {
-                Some(("https://testnet.aurorascan.dev/api", "https://testnet.aurorascan.dev"))
-            }
-            Self::Boba => Some(("https://api.bobascan.com/api", "https://bobascan.com")),
-            Self::Base => {
-                Some(("https://api.etherscan.io/v2/api?chainid=8453", "https://basescan.org"))
-            }
-            Self::BaseSepolia => Some((
-                "https://api.etherscan.io/v2/api?chainid=84532",
-                "https://sepolia.basescan.org",
-            )),
-            Self::Syndr => Some(("https://explorer.syndr.com/api", "https://explorer.syndr.com")),
-            Self::SyndrSepolia => Some((
-                "https://sepolia-explorer.syndr.com/api",
-                "https://sepolia-explorer.syndr.com",
-            )),
-            Self::Shimmer => Some((
-                "https://explorer.evm.shimmer.network/api",
-                "https://explorer.evm.shimmer.network",
-            )),
-            Self::Ink => {
-                Some(("https://explorer.inkonchain.com/api/v2", "https://explorer.inkonchain.com"))
-            }
-            Self::InkSepolia => Some((
-                "https://explorer-sepolia.inkonchain.com/api/v2",
-                "https://explorer-sepolia.inkonchain.com",
-            )),
-            Self::Fraxtal => {
-                Some(("https://api.etherscan.io/v2/api?chainid=252", "https://fraxscan.com"))
-            }
-            Self::FraxtalTestnet => Some((
-                "https://api.etherscan.io/v2/api?chainid=2522",
-                "https://holesky.fraxscan.com",
-            )),
-            Self::Blast => {
-                Some(("https://api.etherscan.io/v2/api?chainid=81457", "https://blastscan.io"))
-            }
-            Self::BlastSepolia => Some((
-                "https://api.etherscan.io/v2/api?chainid=168587773",
-                "https://sepolia.blastscan.io",
-            )),
-            Self::Linea => {
-                Some(("https://api.etherscan.io/v2/api?chainid=59144", "https://lineascan.build"))
-            }
-            Self::LineaSepolia => Some((
-                "https://api.etherscan.io/v2/api?chainid=59141",
-                "https://sepolia.lineascan.build",
-            )),
-            Self::ZkSync => Some((
-                "https://block-explorer-api.mainnet.zksync.io/api",
-                "https://explorer.zksync.io",
-            )),
-            Self::ZkSyncTestnet => Some((
-                "https://block-explorer-api.sepolia.zksync.dev/api",
-                "https://sepolia.explorer.zksync.io",
-            )),
-            Self::Mantle => {
-                Some(("https://api.etherscan.io/v2/api?chainid=5000", "https://mantlescan.xyz"))
-            }
-            Self::MantleSepolia => Some((
-                "https://api.etherscan.io/v2/api?chainid=5003",
-                "https://sepolia.mantlescan.xyz",
-            )),
-            Self::Xai => {
-                Some(("https://api.etherscan.io/v2/api?chainid=660279", "https://xaiscan.io"))
-            }
-            Self::XaiSepolia => Some((
-                "https://api.etherscan.io/v2/api?chainid=37714555429",
-                "https://sepolia.xaiscan.io",
-            )),
-            Self::HappychainTestnet => Some((
-                "https://explorer.testnet.happy.tech/api",
-                "https://explorer.testnet.happy.tech",
-            )),
-            Self::Viction => Some(("https://www.vicscan.xyz/api", "https://www.vicscan.xyz")),
-            Self::Zora => {
-                Some(("https://explorer.zora.energy/api", "https://explorer.zora.energy"))
-            }
-            Self::ZoraSepolia => Some((
-                "https://sepolia.explorer.zora.energy/api",
-                "https://sepolia.explorer.zora.energy",
-            )),
-            Self::Mode => {
-                Some(("https://explorer.mode.network/api", "https://explorer.mode.network"))
-            }
-            Self::ModeSepolia => Some((
-                "https://sepolia.explorer.mode.network/api",
-                "https://sepolia.explorer.mode.network",
-            )),
-            Self::Elastos => Some(("https://esc.elastos.io/api", "https://esc.elastos.io")),
-            Self::Etherlink => {
-                Some(("https://explorer.etherlink.com/api", "https://explorer.etherlink.com"))
-            }
-            Self::EtherlinkShadownet => Some((
-                "https://shadownet.explorer.etherlink.com/api",
-                "https://shadownet.explorer.etherlink.com",
-            )),
-            Self::Degen => Some(("https://explorer.degen.tips/api", "https://explorer.degen.tips")),
-            Self::OpBNBMainnet => {
-                Some(("https://api.etherscan.io/v2/api?chainid=204", "https://opbnb.bscscan.com"))
-            }
-            Self::OpBNBTestnet => Some((
-                "https://api.etherscan.io/v2/api?chainid=5611",
-                "https://opbnb-testnet.bscscan.com",
-            )),
-            Self::Ronin => {
-                Some(("https://skynet-api.roninchain.com/ronin", "https://app.roninchain.com"))
-            }
-            Self::RoninTestnet => Some((
-                "https://api-gateway.skymavis.com/rpc/testnet",
-                "https://saigon-explorer.roninchain.com",
-            )),
-            Self::Radius => {
-                Some(("https://network.radiustech.xyz/api", "https://network.radiustech.xyz"))
-            }
-            Self::RadiusTestnet => {
-                Some(("https://testnet.radiustech.xyz/api", "https://testnet.radiustech.xyz"))
-            }
-            Self::Taiko => {
-                Some(("https://api.etherscan.io/v2/api?chainid=167000", "https://taikoscan.io"))
-            }
-            Self::TaikoHekla => Some((
-                "https://api.etherscan.io/v2/api?chainid=167009",
-                "https://hekla.taikoscan.io",
-            )),
-            Self::Flare => Some((
-                "https://flare-explorer.flare.network/api",
-                "https://flare-explorer.flare.network",
-            )),
-            Self::FlareCoston2 => Some((
-                "https://coston2-explorer.flare.network/api",
-                "https://coston2-explorer.flare.network",
-            )),
-            Self::Acala => {
-                Some(("https://blockscout.acala.network/api", "https://blockscout.acala.network"))
-            }
-            Self::AcalaMandalaTestnet => Some((
-                "https://blockscout.mandala.aca-staging.network/api",
-                "https://blockscout.mandala.aca-staging.network",
-            )),
-            Self::Karura => {
-                Some(("https://blockscout.karura.network/api", "https://blockscout.karura.network"))
-            }
-            Self::Pulsechain => {
-                Some(("https://api.scan.pulsechain.com", "https://scan.pulsechain.com"))
-            }
-            Self::PulsechainTestnet => Some((
-                "https://api.scan.v4.testnet.pulsechain.com",
-                "https://scan.v4.testnet.pulsechain.com",
-            )),
-            Self::Immutable => {
-                Some(("https://explorer.immutable.com/api", "https://explorer.immutable.com"))
-            }
-            Self::ImmutableTestnet => Some((
-                "https://explorer.testnet.immutable.com/api",
-                "https://explorer.testnet.immutable.com",
-            )),
-            Self::Soneium => {
-                Some(("https://soneium.blockscout.com/api", "https://soneium.blockscout.com"))
-            }
-            Self::SoneiumMinatoTestnet => Some((
-                "https://soneium-minato.blockscout.com/api",
-                "https://soneium-minato.blockscout.com",
-            )),
-            Self::World => {
-                Some(("https://api.etherscan.io/v2/api?chainid=480", "https://worldscan.org"))
-            }
-            Self::WorldSepolia => Some((
-                "https://api.etherscan.io/v2/api?chainid=4801",
-                "https://sepolia.worldscan.org",
-            )),
-            Self::Core => Some(("https://openapi.coredao.org/api", "https://scan.coredao.org")),
-            Self::Merlin => {
-                Some(("https://scan.merlinchain.io/api", "https://scan.merlinchain.io"))
-            }
-            Self::Bitlayer => Some(("https://api.btrscan.com/scan/api", "https://www.btrscan.com")),
-            Self::Vana => Some(("https://api.vanascan.io/api", "https://vanascan.io")),
-            Self::Zeta => {
-                Some(("https://zetachain.blockscout.com/api", "https://zetachain.blockscout.com"))
-            }
-            Self::Kaia => Some(("https://mainnet-oapi.kaiascan.io/api", "https://kaiascan.io")),
-            Self::Story => Some(("https://www.storyscan.xyz/api", "https://www.storyscan.xyz")),
-            Self::Sei => {
-                Some(("https://api.etherscan.io/v2/api?chainid=1329", "https://seiscan.io"))
-            }
-            Self::SeiTestnet => {
-                Some(("https://api.etherscan.io/v2/api?chainid=1328", "https://testnet.seiscan.io"))
-            }
-            Self::StableMainnet => {
-                Some(("https://api.etherscan.io/v2/api?chainid=988", "https://stablescan.xyz"))
-            }
-            Self::StableTestnet => Some((
-                "https://api.etherscan.io/v2/api?chainid=2201",
-                "https://testnet.stablescan.xyz",
-            )),
-            Self::MegaEth => {
-                Some(("https://api.etherscan.io/v2/api?chainid=4326", "https://mega.etherscan.io"))
-            }
-            Self::MegaEthTestnet => Some((
-                "https://api.etherscan.io/v2/api?chainid=6343",
-                "https://megaeth-testnet-v2.blockscout.com",
-            )),
-            Self::XdcMainnet => {
-                Some(("https://api.etherscan.io/v2/api?chainid=50", "https://xdcscan.com"))
-            }
-            Self::XdcTestnet => {
-                Some(("https://api.etherscan.io/v2/api?chainid=51", "https://testnet.xdcscan.com"))
-            }
-            Self::Unichain => {
-                Some(("https://api.etherscan.io/v2/api?chainid=130", "https://uniscan.xyz"))
-            }
-            Self::UnichainSepolia => Some((
-                "https://api.etherscan.io/v2/api?chainid=1301",
-                "https://sepolia.uniscan.xyz",
-            )),
-            Self::SignetPecorino => Some((
-                "https://explorer.pecorino.signet.sh/api",
-                "https://explorer.pecorino.signet.sh",
-            )),
-            Self::ApeChain => {
-                Some(("https://api.etherscan.io/v2/api?chainid=33139", "https://apescan.io"))
-            }
-            Self::Curtis => {
-                Some(("https://api.etherscan.io/v2/api?chainid=33111", "https://curtis.apescan.io"))
-            }
-            Self::Sonic => {
-                Some(("https://api.etherscan.io/v2/api?chainid=146", "https://sonicscan.org"))
-            }
-            Self::SonicTestnet => Some((
-                "https://api.etherscan.io/v2/api?chainid=14601",
-                "https://testnet.sonicscan.org",
-            )),
-            Self::Redbelly => Some((
-                "https://api.routescan.io/v2/network/mainnet/evm/151/etherscan",
-                "https://redbelly.routescan.io",
-            )),
-            Self::RedbellyTestnet => Some((
-                "https://api.routescan.io/v2/network/testnet/evm/153/etherscan",
-                "https://redbelly.testnet.routescan.io",
-            )),
-            Self::PlumeTestnet => Some((
-                "https://testnet-explorer.plume.org/api",
-                "https://testnet-explorer.plume.org",
-            )),
-            Self::Plume => Some(("https://explorer.plume.org/api", "https://explorer.plume.org")),
-            Self::BerachainBepolia => Some((
-                "https://api.etherscan.io/v2/api?chainid=80069",
-                "https://testnet.berascan.com",
-            )),
-            Self::Berachain => {
-                Some(("https://api.etherscan.io/v2/api?chainid=80094", "https://berascan.com"))
-            }
-            Self::SuperpositionTestnet => Some((
-                "https://testnet-explorer.superposition.so/api",
-                "https://testnet-explorer.superposition.so",
-            )),
-            Self::Superposition => {
-                Some(("https://explorer.superposition.so/api", "https://explorer.superposition.so"))
-            }
-            Self::Monad => {
-                Some(("https://api.etherscan.io/v2/api?chainid=143", "https://monadscan.com"))
-            }
-            Self::MonadTestnet => Some((
-                "https://api.etherscan.io/v2/api?chainid=10143",
-                "https://testnet.monadscan.com",
-            )),
-            Self::Hyperliquid => {
-                Some(("https://api.etherscan.io/v2/api?chainid=999", "https://hyperevmscan.io"))
-            }
-            Self::Abstract => {
-                Some(("https://api.etherscan.io/v2/api?chainid=2741", "https://abscan.org"))
-            }
-            Self::AbstractTestnet => Some((
-                "https://api.etherscan.io/v2/api?chainid=11124",
-                "https://sepolia.abscan.org",
-            )),
-            Self::Corn => Some((
-                "https://api.routescan.io/v2/network/mainnet/evm/21000000/etherscan/api",
-                "https://cornscan.io",
-            )),
-            Self::CornTestnet => Some((
-                "https://api.routescan.io/v2/network/testnet/evm/21000001/etherscan/api",
-                "https://testnet.cornscan.io",
-            )),
-            Self::Sophon => {
-                Some(("https://api.etherscan.io/v2/api?chainid=50104", "https://sophscan.xyz"))
-            }
-            Self::SophonTestnet => Some((
-                "https://api.etherscan.io/v2/api?chainid=531050104",
-                "https://testnet.sophscan.xyz",
-            )),
-            Self::PolkadotTestnet => Some((
-                "https://blockscout-testnet.polkadot.io/api",
-                "https://blockscout-testnet.polkadot.io",
-            )),
-            Self::Kusama => Some((
-                "https://blockscout-kusama.polkadot.io/api",
-                "https://blockscout-kusama.polkadot.io",
-            )),
-            Self::Polkadot => {
-                Some(("https://blockscout.polkadot.io/api", "https://blockscout.polkadot.io"))
-            }
-            Self::Lens => Some(("https://explorer-api.lens.xyz", "https://explorer.lens.xyz")),
-            Self::LensTestnet => Some((
-                "https://block-explorer-api.staging.lens.zksync.dev",
-                "https://explorer.testnet.lens.xyz",
-            )),
-            Self::Injective => Some((
-                "https://blockscout-api.injective.network/api",
-                "https://blockscout.injective.network",
-            )),
-            Self::InjectiveTestnet => Some((
-                "https://testnet.blockscout-api.injective.network/api",
-                "https://testnet.blockscout.injective.network",
-            )),
-            Self::Katana => {
-                Some(("https://api.etherscan.io/v2/api?chainid=747474", "https://katanascan.com"))
-            }
-            Self::Lisk => Some(("https://blockscout.lisk.com/api", "https://blockscout.lisk.com")),
-            Self::Fuse => Some(("https://explorer.fuse.io/api", "https://explorer.fuse.io")),
-            Self::Fluent => Some(("https://api.fluentscan.xyz/api", "https://fluentscan.xyz")),
-            Self::FluentDevnet => {
-                Some(("https://api-devnet.fluentscan.xyz/api", "https://devnet.fluentscan.xyz"))
-            }
-            Self::FluentTestnet => {
-                Some(("https://api-testnet.fluentscan.xyz/api", "https://testnet.fluentscan.xyz"))
-            }
-            Self::SkaleBase => Some((
-                "https://skale-base-explorer.skalenodes.com/api",
-                "https://skale-base-explorer.skalenodes.com",
-            )),
-            Self::SkaleBaseSepoliaTestnet => Some((
-                "https://base-sepolia-testnet-explorer.skalenodes.com/api",
-                "https://base-sepolia-testnet-explorer.skalenodes.com",
-            )),
-            Self::MemeCore => {
-                Some(("https://api.etherscan.io/v2/api?chainid=4352", "https://memecorescan.io"))
-            }
-            Self::Formicarium => Some((
-                "https://api.etherscan.io/v2/api?chainid=43521",
-                "https://formicarium.memecorescan.io",
-            )),
-            Self::Insectarium => Some((
-                "https://insectarium.blockscout.memecore.com/api",
-                "https://insectarium.blockscout.memecore.com",
-            )),
-            Self::Tempo => Some(("https://contracts.tempo.xyz", "https://explore.tempo.xyz")),
-            Self::TempoModerato => {
-                Some(("https://contracts.tempo.xyz", "https://explore.moderato.tempo.xyz"))
-            }
-            Self::TempoTestnet => {
-                Some(("https://contracts.tempo.xyz", "https://explore.andantino.tempo.xyz"))
-            }
-            Self::ArcTestnet => {
-                Some(("https://testnet.arcscan.app/api", "https://testnet.arcscan.app"))
-            }
-            Self::BattleChainTestnet => Some((
-                "https://block-explorer-api.testnet.battlechain.com/api",
-                "https://explorer.testnet.battlechain.com",
-            )),
-            Self::RobinhoodTestnet => Some((
-                "https://explorer.testnet.chain.robinhood.com/api",
-                "https://explorer.testnet.chain.robinhood.com",
-            )),
+        let data = self.data();
+        match (data.etherscan_api_url.get(), data.etherscan_base_url.get()) {
+            (Some(api), Some(base)) => Some((api, base)),
             _ => None,
         }
     }
@@ -2252,147 +2793,7 @@ impl NamedChain {
     /// Returns the chain's blockchain explorer API key environment variable name.
     #[inline]
     pub const fn etherscan_api_key_name(self) -> Option<&'static str> {
-        match self {
-            Self::BerachainBepolia | Self::Berachain => Some("BERASCAN_API_KEY"),
-            Self::Bitlayer => Some("BITLAYERSCAN_API_KEY"),
-            Self::Crab
-            | Self::Darwinia
-            | Self::Koi
-            | Self::CeloSepolia
-            | Self::Canto
-            | Self::CantoTestnet
-            | Self::Shimmer
-            | Self::Ink
-            | Self::InkSepolia
-            | Self::Zora
-            | Self::ZoraSepolia
-            | Self::Pgn
-            | Self::PgnSepolia
-            | Self::Mode
-            | Self::ModeSepolia
-            | Self::Etherlink
-            | Self::EtherlinkShadownet
-            | Self::Flare
-            | Self::FlareCoston2
-            | Self::Acala
-            | Self::AcalaMandalaTestnet
-            | Self::AcalaTestnet
-            | Self::Karura
-            | Self::KaruraTestnet
-            | Self::Immutable
-            | Self::ImmutableTestnet
-            | Self::Soneium
-            | Self::SoneiumMinatoTestnet
-            | Self::World
-            | Self::WorldSepolia
-            | Self::Vana
-            | Self::Story
-            | Self::SignetPecorino
-            | Self::Curtis
-            | Self::SuperpositionTestnet
-            | Self::Superposition
-            | Self::PolkadotTestnet
-            | Self::Kusama
-            | Self::Polkadot
-            | Self::Injective
-            | Self::InjectiveTestnet
-            | Self::Lisk
-            | Self::Fuse
-            | Self::SkaleBase
-            | Self::SkaleBaseSepoliaTestnet
-            | Self::ArcTestnet => Some("BLOCKSCOUT_API_KEY"),
-            Self::Boba => Some("BOBASCAN_API_KEY"),
-            Self::Core => Some("CORESCAN_API_KEY"),
-            Self::Mainnet
-            | Self::Morden
-            | Self::Ropsten
-            | Self::Rinkeby
-            | Self::Goerli
-            | Self::Kovan
-            | Self::Holesky
-            | Self::Hoodi
-            | Self::Sepolia
-            | Self::Optimism
-            | Self::OptimismKovan
-            | Self::OptimismGoerli
-            | Self::OptimismSepolia
-            | Self::Arbitrum
-            | Self::ArbitrumTestnet
-            | Self::ArbitrumGoerli
-            | Self::ArbitrumSepolia
-            | Self::ArbitrumNova
-            | Self::Cronos
-            | Self::CronosTestnet
-            | Self::BinanceSmartChain
-            | Self::BinanceSmartChainTestnet
-            | Self::Scroll
-            | Self::ScrollSepolia
-            | Self::Gnosis
-            | Self::Polygon
-            | Self::PolygonAmoy
-            | Self::Plasma
-            | Self::PlasmaTestnet
-            | Self::Avalanche
-            | Self::AvalancheFuji
-            | Self::Celo
-            | Self::Aurora
-            | Self::AuroraTestnet
-            | Self::Base
-            | Self::BaseGoerli
-            | Self::BaseSepolia
-            | Self::Syndr
-            | Self::SyndrSepolia
-            | Self::Fraxtal
-            | Self::FraxtalTestnet
-            | Self::Blast
-            | Self::BlastSepolia
-            | Self::Linea
-            | Self::LineaSepolia
-            | Self::ZkSync
-            | Self::ZkSyncTestnet
-            | Self::Mantle
-            | Self::MantleSepolia
-            | Self::Xai
-            | Self::XaiSepolia
-            | Self::OpBNBMainnet
-            | Self::OpBNBTestnet
-            | Self::Taiko
-            | Self::TaikoHekla
-            | Self::Sei
-            | Self::SeiTestnet
-            | Self::StableMainnet
-            | Self::StableTestnet
-            | Self::MegaEth
-            | Self::MegaEthTestnet
-            | Self::XdcMainnet
-            | Self::XdcTestnet
-            | Self::Unichain
-            | Self::UnichainSepolia
-            | Self::ApeChain
-            | Self::Sonic
-            | Self::SonicTestnet
-            | Self::Monad
-            | Self::MonadTestnet
-            | Self::Hyperliquid
-            | Self::Abstract
-            | Self::AbstractTestnet
-            | Self::Sophon
-            | Self::SophonTestnet
-            | Self::Katana
-            | Self::MemeCore
-            | Self::Formicarium => Some("ETHERSCAN_API_KEY"),
-            Self::Fantom | Self::FantomTestnet => Some("FTMSCAN_API_KEY"),
-            Self::Kaia => Some("KAIASCAN_API_KEY"),
-            Self::Merlin => Some("MERLINSCAN_API_KEY"),
-            Self::Moonbeam | Self::MoonbeamDev | Self::Moonriver | Self::Moonbase => {
-                Some("MOONSCAN_API_KEY")
-            }
-            Self::Redbelly | Self::RedbellyTestnet | Self::Corn | Self::CornTestnet => {
-                Some("ROUTESCAN_API_KEY")
-            }
-            Self::Zeta => Some("ZETASCAN_API_KEY"),
-            _ => None,
-        }
+        self.data().etherscan_api_key_name.get()
     }
 
     /// Returns the chain's blockchain explorer API key from the environment.
@@ -2431,275 +2832,17 @@ impl NamedChain {
     /// Returns the address of the most popular wrapped native token address.
     #[inline]
     pub const fn wrapped_native_token(self) -> Option<Address> {
-        match self {
-            Self::Mainnet => Some(address!("0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2")),
-            Self::Optimism => Some(address!("0x4200000000000000000000000000000000000006")),
-            Self::Arbitrum => Some(address!("0x82aF49447D8a07e3bd95BD0d56f35241523fBab1")),
-            Self::Rsk => Some(address!("0x967F8799aF07dF1534d48A95a5C9FEBE92c53AE0")),
-            Self::BinanceSmartChain => Some(address!("0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c")),
-            Self::Scroll => Some(address!("0x5300000000000000000000000000000000000004")),
-            Self::Gnosis => Some(address!("0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d")),
-            Self::Polygon => Some(address!("0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270")),
-            Self::Fantom => Some(address!("0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83")),
-            Self::Avalanche => Some(address!("0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7")),
-            Self::Base => Some(address!("0x4200000000000000000000000000000000000006")),
-            Self::Blast => Some(address!("0x4300000000000000000000000000000000000004")),
-            Self::Linea => Some(address!("0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f")),
-            Self::ZkSync => Some(address!("0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91")),
-            Self::Mantle => Some(address!("0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111")),
-            Self::OpBNBMainnet => Some(address!("0x4200000000000000000000000000000000000006")),
-            Self::Taiko => Some(address!("0xA51894664A773981C6C112C43ce576f315d5b1B6")),
-            Self::Iotex => Some(address!("0xA00744882684C3e4747faEFD68D283eA44099D03")),
-            Self::Core => Some(address!("0x40375C92d9FAf44d2f9db9Bd9ba41a3317a2404f")),
-            Self::Merlin => Some(address!("0xF6D226f9Dc15d9bB51182815b320D3fBE324e1bA")),
-            Self::Bitlayer => Some(address!("0xfF204e2681A6fA0e2C3FaDe68a1B28fb90E4Fc5F")),
-            Self::Vana => Some(address!("0x00EDdD9621Fb08436d0331c149D1690909a5906d")),
-            Self::Zeta => Some(address!("0x5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf")),
-            Self::Kaia => Some(address!("0x19Aac5f612f524B754CA7e7c41cbFa2E981A4432")),
-            Self::Story => Some(address!("0x1514000000000000000000000000000000000000")),
-            Self::Sei => Some(address!("0xE30feDd158A2e3b13e9badaeABaFc5516e95e8C7")),
-            Self::ApeChain => Some(address!("0x48b62137EdfA95a428D35C09E44256a739F6B557")),
-            Self::Sonic => Some(address!("0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38")),
-            Self::Redbelly => Some(address!("0x6ed1F491e2d31536D6561f6bdB2AdC8F092a6076")),
-            Self::Treasure => Some(address!("0x263D8f36Bb8d0d9526255E205868C26690b04B88")),
-            Self::Berachain => Some(address!("0x6969696969696969696969696969696969696969")),
-            Self::Superposition => Some(address!("0x1fB719f10b56d7a85DCD32f27f897375fB21cfdd")),
-            Self::Hyperliquid => Some(address!("0x5555555555555555555555555555555555555555")),
-            Self::Abstract => Some(address!("0x3439153EB7AF838Ad19d56E1571FBD09333C2809")),
-            Self::Sophon => Some(address!("0xF1f9E08a0818594FDe4713AE0Db1E46672Ca960E")),
-            Self::MemeCore => Some(address!("0x653e645e3d81a72e71328Bc01A04002945E3ef7A")),
-            Self::Formicarium => Some(address!("0x653e645e3d81a72e71328Bc01A04002945E3ef7A")),
-            Self::Insectarium => Some(address!("0x653e645e3d81a72e71328Bc01A04002945E3ef7A")),
-            _ => None,
+        let index = self.data().wrapped_native_token;
+        if index == NO_WRAPPED_NATIVE_TOKEN {
+            None
+        } else {
+            Some(WRAPPED_NATIVE_TOKENS[index as usize])
         }
     }
 
     #[cfg(feature = "serde")]
     fn from_serde_str(value: &str) -> Option<Self> {
-        match value {
-            "mainnet" | "ethlive" => Some(Self::Mainnet),
-            "morden" => Some(Self::Morden),
-            "ropsten" => Some(Self::Ropsten),
-            "rinkeby" => Some(Self::Rinkeby),
-            "goerli" => Some(Self::Goerli),
-            "kovan" => Some(Self::Kovan),
-            "holesky" => Some(Self::Holesky),
-            "hoodi" => Some(Self::Hoodi),
-            "sepolia" => Some(Self::Sepolia),
-            "odyssey" => Some(Self::Odyssey),
-            "optimism" => Some(Self::Optimism),
-            "optimism-kovan" | "optimism_kovan" => Some(Self::OptimismKovan),
-            "optimism-goerli" | "optimism_goerli" => Some(Self::OptimismGoerli),
-            "optimism-sepolia" | "optimism_sepolia" => Some(Self::OptimismSepolia),
-            "bob" => Some(Self::Bob),
-            "bob-sepolia" | "bob_sepolia" => Some(Self::BobSepolia),
-            "arbitrum" | "arbitrum_one" | "arbitrum-one" => Some(Self::Arbitrum),
-            "arbitrum-testnet" | "arbitrum_testnet" => Some(Self::ArbitrumTestnet),
-            "arbitrum-goerli" | "arbitrum_goerli" => Some(Self::ArbitrumGoerli),
-            "arbitrum-sepolia" | "arbitrum_sepolia" => Some(Self::ArbitrumSepolia),
-            "arbitrum-nova" | "arbitrum_nova" => Some(Self::ArbitrumNova),
-            "cronos" => Some(Self::Cronos),
-            "cronos-testnet" | "cronos_testnet" => Some(Self::CronosTestnet),
-            "rsk" => Some(Self::Rsk),
-            "rsk-testnet" | "rsk_testnet" => Some(Self::RskTestnet),
-            "telos" | "telos_evm" => Some(Self::TelosEvm),
-            "telos-testnet" | "telos_evm_testnet" | "telos_testnet" | "telos-evm-testnet" => {
-                Some(Self::TelosEvmTestnet)
-            }
-            "crab" => Some(Self::Crab),
-            "darwinia" => Some(Self::Darwinia),
-            "koi" => Some(Self::Koi),
-            "bsc" | "binance-smart-chain" | "bnb-smart-chain" | "binance_smart_chain" => {
-                Some(Self::BinanceSmartChain)
-            }
-            "bsc-testnet"
-            | "binance-smart-chain-testnet"
-            | "bnb-smart-chain-testnet"
-            | "binance_smart_chain_testnet"
-            | "bsc_testnet" => Some(Self::BinanceSmartChainTestnet),
-            "poa" => Some(Self::Poa),
-            "sokol" => Some(Self::Sokol),
-            "scroll" => Some(Self::Scroll),
-            "scroll-sepolia" | "scroll_sepolia" | "scroll_sepolia_testnet" => {
-                Some(Self::ScrollSepolia)
-            }
-            "metis" => Some(Self::Metis),
-            "cfx-testnet" | "cfx_testnet" | "conflux-espace-testnet" => Some(Self::CfxTestnet),
-            "cfx" | "conflux-espace" => Some(Self::Cfx),
-            "xdai" | "gnosis" | "gnosis-chain" => Some(Self::Gnosis),
-            "polygon" => Some(Self::Polygon),
-            "amoy" | "polygon-amoy" | "polygon_amoy" => Some(Self::PolygonAmoy),
-            "fantom" => Some(Self::Fantom),
-            "fantom-testnet" | "fantom_testnet" => Some(Self::FantomTestnet),
-            "moonbeam" => Some(Self::Moonbeam),
-            "moonbeam-dev" | "moonbeam_dev" => Some(Self::MoonbeamDev),
-            "moonriver" => Some(Self::Moonriver),
-            "moonbase" => Some(Self::Moonbase),
-            "dev" => Some(Self::Dev),
-            "anvil-hardhat" | "anvil" | "hardhat" | "anvil_hardhat" => Some(Self::AnvilHardhat),
-            "gravity-alpha-mainnet" | "gravity_alpha_mainnet" => Some(Self::GravityAlphaMainnet),
-            "gravity-alpha-testnet-sepolia" | "gravity_alpha_testnet_sepolia" => {
-                Some(Self::GravityAlphaTestnetSepolia)
-            }
-            "grav" | "gravity" => Some(Self::Gravity),
-            "evmos" => Some(Self::Evmos),
-            "evmos-testnet" | "evmos_testnet" => Some(Self::EvmosTestnet),
-            "plasma" => Some(Self::Plasma),
-            "plasma-testnet" | "plasma_testnet" => Some(Self::PlasmaTestnet),
-            "chiado" => Some(Self::Chiado),
-            "oasis" => Some(Self::Oasis),
-            "emerald" => Some(Self::Emerald),
-            "emerald-testnet" | "emerald_testnet" => Some(Self::EmeraldTestnet),
-            "filecoin-mainnet" | "filecoin_mainnet" => Some(Self::FilecoinMainnet),
-            "filecoin-calibration-testnet" | "filecoin_calibration_testnet" => {
-                Some(Self::FilecoinCalibrationTestnet)
-            }
-            "avalanche" => Some(Self::Avalanche),
-            "fuji" | "avalanche-fuji" | "avalanche_fuji" => Some(Self::AvalancheFuji),
-            "celo" => Some(Self::Celo),
-            "celo-sepolia" | "celo_sepolia" => Some(Self::CeloSepolia),
-            "aurora" => Some(Self::Aurora),
-            "aurora-testnet" | "aurora_testnet" => Some(Self::AuroraTestnet),
-            "canto" => Some(Self::Canto),
-            "canto-testnet" | "canto_testnet" => Some(Self::CantoTestnet),
-            "boba" => Some(Self::Boba),
-            "base" => Some(Self::Base),
-            "base-goerli" | "base_goerli" => Some(Self::BaseGoerli),
-            "base-sepolia" | "base_sepolia" => Some(Self::BaseSepolia),
-            "syndr" => Some(Self::Syndr),
-            "syndr-sepolia" | "syndr_sepolia" => Some(Self::SyndrSepolia),
-            "shimmer" => Some(Self::Shimmer),
-            "ink" => Some(Self::Ink),
-            "ink-sepolia" | "ink_sepolia" | "ink_sepolia_testnet" => Some(Self::InkSepolia),
-            "fraxtal" => Some(Self::Fraxtal),
-            "fraxtal-testnet" | "fraxtal_testnet" => Some(Self::FraxtalTestnet),
-            "blast" => Some(Self::Blast),
-            "blast-sepolia" | "blast_sepolia" => Some(Self::BlastSepolia),
-            "linea" => Some(Self::Linea),
-            "linea-goerli" | "linea_goerli" => Some(Self::LineaGoerli),
-            "linea-sepolia" | "linea_sepolia" => Some(Self::LineaSepolia),
-            "zksync" | "zk_sync" => Some(Self::ZkSync),
-            "zksync-testnet" | "zk_sync_testnet" | "zksync_testnet" => Some(Self::ZkSyncTestnet),
-            "mantle" => Some(Self::Mantle),
-            "mantle-sepolia" | "mantle_sepolia" => Some(Self::MantleSepolia),
-            "xai" => Some(Self::Xai),
-            "xai-sepolia" | "xai_sepolia" => Some(Self::XaiSepolia),
-            "happychain-testnet" | "happychain_testnet" => Some(Self::HappychainTestnet),
-            "viction" => Some(Self::Viction),
-            "zora" => Some(Self::Zora),
-            "zora-sepolia" | "zora_sepolia" => Some(Self::ZoraSepolia),
-            "pgn" => Some(Self::Pgn),
-            "pgn-sepolia" | "pgn_sepolia" => Some(Self::PgnSepolia),
-            "mode" => Some(Self::Mode),
-            "mode-sepolia" | "mode_sepolia" => Some(Self::ModeSepolia),
-            "elastos" => Some(Self::Elastos),
-            "etherlink" => Some(Self::Etherlink),
-            "etherlink-shadownet" | "etherlink_shadownet" => Some(Self::EtherlinkShadownet),
-            "degen" => Some(Self::Degen),
-            "opbnb-mainnet" | "opbnb_mainnet" | "op-bnb-mainnet" => Some(Self::OpBNBMainnet),
-            "opbnb-testnet" | "opbnb_testnet" | "op-bnb-testnet" => Some(Self::OpBNBTestnet),
-            "ronin" => Some(Self::Ronin),
-            "ronin-testnet" | "ronin_testnet" => Some(Self::RoninTestnet),
-            "radius" => Some(Self::Radius),
-            "radius-testnet" | "radius_testnet" => Some(Self::RadiusTestnet),
-            "taiko" => Some(Self::Taiko),
-            "taiko-hekla" | "taiko_hekla" => Some(Self::TaikoHekla),
-            "autonomys-nova-testnet" | "autonomys_nova_testnet" => Some(Self::AutonomysNovaTestnet),
-            "flare" => Some(Self::Flare),
-            "flare-coston2" | "flare_coston2" => Some(Self::FlareCoston2),
-            "acala" => Some(Self::Acala),
-            "acala-mandala-testnet" | "acala_mandala_testnet" => Some(Self::AcalaMandalaTestnet),
-            "acala-testnet" | "acala_testnet" => Some(Self::AcalaTestnet),
-            "karura" => Some(Self::Karura),
-            "karura-testnet" | "karura_testnet" => Some(Self::KaruraTestnet),
-            "pulsechain" => Some(Self::Pulsechain),
-            "pulsechain-testnet" | "pulsechain_testnet" => Some(Self::PulsechainTestnet),
-            "cannon" => Some(Self::Cannon),
-            "immutable" => Some(Self::Immutable),
-            "immutable-testnet" | "immutable_testnet" => Some(Self::ImmutableTestnet),
-            "soneium" => Some(Self::Soneium),
-            "soneium-minato-testnet" | "soneium_minato_testnet" => Some(Self::SoneiumMinatoTestnet),
-            "world" | "worldchain" => Some(Self::World),
-            "world-sepolia" | "world_sepolia" | "worldchain-sepolia" => Some(Self::WorldSepolia),
-            "iotex" => Some(Self::Iotex),
-            "core" => Some(Self::Core),
-            "merlin" => Some(Self::Merlin),
-            "bitlayer" => Some(Self::Bitlayer),
-            "vana" => Some(Self::Vana),
-            "zeta" => Some(Self::Zeta),
-            "kaia" => Some(Self::Kaia),
-            "story" => Some(Self::Story),
-            "sei" => Some(Self::Sei),
-            "sei-testnet" | "sei_testnet" => Some(Self::SeiTestnet),
-            "stable-mainnet" | "stable_mainnet" => Some(Self::StableMainnet),
-            "stable-testnet" | "stable_testnet" => Some(Self::StableTestnet),
-            "megaeth" | "mega_eth" => Some(Self::MegaEth),
-            "megaeth-testnet" | "mega_eth_testnet" | "megaeth_testnet" => {
-                Some(Self::MegaEthTestnet)
-            }
-            "xdc-mainnet" | "xdc_mainnet" => Some(Self::XdcMainnet),
-            "xdc-testnet" | "xdc_testnet" => Some(Self::XdcTestnet),
-            "unichain" => Some(Self::Unichain),
-            "unichain-sepolia" | "unichain_sepolia" => Some(Self::UnichainSepolia),
-            "signet-pecorino" | "signet_pecorino" => Some(Self::SignetPecorino),
-            "apechain" | "ape_chain" => Some(Self::ApeChain),
-            "curtis" | "apechain-testnet" => Some(Self::Curtis),
-            "sonic" => Some(Self::Sonic),
-            "sonic-testnet" | "sonic_testnet" => Some(Self::SonicTestnet),
-            "redbelly" => Some(Self::Redbelly),
-            "redbelly-testnet" | "redbelly_testnet" => Some(Self::RedbellyTestnet),
-            "plume-testnet" | "plume_testnet" => Some(Self::PlumeTestnet),
-            "plume" => Some(Self::Plume),
-            "treasure" => Some(Self::Treasure),
-            "treasure-topaz" | "treasure-topaz-testnet" | "treasure_topaz" => {
-                Some(Self::TreasureTopaz)
-            }
-            "berachain-bepolia" | "berachain-bepolia-testnet" | "berachain_bepolia" => {
-                Some(Self::BerachainBepolia)
-            }
-            "berachain" => Some(Self::Berachain),
-            "superposition-testnet" | "superposition_testnet" => Some(Self::SuperpositionTestnet),
-            "superposition" => Some(Self::Superposition),
-            "monad" => Some(Self::Monad),
-            "monad-testnet" | "monad_testnet" => Some(Self::MonadTestnet),
-            "hyperliquid" => Some(Self::Hyperliquid),
-            "abstract" => Some(Self::Abstract),
-            "abstract-testnet" | "abstract_testnet" => Some(Self::AbstractTestnet),
-            "corn" => Some(Self::Corn),
-            "corn-testnet" | "corn_testnet" => Some(Self::CornTestnet),
-            "sophon" => Some(Self::Sophon),
-            "sophon-testnet" | "sophon_testnet" => Some(Self::SophonTestnet),
-            "polkadot-testnet" | "polkadot_testnet" => Some(Self::PolkadotTestnet),
-            "kusama" => Some(Self::Kusama),
-            "polkadot" => Some(Self::Polkadot),
-            "lens" => Some(Self::Lens),
-            "lens-testnet" | "lens_testnet" => Some(Self::LensTestnet),
-            "injective" => Some(Self::Injective),
-            "injective-testnet" | "injective_testnet" => Some(Self::InjectiveTestnet),
-            "katana" => Some(Self::Katana),
-            "lisk" => Some(Self::Lisk),
-            "fuse" => Some(Self::Fuse),
-            "fluent" => Some(Self::Fluent),
-            "fluent-devnet" | "fluent_devnet" => Some(Self::FluentDevnet),
-            "fluent-testnet" | "fluent_testnet" => Some(Self::FluentTestnet),
-            "skale-base" | "skale_base" => Some(Self::SkaleBase),
-            "skale-base-sepolia-testnet" | "skale_base_sepolia_testnet" => {
-                Some(Self::SkaleBaseSepoliaTestnet)
-            }
-            "memecore" | "meme_core" => Some(Self::MemeCore),
-            "formicarium" | "memecore-formicarium" | "formicairum" => Some(Self::Formicarium),
-            "insectarium" | "memecore-insectarium" => Some(Self::Insectarium),
-            "tempo" | "tempo-mainnet" => Some(Self::Tempo),
-            "tempo-moderato" | "tempo_moderato" => Some(Self::TempoModerato),
-            "tempo-testnet" | "tempo_testnet" => Some(Self::TempoTestnet),
-            "tempo-devnet" | "tempo_devnet" => Some(Self::TempoDevnet),
-            "arc-testnet" | "arc_testnet" => Some(Self::ArcTestnet),
-            "battlechain-testnet" | "battle_chain_testnet" | "battlechain_testnet" => {
-                Some(Self::BattleChainTestnet)
-            }
-            "robinhood-testnet" | "robinhood_testnet" => Some(Self::RobinhoodTestnet),
-            _ => None,
-        }
+        PARSE_NAMES.get(value).or_else(|| SERDE_NAMES.get(value)).copied().map(Self::from_index)
     }
 }
 
@@ -2795,208 +2938,7 @@ impl FromStr for NamedChain {
     type Err = strum::ParseError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "mainnet" | "ethlive" => Ok(Self::Mainnet),
-            "morden" => Ok(Self::Morden),
-            "ropsten" => Ok(Self::Ropsten),
-            "rinkeby" => Ok(Self::Rinkeby),
-            "goerli" => Ok(Self::Goerli),
-            "kovan" => Ok(Self::Kovan),
-            "holesky" => Ok(Self::Holesky),
-            "hoodi" => Ok(Self::Hoodi),
-            "sepolia" => Ok(Self::Sepolia),
-            "odyssey" => Ok(Self::Odyssey),
-            "optimism" => Ok(Self::Optimism),
-            "optimism-kovan" => Ok(Self::OptimismKovan),
-            "optimism-goerli" => Ok(Self::OptimismGoerli),
-            "optimism-sepolia" => Ok(Self::OptimismSepolia),
-            "bob" => Ok(Self::Bob),
-            "bob-sepolia" => Ok(Self::BobSepolia),
-            "arbitrum" => Ok(Self::Arbitrum),
-            "arbitrum-testnet" => Ok(Self::ArbitrumTestnet),
-            "arbitrum-goerli" => Ok(Self::ArbitrumGoerli),
-            "arbitrum-sepolia" => Ok(Self::ArbitrumSepolia),
-            "arbitrum-nova" => Ok(Self::ArbitrumNova),
-            "cronos" => Ok(Self::Cronos),
-            "cronos-testnet" => Ok(Self::CronosTestnet),
-            "rsk" => Ok(Self::Rsk),
-            "rsk-testnet" => Ok(Self::RskTestnet),
-            "telos" => Ok(Self::TelosEvm),
-            "telos-testnet" => Ok(Self::TelosEvmTestnet),
-            "crab" => Ok(Self::Crab),
-            "darwinia" => Ok(Self::Darwinia),
-            "koi" => Ok(Self::Koi),
-            "bsc" | "binance-smart-chain" | "bnb-smart-chain" => Ok(Self::BinanceSmartChain),
-            "bsc-testnet" | "binance-smart-chain-testnet" | "bnb-smart-chain-testnet" => {
-                Ok(Self::BinanceSmartChainTestnet)
-            }
-            "poa" => Ok(Self::Poa),
-            "sokol" => Ok(Self::Sokol),
-            "scroll" => Ok(Self::Scroll),
-            "scroll-sepolia" => Ok(Self::ScrollSepolia),
-            "metis" => Ok(Self::Metis),
-            "cfx-testnet" => Ok(Self::CfxTestnet),
-            "cfx" => Ok(Self::Cfx),
-            "xdai" | "gnosis" | "gnosis-chain" => Ok(Self::Gnosis),
-            "polygon" => Ok(Self::Polygon),
-            "amoy" | "polygon-amoy" => Ok(Self::PolygonAmoy),
-            "fantom" => Ok(Self::Fantom),
-            "fantom-testnet" => Ok(Self::FantomTestnet),
-            "moonbeam" => Ok(Self::Moonbeam),
-            "moonbeam-dev" => Ok(Self::MoonbeamDev),
-            "moonriver" => Ok(Self::Moonriver),
-            "moonbase" => Ok(Self::Moonbase),
-            "dev" => Ok(Self::Dev),
-            "anvil-hardhat" | "anvil" | "hardhat" => Ok(Self::AnvilHardhat),
-            "gravity-alpha-mainnet" => Ok(Self::GravityAlphaMainnet),
-            "gravity-alpha-testnet-sepolia" => Ok(Self::GravityAlphaTestnetSepolia),
-            "grav" => Ok(Self::Gravity),
-            "evmos" => Ok(Self::Evmos),
-            "evmos-testnet" => Ok(Self::EvmosTestnet),
-            "plasma" => Ok(Self::Plasma),
-            "plasma-testnet" => Ok(Self::PlasmaTestnet),
-            "chiado" => Ok(Self::Chiado),
-            "oasis" => Ok(Self::Oasis),
-            "emerald" => Ok(Self::Emerald),
-            "emerald-testnet" => Ok(Self::EmeraldTestnet),
-            "filecoin-mainnet" => Ok(Self::FilecoinMainnet),
-            "filecoin-calibration-testnet" => Ok(Self::FilecoinCalibrationTestnet),
-            "avalanche" => Ok(Self::Avalanche),
-            "fuji" | "avalanche-fuji" => Ok(Self::AvalancheFuji),
-            "celo" => Ok(Self::Celo),
-            "celo-sepolia" => Ok(Self::CeloSepolia),
-            "aurora" => Ok(Self::Aurora),
-            "aurora-testnet" => Ok(Self::AuroraTestnet),
-            "canto" => Ok(Self::Canto),
-            "canto-testnet" => Ok(Self::CantoTestnet),
-            "boba" => Ok(Self::Boba),
-            "base" => Ok(Self::Base),
-            "base-goerli" => Ok(Self::BaseGoerli),
-            "base-sepolia" => Ok(Self::BaseSepolia),
-            "syndr" => Ok(Self::Syndr),
-            "syndr-sepolia" => Ok(Self::SyndrSepolia),
-            "shimmer" => Ok(Self::Shimmer),
-            "ink" => Ok(Self::Ink),
-            "ink-sepolia" => Ok(Self::InkSepolia),
-            "fraxtal" => Ok(Self::Fraxtal),
-            "fraxtal-testnet" => Ok(Self::FraxtalTestnet),
-            "blast" => Ok(Self::Blast),
-            "blast-sepolia" => Ok(Self::BlastSepolia),
-            "linea" => Ok(Self::Linea),
-            "linea-goerli" => Ok(Self::LineaGoerli),
-            "linea-sepolia" => Ok(Self::LineaSepolia),
-            "zksync" => Ok(Self::ZkSync),
-            "zksync-testnet" => Ok(Self::ZkSyncTestnet),
-            "mantle" => Ok(Self::Mantle),
-            "mantle-sepolia" => Ok(Self::MantleSepolia),
-            "xai" => Ok(Self::Xai),
-            "xai-sepolia" => Ok(Self::XaiSepolia),
-            "happychain-testnet" => Ok(Self::HappychainTestnet),
-            "viction" => Ok(Self::Viction),
-            "zora" => Ok(Self::Zora),
-            "zora-sepolia" => Ok(Self::ZoraSepolia),
-            "pgn" => Ok(Self::Pgn),
-            "pgn-sepolia" => Ok(Self::PgnSepolia),
-            "mode" => Ok(Self::Mode),
-            "mode-sepolia" => Ok(Self::ModeSepolia),
-            "elastos" => Ok(Self::Elastos),
-            "etherlink" => Ok(Self::Etherlink),
-            "etherlink-shadownet" => Ok(Self::EtherlinkShadownet),
-            "degen" => Ok(Self::Degen),
-            "opbnb-mainnet" => Ok(Self::OpBNBMainnet),
-            "opbnb-testnet" => Ok(Self::OpBNBTestnet),
-            "ronin" => Ok(Self::Ronin),
-            "ronin-testnet" => Ok(Self::RoninTestnet),
-            "radius" => Ok(Self::Radius),
-            "radius-testnet" => Ok(Self::RadiusTestnet),
-            "taiko" => Ok(Self::Taiko),
-            "taiko-hekla" => Ok(Self::TaikoHekla),
-            "autonomys-nova-testnet" => Ok(Self::AutonomysNovaTestnet),
-            "flare" => Ok(Self::Flare),
-            "flare-coston2" => Ok(Self::FlareCoston2),
-            "acala" => Ok(Self::Acala),
-            "acala-mandala-testnet" => Ok(Self::AcalaMandalaTestnet),
-            "acala-testnet" => Ok(Self::AcalaTestnet),
-            "karura" => Ok(Self::Karura),
-            "karura-testnet" => Ok(Self::KaruraTestnet),
-            "pulsechain" => Ok(Self::Pulsechain),
-            "pulsechain-testnet" => Ok(Self::PulsechainTestnet),
-            "cannon" => Ok(Self::Cannon),
-            "immutable" => Ok(Self::Immutable),
-            "immutable-testnet" => Ok(Self::ImmutableTestnet),
-            "soneium" => Ok(Self::Soneium),
-            "soneium-minato-testnet" => Ok(Self::SoneiumMinatoTestnet),
-            "world" => Ok(Self::World),
-            "world-sepolia" => Ok(Self::WorldSepolia),
-            "iotex" => Ok(Self::Iotex),
-            "core" => Ok(Self::Core),
-            "merlin" => Ok(Self::Merlin),
-            "bitlayer" => Ok(Self::Bitlayer),
-            "vana" => Ok(Self::Vana),
-            "zeta" => Ok(Self::Zeta),
-            "kaia" => Ok(Self::Kaia),
-            "story" => Ok(Self::Story),
-            "sei" => Ok(Self::Sei),
-            "sei-testnet" => Ok(Self::SeiTestnet),
-            "stable-mainnet" => Ok(Self::StableMainnet),
-            "stable-testnet" => Ok(Self::StableTestnet),
-            "megaeth" => Ok(Self::MegaEth),
-            "megaeth-testnet" => Ok(Self::MegaEthTestnet),
-            "xdc-mainnet" => Ok(Self::XdcMainnet),
-            "xdc-testnet" => Ok(Self::XdcTestnet),
-            "unichain" => Ok(Self::Unichain),
-            "unichain-sepolia" => Ok(Self::UnichainSepolia),
-            "signet-pecorino" => Ok(Self::SignetPecorino),
-            "apechain" => Ok(Self::ApeChain),
-            "curtis" | "apechain-testnet" => Ok(Self::Curtis),
-            "sonic" => Ok(Self::Sonic),
-            "sonic-testnet" => Ok(Self::SonicTestnet),
-            "redbelly" => Ok(Self::Redbelly),
-            "redbelly-testnet" => Ok(Self::RedbellyTestnet),
-            "plume-testnet" => Ok(Self::PlumeTestnet),
-            "plume" => Ok(Self::Plume),
-            "treasure" => Ok(Self::Treasure),
-            "treasure-topaz" | "treasure-topaz-testnet" => Ok(Self::TreasureTopaz),
-            "berachain-bepolia" | "berachain-bepolia-testnet" => Ok(Self::BerachainBepolia),
-            "berachain" => Ok(Self::Berachain),
-            "superposition-testnet" => Ok(Self::SuperpositionTestnet),
-            "superposition" => Ok(Self::Superposition),
-            "monad" => Ok(Self::Monad),
-            "monad-testnet" => Ok(Self::MonadTestnet),
-            "hyperliquid" => Ok(Self::Hyperliquid),
-            "abstract" => Ok(Self::Abstract),
-            "abstract-testnet" => Ok(Self::AbstractTestnet),
-            "corn" => Ok(Self::Corn),
-            "corn-testnet" => Ok(Self::CornTestnet),
-            "sophon" => Ok(Self::Sophon),
-            "sophon-testnet" => Ok(Self::SophonTestnet),
-            "polkadot-testnet" => Ok(Self::PolkadotTestnet),
-            "kusama" => Ok(Self::Kusama),
-            "polkadot" => Ok(Self::Polkadot),
-            "lens" => Ok(Self::Lens),
-            "lens-testnet" => Ok(Self::LensTestnet),
-            "injective" => Ok(Self::Injective),
-            "injective-testnet" => Ok(Self::InjectiveTestnet),
-            "katana" => Ok(Self::Katana),
-            "lisk" => Ok(Self::Lisk),
-            "fuse" => Ok(Self::Fuse),
-            "fluent" => Ok(Self::Fluent),
-            "fluent-devnet" => Ok(Self::FluentDevnet),
-            "fluent-testnet" => Ok(Self::FluentTestnet),
-            "skale-base" => Ok(Self::SkaleBase),
-            "skale-base-sepolia-testnet" => Ok(Self::SkaleBaseSepoliaTestnet),
-            "memecore" => Ok(Self::MemeCore),
-            "formicarium" | "memecore-formicarium" => Ok(Self::Formicarium),
-            "insectarium" | "memecore-insectarium" => Ok(Self::Insectarium),
-            "tempo" | "tempo-mainnet" => Ok(Self::Tempo),
-            "tempo-moderato" => Ok(Self::TempoModerato),
-            "tempo-testnet" => Ok(Self::TempoTestnet),
-            "tempo-devnet" => Ok(Self::TempoDevnet),
-            "arc-testnet" => Ok(Self::ArcTestnet),
-            "battlechain-testnet" => Ok(Self::BattleChainTestnet),
-            "robinhood-testnet" => Ok(Self::RobinhoodTestnet),
-            _ => Err(strum::ParseError::VariantNotFound),
-        }
+        PARSE_NAMES.get(s).copied().map(Self::from_index).ok_or(strum::ParseError::VariantNotFound)
     }
 }
 
@@ -3128,26 +3070,118 @@ pub(crate) const PARSE_ALIASES: &[(NamedChain, &str)] = &[
 
 #[cfg(all(test, feature = "serde"))]
 pub(crate) const SERDE_ALIASES: &[(NamedChain, &str)] = &[
+    (NamedChain::OptimismKovan, "optimism_kovan"),
+    (NamedChain::OptimismGoerli, "optimism_goerli"),
+    (NamedChain::OptimismSepolia, "optimism_sepolia"),
+    (NamedChain::BobSepolia, "bob_sepolia"),
     (NamedChain::Arbitrum, "arbitrum_one"),
     (NamedChain::Arbitrum, "arbitrum-one"),
+    (NamedChain::ArbitrumTestnet, "arbitrum_testnet"),
+    (NamedChain::ArbitrumGoerli, "arbitrum_goerli"),
+    (NamedChain::ArbitrumSepolia, "arbitrum_sepolia"),
+    (NamedChain::ArbitrumNova, "arbitrum_nova"),
+    (NamedChain::CronosTestnet, "cronos_testnet"),
+    (NamedChain::RskTestnet, "rsk_testnet"),
     (NamedChain::TelosEvm, "telos_evm"),
+    (NamedChain::TelosEvmTestnet, "telos_evm_testnet"),
     (NamedChain::TelosEvmTestnet, "telos_testnet"),
     (NamedChain::TelosEvmTestnet, "telos-evm-testnet"),
-    (NamedChain::TelosEvmTestnet, "telos_evm_testnet"),
+    (NamedChain::BinanceSmartChain, "binance_smart_chain"),
+    (NamedChain::BinanceSmartChainTestnet, "binance_smart_chain_testnet"),
     (NamedChain::BinanceSmartChainTestnet, "bsc_testnet"),
+    (NamedChain::ScrollSepolia, "scroll_sepolia"),
     (NamedChain::ScrollSepolia, "scroll_sepolia_testnet"),
+    (NamedChain::CfxTestnet, "cfx_testnet"),
     (NamedChain::CfxTestnet, "conflux-espace-testnet"),
     (NamedChain::Cfx, "conflux-espace"),
+    (NamedChain::PolygonAmoy, "polygon_amoy"),
+    (NamedChain::FantomTestnet, "fantom_testnet"),
+    (NamedChain::MoonbeamDev, "moonbeam_dev"),
+    (NamedChain::AnvilHardhat, "anvil_hardhat"),
+    (NamedChain::GravityAlphaMainnet, "gravity_alpha_mainnet"),
+    (NamedChain::GravityAlphaTestnetSepolia, "gravity_alpha_testnet_sepolia"),
+    (NamedChain::Gravity, "gravity"),
+    (NamedChain::EvmosTestnet, "evmos_testnet"),
+    (NamedChain::PlasmaTestnet, "plasma_testnet"),
+    (NamedChain::EmeraldTestnet, "emerald_testnet"),
+    (NamedChain::FilecoinMainnet, "filecoin_mainnet"),
+    (NamedChain::FilecoinCalibrationTestnet, "filecoin_calibration_testnet"),
+    (NamedChain::AvalancheFuji, "avalanche_fuji"),
+    (NamedChain::CeloSepolia, "celo_sepolia"),
+    (NamedChain::AuroraTestnet, "aurora_testnet"),
+    (NamedChain::CantoTestnet, "canto_testnet"),
+    (NamedChain::BaseGoerli, "base_goerli"),
+    (NamedChain::BaseSepolia, "base_sepolia"),
+    (NamedChain::SyndrSepolia, "syndr_sepolia"),
+    (NamedChain::InkSepolia, "ink_sepolia"),
     (NamedChain::InkSepolia, "ink_sepolia_testnet"),
+    (NamedChain::FraxtalTestnet, "fraxtal_testnet"),
+    (NamedChain::BlastSepolia, "blast_sepolia"),
+    (NamedChain::LineaGoerli, "linea_goerli"),
+    (NamedChain::LineaSepolia, "linea_sepolia"),
+    (NamedChain::ZkSync, "zk_sync"),
+    (NamedChain::ZkSyncTestnet, "zk_sync_testnet"),
     (NamedChain::ZkSyncTestnet, "zksync_testnet"),
-    (NamedChain::OpBNBMainnet, "op-bnb-mainnet"),
+    (NamedChain::MantleSepolia, "mantle_sepolia"),
+    (NamedChain::XaiSepolia, "xai_sepolia"),
+    (NamedChain::HappychainTestnet, "happychain_testnet"),
+    (NamedChain::ZoraSepolia, "zora_sepolia"),
+    (NamedChain::PgnSepolia, "pgn_sepolia"),
+    (NamedChain::ModeSepolia, "mode_sepolia"),
+    (NamedChain::EtherlinkShadownet, "etherlink_shadownet"),
     (NamedChain::OpBNBMainnet, "opbnb_mainnet"),
-    (NamedChain::OpBNBTestnet, "op-bnb-testnet"),
+    (NamedChain::OpBNBMainnet, "op-bnb-mainnet"),
     (NamedChain::OpBNBTestnet, "opbnb_testnet"),
+    (NamedChain::OpBNBTestnet, "op-bnb-testnet"),
+    (NamedChain::RoninTestnet, "ronin_testnet"),
+    (NamedChain::RadiusTestnet, "radius_testnet"),
+    (NamedChain::TaikoHekla, "taiko_hekla"),
     (NamedChain::AutonomysNovaTestnet, "autonomys_nova_testnet"),
+    (NamedChain::FlareCoston2, "flare_coston2"),
+    (NamedChain::AcalaMandalaTestnet, "acala_mandala_testnet"),
+    (NamedChain::AcalaTestnet, "acala_testnet"),
+    (NamedChain::KaruraTestnet, "karura_testnet"),
+    (NamedChain::PulsechainTestnet, "pulsechain_testnet"),
+    (NamedChain::ImmutableTestnet, "immutable_testnet"),
+    (NamedChain::SoneiumMinatoTestnet, "soneium_minato_testnet"),
     (NamedChain::World, "worldchain"),
+    (NamedChain::WorldSepolia, "world_sepolia"),
     (NamedChain::WorldSepolia, "worldchain-sepolia"),
+    (NamedChain::SeiTestnet, "sei_testnet"),
+    (NamedChain::StableMainnet, "stable_mainnet"),
+    (NamedChain::StableTestnet, "stable_testnet"),
+    (NamedChain::MegaEth, "mega_eth"),
+    (NamedChain::MegaEthTestnet, "mega_eth_testnet"),
     (NamedChain::MegaEthTestnet, "megaeth_testnet"),
+    (NamedChain::XdcMainnet, "xdc_mainnet"),
+    (NamedChain::XdcTestnet, "xdc_testnet"),
+    (NamedChain::UnichainSepolia, "unichain_sepolia"),
+    (NamedChain::SignetPecorino, "signet_pecorino"),
+    (NamedChain::ApeChain, "ape_chain"),
+    (NamedChain::SonicTestnet, "sonic_testnet"),
+    (NamedChain::RedbellyTestnet, "redbelly_testnet"),
+    (NamedChain::PlumeTestnet, "plume_testnet"),
+    (NamedChain::TreasureTopaz, "treasure_topaz"),
+    (NamedChain::BerachainBepolia, "berachain_bepolia"),
+    (NamedChain::SuperpositionTestnet, "superposition_testnet"),
+    (NamedChain::MonadTestnet, "monad_testnet"),
+    (NamedChain::AbstractTestnet, "abstract_testnet"),
+    (NamedChain::CornTestnet, "corn_testnet"),
+    (NamedChain::SophonTestnet, "sophon_testnet"),
+    (NamedChain::PolkadotTestnet, "polkadot_testnet"),
+    (NamedChain::LensTestnet, "lens_testnet"),
+    (NamedChain::InjectiveTestnet, "injective_testnet"),
+    (NamedChain::FluentDevnet, "fluent_devnet"),
+    (NamedChain::FluentTestnet, "fluent_testnet"),
+    (NamedChain::SkaleBase, "skale_base"),
+    (NamedChain::SkaleBaseSepoliaTestnet, "skale_base_sepolia_testnet"),
+    (NamedChain::MemeCore, "meme_core"),
     (NamedChain::Formicarium, "formicairum"),
+    (NamedChain::TempoModerato, "tempo_moderato"),
+    (NamedChain::TempoTestnet, "tempo_testnet"),
+    (NamedChain::TempoDevnet, "tempo_devnet"),
+    (NamedChain::ArcTestnet, "arc_testnet"),
+    (NamedChain::BattleChainTestnet, "battle_chain_testnet"),
     (NamedChain::BattleChainTestnet, "battlechain_testnet"),
+    (NamedChain::RobinhoodTestnet, "robinhood_testnet"),
 ];

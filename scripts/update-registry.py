@@ -8,7 +8,6 @@ import json
 import subprocess
 import sys
 import urllib.request
-from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -19,6 +18,15 @@ MANUAL_PATH = ROOT / "registry" / "manual.json"
 ASSET_CHAINS_PATH = ROOT / "assets" / "chains.json"
 GENERATED_MOD_PATH = ROOT / "src" / "generated" / "mod.rs"
 GENERATED_NAMED_PATH = ROOT / "src" / "generated" / "named.rs"
+PHF_CODEGEN_PATH = ROOT / "scripts" / "phf-codegen.rs"
+STATIC_STR_NONE = "N"
+NO_WRAPPED_NATIVE_TOKEN = "NO_WRAPPED_NATIVE_TOKEN"
+
+
+@dataclass(frozen=True)
+class StaticStr:
+    offset: int
+    length: int
 
 
 @dataclass(frozen=True)
@@ -40,6 +48,35 @@ class Chain:
     tags: frozenset[str]
     wrapped_native_token: str | None
     manual_only: bool
+
+
+class StaticStringTable:
+    def __init__(self):
+        self.data = bytearray()
+        self.offsets: dict[bytes, int] = {}
+        self.chunks: list[str] = []
+
+    def add(self, value: str | None) -> StaticStr | None:
+        if value is None:
+            return None
+
+        encoded = value.encode()
+        if len(encoded) > 255:
+            raise ValueError(f"Static string is too long for compact storage: {value!r}")
+
+        offset = self.offsets.get(encoded)
+        if offset is None:
+            offset = self.data.find(encoded)
+
+        if offset < 0:
+            offset = len(self.data)
+            self.data.extend(encoded)
+            self.offsets[encoded] = offset
+            self.chunks.append(value)
+
+        if offset > 0xFFFF_FFFF:
+            raise ValueError("Static string table is too large for compact storage")
+        return StaticStr(offset, len(encoded))
 
 
 def main() -> int:
@@ -257,40 +294,46 @@ pub(crate) mod named;
 
 
 def generated_named(chains: list[Chain]) -> str:
+    if len(chains) > 0xFFFF:
+        raise ValueError("Too many chains for compact index storage")
+    if len(chains) > 0xFF:
+        chain_index_type = "u16"
+        chain_index_from = "index as usize"
+    else:
+        chain_index_type = "u8"
+        chain_index_from = "index as usize"
+
+    string_table = StaticStringTable()
+    chain_indexes = {chain.internal_id: index for index, chain in enumerate(chains)}
+    wrapped_native_tokens = unique(
+        [chain.wrapped_native_token for chain in chains if chain.wrapped_native_token is not None]
+    )
+    if len(wrapped_native_tokens) > 0xFF:
+        raise ValueError("Too many wrapped native tokens for compact storage")
+    wrapped_native_token_indexes = {token: index for index, token in enumerate(wrapped_native_tokens)}
+
     enum_variants = "\n".join(f"    {chain.internal_id} = {chain.chain_id}," for chain in chains)
     variants = "\n".join(f"        Self::{chain.internal_id}," for chain in chains)
-    variant_names = "\n".join(f"        {rs_str(chain.name)}," for chain in chains)
     chain_id_arms = "\n".join(
         f"            {chain.chain_id} => Some(Self::{chain.internal_id})," for chain in chains
     )
-    as_str_arms = "\n".join(
-        f"            Self::{chain.internal_id} => {rs_str(chain.name)}," for chain in chains
-    )
-    average_blocktime_arms = "\n".join(grouped_option_duration(chains))
-    native_currency_symbol_arms = "\n".join(
-        grouped_option_str(chains, lambda chain: chain.native_currency_symbol)
-    )
-    etherscan_url_arms = "\n".join(
-        f"            Self::{chain.internal_id} => Some(({rs_str(chain.etherscan_api_url)}, "
-        f"{rs_str(chain.etherscan_base_url)})),"
-        for chain in chains
-        if chain.etherscan_api_url is not None and chain.etherscan_base_url is not None
-    )
-    etherscan_api_key_name_arms = "\n".join(
-        grouped_option_str(chains, lambda chain: chain.etherscan_api_key_name)
-    )
-    wrapped_native_token_arms = "\n".join(
-        f"            Self::{chain.internal_id} => Some(address!({rs_str(chain.wrapped_native_token)})),"
-        for chain in chains
-        if chain.wrapped_native_token is not None
-    )
-    serde_arms = "\n".join(
-        f"            {match_patterns(serde_parse_names(chain))} => Some(Self::{chain.internal_id}),"
+    chain_data = "\n".join(
+        "    d(["
+        f"{static_str(string_table.add(chain.name))}, "
+        f"{static_str(string_table.add(chain.native_currency_symbol))}, "
+        f"{static_str(string_table.add(chain.etherscan_api_url))}, "
+        f"{static_str(string_table.add(chain.etherscan_base_url))}, "
+        f"{static_str(string_table.add(chain.etherscan_api_key_name))}"
+        "], "
+        f"{average_blocktime_millis(chain)}, "
+        f"{chain_flags(chain)}, "
+        f"{wrapped_native_token_index(chain, wrapped_native_token_indexes)}"
+        "),"
         for chain in chains
     )
-    parse_arms = "\n".join(
-        f"            {match_patterns(parse_names(chain))} => Ok(Self::{chain.internal_id}),"
-        for chain in chains
+    string_data = "\n".join(f"    {rs_str(chunk)}," for chunk in string_table.chunks)
+    wrapped_native_token_data = "\n".join(
+        f"    address!({rs_str(token)})," for token in wrapped_native_tokens
     )
     parse_aliases = "\n".join(
         f"    (NamedChain::{chain.internal_id}, {rs_str(alias)}),"
@@ -300,8 +343,24 @@ def generated_named(chains: list[Chain]) -> str:
     serde_aliases = "\n".join(
         f"    (NamedChain::{chain.internal_id}, {rs_str(alias)}),"
         for chain in chains
-        for alias in (*chain.serde_aliases, *((chain.serde_name,) if chain.serde_name is not None else ()))
+        for alias in serde_extra_names(chain)
     )
+    parse_entries = [
+        (name, chain_indexes[chain.internal_id])
+        for chain in chains
+        for name in parse_names(chain)
+    ]
+    serde_entries = [
+        (name, chain_indexes[chain.internal_id])
+        for chain in chains
+        for name in serde_extra_names(chain)
+    ]
+    phf_maps = generate_phf_maps(parse_entries, serde_entries)
+    chain_data_len = len(chains)
+    wrapped_native_token_len = len(wrapped_native_tokens)
+    string_data_len = len(string_table.data)
+    if string_data_len > 0xFFFF_FFFF:
+        raise ValueError("Static string data is too large for compact storage")
 
     return f"""// @generated by scripts/update-registry.py.
 // Do not edit manually. Update registry/manual.json instead.
@@ -309,6 +368,113 @@ def generated_named(chains: list[Chain]) -> str:
 use alloy_primitives::{{Address, address}};
 use alloc::string::String;
 use core::{{cmp::Ordering, fmt, str::FromStr, time::Duration}};
+
+type ChainIndex = {chain_index_type};
+
+const FLAG_LEGACY: u16 = 1 << 0;
+const FLAG_SUPPORTS_SHANGHAI: u16 = 1 << 1;
+const FLAG_TESTNET: u16 = 1 << 2;
+const FLAG_ETHEREUM: u16 = 1 << 3;
+const FLAG_OPTIMISM: u16 = 1 << 4;
+const FLAG_GNOSIS: u16 = 1 << 5;
+const FLAG_POLYGON: u16 = 1 << 6;
+const FLAG_ARBITRUM: u16 = 1 << 7;
+const FLAG_ELASTIC: u16 = 1 << 8;
+const FLAG_TEMPO: u16 = 1 << 9;
+const FLAG_CUSTOM_SOURCIFY: u16 = 1 << 10;
+const {NO_WRAPPED_NATIVE_TOKEN}: u8 = u8::MAX;
+const {STATIC_STR_NONE}: StaticStr = StaticStr::NONE;
+
+#[derive(Clone, Copy)]
+#[repr(C, packed)]
+struct StaticStr {{
+    offset: u32,
+    len: u8,
+}}
+
+impl StaticStr {{
+    const NONE: Self = Self {{ offset: u32::MAX, len: 0 }};
+
+    #[inline]
+    const fn get(self) -> Option<&'static str> {{
+        if self.offset == u32::MAX {{
+            None
+        }} else {{
+            Some(self.get_unchecked())
+        }}
+    }}
+
+    #[inline]
+    const fn get_unchecked(self) -> &'static str {{
+        let ptr = unsafe {{ STRING_DATA.as_ptr().add(self.offset as usize) }};
+        let bytes = unsafe {{ core::slice::from_raw_parts(ptr, self.len as usize) }};
+        unsafe {{ core::str::from_utf8_unchecked(bytes) }}
+    }}
+}}
+
+#[derive(Clone, Copy)]
+#[repr(C, packed)]
+struct ChainData {{
+    name: StaticStr,
+    average_blocktime_millis: u16,
+    flags: u16,
+    native_currency_symbol: StaticStr,
+    etherscan_api_url: StaticStr,
+    etherscan_base_url: StaticStr,
+    etherscan_api_key_name: StaticStr,
+    wrapped_native_token: u8,
+}}
+
+const fn s(offset: u32, len: u8) -> StaticStr {{
+    StaticStr {{ offset, len }}
+}}
+
+const fn d(
+    strings: [StaticStr; 5],
+    average_blocktime_millis: u16,
+    flags: u16,
+    wrapped_native_token: u8,
+) -> ChainData {{
+    let [name, native_currency_symbol, etherscan_api_url, etherscan_base_url, etherscan_api_key_name] =
+        strings;
+    ChainData {{
+        name,
+        average_blocktime_millis,
+        flags,
+        native_currency_symbol,
+        etherscan_api_url,
+        etherscan_base_url,
+        etherscan_api_key_name,
+        wrapped_native_token,
+    }}
+}}
+
+static STRING_DATA: &[u8] = concat!(
+{string_data}
+)
+.as_bytes();
+
+static CHAIN_DATA: [ChainData; {chain_data_len}] = [
+{chain_data}
+];
+
+static WRAPPED_NATIVE_TOKENS: [Address; {wrapped_native_token_len}] = [
+{wrapped_native_token_data}
+];
+
+static VARIANT_NAMES_DATA: [&str; {chain_data_len}] = variant_names();
+
+{phf_maps}
+
+const fn variant_names() -> [&'static str; {chain_data_len}] {{
+    let mut names = [""; {chain_data_len}];
+    let mut index = 0;
+    while index < CHAIN_DATA.len() {{
+        names[index] = CHAIN_DATA[index].name.get_unchecked();
+        index += 1;
+    }}
+    names
+}}
 
 /// An Ethereum EIP-155 chain.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -360,7 +526,7 @@ impl core::iter::FusedIterator for NamedChainIter {{}}
 
 impl NamedChain {{
     /// The number of named chains.
-    pub const COUNT: usize = {len(chains)};
+    pub const COUNT: usize = {chain_data_len};
 
     /// All named chains in declaration order.
     pub const VARIANTS: &'static [Self] = &[
@@ -368,14 +534,39 @@ impl NamedChain {{
     ];
 
     /// All named chain string representations in declaration order.
-    pub const VARIANT_NAMES: &'static [&'static str] = &[
-{variant_names}
-    ];
+    pub const VARIANT_NAMES: &'static [&'static str] = &VARIANT_NAMES_DATA;
 
     /// Returns an iterator over all named chains.
     #[inline]
     pub fn iter() -> NamedChainIter {{
         NamedChainIter {{ inner: Self::VARIANTS.iter().copied() }}
+    }}
+
+    #[inline]
+    const fn from_index(index: ChainIndex) -> Self {{
+        Self::VARIANTS[{chain_index_from}]
+    }}
+
+    #[inline]
+    const fn variant_index(self) -> usize {{
+        let mut index = 0;
+        while index < Self::VARIANTS.len() {{
+            if Self::VARIANTS[index] as u64 == self as u64 {{
+                return index;
+            }}
+            index += 1;
+        }}
+        unreachable!()
+    }}
+
+    #[inline]
+    const fn data(self) -> ChainData {{
+        CHAIN_DATA[self.variant_index()]
+    }}
+
+    #[inline]
+    const fn has_flag(self, flag: u16) -> bool {{
+        self.data().flags & flag != 0
     }}
 
     /// Returns the chain for the given EIP-155 chain ID.
@@ -390,100 +581,98 @@ impl NamedChain {{
     /// Returns the string representation of the chain.
     #[inline]
     pub const fn as_str(&self) -> &'static str {{
-        match self {{
-{as_str_arms}
-        }}
+        (*self).data().name.get_unchecked()
     }}
 
     /// Returns `true` if this chain is Ethereum or an Ethereum testnet.
     #[inline]
     pub const fn is_ethereum(&self) -> bool {{
-        {matches_expr('*self', tagged(chains, 'ethereum'))}
+        (*self).has_flag(FLAG_ETHEREUM)
     }}
 
     /// Returns true if the chain contains Optimism configuration.
     #[inline]
     pub const fn is_optimism(self) -> bool {{
-        {matches_expr('self', tagged(chains, 'optimism'))}
+        self.has_flag(FLAG_OPTIMISM)
     }}
 
     /// Returns true if the chain contains Gnosis configuration.
     #[inline]
     pub const fn is_gnosis(self) -> bool {{
-        {matches_expr('self', tagged(chains, 'gnosis'))}
+        self.has_flag(FLAG_GNOSIS)
     }}
 
     /// Returns true if the chain contains Polygon configuration.
     #[inline]
     pub const fn is_polygon(self) -> bool {{
-        {matches_expr('self', tagged(chains, 'polygon'))}
+        self.has_flag(FLAG_POLYGON)
     }}
 
     /// Returns true if the chain contains Arbitrum configuration.
     #[inline]
     pub const fn is_arbitrum(self) -> bool {{
-        {matches_expr('self', tagged(chains, 'arbitrum'))}
+        self.has_flag(FLAG_ARBITRUM)
     }}
 
     /// Returns true if the chain contains Elastic Network configuration.
     #[inline]
     pub const fn is_elastic(self) -> bool {{
-        {matches_expr('self', tagged(chains, 'elastic'))}
+        self.has_flag(FLAG_ELASTIC)
     }}
 
     /// Returns true if the chain contains Tempo configuration.
     #[inline]
     pub const fn is_tempo(self) -> bool {{
-        {matches_expr('self', tagged(chains, 'tempo'))}
+        self.has_flag(FLAG_TEMPO)
     }}
 
     /// Returns true if the chain uses a custom Sourcify-compatible API.
     #[inline]
     pub const fn is_custom_sourcify(self) -> bool {{
-        {matches_expr('self', tagged(chains, 'custom-sourcify'))}
+        self.has_flag(FLAG_CUSTOM_SOURCIFY)
     }}
 
     /// Returns the chain's average blocktime, if applicable.
     #[inline]
     pub const fn average_blocktime_hint(self) -> Option<Duration> {{
-        match self {{
-{average_blocktime_arms}
-            _ => None,
+        let millis = self.data().average_blocktime_millis;
+        if millis == 0 {{
+            None
+        }} else {{
+            Some(Duration::from_millis(millis as u64))
         }}
     }}
 
     /// Returns whether the chain implements EIP-1559.
     #[inline]
     pub const fn is_legacy(self) -> bool {{
-        {matches_expr('self', [c for c in chains if c.is_legacy])}
+        self.has_flag(FLAG_LEGACY)
     }}
 
     /// Returns whether the chain supports the Shanghai hardfork.
     #[inline]
     pub const fn supports_shanghai(self) -> bool {{
-        {matches_expr('self', [c for c in chains if c.supports_shanghai])}
+        self.has_flag(FLAG_SUPPORTS_SHANGHAI)
     }}
 
     /// Returns whether the chain is a testnet.
     #[inline]
     pub const fn is_testnet(self) -> bool {{
-        {matches_expr('self', [c for c in chains if c.is_testnet])}
+        self.has_flag(FLAG_TESTNET)
     }}
 
     /// Returns the symbol of the chain's native currency.
     #[inline]
     pub const fn native_currency_symbol(self) -> Option<&'static str> {{
-        match self {{
-{native_currency_symbol_arms}
-            _ => None,
-        }}
+        self.data().native_currency_symbol.get()
     }}
 
     /// Returns the chain's blockchain explorer and its API URLs.
     #[inline]
     pub const fn etherscan_urls(self) -> Option<(&'static str, &'static str)> {{
-        match self {{
-{etherscan_url_arms}
+        let data = self.data();
+        match (data.etherscan_api_url.get(), data.etherscan_base_url.get()) {{
+            (Some(api), Some(base)) => Some((api, base)),
             _ => None,
         }}
     }}
@@ -491,10 +680,7 @@ impl NamedChain {{
     /// Returns the chain's blockchain explorer API key environment variable name.
     #[inline]
     pub const fn etherscan_api_key_name(self) -> Option<&'static str> {{
-        match self {{
-{etherscan_api_key_name_arms}
-            _ => None,
-        }}
+        self.data().etherscan_api_key_name.get()
     }}
 
     /// Returns the chain's blockchain explorer API key from the environment.
@@ -534,18 +720,21 @@ impl NamedChain {{
     /// Returns the address of the most popular wrapped native token address.
     #[inline]
     pub const fn wrapped_native_token(self) -> Option<Address> {{
-        match self {{
-{wrapped_native_token_arms}
-            _ => None,
+        let index = self.data().wrapped_native_token;
+        if index == {NO_WRAPPED_NATIVE_TOKEN} {{
+            None
+        }} else {{
+            Some(WRAPPED_NATIVE_TOKENS[index as usize])
         }}
     }}
 
     #[cfg(feature = "serde")]
     fn from_serde_str(value: &str) -> Option<Self> {{
-        match value {{
-{serde_arms}
-            _ => None,
-        }}
+        PARSE_NAMES
+            .get(value)
+            .or_else(|| SERDE_NAMES.get(value))
+            .copied()
+            .map(Self::from_index)
     }}
 }}
 
@@ -641,10 +830,11 @@ impl FromStr for NamedChain {{
     type Err = strum::ParseError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {{
-        match s {{
-{parse_arms}
-            _ => Err(strum::ParseError::VariantNotFound),
-        }}
+        PARSE_NAMES
+            .get(s)
+            .copied()
+            .map(Self::from_index)
+            .ok_or(strum::ParseError::VariantNotFound)
     }}
 }}
 
@@ -764,31 +954,80 @@ pub(crate) const SERDE_ALIASES: &[(NamedChain, &str)] = &[
 """
 
 
-def tagged(chains: list[Chain], tag: str) -> list[Chain]:
-    return [chain for chain in chains if tag in chain.tags]
+def average_blocktime_millis(chain: Chain) -> int:
+    value = chain.average_blocktime_hint or 0
+    if value > 0xFFFF:
+        raise ValueError(f"{chain.internal_id} average blocktime is too large for compact storage")
+    return value
 
 
-def grouped_option_duration(chains: list[Chain]) -> list[str]:
-    groups: dict[int, list[Chain]] = defaultdict(list)
-    for chain in chains:
-        if chain.average_blocktime_hint is not None:
-            groups[chain.average_blocktime_hint].append(chain)
-    return [
-        f"            {variant_pattern(group)} => Some(Duration::from_millis({value})),"
-        for value, group in sorted(groups.items())
-    ]
+def chain_flags(chain: Chain) -> str:
+    flags = []
+    if chain.is_legacy:
+        flags.append("FLAG_LEGACY")
+    if chain.supports_shanghai:
+        flags.append("FLAG_SUPPORTS_SHANGHAI")
+    if chain.is_testnet:
+        flags.append("FLAG_TESTNET")
+    for tag, flag in [
+        ("ethereum", "FLAG_ETHEREUM"),
+        ("optimism", "FLAG_OPTIMISM"),
+        ("gnosis", "FLAG_GNOSIS"),
+        ("polygon", "FLAG_POLYGON"),
+        ("arbitrum", "FLAG_ARBITRUM"),
+        ("elastic", "FLAG_ELASTIC"),
+        ("tempo", "FLAG_TEMPO"),
+        ("custom-sourcify", "FLAG_CUSTOM_SOURCIFY"),
+    ]:
+        if tag in chain.tags:
+            flags.append(flag)
+    return " | ".join(flags) if flags else "0"
 
 
-def grouped_option_str(chains: list[Chain], get_value) -> list[str]:
-    groups: dict[str, list[Chain]] = defaultdict(list)
-    for chain in chains:
-        value = get_value(chain)
-        if value is not None:
-            groups[value].append(chain)
-    return [
-        f"            {variant_pattern(group)} => Some({rs_str(value)}),"
-        for value, group in sorted(groups.items())
-    ]
+def static_str(value: StaticStr | None) -> str:
+    if value is None:
+        return STATIC_STR_NONE
+    return f"s({value.offset}, {value.length})"
+
+
+def wrapped_native_token_index(chain: Chain, indexes: dict[str, int]) -> str:
+    if chain.wrapped_native_token is None:
+        return NO_WRAPPED_NATIVE_TOKEN
+    return str(indexes[chain.wrapped_native_token])
+
+
+def generate_phf_maps(parse_entries: list[tuple[str, int]], serde_entries: list[tuple[str, int]]) -> str:
+    lines = ["map\tPARSE_NAMES\t"]
+    lines.extend(phf_entry_lines(parse_entries))
+    lines.append("end")
+    lines.append('map\tSERDE_NAMES\t#[cfg(feature = "serde")]')
+    lines.extend(phf_entry_lines(serde_entries))
+    lines.append("end")
+
+    output = subprocess.run(
+        ["cargo", "-Zscript", str(PHF_CODEGEN_PATH)],
+        input="\n".join(lines) + "\n",
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+        check=True,
+    )
+    return output.stdout.strip()
+
+
+def phf_entry_lines(entries: list[tuple[str, int]]) -> list[str]:
+    lines = []
+    for key, value in entries:
+        if "\t" in key or "\n" in key:
+            raise ValueError(f"PHF key contains unsupported whitespace: {key!r}")
+        lines.append(f"{key}\t{value}")
+    return lines
+
+
+def serde_extra_names(chain: Chain) -> list[str]:
+    parse = set(parse_names(chain))
+    serde_name = chain.serde_name or snake_case(chain.internal_id)
+    return [name for name in unique([serde_name, *chain.serde_aliases]) if name not in parse]
 
 
 def parse_names(chain: Chain) -> list[str]:
@@ -821,20 +1060,6 @@ def unique(items: list[str]) -> list[str]:
             seen.add(item)
             output.append(item)
     return output
-
-
-def matches_expr(expr: str, chains: list[Chain]) -> str:
-    if not chains:
-        return "false"
-    return f"matches!({expr}, {variant_pattern(chains)})"
-
-
-def variant_pattern(chains: list[Chain]) -> str:
-    return " | ".join(f"Self::{chain.internal_id}" for chain in chains)
-
-
-def match_patterns(values: list[str]) -> str:
-    return " | ".join(rs_str(value) for value in values)
 
 
 def rs_str(value: str) -> str:

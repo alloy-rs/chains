@@ -1,31 +1,27 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Chains",
   "description": "Ethereum EIP-155 chains.",
   "type": "object",
-  "required": [
-    "chains"
-  ],
   "properties": {
     "chains": {
       "description": "Map of chain IDs to chain definitions.",
       "type": "object",
-      "additionalProperties": {
-        "$ref": "#/definitions/Chain"
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\d+$": {
+          "$ref": "#/$defs/Chain"
+        }
       }
     }
   },
-  "definitions": {
+  "required": [
+    "chains"
+  ],
+  "$defs": {
     "Chain": {
       "description": "Specification for a single chain.",
       "type": "object",
-      "required": [
-        "internalId",
-        "isLegacy",
-        "isTestnet",
-        "name",
-        "supportsShanghai"
-      ],
       "properties": {
         "averageBlocktimeHint": {
           "description": "An optional hint for the average block time, in milliseconds.",
@@ -34,7 +30,7 @@
             "null"
           ],
           "format": "uint64",
-          "minimum": 0.0
+          "minimum": 0
         },
         "etherscanApiKeyName": {
           "description": "The name of the environment variable that contains the Etherscan API key.",
@@ -84,7 +80,14 @@
           "description": "Whether the chain supports the Shanghai hardfork.",
           "type": "boolean"
         }
-      }
+      },
+      "required": [
+        "internalId",
+        "name",
+        "isLegacy",
+        "supportsShanghai",
+        "isTestnet"
+      ]
     }
   }
 }
