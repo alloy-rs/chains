@@ -604,13 +604,13 @@ impl NamedChain {{
     /// Returns the string representation of the chain.
     #[inline]
     pub const fn as_str(&self) -> &'static str {{
-        (*self).data().name.get_unchecked()
+        self.data().name.get_unchecked()
     }}
 
     /// Returns `true` if this chain is Ethereum or an Ethereum testnet.
     #[inline]
     pub const fn is_ethereum(&self) -> bool {{
-        (*self).has_flag(FLAG_ETHEREUM)
+        self.has_flag(FLAG_ETHEREUM)
     }}
 
     /// Returns true if the chain contains Optimism configuration.
