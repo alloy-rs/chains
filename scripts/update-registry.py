@@ -9,6 +9,7 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
+from string import Template
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,6 +38,10 @@ CHAIN_TAG_FLAGS = (
     ("tempo", "FLAG_TEMPO"),
     ("custom-sourcify", "FLAG_CUSTOM_SOURCIFY"),
 )
+
+
+class RustTemplate(Template):
+    delimiter = "%%"
 
 
 @dataclass(frozen=True)
@@ -206,7 +211,7 @@ def asset_chains(chains: list[Chain]) -> dict:
 
 
 def generated_mod() -> str:
-    return MOD_TEMPLATE_PATH.read_text().format()
+    return render_template(MOD_TEMPLATE_PATH)
 
 
 def generated_named(chains: list[Chain]) -> str:
@@ -292,7 +297,8 @@ def generated_named(chains: list[Chain]) -> str:
         for tag, _flag in CHAIN_TAG_FLAGS
     }
 
-    return NAMED_TEMPLATE_PATH.read_text().format(
+    return render_template(
+        NAMED_TEMPLATE_PATH,
         chain_data=chain_data,
         chain_data_arms=chain_data_arms,
         chain_data_len=chain_data_len,
@@ -320,6 +326,10 @@ def generated_named(chains: list[Chain]) -> str:
         wrapped_native_token_data=wrapped_native_token_data,
         wrapped_native_token_len=wrapped_native_token_len,
     )
+
+
+def render_template(path: Path, **values) -> str:
+    return RustTemplate(path.read_text()).substitute(**values)
 
 
 def average_blocktime_millis(chain: Chain) -> int:
