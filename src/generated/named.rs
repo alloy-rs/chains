@@ -7,17 +7,12 @@ use core::{cmp::Ordering, fmt, str::FromStr, time::Duration};
 
 type ChainIndex = u8;
 
-const FLAG_LEGACY: u16 = 1 << 0;
-const FLAG_SUPPORTS_SHANGHAI: u16 = 1 << 1;
-const FLAG_TESTNET: u16 = 1 << 2;
-const FLAG_ETHEREUM: u16 = 1 << 3;
-const FLAG_OPTIMISM: u16 = 1 << 4;
-const FLAG_GNOSIS: u16 = 1 << 5;
-const FLAG_POLYGON: u16 = 1 << 6;
-const FLAG_ARBITRUM: u16 = 1 << 7;
-const FLAG_ELASTIC: u16 = 1 << 8;
-const FLAG_TEMPO: u16 = 1 << 9;
-const FLAG_CUSTOM_SOURCIFY: u16 = 1 << 10;
+const FLAG_LEGACY: u8 = 1 << 0;
+const FLAG_SUPPORTS_SHANGHAI: u8 = 1 << 1;
+const FLAG_TESTNET: u8 = 1 << 2;
+const FLAG_ETHEREUM: u8 = 1 << 3;
+const FLAG_OPTIMISM: u8 = 1 << 4;
+const FLAG_ELASTIC: u8 = 1 << 5;
 const NO_WRAPPED_NATIVE_TOKEN: u8 = u8::MAX;
 const N: StaticStr = StaticStr::NONE;
 
@@ -49,7 +44,7 @@ impl StaticStr {
 struct ChainData {
     name: StaticStr,
     average_blocktime_millis: u16,
-    flags: u16,
+    flags: u8,
     native_currency_symbol: StaticStr,
     etherscan_api_url: StaticStr,
     etherscan_base_url: StaticStr,
@@ -64,7 +59,7 @@ const fn s(offset: u32, len: u8) -> StaticStr {
 const fn d(
     strings: [StaticStr; 5],
     average_blocktime_millis: u16,
-    flags: u16,
+    flags: u8,
     wrapped_native_token: u8,
 ) -> ChainData {
     let [
@@ -703,24 +698,19 @@ static CHAIN_DATA: [ChainData; 197] = [
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d(
-        [s(702, 8), s(7, 3), s(710, 45), s(755, 19), s(71, 17)],
-        260,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_ARBITRUM,
-        2,
-    ),
-    d([s(774, 16), N, N, N, s(71, 17)], 260, FLAG_TESTNET | FLAG_ARBITRUM, NO_WRAPPED_NATIVE_TOKEN),
-    d([s(790, 15), N, N, N, s(71, 17)], 260, FLAG_TESTNET | FLAG_ARBITRUM, NO_WRAPPED_NATIVE_TOKEN),
+    d([s(702, 8), s(7, 3), s(710, 45), s(755, 19), s(71, 17)], 260, FLAG_SUPPORTS_SHANGHAI, 2),
+    d([s(774, 16), N, N, N, s(71, 17)], 260, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d([s(790, 15), N, N, N, s(71, 17)], 260, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
     d(
         [s(805, 16), N, s(821, 46), s(867, 27), s(71, 17)],
         260,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_ARBITRUM,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
         [s(894, 13), s(7, 3), s(907, 45), s(952, 24), s(71, 17)],
         260,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_ARBITRUM,
+        FLAG_SUPPORTS_SHANGHAI,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d([s(976, 6), N, s(982, 42), s(1024, 21), s(71, 17)], 5700, 0, NO_WRAPPED_NATIVE_TOKEN),
@@ -791,22 +781,17 @@ static CHAIN_DATA: [ChainData; 197] = [
         FLAG_SUPPORTS_SHANGHAI,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d(
-        [s(1927, 4), N, s(1931, 43), s(1974, 21), s(71, 17)],
-        5000,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_GNOSIS,
-        6,
-    ),
+    d([s(1927, 4), N, s(1931, 43), s(1974, 21), s(71, 17)], 5000, FLAG_SUPPORTS_SHANGHAI, 6),
     d(
         [s(1995, 7), s(2002, 3), s(2005, 43), s(2048, 23), s(71, 17)],
         2100,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_POLYGON,
+        FLAG_SUPPORTS_SHANGHAI,
         7,
     ),
     d(
         [s(2071, 4), s(2002, 3), s(2075, 45), s(2120, 28), s(71, 17)],
         2100,
-        FLAG_TESTNET | FLAG_POLYGON,
+        FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d([s(2148, 6), N, N, N, s(2154, 15)], 1200, FLAG_LEGACY, 8),
@@ -882,7 +867,7 @@ static CHAIN_DATA: [ChainData; 197] = [
     d(
         [s(2818, 6), N, s(2824, 40), s(2824, 36), N],
         5000,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_GNOSIS,
+        FLAG_SUPPORTS_SHANGHAI,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d([s(2864, 5), N, N, N, N], 5500, 0, NO_WRAPPED_NATIVE_TOKEN),
@@ -1510,25 +1495,25 @@ static CHAIN_DATA: [ChainData; 197] = [
     d(
         [s(11114, 5), s(5795, 3), s(11119, 27), s(11146, 25), N],
         500,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_TEMPO | FLAG_CUSTOM_SOURCIFY,
+        FLAG_SUPPORTS_SHANGHAI,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
         [s(11171, 14), s(5795, 3), s(11119, 27), s(11185, 34), N],
         500,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_TEMPO | FLAG_CUSTOM_SOURCIFY,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
         [s(11219, 13), s(5795, 3), s(11119, 27), s(11232, 35), N],
         500,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_TEMPO | FLAG_CUSTOM_SOURCIFY,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
         [s(11267, 12), s(5795, 3), N, N, N],
         500,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_TEMPO,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
@@ -2749,7 +2734,7 @@ impl NamedChain {
     }
 
     #[inline]
-    const fn has_flag(self, flag: u16) -> bool {
+    const fn has_flag(self, flag: u8) -> bool {
         self.data().flags & flag != 0
     }
 
@@ -2979,19 +2964,26 @@ impl NamedChain {
     /// Returns true if the chain contains Gnosis configuration.
     #[inline]
     pub const fn is_gnosis(self) -> bool {
-        self.has_flag(FLAG_GNOSIS)
+        matches!(self, Self::Gnosis | Self::Chiado)
     }
 
     /// Returns true if the chain contains Polygon configuration.
     #[inline]
     pub const fn is_polygon(self) -> bool {
-        self.has_flag(FLAG_POLYGON)
+        matches!(self, Self::Polygon | Self::PolygonAmoy)
     }
 
     /// Returns true if the chain contains Arbitrum configuration.
     #[inline]
     pub const fn is_arbitrum(self) -> bool {
-        self.has_flag(FLAG_ARBITRUM)
+        matches!(
+            self,
+            Self::Arbitrum
+                | Self::ArbitrumTestnet
+                | Self::ArbitrumGoerli
+                | Self::ArbitrumSepolia
+                | Self::ArbitrumNova
+        )
     }
 
     /// Returns true if the chain contains Elastic Network configuration.
@@ -3003,13 +2995,13 @@ impl NamedChain {
     /// Returns true if the chain contains Tempo configuration.
     #[inline]
     pub const fn is_tempo(self) -> bool {
-        self.has_flag(FLAG_TEMPO)
+        matches!(self, Self::Tempo | Self::TempoModerato | Self::TempoTestnet | Self::TempoDevnet)
     }
 
     /// Returns true if the chain uses a custom Sourcify-compatible API.
     #[inline]
     pub const fn is_custom_sourcify(self) -> bool {
-        self.has_flag(FLAG_CUSTOM_SOURCIFY)
+        matches!(self, Self::Tempo | Self::TempoModerato | Self::TempoTestnet)
     }
 
     /// Returns the chain's average blocktime, if applicable.
