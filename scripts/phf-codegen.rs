@@ -15,7 +15,14 @@ use std::{
 struct MapSpec {
     name: String,
     cfg: Option<String>,
+    key: MapKey,
     entries: Vec<(String, String)>,
+}
+
+#[derive(Clone, Copy)]
+enum MapKey {
+    Str,
+    U64,
 }
 
 fn main() {
@@ -29,18 +36,37 @@ fn main() {
             writeln!(output, "{cfg}").unwrap();
         }
 
-        let mut builder = phf_codegen::Map::new();
-        for (key, value) in &map.entries {
-            builder.entry(key.as_str(), value.as_str());
-        }
+        match map.key {
+            MapKey::Str => {
+                let mut builder = phf_codegen::Map::new();
+                for (key, value) in &map.entries {
+                    builder.entry(key.as_str(), value.as_str());
+                }
 
-        writeln!(
-            output,
-            "static {}: phf::Map<&'static str, ChainIndex> = {};",
-            map.name,
-            builder.build()
-        )
-        .unwrap();
+                writeln!(
+                    output,
+                    "static {}: phf::Map<&'static str, ChainIndex> = {};",
+                    map.name,
+                    builder.build()
+                )
+                .unwrap();
+            }
+            MapKey::U64 => {
+                let mut builder = phf_codegen::Map::new();
+                for (key, value) in &map.entries {
+                    let key = key.parse::<u64>().expect("u64 map key");
+                    builder.entry(key, value.as_str());
+                }
+
+                writeln!(
+                    output,
+                    "static {}: phf::Map<u64, ChainIndex> = {};",
+                    map.name,
+                    builder.build()
+                )
+                .unwrap();
+            }
+        }
     }
 
     print!("{output}");
@@ -70,7 +96,18 @@ fn parse_maps(input: &str) -> Vec<MapSpec> {
             let mut parts = rest.splitn(2, '\t');
             let name = parts.next().expect("name").to_owned();
             let cfg = parts.next().filter(|cfg| !cfg.is_empty()).map(str::to_owned);
-            current = Some(MapSpec { name, cfg, entries: Vec::new() });
+            current = Some(MapSpec { name, cfg, key: MapKey::Str, entries: Vec::new() });
+            continue;
+        }
+
+        if let Some(rest) = line.strip_prefix("map_u64\t") {
+            if current.is_some() {
+                panic!("line {line_no}: nested map");
+            }
+            let mut parts = rest.splitn(2, '\t');
+            let name = parts.next().expect("name").to_owned();
+            let cfg = parts.next().filter(|cfg| !cfg.is_empty()).map(str::to_owned);
+            current = Some(MapSpec { name, cfg, key: MapKey::U64, entries: Vec::new() });
             continue;
         }
 

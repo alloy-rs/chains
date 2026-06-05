@@ -355,7 +355,11 @@ def generated_named(chains: list[Chain]) -> str:
         for chain in chains
         for name in serde_extra_names(chain)
     ]
-    phf_maps = generate_phf_maps(parse_entries, serde_entries)
+    chain_id_entries = [
+        (str(chain.chain_id), chain_indexes[chain.internal_id])
+        for chain in chains
+    ]
+    phf_maps = generate_phf_maps(chain_id_entries, parse_entries, serde_entries)
     chain_data_len = len(chains)
     wrapped_native_token_len = len(wrapped_native_tokens)
     string_data_len = len(string_table.data)
@@ -579,6 +583,11 @@ impl NamedChain {{
     }}
 
     #[inline]
+    fn from_chain_id_map(id: u64) -> Option<Self> {{
+        CHAIN_IDS.get(&id).copied().map(Self::from_index)
+    }}
+
+    #[inline]
     const fn has_flag(self, flag: u16) -> bool {{
         self.data().flags & flag != 0
     }}
@@ -796,7 +805,7 @@ impl num_enum::TryFromPrimitive for NamedChain {{
 
     #[inline]
     fn try_from_primitive(number: Self::Primitive) -> Result<Self, Self::Error> {{
-        Self::from_chain_id(number).ok_or_else(|| num_enum::TryFromPrimitiveError::new(number))
+        Self::from_chain_id_map(number).ok_or_else(|| num_enum::TryFromPrimitiveError::new(number))
     }}
 }}
 
@@ -989,8 +998,15 @@ def wrapped_native_token_index(chain: Chain, indexes: dict[str, int]) -> str:
     return str(indexes[chain.wrapped_native_token])
 
 
-def generate_phf_maps(parse_entries: list[tuple[str, int]], serde_entries: list[tuple[str, int]]) -> str:
-    lines = ["map\tPARSE_NAMES\t"]
+def generate_phf_maps(
+    chain_id_entries: list[tuple[str, int]],
+    parse_entries: list[tuple[str, int]],
+    serde_entries: list[tuple[str, int]],
+) -> str:
+    lines = ["map_u64\tCHAIN_IDS"]
+    lines.extend(phf_entry_lines(chain_id_entries))
+    lines.append("end")
+    lines.append("map\tPARSE_NAMES\t")
     lines.extend(phf_entry_lines(parse_entries))
     lines.append("end")
     lines.append('map\tSERDE_NAMES\t#[cfg(feature = "serde")]')
