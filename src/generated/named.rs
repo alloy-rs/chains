@@ -13,21 +13,19 @@ const FLAG_ETHEREUM: u8 = 1 << 3;
 const FLAG_OPTIMISM: u8 = 1 << 4;
 const FLAG_ELASTIC: u8 = 1 << 5;
 const NO_WRAPPED_NATIVE_TOKEN: u8 = u8::MAX;
-const N: StaticStr = StaticStr::NONE;
+const N: u8 = u8::MAX;
 
 #[derive(Clone, Copy)]
 #[repr(C, packed)]
 struct StaticStr {
-    offset: u32,
+    offset: u16,
     len: u8,
 }
 
 impl StaticStr {
-    const NONE: Self = Self { offset: u32::MAX, len: 0 };
-
     #[inline]
     const fn get(self) -> Option<&'static str> {
-        if self.offset == u32::MAX { None } else { Some(self.get_unchecked()) }
+        if self.len == N { None } else { Some(self.get_unchecked()) }
     }
 
     #[inline]
@@ -41,50 +39,73 @@ impl StaticStr {
 #[derive(Clone, Copy)]
 #[repr(C, packed)]
 struct ChainData {
-    name: StaticStr,
+    string_offset: u16,
+    string_lens: [u8; 5],
     average_blocktime_millis: u16,
     flags: u8,
-    native_currency_symbol: StaticStr,
-    etherscan_api_url: StaticStr,
-    etherscan_base_url: StaticStr,
-    etherscan_api_key_name: StaticStr,
     wrapped_native_token: u8,
 }
 
-const fn s(offset: u32, len: u8) -> StaticStr {
+impl ChainData {
+    #[inline]
+    const fn string(self, index: usize) -> StaticStr {
+        let mut offset = self.string_offset;
+        let mut current = 0;
+        while current < index {
+            let len = self.string_lens[current];
+            if len != N {
+                offset += len as u16;
+            }
+            current += 1;
+        }
+        s(offset, self.string_lens[index])
+    }
+
+    #[inline]
+    const fn name(self) -> StaticStr {
+        s(self.string_offset, self.string_lens[0])
+    }
+
+    #[inline]
+    const fn native_currency_symbol(self) -> StaticStr {
+        self.string(1)
+    }
+
+    #[inline]
+    const fn etherscan_api_url(self) -> StaticStr {
+        self.string(2)
+    }
+
+    #[inline]
+    const fn etherscan_base_url(self) -> StaticStr {
+        self.string(3)
+    }
+
+    #[inline]
+    const fn etherscan_api_key_name(self) -> StaticStr {
+        self.string(4)
+    }
+}
+
+const fn s(offset: u16, len: u8) -> StaticStr {
     StaticStr { offset, len }
 }
 
 const fn d(
-    strings: [StaticStr; 5],
+    string_offset: u16,
+    string_lens: [u8; 5],
     average_blocktime_millis: u16,
     flags: u8,
     wrapped_native_token: u8,
 ) -> ChainData {
-    let [
-        name,
-        native_currency_symbol,
-        etherscan_api_url,
-        etherscan_base_url,
-        etherscan_api_key_name,
-    ] = strings;
-    ChainData {
-        name,
-        average_blocktime_millis,
-        flags,
-        native_currency_symbol,
-        etherscan_api_url,
-        etherscan_base_url,
-        etherscan_api_key_name,
-        wrapped_native_token,
-    }
+    ChainData { string_offset, string_lens, average_blocktime_millis, flags, wrapped_native_token }
 }
 
 const fn variant_names() -> [&'static str; 197] {
     let mut names = [""; 197];
     let mut index = 0;
     while index < CHAIN_DATA.len() {
-        names[index] = CHAIN_DATA[index].name.get_unchecked();
+        names[index] = CHAIN_DATA[index].name().get_unchecked();
         index += 1;
     }
     names
@@ -988,7 +1009,7 @@ impl NamedChain {
     /// Returns the string representation of the chain.
     #[inline]
     pub const fn as_str(&self) -> &'static str {
-        self.data().name.get_unchecked()
+        self.data().name().get_unchecked()
     }
 
     /// Returns `true` if this chain is Ethereum or an Ethereum testnet.
@@ -1074,14 +1095,14 @@ impl NamedChain {
     /// Returns the symbol of the chain's native currency.
     #[inline]
     pub const fn native_currency_symbol(self) -> Option<&'static str> {
-        self.data().native_currency_symbol.get()
+        self.data().native_currency_symbol().get()
     }
 
     /// Returns the chain's blockchain explorer and its API URLs.
     #[inline]
     pub const fn etherscan_urls(self) -> Option<(&'static str, &'static str)> {
         let data = self.data();
-        match (data.etherscan_api_url.get(), data.etherscan_base_url.get()) {
+        match (data.etherscan_api_url().get(), data.etherscan_base_url().get()) {
             (Some(api), Some(base)) => Some((api, base)),
             _ => None,
         }
@@ -1090,7 +1111,7 @@ impl NamedChain {
     /// Returns the chain's blockchain explorer API key environment variable name.
     #[inline]
     pub const fn etherscan_api_key_name(self) -> Option<&'static str> {
-        self.data().etherscan_api_key_name.get()
+        self.data().etherscan_api_key_name().get()
     }
 
     /// Returns the chain's blockchain explorer API key from the environment.
@@ -1462,936 +1483,614 @@ pub(crate) const SERDE_ALIASES: &[(NamedChain, &str)] = &[
     (NamedChain::RobinhoodTestnet, "robinhood_testnet"),
 ];
 
-static STRING_DATA: &[u8] = b"mainnetETHhttps://api.etherscan.io/v2/api?chainid=1https://etherscan.ioETHERSCAN_API_KEYmordenropstenrinkebygoerlikovanholeskyhttps://api.etherscan.io/v2/api?chainid=17000https://holesky.etherscan.iohoodihttps://api.etherscan.io/v2/api?chainid=560048https://hoodi.etherscan.iosepoliahttps://api.etherscan.io/v2/api?chainid=11155111https://sepolia.etherscan.ioodysseyhttps://odyssey-explorer.ithaca.xyz/apioptimismhttps://api.etherscan.io/v2/api?chainid=10https://optimistic.etherscan.iooptimism-kovanoptimism-goerlioptimism-sepoliahttps://api.etherscan.io/v2/api?chainid=11155420https://sepolia-optimism.etherscan.iobobhttps://explorer.gobob.xyz/apibob-sepoliahttps://bob-sepolia.explorer.gobob.xyz/apiarbitrumhttps://api.etherscan.io/v2/api?chainid=42161https://arbiscan.ioarbitrum-testnetarbitrum-goerliarbitrum-sepoliahttps://api.etherscan.io/v2/api?chainid=421614https://sepolia.arbiscan.ioarbitrum-novahttps://api.etherscan.io/v2/api?chainid=42170https://nova.arbiscan.iocronoshttps://api.etherscan.io/v2/api?chainid=25https://cronoscan.comcronos-testnetrskRBTChttps://blockscout.com/rsk/mainnet/apirsk-testnettRBTChttps://rootstock-testnet.blockscout.com/apitelosTLOShttps://api.teloscan.io/apihttps://teloscan.iotelos-testnethttps://api.testnet.teloscan.io/apihttps://testnet.teloscan.iocrabCRABhttps://crab-scan.darwinia.network/apiBLOCKSCOUT_API_KEYRINGhttps://explorer.darwinia.network/apikoiKRINGbscBNBhttps://bscscan.combsc-testnethttps://api.etherscan.io/v2/api?chainid=97https://testnet.bscscan.compoasokolscrollhttps://api.etherscan.io/v2/api?chainid=534352https://scrollscan.comscroll-sepoliahttps://api.etherscan.io/v2/api?chainid=534351https://sepolia.scrollscan.commetishttps://api.routescan.io/v2/network/mainnet/evm/1088/etherscanhttps://explorer.metis.iocfx-testnetCFXhttps://evmapi-testnet.confluxscan.org/apihttps://evmtestnet.confluxscan.orghttps://evmapi.confluxscan.org/apihttps://evm.confluxscan.orgxdaihttps://api.etherscan.io/v2/api?chainid=100https://gnosisscan.iopolygonPOLhttps://api.etherscan.io/v2/api?chainid=137https://polygonscan.comamoyhttps://api.etherscan.io/v2/api?chainid=80002https://amoy.polygonscan.comfantomFTMSCAN_API_KEYfantom-testnetmoonbeamGLMRhttps://api.etherscan.io/v2/api?chainid=1284https://moonbeam.moonscan.ioMOONSCAN_API_KEYmoonbeam-devDEVmoonriverMOVRhttps://api.etherscan.io/v2/api?chainid=1285https://moonriver.moonscan.iomoonbasehttps://api.etherscan.io/v2/api?chainid=1287https://moonbase.moonscan.ioanvil-hardhatgravity-alpha-mainnethttps://explorer.gravity.xyz/apigravity-alpha-testnet-sepoliahttps://explorer-sepolia.gravity.xyz/apihttps://mainnet-explorer.gravity.xyz/apievmosevmos-testnetplasmaXPLhttps://api.etherscan.io/v2/api?chainid=9745https://plasmascan.toplasma-testnethttps://api.etherscan.io/v2/api?chainid=9746https://testnet.plasmascan.tochiadohttps://gnosis-chiado.blockscout.com/apioasisemeraldhttps://explorer.emerald.oasis.dev/apiemerald-testnethttps://testnet.explorer.emerald.oasis.dev/apifilecoin-mainnetfilecoin-calibration-testnethttps://api.calibration.node.glif.io/rpc/v1https://calibration.filfox.info/enavalanchehttps://api.etherscan.io/v2/api?chainid=43114https://snowscan.xyzfujihttps://api.etherscan.io/v2/api?chainid=43113https://testnet.snowscan.xyzceloCELOhttps://api.etherscan.io/v2/api?chainid=42220https://celoscan.iocelo-sepoliahttps://api.etherscan.io/v2/api?chainid=11142220https://sepolia.celoscan.ioaurorahttps://api.aurorascan.dev/apihttps://aurorascan.devaurora-testnethttps://testnet.aurorascan.dev/apicantocanto-testnetbobahttps://api.bobascan.com/apihttps://bobascan.comBOBASCAN_API_KEYhttps://api.etherscan.io/v2/api?chainid=8453https://basescan.orgbase-goerlibase-sepoliahttps://api.etherscan.io/v2/api?chainid=84532https://sepolia.basescan.orgsyndrhttps://explorer.syndr.com/apisyndr-sepoliahttps://sepolia-explorer.syndr.com/apishimmerSMRhttps://explorer.evm.shimmer.network/apihttps://explorer.inkonchain.com/api/v2ink-sepoliahttps://explorer-sepolia.inkonchain.com/api/v2fraxtalhttps://api.etherscan.io/v2/api?chainid=252https://fraxscan.comfraxtal-testnethttps://api.etherscan.io/v2/api?chainid=2522https://holesky.fraxscan.comblasthttps://api.etherscan.io/v2/api?chainid=81457https://blastscan.ioblast-sepoliahttps://api.etherscan.io/v2/api?chainid=168587773https://sepolia.blastscan.iolineahttps://api.etherscan.io/v2/api?chainid=59144https://lineascan.buildlinea-goerlilinea-sepoliahttps://api.etherscan.io/v2/api?chainid=59141https://sepolia.lineascan.buildzksynchttps://block-explorer-api.mainnet.zksync.io/apihttps://explorer.zksync.iozksync-testnethttps://block-explorer-api.sepolia.zksync.dev/apihttps://sepolia.explorer.zksync.iomantleMNThttps://api.etherscan.io/v2/api?chainid=5000https://mantlescan.xyzmantle-sepoliahttps://api.etherscan.io/v2/api?chainid=5003https://sepolia.mantlescan.xyzxaiXAIhttps://api.etherscan.io/v2/api?chainid=660279https://xaiscan.ioxai-sepoliahttps://api.etherscan.io/v2/api?chainid=37714555429https://sepolia.xaiscan.iohappychain-testnetHAPPYhttps://explorer.testnet.happy.tech/apivictionhttps://www.vicscan.xyz/apizorahttps://explorer.zora.energy/apizora-sepoliahttps://sepolia.explorer.zora.energy/apipgnpgn-sepoliamodehttps://explorer.mode.network/apimode-sepoliahttps://sepolia.explorer.mode.network/apielastoshttps://esc.elastos.io/apietherlinkXTZhttps://explorer.etherlink.com/apietherlink-shadownethttps://shadownet.explorer.etherlink.com/apidegenDEGENhttps://explorer.degen.tips/apiopbnb-mainnethttps://api.etherscan.io/v2/api?chainid=204https://opbnb.bscscan.comopbnb-testnethttps://api.etherscan.io/v2/api?chainid=5611https://opbnb-testnet.bscscan.comroninRONhttps://skynet-api.roninchain.com/roninhttps://app.roninchain.comronin-testnethttps://api-gateway.skymavis.com/rpc/testnethttps://saigon-explorer.roninchain.comradiusRUSDhttps://network.radiustech.xyz/apiradius-testnethttps://testnet.radiustech.xyz/apitaikohttps://api.etherscan.io/v2/api?chainid=167000https://taikoscan.iotaiko-heklahttps://api.etherscan.io/v2/api?chainid=167009https://hekla.taikoscan.ioautonomys-nova-testnetflareFLRhttps://flare-explorer.flare.network/apiflare-coston2C2FLRhttps://coston2-explorer.flare.network/apiacalahttps://blockscout.acala.network/apiacala-mandala-testnethttps://blockscout.mandala.aca-staging.network/apiacala-testnetkarurahttps://blockscout.karura.network/apikarura-testnetpulsechainPLShttps://api.scan.pulsechain.comhttps://scan.pulsechain.compulsechain-testnethttps://api.scan.v4.testnet.pulsechain.comhttps://scan.v4.testnet.pulsechain.comcannonimmutableIMXhttps://explorer.immutable.com/apiimmutable-testnettIMXhttps://explorer.testnet.immutable.com/apisoneiumhttps://soneium.blockscout.com/apisoneium-minato-testnethttps://soneium-minato.blockscout.com/apiworldWRLDhttps://api.etherscan.io/v2/api?chainid=480https://worldscan.orgworld-sepoliahttps://api.etherscan.io/v2/api?chainid=4801https://sepolia.worldscan.orgiotexIOTXcoreCOREhttps://openapi.coredao.org/apihttps://scan.coredao.orgCORESCAN_API_KEYmerlinhttps://scan.merlinchain.io/apiMERLINSCAN_API_KEYbitlayerhttps://api.btrscan.com/scan/apihttps://www.btrscan.comBITLAYERSCAN_API_KEYvanaVANAhttps://api.vanascan.io/apihttps://vanascan.iozetaZETAhttps://zetachain.blockscout.com/apiZETASCAN_API_KEYkaiaKAIAhttps://mainnet-oapi.kaiascan.io/apihttps://kaiascan.ioKAIASCAN_API_KEYstoryIPhttps://www.storyscan.xyz/apiseiSEIhttps://api.etherscan.io/v2/api?chainid=1329https://seiscan.iosei-testnethttps://api.etherscan.io/v2/api?chainid=1328https://testnet.seiscan.iostable-mainnetUSDT0https://api.etherscan.io/v2/api?chainid=988https://stablescan.xyzstable-testnethttps://api.etherscan.io/v2/api?chainid=2201https://testnet.stablescan.xyzmegaethhttps://api.etherscan.io/v2/api?chainid=4326https://mega.etherscan.iomegaeth-testnethttps://api.etherscan.io/v2/api?chainid=6343https://megaeth-testnet-v2.blockscout.comxdc-mainnetXDChttps://xdcscan.comxdc-testnetTXDChttps://api.etherscan.io/v2/api?chainid=51https://testnet.xdcscan.comunichainhttps://api.etherscan.io/v2/api?chainid=130https://uniscan.xyzunichain-sepoliahttps://api.etherscan.io/v2/api?chainid=1301https://sepolia.uniscan.xyzsignet-pecorinoUSDShttps://explorer.pecorino.signet.sh/apiapechainAPEhttps://api.etherscan.io/v2/api?chainid=33139https://apescan.iocurtishttps://api.etherscan.io/v2/api?chainid=33111https://curtis.apescan.iosonichttps://api.etherscan.io/v2/api?chainid=146https://sonicscan.orgsonic-testnethttps://api.etherscan.io/v2/api?chainid=14601https://testnet.sonicscan.orgredbellyRBNThttps://api.routescan.io/v2/network/mainnet/evm/151/etherscanhttps://redbelly.routescan.ioROUTESCAN_API_KEYredbelly-testnethttps://api.routescan.io/v2/network/testnet/evm/153/etherscanhttps://redbelly.testnet.routescan.ioplume-testnetPLUMEhttps://testnet-explorer.plume.org/apihttps://explorer.plume.org/apitreasureMAGICtreasure-topazberachain-bepoliaBERAhttps://api.etherscan.io/v2/api?chainid=80069https://testnet.berascan.comBERASCAN_API_KEYhttps://api.etherscan.io/v2/api?chainid=80094https://berascan.comsuperposition-testnethttps://testnet-explorer.superposition.so/apihttps://explorer.superposition.so/apimonadMONhttps://api.etherscan.io/v2/api?chainid=143https://monadscan.commonad-testnethttps://api.etherscan.io/v2/api?chainid=10143https://testnet.monadscan.comhyperliquidHYPEhttps://api.etherscan.io/v2/api?chainid=999https://hyperevmscan.ioabstracthttps://api.etherscan.io/v2/api?chainid=2741https://abscan.orgabstract-testnethttps://api.etherscan.io/v2/api?chainid=11124https://sepolia.abscan.orgcornBTCNhttps://api.routescan.io/v2/network/mainnet/evm/21000000/etherscan/apihttps://cornscan.iocorn-testnethttps://api.routescan.io/v2/network/testnet/evm/21000001/etherscan/apihttps://testnet.cornscan.iosophonSOPHhttps://api.etherscan.io/v2/api?chainid=50104https://sophscan.xyzsophon-testnethttps://api.etherscan.io/v2/api?chainid=531050104https://testnet.sophscan.xyzpolkadot-testnetPAShttps://blockscout-testnet.polkadot.io/apikusamaKSMhttps://blockscout-kusama.polkadot.io/apiDOThttps://blockscout.polkadot.io/apilensGHOhttps://explorer-api.lens.xyzhttps://explorer.lens.xyzlens-testnetGRASShttps://block-explorer-api.staging.lens.zksync.devhttps://explorer.testnet.lens.xyzinjectiveINJhttps://blockscout-api.injective.network/apihttps://blockscout.injective.networkinjective-testnethttps://testnet.blockscout-api.injective.network/apihttps://testnet.blockscout.injective.networkkatanahttps://api.etherscan.io/v2/api?chainid=747474https://katanascan.comliskhttps://blockscout.lisk.com/apifusehttps://explorer.fuse.io/apifluenthttps://api.fluentscan.xyz/apihttps://fluentscan.xyzfluent-devnethttps://api-devnet.fluentscan.xyz/apihttps://devnet.fluentscan.xyzfluent-testnethttps://api-testnet.fluentscan.xyz/apihttps://testnet.fluentscan.xyzskale-basehttps://skale-base-explorer.skalenodes.com/apiskale-base-sepolia-testnethttps://base-sepolia-testnet-explorer.skalenodes.com/apimemecorehttps://api.etherscan.io/v2/api?chainid=4352https://memecorescan.ioformicariumtMhttps://api.etherscan.io/v2/api?chainid=43521https://formicarium.memecorescan.ioinsectariumhttps://insectarium.blockscout.memecore.com/apitempohttps://contracts.tempo.xyzhttps://explore.tempo.xyztempo-moderatohttps://explore.moderato.tempo.xyztempo-testnethttps://explore.andantino.tempo.xyztempo-devnetarc-testnetUSDChttps://testnet.arcscan.app/apibattlechain-testnethttps://block-explorer-api.testnet.battlechain.com/apihttps://explorer.testnet.battlechain.comrobinhood-testnethttps://explorer.testnet.chain.robinhood.com/api";
+static STRING_DATA: &[u8] = b"mainnetETHhttps://api.etherscan.io/v2/api?chainid=1https://etherscan.ioETHERSCAN_API_KEYmordenETHETHERSCAN_API_KEYropstenETHETHERSCAN_API_KEYrinkebyETHETHERSCAN_API_KEYgoerliETHETHERSCAN_API_KEYkovanETHETHERSCAN_API_KEYholeskyETHhttps://api.etherscan.io/v2/api?chainid=17000https://holesky.etherscan.ioETHERSCAN_API_KEYhoodihttps://api.etherscan.io/v2/api?chainid=560048https://hoodi.etherscan.ioETHERSCAN_API_KEYsepoliaETHhttps://api.etherscan.io/v2/api?chainid=11155111https://sepolia.etherscan.ioETHERSCAN_API_KEYodysseyhttps://odyssey-explorer.ithaca.xyz/apihttps://odyssey-explorer.ithaca.xyzoptimismETHhttps://api.etherscan.io/v2/api?chainid=10https://optimistic.etherscan.ioETHERSCAN_API_KEYoptimism-kovanETHERSCAN_API_KEYoptimism-goerliETHERSCAN_API_KEYoptimism-sepoliaETHhttps://api.etherscan.io/v2/api?chainid=11155420https://sepolia-optimism.etherscan.ioETHERSCAN_API_KEYbobETHhttps://explorer.gobob.xyz/apihttps://explorer.gobob.xyzbob-sepoliahttps://bob-sepolia.explorer.gobob.xyz/apihttps://bob-sepolia.explorer.gobob.xyzarbitrumETHhttps://api.etherscan.io/v2/api?chainid=42161https://arbiscan.ioETHERSCAN_API_KEYarbitrum-testnetETHERSCAN_API_KEYarbitrum-goerliETHERSCAN_API_KEYarbitrum-sepoliahttps://api.etherscan.io/v2/api?chainid=421614https://sepolia.arbiscan.ioETHERSCAN_API_KEYarbitrum-novaETHhttps://api.etherscan.io/v2/api?chainid=42170https://nova.arbiscan.ioETHERSCAN_API_KEYcronoshttps://api.etherscan.io/v2/api?chainid=25https://cronoscan.comETHERSCAN_API_KEYcronos-testnetETHERSCAN_API_KEYrskRBTChttps://blockscout.com/rsk/mainnet/apihttps://blockscout.com/rsk/mainnetrsk-testnettRBTChttps://rootstock-testnet.blockscout.com/apihttps://rootstock-testnet.blockscout.comtelosTLOShttps://api.teloscan.io/apihttps://teloscan.iotelos-testnetTLOShttps://api.testnet.teloscan.io/apihttps://testnet.teloscan.iocrabCRABhttps://crab-scan.darwinia.network/apihttps://crab-scan.darwinia.networkBLOCKSCOUT_API_KEYdarwiniaRINGhttps://explorer.darwinia.network/apihttps://explorer.darwinia.networkBLOCKSCOUT_API_KEYkoiKRINGBLOCKSCOUT_API_KEYbscBNBhttps://api.etherscan.io/v2/api?chainid=56https://bscscan.comETHERSCAN_API_KEYbsc-testnetBNBhttps://api.etherscan.io/v2/api?chainid=97https://testnet.bscscan.comETHERSCAN_API_KEYpoasokolscrollETHhttps://api.etherscan.io/v2/api?chainid=534352https://scrollscan.comETHERSCAN_API_KEYscroll-sepoliaETHhttps://api.etherscan.io/v2/api?chainid=534351https://sepolia.scrollscan.comETHERSCAN_API_KEYmetishttps://api.routescan.io/v2/network/mainnet/evm/1088/etherscanhttps://explorer.metis.iocfx-testnetCFXhttps://evmapi-testnet.confluxscan.org/apihttps://evmtestnet.confluxscan.orgcfxCFXhttps://evmapi.confluxscan.org/apihttps://evm.confluxscan.orgxdaihttps://api.etherscan.io/v2/api?chainid=100https://gnosisscan.ioETHERSCAN_API_KEYpolygonPOLhttps://api.etherscan.io/v2/api?chainid=137https://polygonscan.comETHERSCAN_API_KEYamoyPOLhttps://api.etherscan.io/v2/api?chainid=80002https://amoy.polygonscan.comETHERSCAN_API_KEYfantomFTMSCAN_API_KEYfantom-testnetFTMSCAN_API_KEYmoonbeamGLMRhttps://api.etherscan.io/v2/api?chainid=1284https://moonbeam.moonscan.ioMOONSCAN_API_KEYmoonbeam-devDEVMOONSCAN_API_KEYmoonriverMOVRhttps://api.etherscan.io/v2/api?chainid=1285https://moonriver.moonscan.ioMOONSCAN_API_KEYmoonbaseDEVhttps://api.etherscan.io/v2/api?chainid=1287https://moonbase.moonscan.ioMOONSCAN_API_KEYanvil-hardhatgravity-alpha-mainnetGhttps://explorer.gravity.xyz/apihttps://explorer.gravity.xyzgravity-alpha-testnet-sepoliaGhttps://explorer-sepolia.gravity.xyz/apihttps://explorer-sepolia.gravity.xyzgravGhttps://mainnet-explorer.gravity.xyz/apihttps://mainnet-explorer.gravity.xyzevmosevmos-testnetplasmaXPLhttps://api.etherscan.io/v2/api?chainid=9745https://plasmascan.toETHERSCAN_API_KEYplasma-testnetXPLhttps://api.etherscan.io/v2/api?chainid=9746https://testnet.plasmascan.toETHERSCAN_API_KEYchiadohttps://gnosis-chiado.blockscout.com/apihttps://gnosis-chiado.blockscout.comoasisemeraldhttps://explorer.emerald.oasis.dev/apihttps://explorer.emerald.oasis.devemerald-testnethttps://testnet.explorer.emerald.oasis.dev/apihttps://testnet.explorer.emerald.oasis.devfilecoin-mainnetfilecoin-calibration-testnethttps://api.calibration.node.glif.io/rpc/v1https://calibration.filfox.info/enavalanchehttps://api.etherscan.io/v2/api?chainid=43114https://snowscan.xyzETHERSCAN_API_KEYfujihttps://api.etherscan.io/v2/api?chainid=43113https://testnet.snowscan.xyzETHERSCAN_API_KEYceloCELOhttps://api.etherscan.io/v2/api?chainid=42220https://celoscan.ioETHERSCAN_API_KEYcelo-sepoliaCELOhttps://api.etherscan.io/v2/api?chainid=11142220https://sepolia.celoscan.ioBLOCKSCOUT_API_KEYaurorahttps://api.aurorascan.dev/apihttps://aurorascan.devETHERSCAN_API_KEYaurora-testnethttps://testnet.aurorascan.dev/apihttps://testnet.aurorascan.devETHERSCAN_API_KEYcantoBLOCKSCOUT_API_KEYcanto-testnetBLOCKSCOUT_API_KEYbobahttps://api.bobascan.com/apihttps://bobascan.comBOBASCAN_API_KEYbaseETHhttps://api.etherscan.io/v2/api?chainid=8453https://basescan.orgETHERSCAN_API_KEYbase-goerliETHETHERSCAN_API_KEYbase-sepoliaETHhttps://api.etherscan.io/v2/api?chainid=84532https://sepolia.basescan.orgETHERSCAN_API_KEYsyndrhttps://explorer.syndr.com/apihttps://explorer.syndr.comETHERSCAN_API_KEYsyndr-sepoliahttps://sepolia-explorer.syndr.com/apihttps://sepolia-explorer.syndr.comETHERSCAN_API_KEYshimmerSMRhttps://explorer.evm.shimmer.network/apihttps://explorer.evm.shimmer.networkBLOCKSCOUT_API_KEYinkETHhttps://explorer.inkonchain.com/api/v2https://explorer.inkonchain.comBLOCKSCOUT_API_KEYink-sepoliahttps://explorer-sepolia.inkonchain.com/api/v2https://explorer-sepolia.inkonchain.comBLOCKSCOUT_API_KEYfraxtalhttps://api.etherscan.io/v2/api?chainid=252https://fraxscan.comETHERSCAN_API_KEYfraxtal-testnethttps://api.etherscan.io/v2/api?chainid=2522https://holesky.fraxscan.comETHERSCAN_API_KEYblasthttps://api.etherscan.io/v2/api?chainid=81457https://blastscan.ioETHERSCAN_API_KEYblast-sepoliahttps://api.etherscan.io/v2/api?chainid=168587773https://sepolia.blastscan.ioETHERSCAN_API_KEYlineaETHhttps://api.etherscan.io/v2/api?chainid=59144https://lineascan.buildETHERSCAN_API_KEYlinea-goerlilinea-sepoliahttps://api.etherscan.io/v2/api?chainid=59141https://sepolia.lineascan.buildETHERSCAN_API_KEYzksyncETHhttps://block-explorer-api.mainnet.zksync.io/apihttps://explorer.zksync.ioETHERSCAN_API_KEYzksync-testnetETHhttps://block-explorer-api.sepolia.zksync.dev/apihttps://sepolia.explorer.zksync.ioETHERSCAN_API_KEYmantleMNThttps://api.etherscan.io/v2/api?chainid=5000https://mantlescan.xyzETHERSCAN_API_KEYmantle-sepoliaMNThttps://api.etherscan.io/v2/api?chainid=5003https://sepolia.mantlescan.xyzETHERSCAN_API_KEYxaiXAIhttps://api.etherscan.io/v2/api?chainid=660279https://xaiscan.ioETHERSCAN_API_KEYxai-sepoliaXAIhttps://api.etherscan.io/v2/api?chainid=37714555429https://sepolia.xaiscan.ioETHERSCAN_API_KEYhappychain-testnetHAPPYhttps://explorer.testnet.happy.tech/apihttps://explorer.testnet.happy.techvictionhttps://www.vicscan.xyz/apihttps://www.vicscan.xyzzorahttps://explorer.zora.energy/apihttps://explorer.zora.energyBLOCKSCOUT_API_KEYzora-sepoliahttps://sepolia.explorer.zora.energy/apihttps://sepolia.explorer.zora.energyBLOCKSCOUT_API_KEYpgnBLOCKSCOUT_API_KEYpgn-sepoliaBLOCKSCOUT_API_KEYmodehttps://explorer.mode.network/apihttps://explorer.mode.networkBLOCKSCOUT_API_KEYmode-sepoliahttps://sepolia.explorer.mode.network/apihttps://sepolia.explorer.mode.networkBLOCKSCOUT_API_KEYelastoshttps://esc.elastos.io/apihttps://esc.elastos.ioetherlinkXTZhttps://explorer.etherlink.com/apihttps://explorer.etherlink.comBLOCKSCOUT_API_KEYetherlink-shadownetXTZhttps://shadownet.explorer.etherlink.com/apihttps://shadownet.explorer.etherlink.comBLOCKSCOUT_API_KEYdegenDEGENhttps://explorer.degen.tips/apihttps://explorer.degen.tipsopbnb-mainnetBNBhttps://api.etherscan.io/v2/api?chainid=204https://opbnb.bscscan.comETHERSCAN_API_KEYopbnb-testnetBNBhttps://api.etherscan.io/v2/api?chainid=5611https://opbnb-testnet.bscscan.comETHERSCAN_API_KEYroninRONhttps://skynet-api.roninchain.com/roninhttps://app.roninchain.comronin-testnetRONhttps://api-gateway.skymavis.com/rpc/testnethttps://saigon-explorer.roninchain.comradiusRUSDhttps://network.radiustech.xyz/apihttps://network.radiustech.xyzradius-testnetRUSDhttps://testnet.radiustech.xyz/apihttps://testnet.radiustech.xyztaikoETHhttps://api.etherscan.io/v2/api?chainid=167000https://taikoscan.ioETHERSCAN_API_KEYtaiko-heklaETHhttps://api.etherscan.io/v2/api?chainid=167009https://hekla.taikoscan.ioETHERSCAN_API_KEYautonomys-nova-testnetflareFLRhttps://flare-explorer.flare.network/apihttps://flare-explorer.flare.networkBLOCKSCOUT_API_KEYflare-coston2C2FLRhttps://coston2-explorer.flare.network/apihttps://coston2-explorer.flare.networkBLOCKSCOUT_API_KEYacalahttps://blockscout.acala.network/apihttps://blockscout.acala.networkBLOCKSCOUT_API_KEYacala-mandala-testnethttps://blockscout.mandala.aca-staging.network/apihttps://blockscout.mandala.aca-staging.networkBLOCKSCOUT_API_KEYacala-testnetBLOCKSCOUT_API_KEYkarurahttps://blockscout.karura.network/apihttps://blockscout.karura.networkBLOCKSCOUT_API_KEYkarura-testnetBLOCKSCOUT_API_KEYpulsechainPLShttps://api.scan.pulsechain.comhttps://scan.pulsechain.compulsechain-testnetPLShttps://api.scan.v4.testnet.pulsechain.comhttps://scan.v4.testnet.pulsechain.comcannonimmutableIMXhttps://explorer.immutable.com/apihttps://explorer.immutable.comBLOCKSCOUT_API_KEYimmutable-testnettIMXhttps://explorer.testnet.immutable.com/apihttps://explorer.testnet.immutable.comBLOCKSCOUT_API_KEYsoneiumhttps://soneium.blockscout.com/apihttps://soneium.blockscout.comBLOCKSCOUT_API_KEYsoneium-minato-testnethttps://soneium-minato.blockscout.com/apihttps://soneium-minato.blockscout.comBLOCKSCOUT_API_KEYworldWRLDhttps://api.etherscan.io/v2/api?chainid=480https://worldscan.orgBLOCKSCOUT_API_KEYworld-sepoliaWRLDhttps://api.etherscan.io/v2/api?chainid=4801https://sepolia.worldscan.orgBLOCKSCOUT_API_KEYiotexIOTXcoreCOREhttps://openapi.coredao.org/apihttps://scan.coredao.orgCORESCAN_API_KEYmerlinBTChttps://scan.merlinchain.io/apihttps://scan.merlinchain.ioMERLINSCAN_API_KEYbitlayerBTChttps://api.btrscan.com/scan/apihttps://www.btrscan.comBITLAYERSCAN_API_KEYvanaVANAhttps://api.vanascan.io/apihttps://vanascan.ioBLOCKSCOUT_API_KEYzetaZETAhttps://zetachain.blockscout.com/apihttps://zetachain.blockscout.comZETASCAN_API_KEYkaiaKAIAhttps://mainnet-oapi.kaiascan.io/apihttps://kaiascan.ioKAIASCAN_API_KEYstoryIPhttps://www.storyscan.xyz/apihttps://www.storyscan.xyzBLOCKSCOUT_API_KEYseiSEIhttps://api.etherscan.io/v2/api?chainid=1329https://seiscan.ioETHERSCAN_API_KEYsei-testnetSEIhttps://api.etherscan.io/v2/api?chainid=1328https://testnet.seiscan.ioETHERSCAN_API_KEYstable-mainnetUSDT0https://api.etherscan.io/v2/api?chainid=988https://stablescan.xyzETHERSCAN_API_KEYstable-testnetUSDT0https://api.etherscan.io/v2/api?chainid=2201https://testnet.stablescan.xyzETHERSCAN_API_KEYmegaethETHhttps://api.etherscan.io/v2/api?chainid=4326https://mega.etherscan.ioETHERSCAN_API_KEYmegaeth-testnetETHhttps://api.etherscan.io/v2/api?chainid=6343https://megaeth-testnet-v2.blockscout.comETHERSCAN_API_KEYxdc-mainnetXDChttps://api.etherscan.io/v2/api?chainid=50https://xdcscan.comETHERSCAN_API_KEYxdc-testnetTXDChttps://api.etherscan.io/v2/api?chainid=51https://testnet.xdcscan.comETHERSCAN_API_KEYunichainETHhttps://api.etherscan.io/v2/api?chainid=130https://uniscan.xyzETHERSCAN_API_KEYunichain-sepoliaETHhttps://api.etherscan.io/v2/api?chainid=1301https://sepolia.uniscan.xyzETHERSCAN_API_KEYsignet-pecorinoUSDShttps://explorer.pecorino.signet.sh/apihttps://explorer.pecorino.signet.shBLOCKSCOUT_API_KEYapechainAPEhttps://api.etherscan.io/v2/api?chainid=33139https://apescan.ioETHERSCAN_API_KEYcurtisAPEhttps://api.etherscan.io/v2/api?chainid=33111https://curtis.apescan.ioBLOCKSCOUT_API_KEYsonicShttps://api.etherscan.io/v2/api?chainid=146https://sonicscan.orgETHERSCAN_API_KEYsonic-testnetShttps://api.etherscan.io/v2/api?chainid=14601https://testnet.sonicscan.orgETHERSCAN_API_KEYredbellyRBNThttps://api.routescan.io/v2/network/mainnet/evm/151/etherscanhttps://redbelly.routescan.ioROUTESCAN_API_KEYredbelly-testnetRBNThttps://api.routescan.io/v2/network/testnet/evm/153/etherscanhttps://redbelly.testnet.routescan.ioROUTESCAN_API_KEYplume-testnetPLUMEhttps://testnet-explorer.plume.org/apihttps://testnet-explorer.plume.orgplumePLUMEhttps://explorer.plume.org/apihttps://explorer.plume.orgtreasureMAGICtreasure-topazMAGICberachain-bepoliaBERAhttps://api.etherscan.io/v2/api?chainid=80069https://testnet.berascan.comBERASCAN_API_KEYberachainBERAhttps://api.etherscan.io/v2/api?chainid=80094https://berascan.comBERASCAN_API_KEYsuperposition-testnetETHhttps://testnet-explorer.superposition.so/apihttps://testnet-explorer.superposition.soBLOCKSCOUT_API_KEYsuperpositionETHhttps://explorer.superposition.so/apihttps://explorer.superposition.soBLOCKSCOUT_API_KEYmonadMONhttps://api.etherscan.io/v2/api?chainid=143https://monadscan.comETHERSCAN_API_KEYmonad-testnetMONhttps://api.etherscan.io/v2/api?chainid=10143https://testnet.monadscan.comETHERSCAN_API_KEYhyperliquidHYPEhttps://api.etherscan.io/v2/api?chainid=999https://hyperevmscan.ioETHERSCAN_API_KEYabstractETHhttps://api.etherscan.io/v2/api?chainid=2741https://abscan.orgETHERSCAN_API_KEYabstract-testnethttps://api.etherscan.io/v2/api?chainid=11124https://sepolia.abscan.orgETHERSCAN_API_KEYcornBTCNhttps://api.routescan.io/v2/network/mainnet/evm/21000000/etherscan/apihttps://cornscan.ioROUTESCAN_API_KEYcorn-testnetBTCNhttps://api.routescan.io/v2/network/testnet/evm/21000001/etherscan/apihttps://testnet.cornscan.ioROUTESCAN_API_KEYsophonSOPHhttps://api.etherscan.io/v2/api?chainid=50104https://sophscan.xyzETHERSCAN_API_KEYsophon-testnetSOPHhttps://api.etherscan.io/v2/api?chainid=531050104https://testnet.sophscan.xyzETHERSCAN_API_KEYpolkadot-testnetPAShttps://blockscout-testnet.polkadot.io/apihttps://blockscout-testnet.polkadot.ioBLOCKSCOUT_API_KEYkusamaKSMhttps://blockscout-kusama.polkadot.io/apihttps://blockscout-kusama.polkadot.ioBLOCKSCOUT_API_KEYpolkadotDOThttps://blockscout.polkadot.io/apihttps://blockscout.polkadot.ioBLOCKSCOUT_API_KEYlensGHOhttps://explorer-api.lens.xyzhttps://explorer.lens.xyzlens-testnetGRASShttps://block-explorer-api.staging.lens.zksync.devhttps://explorer.testnet.lens.xyzinjectiveINJhttps://blockscout-api.injective.network/apihttps://blockscout.injective.networkBLOCKSCOUT_API_KEYinjective-testnetINJhttps://testnet.blockscout-api.injective.network/apihttps://testnet.blockscout.injective.networkBLOCKSCOUT_API_KEYkatanaETHhttps://api.etherscan.io/v2/api?chainid=747474https://katanascan.comETHERSCAN_API_KEYliskETHhttps://blockscout.lisk.com/apihttps://blockscout.lisk.comBLOCKSCOUT_API_KEYfusehttps://explorer.fuse.io/apihttps://explorer.fuse.ioBLOCKSCOUT_API_KEYfluenthttps://api.fluentscan.xyz/apihttps://fluentscan.xyzfluent-devnethttps://api-devnet.fluentscan.xyz/apihttps://devnet.fluentscan.xyzfluent-testnethttps://api-testnet.fluentscan.xyz/apihttps://testnet.fluentscan.xyzskale-basehttps://skale-base-explorer.skalenodes.com/apihttps://skale-base-explorer.skalenodes.comBLOCKSCOUT_API_KEYskale-base-sepolia-testnethttps://base-sepolia-testnet-explorer.skalenodes.com/apihttps://base-sepolia-testnet-explorer.skalenodes.comBLOCKSCOUT_API_KEYmemecoreMhttps://api.etherscan.io/v2/api?chainid=4352https://memecorescan.ioETHERSCAN_API_KEYformicariumtMhttps://api.etherscan.io/v2/api?chainid=43521https://formicarium.memecorescan.ioETHERSCAN_API_KEYinsectariumtMhttps://insectarium.blockscout.memecore.com/apihttps://insectarium.blockscout.memecore.comtempoUSDhttps://contracts.tempo.xyzhttps://explore.tempo.xyztempo-moderatoUSDhttps://contracts.tempo.xyzhttps://explore.moderato.tempo.xyztempo-testnetUSDhttps://contracts.tempo.xyzhttps://explore.andantino.tempo.xyztempo-devnetUSDarc-testnetUSDChttps://testnet.arcscan.app/apihttps://testnet.arcscan.appBLOCKSCOUT_API_KEYbattlechain-testnetETHhttps://block-explorer-api.testnet.battlechain.com/apihttps://explorer.testnet.battlechain.comrobinhood-testnethttps://explorer.testnet.chain.robinhood.com/apihttps://explorer.testnet.chain.robinhood.com";
 
 static CHAIN_DATA: [ChainData; 197] = [
+    d(0, [7, 3, 41, 20, 17], 12000, FLAG_SUPPORTS_SHANGHAI | FLAG_ETHEREUM, 0),
+    d(88, [6, 3, N, N, 17], 0, FLAG_TESTNET | FLAG_ETHEREUM, NO_WRAPPED_NATIVE_TOKEN),
+    d(114, [7, 3, N, N, 17], 0, FLAG_TESTNET | FLAG_ETHEREUM, NO_WRAPPED_NATIVE_TOKEN),
+    d(141, [7, 3, N, N, 17], 0, FLAG_TESTNET | FLAG_ETHEREUM, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(0, 7), s(7, 3), s(10, 41), s(51, 20), s(71, 17)],
-        12000,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_ETHEREUM,
+        168,
+        [6, 3, N, N, 17],
         0,
-    ),
-    d(
-        [s(88, 6), s(7, 3), N, N, s(71, 17)],
-        0,
-        FLAG_TESTNET | FLAG_ETHEREUM,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_ETHEREUM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(194, [5, 3, N, N, 17], 0, FLAG_TESTNET | FLAG_ETHEREUM, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(94, 7), s(7, 3), N, N, s(71, 17)],
+        219,
+        [7, 3, 45, 28, 17],
         0,
-        FLAG_TESTNET | FLAG_ETHEREUM,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_ETHEREUM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(319, [5, N, 46, 26, 17], 0, FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(101, 7), s(7, 3), N, N, s(71, 17)],
-        0,
-        FLAG_TESTNET | FLAG_ETHEREUM,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(108, 6), s(7, 3), N, N, s(71, 17)],
+        413,
+        [7, 3, 48, 28, 17],
         0,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_ETHEREUM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(114, 5), s(7, 3), N, N, s(71, 17)],
-        0,
-        FLAG_TESTNET | FLAG_ETHEREUM,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(119, 7), s(7, 3), s(126, 45), s(171, 28), s(71, 17)],
-        0,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_ETHEREUM,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(199, 5), N, s(204, 46), s(250, 26), s(71, 17)],
-        0,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(276, 7), s(7, 3), s(283, 48), s(331, 28), s(71, 17)],
-        0,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_ETHEREUM,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(359, 7), N, s(366, 39), s(366, 35), N],
+        516,
+        [7, N, 39, 35, N],
         1000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(597, [8, 3, 42, 31, 17], 2000, FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM, 1),
     d(
-        [s(405, 8), s(7, 3), s(413, 42), s(455, 31), s(71, 17)],
-        2000,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
-        1,
-    ),
-    d(
-        [s(486, 14), N, N, N, s(71, 17)],
+        698,
+        [14, N, N, N, 17],
         0,
         FLAG_LEGACY | FLAG_TESTNET | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(500, 15), N, N, N, s(71, 17)],
+        729,
+        [15, N, N, N, 17],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(515, 16), s(7, 3), s(531, 48), s(579, 37), s(71, 17)],
+        761,
+        [16, 3, 48, 37, 17],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(882, [3, 3, 30, 26, N], 2000, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(616, 3), s(7, 3), s(619, 30), s(619, 26), N],
-        2000,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(649, 11), N, s(660, 42), s(660, 38), N],
+        944,
+        [11, N, 42, 38, N],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(702, 8), s(7, 3), s(710, 45), s(755, 19), s(71, 17)], 260, FLAG_SUPPORTS_SHANGHAI, 2),
-    d([s(774, 16), N, N, N, s(71, 17)], 260, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
-    d([s(790, 15), N, N, N, s(71, 17)], 260, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(1035, [8, 3, 45, 19, 17], 260, FLAG_SUPPORTS_SHANGHAI, 2),
+    d(1127, [16, N, N, N, 17], 260, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(1160, [15, N, N, N, 17], 260, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(805, 16), N, s(821, 46), s(867, 27), s(71, 17)],
+        1192,
+        [16, N, 46, 27, 17],
         260,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(1298, [13, 3, 45, 24, 17], 260, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
+    d(1400, [6, N, 42, 21, 17], 5700, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(1486, [14, N, N, N, 17], 5700, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(1517, [3, 4, 38, 34, N], 25000, FLAG_LEGACY | FLAG_SUPPORTS_SHANGHAI, 3),
     d(
-        [s(894, 13), s(7, 3), s(907, 45), s(952, 24), s(71, 17)],
-        260,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d([s(976, 6), N, s(982, 42), s(1024, 21), s(71, 17)], 5700, 0, NO_WRAPPED_NATIVE_TOKEN),
-    d([s(1045, 14), N, N, N, s(71, 17)], 5700, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
-    d(
-        [s(1059, 3), s(1062, 4), s(1066, 38), s(1066, 34), N],
-        25000,
-        FLAG_LEGACY | FLAG_SUPPORTS_SHANGHAI,
-        3,
-    ),
-    d(
-        [s(1104, 11), s(1115, 5), s(1120, 44), s(1120, 40), N],
+        1596,
+        [11, 5, 44, 40, N],
         25000,
         FLAG_LEGACY | FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(1164, 5), s(1169, 4), s(1173, 27), s(1200, 19), N], 500, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(1696, [5, 4, 27, 19, N], 500, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(1751, [13, 4, 35, 27, N], 500, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(1830, [4, 4, 38, 34, 18], 6000, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
+    d(1928, [8, 4, 37, 33, 18], 6000, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
+    d(2028, [3, 5, N, N, 18], 6000, FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(2054, [3, 3, 42, 19, 17], 450, FLAG_SUPPORTS_SHANGHAI, 4),
     d(
-        [s(1219, 13), s(1169, 4), s(1232, 35), s(1267, 27), N],
-        500,
-        FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(1294, 4), s(1298, 4), s(1302, 38), s(1302, 34), s(1340, 18)],
-        6000,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(1320, 8), s(1358, 4), s(1362, 37), s(1362, 33), s(1340, 18)],
-        6000,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(1399, 3), s(1402, 5), N, N, s(1340, 18)],
-        6000,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d([s(1407, 3), s(1410, 3), s(204, 42), s(1413, 19), s(71, 17)], 450, FLAG_SUPPORTS_SHANGHAI, 4),
-    d(
-        [s(1432, 11), s(1410, 3), s(1443, 42), s(1485, 27), s(71, 17)],
+        2138,
+        [11, 3, 42, 27, 17],
         450,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(1512, 3), N, N, N, N], 0, 0, NO_WRAPPED_NATIVE_TOKEN),
-    d([s(1515, 5), N, N, N, N], 0, 0, NO_WRAPPED_NATIVE_TOKEN),
-    d([s(1520, 6), s(7, 3), s(1526, 46), s(1572, 22), s(71, 17)], 3000, FLAG_SUPPORTS_SHANGHAI, 5),
+    d(2238, [3, N, N, N, N], 0, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(2241, [5, N, N, N, N], 0, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(2246, [6, 3, 46, 22, 17], 3000, FLAG_SUPPORTS_SHANGHAI, 5),
     d(
-        [s(1594, 14), s(7, 3), s(1608, 46), s(1654, 30), s(71, 17)],
+        2340,
+        [14, 3, 46, 30, 17],
         3000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(1684, 5), N, s(1689, 62), s(1751, 25), N], 0, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(2450, [5, N, 62, 25, N], 0, 0, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(1776, 11), s(1787, 3), s(1790, 42), s(1832, 34), N],
+        2542,
+        [11, 3, 42, 34, N],
         500,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(2632, [3, 3, 34, 27, N], 500, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
+    d(2699, [4, N, 43, 21, 17], 5000, FLAG_SUPPORTS_SHANGHAI, 6),
+    d(2784, [7, 3, 43, 23, 17], 2100, FLAG_SUPPORTS_SHANGHAI, 7),
+    d(2877, [4, 3, 45, 28, 17], 2100, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(2974, [6, N, N, N, 15], 1200, FLAG_LEGACY, 8),
+    d(2995, [14, N, N, N, 15], 1200, FLAG_LEGACY | FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(3024, [8, 4, 44, 28, 16], 6500, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
+    d(3124, [12, 3, N, N, 16], 0, FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(3155, [9, 4, 44, 29, 16], 6500, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(1776, 3), s(1787, 3), s(1866, 34), s(1900, 27), N],
-        500,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d([s(1927, 4), N, s(1931, 43), s(1974, 21), s(71, 17)], 5000, FLAG_SUPPORTS_SHANGHAI, 6),
-    d(
-        [s(1995, 7), s(2002, 3), s(2005, 43), s(2048, 23), s(71, 17)],
-        2100,
-        FLAG_SUPPORTS_SHANGHAI,
-        7,
-    ),
-    d(
-        [s(2071, 4), s(2002, 3), s(2075, 45), s(2120, 28), s(71, 17)],
-        2100,
-        FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d([s(2148, 6), N, N, N, s(2154, 15)], 1200, FLAG_LEGACY, 8),
-    d(
-        [s(2169, 14), N, N, N, s(2154, 15)],
-        1200,
-        FLAG_LEGACY | FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(2183, 8), s(2191, 4), s(2195, 44), s(2239, 28), s(2267, 16)],
-        6500,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(2283, 12), s(2295, 3), N, N, s(2267, 16)],
-        0,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(2298, 9), s(2307, 4), s(2311, 44), s(2355, 29), s(2267, 16)],
-        6500,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(2384, 8), s(2295, 3), s(2392, 44), s(2436, 28), s(2267, 16)],
+        3257,
+        [8, 3, 44, 28, 16],
         6500,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(2292, 3), N, N, N, N], 200, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(3133, [3, N, N, N, N], 200, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(3356, [13, N, N, N, N], 200, FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(3369, [21, 1, 32, 28, N], 260, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(2464, 13), N, N, N, N],
-        200,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(2477, 21), s(1361, 1), s(2498, 32), s(2498, 28), N],
-        260,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(2530, 29), s(1361, 1), s(2559, 40), s(2559, 36), N],
+        3451,
+        [29, 1, 40, 36, N],
         260,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(3557, [4, 1, 40, 36, N], 260, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
+    d(3638, [5, N, N, N, N], 1900, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(3643, [13, N, N, N, N], 1900, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(3656, [6, 3, 44, 21, 17], 1000, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(3747, [14, 3, 44, 29, 17], 1000, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(3854, [6, N, 40, 36, N], 5000, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
+    d(3936, [5, N, N, N, N], 5500, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(3941, [7, N, 38, 34, N], 6000, FLAG_LEGACY, NO_WRAPPED_NATIVE_TOKEN),
+    d(4020, [15, N, 46, 42, N], 0, FLAG_LEGACY | FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(4123, [16, N, N, N, N], 30000, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(4139, [28, N, 43, 34, N], 30000, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(4244, [9, N, 45, 20, 17], 2000, FLAG_SUPPORTS_SHANGHAI, 9),
     d(
-        [s(2477, 4), s(1361, 1), s(2599, 40), s(2599, 36), N],
-        260,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d([s(2639, 5), N, N, N, N], 1900, 0, NO_WRAPPED_NATIVE_TOKEN),
-    d([s(2644, 13), N, N, N, N], 1900, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
-    d(
-        [s(2657, 6), s(2663, 3), s(2666, 44), s(2710, 21), s(71, 17)],
-        1000,
-        0,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(2731, 14), s(2663, 3), s(2745, 44), s(2789, 29), s(71, 17)],
-        1000,
-        FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(2818, 6), N, s(2824, 40), s(2824, 36), N],
-        5000,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d([s(2864, 5), N, N, N, N], 5500, 0, NO_WRAPPED_NATIVE_TOKEN),
-    d([s(2869, 7), N, s(2876, 38), s(2876, 34), N], 6000, FLAG_LEGACY, NO_WRAPPED_NATIVE_TOKEN),
-    d(
-        [s(2914, 15), N, s(2929, 46), s(2929, 42), N],
-        0,
-        FLAG_LEGACY | FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d([s(2975, 16), N, N, N, N], 30000, 0, NO_WRAPPED_NATIVE_TOKEN),
-    d([s(2991, 28), N, s(3019, 43), s(3062, 34), N], 30000, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
-    d([s(3096, 9), N, s(3105, 45), s(3150, 20), s(71, 17)], 2000, FLAG_SUPPORTS_SHANGHAI, 9),
-    d(
-        [s(3170, 4), N, s(3174, 45), s(3219, 28), s(71, 17)],
+        4335,
+        [4, N, 45, 28, 17],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(3247, 4), s(3251, 4), s(3255, 45), s(3300, 19), s(71, 17)],
+        4429,
+        [4, 4, 45, 19, 17],
         1000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(3319, 12), s(3251, 4), s(3331, 48), s(3379, 27), s(1340, 18)],
+        4518,
+        [12, 4, 48, 27, 18],
         1000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(3406, 6), N, s(3412, 30), s(3442, 22), s(71, 17)], 1100, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(4627, [6, N, 30, 22, 17], 1100, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(4702, [14, N, 34, 30, 17], 1100, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(4797, [5, N, N, N, 18], 5700, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(4820, [13, N, N, N, 18], 5700, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(4851, [4, N, 28, 20, 16], 0, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(4919, [4, 3, 44, 20, 17], 2000, FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM, 1),
     d(
-        [s(3464, 14), N, s(3478, 34), s(3478, 30), s(71, 17)],
-        1100,
-        FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d([s(3512, 5), N, N, N, s(1340, 18)], 5700, 0, NO_WRAPPED_NATIVE_TOKEN),
-    d([s(3517, 13), N, N, N, s(1340, 18)], 5700, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
-    d([s(3530, 4), N, s(3534, 28), s(3562, 20), s(3582, 16)], 0, 0, NO_WRAPPED_NATIVE_TOKEN),
-    d(
-        [s(2388, 4), s(7, 3), s(3598, 44), s(3642, 20), s(71, 17)],
-        2000,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
-        1,
-    ),
-    d(
-        [s(3662, 11), s(7, 3), N, N, s(71, 17)],
+        5007,
+        [11, 3, N, N, 17],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(3673, 12), s(7, 3), s(3685, 45), s(3730, 28), s(71, 17)],
+        5038,
+        [12, 3, 45, 28, 17],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(5143, [5, N, 30, 26, 17], 260, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(3758, 5), N, s(3763, 30), s(3763, 26), s(71, 17)],
-        260,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(3793, 13), N, s(3806, 38), s(3806, 34), s(71, 17)],
+        5221,
+        [13, N, 38, 34, 17],
         260,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(3844, 7), s(3851, 3), s(3854, 40), s(3854, 36), s(1340, 18)],
+        5323,
+        [7, 3, 40, 36, 18],
         5000,
         FLAG_LEGACY | FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(102, 3), s(7, 3), s(3894, 38), s(3894, 31), s(1340, 18)],
+        5427,
+        [3, 3, 38, 31, 18],
         1000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(3932, 11), N, s(3943, 46), s(3943, 39), s(1340, 18)],
+        5520,
+        [11, N, 46, 39, 18],
         1000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(3989, 7), N, s(3996, 43), s(4039, 20), s(71, 17)],
+        5634,
+        [7, N, 43, 20, 17],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(4059, 15), N, s(4074, 44), s(4118, 28), s(71, 17)],
+        5721,
+        [15, N, 44, 28, 17],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(4146, 5), N, s(4151, 45), s(4196, 20), s(71, 17)], 2000, FLAG_SUPPORTS_SHANGHAI, 10),
+    d(5825, [5, N, 45, 20, 17], 2000, FLAG_SUPPORTS_SHANGHAI, 10),
     d(
-        [s(4216, 13), N, s(4229, 49), s(4278, 28), s(71, 17)],
+        5912,
+        [13, N, 49, 28, 17],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(4306, 5), s(7, 3), s(4311, 45), s(4356, 23), s(71, 17)], 0, FLAG_SUPPORTS_SHANGHAI, 11),
-    d([s(4379, 12), N, N, N, N], 0, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(6019, [5, 3, 45, 23, 17], 0, FLAG_SUPPORTS_SHANGHAI, 11),
+    d(6112, [12, N, N, N, N], 0, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(6124, [13, N, 45, 31, 17], 0, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(6230, [6, 3, 48, 26, 17], 1000, FLAG_ELASTIC, 12),
+    d(6330, [14, 3, 49, 34, 17], 1000, FLAG_TESTNET | FLAG_ELASTIC, NO_WRAPPED_NATIVE_TOKEN),
+    d(6447, [6, 3, 44, 22, 17], 2000, FLAG_SUPPORTS_SHANGHAI, 13),
     d(
-        [s(4391, 13), N, s(4404, 45), s(4449, 31), s(71, 17)],
-        0,
-        FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d([s(4480, 6), s(7, 3), s(4486, 48), s(4534, 26), s(71, 17)], 1000, FLAG_ELASTIC, 12),
-    d(
-        [s(4560, 14), s(7, 3), s(4574, 49), s(4623, 34), s(71, 17)],
-        1000,
-        FLAG_TESTNET | FLAG_ELASTIC,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(4657, 6), s(4663, 3), s(4666, 44), s(4710, 22), s(71, 17)],
-        2000,
-        FLAG_SUPPORTS_SHANGHAI,
-        13,
-    ),
-    d(
-        [s(4732, 14), s(4663, 3), s(4746, 44), s(4790, 30), s(71, 17)],
+        6539,
+        [14, 3, 44, 30, 17],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(6647, [3, 3, 46, 18, 17], 260, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(4820, 3), s(4823, 3), s(4826, 46), s(4872, 18), s(71, 17)],
-        260,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(4890, 11), s(4823, 3), s(4901, 51), s(4952, 26), s(71, 17)],
+        6734,
+        [11, 3, 51, 26, 17],
         260,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(4978, 18), s(4996, 5), s(5001, 39), s(5001, 35), N],
+        6842,
+        [18, 5, 39, 35, N],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(5040, 7), N, s(5047, 27), s(5047, 23), N], 2000, FLAG_LEGACY, NO_WRAPPED_NATIVE_TOKEN),
+    d(6939, [7, N, 27, 23, N], 2000, FLAG_LEGACY, NO_WRAPPED_NATIVE_TOKEN),
+    d(6996, [4, N, 32, 28, 18], 2000, FLAG_OPTIMISM, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(5074, 4), N, s(5078, 32), s(5078, 28), s(1340, 18)],
-        2000,
-        FLAG_OPTIMISM,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(5110, 12), N, s(5122, 40), s(5122, 36), s(1340, 18)],
+        7078,
+        [12, N, 40, 36, 18],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(5162, 3), N, N, N, s(1340, 18)], 2000, FLAG_OPTIMISM, NO_WRAPPED_NATIVE_TOKEN),
+    d(7184, [3, N, N, N, 18], 2000, FLAG_OPTIMISM, NO_WRAPPED_NATIVE_TOKEN),
+    d(7205, [11, N, N, N, 18], 2000, FLAG_TESTNET | FLAG_OPTIMISM, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(5165, 11), N, N, N, s(1340, 18)],
-        2000,
-        FLAG_TESTNET | FLAG_OPTIMISM,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(5176, 4), N, s(5180, 33), s(5180, 29), s(1340, 18)],
+        7234,
+        [4, N, 33, 29, 18],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(5213, 12), N, s(5225, 41), s(5225, 37), s(1340, 18)],
+        7318,
+        [12, N, 41, 37, 18],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(5266, 7), N, s(5273, 26), s(5273, 22), N], 5000, FLAG_LEGACY, NO_WRAPPED_NATIVE_TOKEN),
+    d(7426, [7, N, 26, 22, N], 5000, FLAG_LEGACY, NO_WRAPPED_NATIVE_TOKEN),
+    d(7481, [9, 3, 34, 30, 18], 5000, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(5299, 9), s(5308, 3), s(5311, 34), s(5311, 30), s(1340, 18)],
-        5000,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(5345, 19), s(5308, 3), s(5364, 44), s(5364, 40), s(1340, 18)],
+        7575,
+        [19, 3, 44, 40, 18],
         5000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(5408, 5), s(5413, 5), s(5418, 31), s(5418, 27), N], 600, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(7699, [5, 5, 31, 27, N], 600, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(7767, [13, 3, 43, 25, 17], 1000, FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM, 1),
     d(
-        [s(5449, 13), s(1410, 3), s(5462, 43), s(5505, 25), s(71, 17)],
-        1000,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
-        1,
-    ),
-    d(
-        [s(5530, 13), s(1410, 3), s(5543, 44), s(5587, 33), s(71, 17)],
+        7868,
+        [13, 3, 44, 33, 17],
         1000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(5620, 5), s(5625, 3), s(5628, 39), s(5667, 26), N], 3000, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(7978, [5, 3, 39, 26, N], 3000, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(8051, [13, 3, 44, 38, N], 3000, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(8149, [6, 4, 34, 30, N], 500, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(5693, 13), s(5625, 3), s(5706, 44), s(5750, 38), N],
-        3000,
-        FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(5788, 6), s(5794, 4), s(5798, 34), s(5798, 30), N],
-        500,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(5832, 14), s(5794, 4), s(5846, 34), s(5846, 30), N],
+        8223,
+        [14, 4, 34, 30, N],
         500,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(8305, [5, 3, 46, 20, 17], 12000, FLAG_SUPPORTS_SHANGHAI, 14),
     d(
-        [s(5880, 5), s(7, 3), s(5885, 46), s(5931, 20), s(71, 17)],
-        12000,
-        FLAG_SUPPORTS_SHANGHAI,
-        14,
-    ),
-    d(
-        [s(5951, 11), s(7, 3), s(5962, 46), s(6008, 26), s(71, 17)],
+        8396,
+        [11, 3, 46, 26, 17],
         12000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(8499, [22, N, N, N, N], 1000, FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(8521, [5, 3, 40, 36, 18], 1800, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(8623, [13, 5, 42, 38, 18], 2500, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(8739, [5, N, 36, 32, 18], 12500, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(6034, 22), N, N, N, N],
-        1000,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(6056, 5), s(6061, 3), s(6064, 40), s(6064, 36), s(1340, 18)],
-        1800,
-        0,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(6104, 13), s(6117, 5), s(6122, 42), s(6122, 38), s(1340, 18)],
-        2500,
-        FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(6164, 5), N, s(6169, 36), s(6169, 32), s(1340, 18)],
-        12500,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(6205, 21), N, s(6226, 50), s(6226, 46), s(1340, 18)],
+        8830,
+        [21, N, 50, 46, 18],
         12500,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(6276, 13), N, N, N, s(1340, 18)],
+        8965,
+        [13, N, N, N, 18],
         12500,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(8996, [6, N, 37, 33, 18], 12500, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(6289, 6), N, s(6295, 37), s(6295, 33), s(1340, 18)],
-        12500,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(6332, 14), N, N, N, s(1340, 18)],
+        9090,
+        [14, N, N, N, 18],
         12500,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(9122, [10, 3, 31, 27, N], 10000, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(6346, 10), s(6356, 3), s(6359, 31), s(6390, 27), N],
-        10000,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(6417, 18), s(6356, 3), s(6435, 42), s(6477, 38), N],
+        9193,
+        [18, 3, 42, 38, N],
         10101,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(6515, 6), N, N, N, N], 0, FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(9294, [6, N, N, N, N], 0, FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(9300, [9, 3, 34, 30, 18], 2000, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(6521, 9), s(6530, 3), s(6533, 34), s(6533, 30), s(1340, 18)],
-        2000,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(6567, 17), s(6584, 4), s(6588, 42), s(6588, 38), s(1340, 18)],
+        9394,
+        [17, 4, 42, 38, 18],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(6630, 7), N, s(6637, 34), s(6637, 30), s(1340, 18)],
+        9513,
+        [7, N, 34, 30, 18],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(6671, 22), N, s(6693, 41), s(6693, 37), s(1340, 18)],
+        9602,
+        [22, N, 41, 37, 18],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(6734, 5), s(6739, 4), s(6743, 43), s(6786, 21), s(1340, 18)],
+        9720,
+        [5, 4, 43, 21, 18],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(6807, 13), s(6739, 4), s(6820, 44), s(6864, 29), s(1340, 18)],
+        9811,
+        [13, 4, 44, 29, 18],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(6893, 5), s(6898, 4), N, N, N], 5000, FLAG_SUPPORTS_SHANGHAI, 15),
-    d([s(6902, 4), s(6906, 4), s(6910, 31), s(6941, 24), s(6965, 16)], 3000, 0, 16),
-    d([s(6981, 6), s(1063, 3), s(6987, 31), s(6987, 27), s(7018, 18)], 3000, 0, 17),
-    d([s(7036, 8), s(1063, 3), s(7044, 32), s(7076, 23), s(7099, 20)], 3000, 0, 18),
-    d([s(7119, 4), s(7123, 4), s(7127, 27), s(7154, 19), s(1340, 18)], 6000, 0, 19),
-    d([s(7173, 4), s(7177, 4), s(7181, 36), s(7181, 32), s(7217, 16)], 6000, 0, 20),
-    d([s(7233, 4), s(7237, 4), s(7241, 36), s(7277, 19), s(7296, 16)], 1000, 0, 21),
-    d([s(7312, 5), s(7317, 2), s(7319, 29), s(7319, 25), s(1340, 18)], 2500, 0, 22),
+    d(9919, [5, 4, N, N, N], 5000, FLAG_SUPPORTS_SHANGHAI, 15),
+    d(9928, [4, 4, 31, 24, 16], 3000, 0, 16),
+    d(10007, [6, 3, 31, 27, 18], 3000, 0, 17),
+    d(10092, [8, 3, 32, 23, 20], 3000, 0, 18),
+    d(10178, [4, 4, 27, 19, 18], 6000, 0, 19),
+    d(10250, [4, 4, 36, 32, 16], 6000, 0, 20),
+    d(10342, [4, 4, 36, 19, 16], 1000, 0, 21),
+    d(10421, [5, 2, 29, 25, 18], 2500, 0, 22),
+    d(10500, [3, 3, 44, 18, 17], 500, FLAG_SUPPORTS_SHANGHAI, 23),
+    d(10585, [11, 3, 44, 26, 17], 500, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(10686, [14, 5, 43, 22, 17], 700, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(7348, 3), s(7351, 3), s(7354, 44), s(7398, 18), s(71, 17)],
-        500,
-        FLAG_SUPPORTS_SHANGHAI,
-        23,
-    ),
-    d(
-        [s(7416, 11), s(7351, 3), s(7427, 44), s(7471, 26), s(71, 17)],
-        500,
-        FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(7497, 14), s(7511, 5), s(7516, 43), s(7559, 22), s(71, 17)],
-        700,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(7581, 14), s(7511, 5), s(7595, 44), s(7639, 30), s(71, 17)],
+        10787,
+        [14, 5, 44, 30, 17],
         700,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(10897, [7, 3, 44, 25, 17], 1000, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(7669, 7), s(7, 3), s(7676, 44), s(7720, 25), s(71, 17)],
-        1000,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(7745, 15), s(7, 3), s(7760, 44), s(7804, 41), s(71, 17)],
+        10993,
+        [15, 3, 44, 41, 17],
         1000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(11113, [11, 3, 42, 19, 17], 2400, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(11205, [11, 4, 42, 27, 17], 2400, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(7845, 11), s(7856, 3), s(4666, 42), s(7859, 19), s(71, 17)],
-        2400,
-        0,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(7878, 11), s(7889, 4), s(7893, 42), s(7935, 27), s(71, 17)],
-        2400,
-        FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(7962, 8), s(7, 3), s(7970, 43), s(8013, 19), s(71, 17)],
+        11306,
+        [8, 3, 43, 19, 17],
         1000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(8032, 16), s(7, 3), s(8048, 44), s(8092, 27), s(71, 17)],
+        11396,
+        [16, 3, 44, 27, 17],
         1000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(8119, 15), s(8134, 4), s(8138, 39), s(8138, 35), s(1340, 18)],
+        11503,
+        [15, 4, 39, 35, 18],
         12000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(11614, [8, 3, 45, 18, 17], 260, FLAG_SUPPORTS_SHANGHAI, 24),
     d(
-        [s(8177, 8), s(8185, 3), s(8188, 45), s(8233, 18), s(71, 17)],
-        260,
-        FLAG_SUPPORTS_SHANGHAI,
-        24,
-    ),
-    d(
-        [s(8251, 6), s(8185, 3), s(8257, 45), s(8302, 25), s(1340, 18)],
+        11705,
+        [6, 3, 45, 25, 18],
         260,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(11802, [5, 1, 43, 21, 17], 1000, FLAG_SUPPORTS_SHANGHAI, 25),
+    d(11889, [13, 1, 45, 29, 17], 1000, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(11994, [8, 4, 61, 29, 17], 60000, FLAG_SUPPORTS_SHANGHAI, 26),
     d(
-        [s(8327, 5), s(76, 1), s(8332, 43), s(8375, 21), s(71, 17)],
-        1000,
-        FLAG_SUPPORTS_SHANGHAI,
-        25,
-    ),
-    d(
-        [s(8396, 13), s(76, 1), s(8409, 45), s(8454, 29), s(71, 17)],
-        1000,
-        FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(8483, 8), s(8491, 4), s(8495, 61), s(8556, 29), s(8585, 17)],
-        60000,
-        FLAG_SUPPORTS_SHANGHAI,
-        26,
-    ),
-    d(
-        [s(8602, 16), s(8491, 4), s(8618, 61), s(8679, 37), s(8585, 17)],
+        12113,
+        [16, 4, 61, 37, 17],
         60000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(8716, 13), s(8729, 5), s(8734, 38), s(8734, 34), N],
+        12248,
+        [13, 5, 38, 34, N],
         260,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(12338, [5, 5, 30, 26, N], 260, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
+    d(12404, [8, 5, N, N, N], 0, FLAG_LEGACY, 27),
+    d(12417, [14, 5, N, N, N], 0, FLAG_LEGACY | FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(8716, 5), s(8729, 5), s(8772, 30), s(8772, 26), N],
-        260,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d([s(8802, 8), s(8810, 5), N, N, N], 0, FLAG_LEGACY, 27),
-    d([s(8815, 14), s(8810, 5), N, N, N], 0, FLAG_LEGACY | FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
-    d(
-        [s(8829, 17), s(8846, 4), s(8850, 45), s(8895, 28), s(8923, 16)],
+        12436,
+        [17, 4, 45, 28, 16],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(12546, [9, 4, 45, 20, 16], 2000, FLAG_SUPPORTS_SHANGHAI, 28),
     d(
-        [s(8829, 9), s(8846, 4), s(8939, 45), s(8984, 20), s(8923, 16)],
-        2000,
-        FLAG_SUPPORTS_SHANGHAI,
-        28,
-    ),
-    d(
-        [s(9004, 21), s(7, 3), s(9025, 45), s(9025, 41), s(1340, 18)],
+        12640,
+        [21, 3, 45, 41, 18],
         260,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(12768, [13, 3, 37, 33, 18], 260, FLAG_SUPPORTS_SHANGHAI, 29),
+    d(12872, [5, 3, 43, 21, 17], 400, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(9004, 13), s(7, 3), s(9070, 37), s(9070, 33), s(1340, 18)],
-        260,
-        FLAG_SUPPORTS_SHANGHAI,
-        29,
-    ),
-    d(
-        [s(9107, 5), s(9112, 3), s(9115, 43), s(9158, 21), s(71, 17)],
-        400,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(9179, 13), s(9112, 3), s(9192, 45), s(9237, 29), s(71, 17)],
+        12961,
+        [13, 3, 45, 29, 17],
         400,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(9266, 11), s(9277, 4), s(9281, 43), s(9324, 23), s(71, 17)], 2000, 0, 30),
-    d([s(9347, 8), s(7, 3), s(9355, 44), s(9399, 18), s(71, 17)], 1000, FLAG_ELASTIC, 31),
+    d(13068, [11, 4, 43, 23, 17], 2000, 0, 30),
+    d(13166, [8, 3, 44, 18, 17], 1000, FLAG_ELASTIC, 31),
+    d(13256, [16, N, 45, 26, 17], 1000, FLAG_TESTNET | FLAG_ELASTIC, NO_WRAPPED_NATIVE_TOKEN),
+    d(13360, [4, 4, 70, 19, 17], 0, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(9417, 16), N, s(9433, 45), s(9478, 26), s(71, 17)],
-        1000,
-        FLAG_TESTNET | FLAG_ELASTIC,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(9504, 4), s(9508, 4), s(9512, 70), s(9582, 19), s(8585, 17)],
-        0,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(9601, 12), s(9508, 4), s(9613, 70), s(9683, 27), s(8585, 17)],
+        13474,
+        [12, 4, 70, 27, 17],
         0,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(13604, [6, 4, 45, 20, 17], 1000, FLAG_LEGACY | FLAG_ELASTIC, 32),
     d(
-        [s(9710, 6), s(9716, 4), s(9720, 45), s(9765, 20), s(71, 17)],
-        1000,
-        FLAG_LEGACY | FLAG_ELASTIC,
-        32,
-    ),
-    d(
-        [s(9785, 14), s(9716, 4), s(9799, 49), s(9848, 28), s(71, 17)],
+        13696,
+        [14, 4, 49, 28, 17],
         1000,
         FLAG_LEGACY | FLAG_TESTNET | FLAG_ELASTIC,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(9876, 16), s(9892, 3), s(9895, 42), s(9895, 38), s(1340, 18)],
+        13808,
+        [16, 3, 42, 38, 18],
         2000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(13925, [6, 3, 41, 37, 18], 2000, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
+    d(14030, [8, 3, 34, 30, 18], 2000, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
+    d(14123, [4, 3, 29, 25, N], 1000, FLAG_ELASTIC, NO_WRAPPED_NATIVE_TOKEN),
+    d(14184, [12, 5, 50, 33, N], 1000, FLAG_TESTNET | FLAG_ELASTIC, NO_WRAPPED_NATIVE_TOKEN),
+    d(14284, [9, 3, 44, 36, 18], 700, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(9937, 6), s(9943, 3), s(9946, 41), s(9946, 37), s(1340, 18)],
-        2000,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(9876, 8), s(9987, 3), s(9990, 34), s(9990, 30), s(1340, 18)],
-        2000,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(10024, 4), s(10028, 3), s(10031, 29), s(10060, 25), N],
-        1000,
-        FLAG_ELASTIC,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(10085, 12), s(10097, 5), s(10102, 50), s(10152, 33), N],
-        1000,
-        FLAG_TESTNET | FLAG_ELASTIC,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(10185, 9), s(10194, 3), s(10197, 44), s(10241, 36), s(1340, 18)],
-        700,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(10277, 17), s(10194, 3), s(10294, 52), s(10346, 44), s(1340, 18)],
+        14394,
+        [17, 3, 52, 44, 18],
         700,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(10390, 6), s(7, 3), s(10396, 46), s(10442, 22), s(71, 17)],
+        14528,
+        [6, 3, 46, 22, 17],
         1000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_OPTIMISM,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
+    d(14622, [4, 3, 31, 27, 18], 2000, FLAG_OPTIMISM, NO_WRAPPED_NATIVE_TOKEN),
+    d(14705, [4, N, 28, 24, 18], 5000, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(14779, [6, N, 30, 22, N], 1000, 0, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(10464, 4), s(7, 3), s(10468, 31), s(10468, 27), s(1340, 18)],
-        2000,
-        FLAG_OPTIMISM,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d([s(10499, 4), N, s(10503, 28), s(10503, 24), s(1340, 18)], 5000, 0, NO_WRAPPED_NATIVE_TOKEN),
-    d([s(10531, 6), N, s(10537, 30), s(10567, 22), N], 1000, 0, NO_WRAPPED_NATIVE_TOKEN),
-    d(
-        [s(10589, 13), N, s(10602, 37), s(10639, 29), N],
+        14837,
+        [13, N, 37, 29, N],
         3000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(10668, 14), N, s(10682, 38), s(10720, 30), N],
+        14916,
+        [14, N, 38, 30, N],
         1000,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(10750, 10), N, s(10760, 46), s(10760, 42), s(1340, 18)], 1000, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(14998, [10, N, 46, 42, 18], 1000, 0, NO_WRAPPED_NATIVE_TOKEN),
+    d(15114, [26, N, 56, 52, 18], 1000, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(15266, [8, 1, 44, 23, 17], 7000, FLAG_SUPPORTS_SHANGHAI, 33),
+    d(15359, [11, 2, 45, 35, 17], 7000, FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET, 33),
+    d(15469, [11, 2, 47, 43, N], 7000, FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET, 33),
+    d(15572, [5, 3, 27, 25, N], 500, FLAG_SUPPORTS_SHANGHAI, NO_WRAPPED_NATIVE_TOKEN),
     d(
-        [s(10806, 26), N, s(10832, 56), s(10832, 52), s(1340, 18)],
-        1000,
-        FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(10888, 8), s(2156, 1), s(10896, 44), s(10940, 23), s(71, 17)],
-        7000,
-        FLAG_SUPPORTS_SHANGHAI,
-        33,
-    ),
-    d(
-        [s(10963, 11), s(10974, 2), s(10976, 45), s(11021, 35), s(71, 17)],
-        7000,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
-        33,
-    ),
-    d(
-        [s(11056, 11), s(10974, 2), s(11067, 47), s(11067, 43), N],
-        7000,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
-        33,
-    ),
-    d(
-        [s(11114, 5), s(5795, 3), s(11119, 27), s(11146, 25), N],
-        500,
-        FLAG_SUPPORTS_SHANGHAI,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(11171, 14), s(5795, 3), s(11119, 27), s(11185, 34), N],
+        15632,
+        [14, 3, 27, 34, N],
         500,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(11219, 13), s(5795, 3), s(11119, 27), s(11232, 35), N],
+        15710,
+        [13, 3, 27, 35, N],
+        500,
+        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
+        NO_WRAPPED_NATIVE_TOKEN,
+    ),
+    d(15788, [12, 3, N, N, N], 500, FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(
+        15803,
+        [11, 4, 31, 27, 18],
         500,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
     d(
-        [s(11267, 12), s(5795, 3), N, N, N],
-        500,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(11279, 11), s(11290, 4), s(11294, 31), s(11294, 27), s(1340, 18)],
-        500,
-        FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET,
-        NO_WRAPPED_NATIVE_TOKEN,
-    ),
-    d(
-        [s(11325, 19), s(7, 3), s(11344, 54), s(11398, 40), N],
+        15894,
+        [19, 3, 54, 40, N],
         250,
         FLAG_SUPPORTS_SHANGHAI | FLAG_TESTNET | FLAG_ELASTIC,
         NO_WRAPPED_NATIVE_TOKEN,
     ),
-    d([s(11438, 17), N, s(11455, 48), s(11455, 44), N], 0, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
+    d(16010, [17, N, 48, 44, N], 0, FLAG_TESTNET, NO_WRAPPED_NATIVE_TOKEN),
 ];
 
 static WRAPPED_NATIVE_TOKENS: [Address; 34] = [

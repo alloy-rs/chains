@@ -45,9 +45,9 @@ class RustTemplate(Template):
 
 
 @dataclass(frozen=True)
-class StaticStr:
+class StaticStringBlock:
     offset: int
-    length: int
+    lengths: tuple[int | None, ...]
 
 
 @dataclass(frozen=True)
@@ -75,26 +75,34 @@ class StaticStringTable:
         self.data = bytearray()
         self.offsets: dict[bytes, int] = {}
 
-    def add(self, value: str | None) -> StaticStr | None:
-        if value is None:
-            return None
+    def add_block(self, values: tuple[str | None, ...]) -> StaticStringBlock:
+        encoded_values = []
+        lengths = []
+        for value in values:
+            if value is None:
+                lengths.append(None)
+                continue
 
-        encoded = value.encode()
-        if len(encoded) > 255:
-            raise ValueError(f"Static string is too long for compact storage: {value!r}")
+            encoded = value.encode()
+            if len(encoded) >= 0xFF:
+                raise ValueError(f"Static string is too long for compact storage: {value!r}")
+            encoded_values.append(encoded)
+            lengths.append(len(encoded))
 
-        offset = self.offsets.get(encoded)
+        encoded_block = b"".join(encoded_values)
+
+        offset = self.offsets.get(encoded_block)
         if offset is None:
-            offset = self.data.find(encoded)
+            offset = self.data.find(encoded_block)
 
         if offset < 0:
             offset = len(self.data)
-            self.data.extend(encoded)
-            self.offsets[encoded] = offset
+            self.data.extend(encoded_block)
+            self.offsets[encoded_block] = offset
 
-        if offset > 0xFFFF_FFFF:
-            raise ValueError("Static string table is too large for compact storage")
-        return StaticStr(offset, len(encoded))
+        if offset > 0xFFFF:
+            raise ValueError("Static string table offset is too large for compact storage")
+        return StaticStringBlock(offset, tuple(lengths))
 
 
 def main() -> int:
@@ -245,13 +253,8 @@ def generated_named(chains: list[Chain]) -> str:
     stored_tag_flags = stored_chain_tag_flags(chains)
     flag_type, flag_consts = generated_flag_consts(stored_tag_flags)
     chain_data = "\n".join(
-        "    d(["
-        f"{static_str(string_table.add(chain.name))}, "
-        f"{static_str(string_table.add(chain.native_currency_symbol))}, "
-        f"{static_str(string_table.add(chain.etherscan_api_url))}, "
-        f"{static_str(string_table.add(chain.etherscan_base_url))}, "
-        f"{static_str(string_table.add(chain.etherscan_api_key_name))}"
-        "], "
+        "    d("
+        f"{chain_string_data(string_table, chain)}, "
         f"{average_blocktime_millis(chain)}, "
         f"{chain_flags(chain, stored_tag_flags)}, "
         f"{wrapped_native_token_index(chain, wrapped_native_token_indexes)}"
@@ -290,7 +293,7 @@ def generated_named(chains: list[Chain]) -> str:
     chain_data_len = len(chains)
     wrapped_native_token_len = len(wrapped_native_tokens)
     string_data_len = len(string_table.data)
-    if string_data_len > 0xFFFF_FFFF:
+    if string_data_len > 0xFFFF:
         raise ValueError("Static string data is too large for compact storage")
     tag_predicates = {
         tag.replace("-", "_"): tag_predicate_expr(chains, stored_tag_flags, tag, "self")
@@ -401,10 +404,24 @@ def chain_flags(chain: Chain, stored_tag_flags: list[tuple[str, str]]) -> str:
     return " | ".join(flags) if flags else "0"
 
 
-def static_str(value: StaticStr | None) -> str:
+def chain_string_data(string_table: StaticStringTable, chain: Chain) -> str:
+    block = string_table.add_block(
+        (
+            chain.name,
+            chain.native_currency_symbol,
+            chain.etherscan_api_url,
+            chain.etherscan_base_url,
+            chain.etherscan_api_key_name,
+        )
+    )
+    lengths = ", ".join(static_str_len(length) for length in block.lengths)
+    return f"{block.offset}, [{lengths}]"
+
+
+def static_str_len(value: int | None) -> str:
     if value is None:
         return STATIC_STR_NONE
-    return f"s({value.offset}, {value.length})"
+    return str(value)
 
 
 def wrapped_native_token_index(chain: Chain, indexes: dict[str, int]) -> str:

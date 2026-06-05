@@ -8,21 +8,19 @@ type ChainIndex = %%chain_index_type;
 
 %%flag_consts
 const %%NO_WRAPPED_NATIVE_TOKEN: u8 = u8::MAX;
-const %%STATIC_STR_NONE: StaticStr = StaticStr::NONE;
+const %%STATIC_STR_NONE: u8 = u8::MAX;
 
 #[derive(Clone, Copy)]
 #[repr(C, packed)]
 struct StaticStr {
-    offset: u32,
+    offset: u16,
     len: u8,
 }
 
 impl StaticStr {
-    const NONE: Self = Self { offset: u32::MAX, len: 0 };
-
     #[inline]
     const fn get(self) -> Option<&'static str> {
-        if self.offset == u32::MAX {
+        if self.len == %%STATIC_STR_NONE {
             None
         } else {
             Some(self.get_unchecked())
@@ -40,36 +38,70 @@ impl StaticStr {
 #[derive(Clone, Copy)]
 #[repr(C, packed)]
 struct ChainData {
-    name: StaticStr,
+    string_offset: u16,
+    string_lens: [u8; 5],
     average_blocktime_millis: u16,
     flags: %%flag_type,
-    native_currency_symbol: StaticStr,
-    etherscan_api_url: StaticStr,
-    etherscan_base_url: StaticStr,
-    etherscan_api_key_name: StaticStr,
     wrapped_native_token: u8,
 }
 
-const fn s(offset: u32, len: u8) -> StaticStr {
+impl ChainData {
+    #[inline]
+    const fn string(self, index: usize) -> StaticStr {
+        let mut offset = self.string_offset;
+        let mut current = 0;
+        while current < index {
+            let len = self.string_lens[current];
+            if len != %%STATIC_STR_NONE {
+                offset += len as u16;
+            }
+            current += 1;
+        }
+        s(offset, self.string_lens[index])
+    }
+
+    #[inline]
+    const fn name(self) -> StaticStr {
+        s(self.string_offset, self.string_lens[0])
+    }
+
+    #[inline]
+    const fn native_currency_symbol(self) -> StaticStr {
+        self.string(1)
+    }
+
+    #[inline]
+    const fn etherscan_api_url(self) -> StaticStr {
+        self.string(2)
+    }
+
+    #[inline]
+    const fn etherscan_base_url(self) -> StaticStr {
+        self.string(3)
+    }
+
+    #[inline]
+    const fn etherscan_api_key_name(self) -> StaticStr {
+        self.string(4)
+    }
+}
+
+const fn s(offset: u16, len: u8) -> StaticStr {
     StaticStr { offset, len }
 }
 
 const fn d(
-    strings: [StaticStr; 5],
+    string_offset: u16,
+    string_lens: [u8; 5],
     average_blocktime_millis: u16,
     flags: %%flag_type,
     wrapped_native_token: u8,
 ) -> ChainData {
-    let [name, native_currency_symbol, etherscan_api_url, etherscan_base_url, etherscan_api_key_name] =
-        strings;
     ChainData {
-        name,
+        string_offset,
+        string_lens,
         average_blocktime_millis,
         flags,
-        native_currency_symbol,
-        etherscan_api_url,
-        etherscan_base_url,
-        etherscan_api_key_name,
         wrapped_native_token,
     }
 }
@@ -78,7 +110,7 @@ const fn variant_names() -> [&'static str; %%chain_data_len] {
     let mut names = [""; %%chain_data_len];
     let mut index = 0;
     while index < CHAIN_DATA.len() {
-        names[index] = CHAIN_DATA[index].name.get_unchecked();
+        names[index] = CHAIN_DATA[index].name().get_unchecked();
         index += 1;
     }
     names
@@ -198,7 +230,7 @@ impl NamedChain {
     /// Returns the string representation of the chain.
     #[inline]
     pub const fn as_str(&self) -> &'static str {
-        self.data().name.get_unchecked()
+        self.data().name().get_unchecked()
     }
 
     /// Returns `true` if this chain is Ethereum or an Ethereum testnet.
@@ -281,14 +313,14 @@ impl NamedChain {
     /// Returns the symbol of the chain's native currency.
     #[inline]
     pub const fn native_currency_symbol(self) -> Option<&'static str> {
-        self.data().native_currency_symbol.get()
+        self.data().native_currency_symbol().get()
     }
 
     /// Returns the chain's blockchain explorer and its API URLs.
     #[inline]
     pub const fn etherscan_urls(self) -> Option<(&'static str, &'static str)> {
         let data = self.data();
-        match (data.etherscan_api_url.get(), data.etherscan_base_url.get()) {
+        match (data.etherscan_api_url().get(), data.etherscan_base_url().get()) {
             (Some(api), Some(base)) => Some((api, base)),
             _ => None,
         }
@@ -297,7 +329,7 @@ impl NamedChain {
     /// Returns the chain's blockchain explorer API key environment variable name.
     #[inline]
     pub const fn etherscan_api_key_name(self) -> Option<&'static str> {
-        self.data().etherscan_api_key_name.get()
+        self.data().etherscan_api_key_name().get()
     }
 
     /// Returns the chain's blockchain explorer API key from the environment.
