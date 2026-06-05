@@ -487,6 +487,20 @@ pub enum NamedChain {{
 {enum_variants}
 }}
 
+/// Error returned when parsing a named chain from a string fails.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+pub struct ParseNamedChainError;
+
+impl fmt::Display for ParseNamedChainError {{
+    #[inline]
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {{
+        f.write_str("matching variant not found")
+    }}
+}}
+
+#[cfg(feature = "std")]
+impl std::error::Error for ParseNamedChainError {{}}
+
 /// Iterator over all named chains.
 #[derive(Clone, Debug)]
 pub struct NamedChainIter {{
@@ -827,19 +841,19 @@ impl AsRef<str> for NamedChain {{
 }}
 
 impl FromStr for NamedChain {{
-    type Err = strum::ParseError;
+    type Err = ParseNamedChainError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {{
         PARSE_NAMES
             .get(s)
             .copied()
             .map(Self::from_index)
-            .ok_or(strum::ParseError::VariantNotFound)
+            .ok_or(ParseNamedChainError)
     }}
 }}
 
 impl TryFrom<&str> for NamedChain {{
-    type Error = strum::ParseError;
+    type Error = ParseNamedChainError;
 
     #[inline]
     fn try_from(value: &str) -> Result<Self, Self::Error> {{
@@ -858,27 +872,6 @@ impl PartialOrd<u64> for NamedChain {{
     #[inline]
     fn partial_cmp(&self, other: &u64) -> Option<Ordering> {{
         (*self as u64).partial_cmp(other)
-    }}
-}}
-
-impl strum::EnumCount for NamedChain {{
-    const COUNT: usize = Self::COUNT;
-}}
-
-impl strum::VariantArray for NamedChain {{
-    const VARIANTS: &'static [Self] = Self::VARIANTS;
-}}
-
-impl strum::VariantNames for NamedChain {{
-    const VARIANTS: &'static [&'static str] = Self::VARIANT_NAMES;
-}}
-
-impl strum::IntoEnumIterator for NamedChain {{
-    type Iterator = NamedChainIter;
-
-    #[inline]
-    fn iter() -> Self::Iterator {{
-        Self::iter()
     }}
 }}
 

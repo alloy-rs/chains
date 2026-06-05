@@ -13,7 +13,6 @@ repository = "https://github.com/alloy-rs/chains"
 
 [dependencies]
 num_enum = { version = "0.7", default-features = false }
-strum = { version = "0.28", default-features = false }
 alloy-primitives = { version = "1.6", default-features = false }
 phf = { version = "0.13", default-features = false }
 
@@ -40,7 +39,7 @@ serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
 
 [features]
 default = ["std"]
-std = ["strum/std", "serde?/std", "alloy-primitives/std"]
+std = ["serde?/std", "alloy-primitives/std"]
 serde = ["dep:serde", "alloy-primitives/serde"]
 rlp = ["dep:alloy-rlp", "alloy-primitives/rlp"]
 arbitrary = ["dep:arbitrary", "dep:proptest", "alloy-primitives/arbitrary"]

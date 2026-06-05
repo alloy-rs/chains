@@ -1,4 +1,4 @@
-pub use crate::generated::named::{NamedChain, NamedChainIter};
+pub use crate::generated::named::{NamedChain, NamedChainIter, ParseNamedChainError};
 
 #[cfg(test)]
 mod tests {
@@ -19,9 +19,8 @@ mod tests {
     #[test]
     fn enum_iter() {
         assert_eq!(NamedChain::COUNT, NamedChain::iter().size_hint().0);
-        assert_eq!(NamedChain::COUNT, <NamedChain as strum::EnumCount>::COUNT);
-        assert_eq!(NamedChain::VARIANTS, <NamedChain as strum::VariantArray>::VARIANTS);
-        assert_eq!(NamedChain::VARIANT_NAMES, <NamedChain as strum::VariantNames>::VARIANTS);
+        assert_eq!(NamedChain::COUNT, NamedChain::VARIANTS.len());
+        assert_eq!(NamedChain::COUNT, NamedChain::VARIANT_NAMES.len());
     }
 
     #[test]
