@@ -469,23 +469,6 @@ const fn d(
     }}
 }}
 
-static STRING_DATA: &[u8] = concat!(
-{string_data}
-)
-.as_bytes();
-
-static CHAIN_DATA: [ChainData; {chain_data_len}] = [
-{chain_data}
-];
-
-static WRAPPED_NATIVE_TOKENS: [Address; {wrapped_native_token_len}] = [
-{wrapped_native_token_data}
-];
-
-static VARIANT_NAMES_DATA: [&str; {chain_data_len}] = variant_names();
-
-{phf_maps}
-
 const fn variant_names() -> [&'static str; {chain_data_len}] {{
     let mut names = [""; {chain_data_len}];
     let mut index = 0;
@@ -959,6 +942,23 @@ pub(crate) const PARSE_ALIASES: &[(NamedChain, &str)] = &[
 pub(crate) const SERDE_ALIASES: &[(NamedChain, &str)] = &[
 {serde_aliases}
 ];
+
+static STRING_DATA: &[u8] = concat!(
+{string_data}
+)
+.as_bytes();
+
+static CHAIN_DATA: [ChainData; {chain_data_len}] = [
+{chain_data}
+];
+
+static WRAPPED_NATIVE_TOKENS: [Address; {wrapped_native_token_len}] = [
+{wrapped_native_token_data}
+];
+
+static VARIANT_NAMES_DATA: [&str; {chain_data_len}] = variant_names();
+
+{phf_maps}
 """
 
 

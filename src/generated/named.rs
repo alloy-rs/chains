@@ -81,6 +81,1388 @@ const fn d(
     }
 }
 
+const fn variant_names() -> [&'static str; 197] {
+    let mut names = [""; 197];
+    let mut index = 0;
+    while index < CHAIN_DATA.len() {
+        names[index] = CHAIN_DATA[index].name.get_unchecked();
+        index += 1;
+    }
+    names
+}
+
+/// An Ethereum EIP-155 chain.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
+#[cfg_attr(feature = "schema", schemars(rename_all = "snake_case"))]
+#[repr(u64)]
+#[allow(missing_docs)]
+#[non_exhaustive]
+pub enum NamedChain {
+    Mainnet = 1,
+    Morden = 2,
+    Ropsten = 3,
+    Rinkeby = 4,
+    Goerli = 5,
+    Kovan = 42,
+    Holesky = 17000,
+    Hoodi = 560048,
+    Sepolia = 11155111,
+    Odyssey = 911867,
+    Optimism = 10,
+    OptimismKovan = 69,
+    OptimismGoerli = 420,
+    OptimismSepolia = 11155420,
+    Bob = 60808,
+    BobSepolia = 808813,
+    Arbitrum = 42161,
+    ArbitrumTestnet = 421611,
+    ArbitrumGoerli = 421613,
+    ArbitrumSepolia = 421614,
+    ArbitrumNova = 42170,
+    Cronos = 25,
+    CronosTestnet = 338,
+    Rsk = 30,
+    RskTestnet = 31,
+    TelosEvm = 40,
+    TelosEvmTestnet = 41,
+    Crab = 44,
+    Darwinia = 46,
+    Koi = 701,
+    BinanceSmartChain = 56,
+    BinanceSmartChainTestnet = 97,
+    Poa = 99,
+    Sokol = 77,
+    Scroll = 534352,
+    ScrollSepolia = 534351,
+    Metis = 1088,
+    CfxTestnet = 71,
+    Cfx = 1030,
+    Gnosis = 100,
+    Polygon = 137,
+    PolygonAmoy = 80002,
+    Fantom = 250,
+    FantomTestnet = 4002,
+    Moonbeam = 1284,
+    MoonbeamDev = 1281,
+    Moonriver = 1285,
+    Moonbase = 1287,
+    Dev = 1337,
+    AnvilHardhat = 31337,
+    GravityAlphaMainnet = 1625,
+    GravityAlphaTestnetSepolia = 13505,
+    Gravity = 127001,
+    Evmos = 9001,
+    EvmosTestnet = 9000,
+    Plasma = 9745,
+    PlasmaTestnet = 9746,
+    Chiado = 10200,
+    Oasis = 26863,
+    Emerald = 42262,
+    EmeraldTestnet = 42261,
+    FilecoinMainnet = 314,
+    FilecoinCalibrationTestnet = 314159,
+    Avalanche = 43114,
+    AvalancheFuji = 43113,
+    Celo = 42220,
+    CeloSepolia = 11142220,
+    Aurora = 1313161554,
+    AuroraTestnet = 1313161555,
+    Canto = 7700,
+    CantoTestnet = 740,
+    Boba = 288,
+    Base = 8453,
+    BaseGoerli = 84531,
+    BaseSepolia = 84532,
+    Syndr = 404,
+    SyndrSepolia = 444444,
+    Shimmer = 148,
+    Ink = 57073,
+    InkSepolia = 763373,
+    Fraxtal = 252,
+    FraxtalTestnet = 2522,
+    Blast = 81457,
+    BlastSepolia = 168587773,
+    Linea = 59144,
+    LineaGoerli = 59140,
+    LineaSepolia = 59141,
+    ZkSync = 324,
+    ZkSyncTestnet = 300,
+    Mantle = 5000,
+    MantleSepolia = 5003,
+    Xai = 660279,
+    XaiSepolia = 37714555429,
+    HappychainTestnet = 216,
+    Viction = 88,
+    Zora = 7777777,
+    ZoraSepolia = 999999999,
+    Pgn = 424,
+    PgnSepolia = 58008,
+    Mode = 34443,
+    ModeSepolia = 919,
+    Elastos = 20,
+    Etherlink = 42793,
+    EtherlinkShadownet = 127823,
+    Degen = 666666666,
+    OpBNBMainnet = 204,
+    OpBNBTestnet = 5611,
+    Ronin = 2020,
+    RoninTestnet = 202601,
+    Radius = 723487,
+    RadiusTestnet = 72344,
+    Taiko = 167000,
+    TaikoHekla = 167009,
+    AutonomysNovaTestnet = 490000,
+    Flare = 14,
+    FlareCoston2 = 114,
+    Acala = 787,
+    AcalaMandalaTestnet = 595,
+    AcalaTestnet = 597,
+    Karura = 686,
+    KaruraTestnet = 596,
+    Pulsechain = 369,
+    PulsechainTestnet = 943,
+    Cannon = 13370,
+    Immutable = 13371,
+    ImmutableTestnet = 13473,
+    Soneium = 1868,
+    SoneiumMinatoTestnet = 1946,
+    World = 480,
+    WorldSepolia = 4801,
+    Iotex = 4689,
+    Core = 1116,
+    Merlin = 4200,
+    Bitlayer = 200901,
+    Vana = 1480,
+    Zeta = 7000,
+    Kaia = 8217,
+    Story = 1514,
+    Sei = 1329,
+    SeiTestnet = 1328,
+    StableMainnet = 988,
+    StableTestnet = 2201,
+    MegaEth = 4326,
+    MegaEthTestnet = 6343,
+    XdcMainnet = 50,
+    XdcTestnet = 51,
+    Unichain = 130,
+    UnichainSepolia = 1301,
+    SignetPecorino = 14174,
+    ApeChain = 33139,
+    Curtis = 33111,
+    Sonic = 146,
+    SonicTestnet = 14601,
+    Redbelly = 151,
+    RedbellyTestnet = 153,
+    PlumeTestnet = 98867,
+    Plume = 98866,
+    Treasure = 61166,
+    TreasureTopaz = 978658,
+    BerachainBepolia = 80069,
+    Berachain = 80094,
+    SuperpositionTestnet = 98985,
+    Superposition = 55244,
+    Monad = 143,
+    MonadTestnet = 10143,
+    Hyperliquid = 999,
+    Abstract = 2741,
+    AbstractTestnet = 11124,
+    Corn = 21000000,
+    CornTestnet = 21000001,
+    Sophon = 50104,
+    SophonTestnet = 531050104,
+    PolkadotTestnet = 420420417,
+    Kusama = 420420418,
+    Polkadot = 420420419,
+    Lens = 232,
+    LensTestnet = 37111,
+    Injective = 1776,
+    InjectiveTestnet = 1439,
+    Katana = 747474,
+    Lisk = 1135,
+    Fuse = 122,
+    Fluent = 25363,
+    FluentDevnet = 20993,
+    FluentTestnet = 20994,
+    SkaleBase = 1187947933,
+    SkaleBaseSepoliaTestnet = 324705682,
+    MemeCore = 4352,
+    Formicarium = 43521,
+    Insectarium = 43522,
+    Tempo = 4217,
+    TempoModerato = 42431,
+    TempoTestnet = 42429,
+    TempoDevnet = 31318,
+    ArcTestnet = 5042002,
+    BattleChainTestnet = 627,
+    RobinhoodTestnet = 46630,
+}
+
+/// Error returned when parsing a named chain from a string fails.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+pub struct ParseNamedChainError;
+
+impl fmt::Display for ParseNamedChainError {
+    #[inline]
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("matching variant not found")
+    }
+}
+
+#[cfg(feature = "std")]
+impl std::error::Error for ParseNamedChainError {}
+
+/// Iterator over all named chains.
+#[derive(Clone, Debug)]
+pub struct NamedChainIter {
+    inner: core::iter::Copied<core::slice::Iter<'static, NamedChain>>,
+}
+
+impl Default for NamedChainIter {
+    #[inline]
+    fn default() -> Self {
+        NamedChain::iter()
+    }
+}
+
+impl Iterator for NamedChainIter {
+    type Item = NamedChain;
+
+    #[inline]
+    fn next(&mut self) -> Option<Self::Item> {
+        self.inner.next()
+    }
+
+    #[inline]
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        self.inner.size_hint()
+    }
+}
+
+impl DoubleEndedIterator for NamedChainIter {
+    #[inline]
+    fn next_back(&mut self) -> Option<Self::Item> {
+        self.inner.next_back()
+    }
+}
+
+impl ExactSizeIterator for NamedChainIter {}
+impl core::iter::FusedIterator for NamedChainIter {}
+
+impl NamedChain {
+    /// The number of named chains.
+    pub const COUNT: usize = 197;
+
+    /// All named chains in declaration order.
+    pub const VARIANTS: &'static [Self] = &[
+        Self::Mainnet,
+        Self::Morden,
+        Self::Ropsten,
+        Self::Rinkeby,
+        Self::Goerli,
+        Self::Kovan,
+        Self::Holesky,
+        Self::Hoodi,
+        Self::Sepolia,
+        Self::Odyssey,
+        Self::Optimism,
+        Self::OptimismKovan,
+        Self::OptimismGoerli,
+        Self::OptimismSepolia,
+        Self::Bob,
+        Self::BobSepolia,
+        Self::Arbitrum,
+        Self::ArbitrumTestnet,
+        Self::ArbitrumGoerli,
+        Self::ArbitrumSepolia,
+        Self::ArbitrumNova,
+        Self::Cronos,
+        Self::CronosTestnet,
+        Self::Rsk,
+        Self::RskTestnet,
+        Self::TelosEvm,
+        Self::TelosEvmTestnet,
+        Self::Crab,
+        Self::Darwinia,
+        Self::Koi,
+        Self::BinanceSmartChain,
+        Self::BinanceSmartChainTestnet,
+        Self::Poa,
+        Self::Sokol,
+        Self::Scroll,
+        Self::ScrollSepolia,
+        Self::Metis,
+        Self::CfxTestnet,
+        Self::Cfx,
+        Self::Gnosis,
+        Self::Polygon,
+        Self::PolygonAmoy,
+        Self::Fantom,
+        Self::FantomTestnet,
+        Self::Moonbeam,
+        Self::MoonbeamDev,
+        Self::Moonriver,
+        Self::Moonbase,
+        Self::Dev,
+        Self::AnvilHardhat,
+        Self::GravityAlphaMainnet,
+        Self::GravityAlphaTestnetSepolia,
+        Self::Gravity,
+        Self::Evmos,
+        Self::EvmosTestnet,
+        Self::Plasma,
+        Self::PlasmaTestnet,
+        Self::Chiado,
+        Self::Oasis,
+        Self::Emerald,
+        Self::EmeraldTestnet,
+        Self::FilecoinMainnet,
+        Self::FilecoinCalibrationTestnet,
+        Self::Avalanche,
+        Self::AvalancheFuji,
+        Self::Celo,
+        Self::CeloSepolia,
+        Self::Aurora,
+        Self::AuroraTestnet,
+        Self::Canto,
+        Self::CantoTestnet,
+        Self::Boba,
+        Self::Base,
+        Self::BaseGoerli,
+        Self::BaseSepolia,
+        Self::Syndr,
+        Self::SyndrSepolia,
+        Self::Shimmer,
+        Self::Ink,
+        Self::InkSepolia,
+        Self::Fraxtal,
+        Self::FraxtalTestnet,
+        Self::Blast,
+        Self::BlastSepolia,
+        Self::Linea,
+        Self::LineaGoerli,
+        Self::LineaSepolia,
+        Self::ZkSync,
+        Self::ZkSyncTestnet,
+        Self::Mantle,
+        Self::MantleSepolia,
+        Self::Xai,
+        Self::XaiSepolia,
+        Self::HappychainTestnet,
+        Self::Viction,
+        Self::Zora,
+        Self::ZoraSepolia,
+        Self::Pgn,
+        Self::PgnSepolia,
+        Self::Mode,
+        Self::ModeSepolia,
+        Self::Elastos,
+        Self::Etherlink,
+        Self::EtherlinkShadownet,
+        Self::Degen,
+        Self::OpBNBMainnet,
+        Self::OpBNBTestnet,
+        Self::Ronin,
+        Self::RoninTestnet,
+        Self::Radius,
+        Self::RadiusTestnet,
+        Self::Taiko,
+        Self::TaikoHekla,
+        Self::AutonomysNovaTestnet,
+        Self::Flare,
+        Self::FlareCoston2,
+        Self::Acala,
+        Self::AcalaMandalaTestnet,
+        Self::AcalaTestnet,
+        Self::Karura,
+        Self::KaruraTestnet,
+        Self::Pulsechain,
+        Self::PulsechainTestnet,
+        Self::Cannon,
+        Self::Immutable,
+        Self::ImmutableTestnet,
+        Self::Soneium,
+        Self::SoneiumMinatoTestnet,
+        Self::World,
+        Self::WorldSepolia,
+        Self::Iotex,
+        Self::Core,
+        Self::Merlin,
+        Self::Bitlayer,
+        Self::Vana,
+        Self::Zeta,
+        Self::Kaia,
+        Self::Story,
+        Self::Sei,
+        Self::SeiTestnet,
+        Self::StableMainnet,
+        Self::StableTestnet,
+        Self::MegaEth,
+        Self::MegaEthTestnet,
+        Self::XdcMainnet,
+        Self::XdcTestnet,
+        Self::Unichain,
+        Self::UnichainSepolia,
+        Self::SignetPecorino,
+        Self::ApeChain,
+        Self::Curtis,
+        Self::Sonic,
+        Self::SonicTestnet,
+        Self::Redbelly,
+        Self::RedbellyTestnet,
+        Self::PlumeTestnet,
+        Self::Plume,
+        Self::Treasure,
+        Self::TreasureTopaz,
+        Self::BerachainBepolia,
+        Self::Berachain,
+        Self::SuperpositionTestnet,
+        Self::Superposition,
+        Self::Monad,
+        Self::MonadTestnet,
+        Self::Hyperliquid,
+        Self::Abstract,
+        Self::AbstractTestnet,
+        Self::Corn,
+        Self::CornTestnet,
+        Self::Sophon,
+        Self::SophonTestnet,
+        Self::PolkadotTestnet,
+        Self::Kusama,
+        Self::Polkadot,
+        Self::Lens,
+        Self::LensTestnet,
+        Self::Injective,
+        Self::InjectiveTestnet,
+        Self::Katana,
+        Self::Lisk,
+        Self::Fuse,
+        Self::Fluent,
+        Self::FluentDevnet,
+        Self::FluentTestnet,
+        Self::SkaleBase,
+        Self::SkaleBaseSepoliaTestnet,
+        Self::MemeCore,
+        Self::Formicarium,
+        Self::Insectarium,
+        Self::Tempo,
+        Self::TempoModerato,
+        Self::TempoTestnet,
+        Self::TempoDevnet,
+        Self::ArcTestnet,
+        Self::BattleChainTestnet,
+        Self::RobinhoodTestnet,
+    ];
+
+    /// All named chain string representations in declaration order.
+    pub const VARIANT_NAMES: &'static [&'static str] = &VARIANT_NAMES_DATA;
+
+    /// Returns an iterator over all named chains.
+    #[inline]
+    pub fn iter() -> NamedChainIter {
+        NamedChainIter { inner: Self::VARIANTS.iter().copied() }
+    }
+
+    #[inline]
+    const fn from_index(index: ChainIndex) -> Self {
+        Self::VARIANTS[index as usize]
+    }
+
+    #[inline]
+    const fn data(self) -> ChainData {
+        match self {
+            Self::Mainnet => CHAIN_DATA[0],
+            Self::Morden => CHAIN_DATA[1],
+            Self::Ropsten => CHAIN_DATA[2],
+            Self::Rinkeby => CHAIN_DATA[3],
+            Self::Goerli => CHAIN_DATA[4],
+            Self::Kovan => CHAIN_DATA[5],
+            Self::Holesky => CHAIN_DATA[6],
+            Self::Hoodi => CHAIN_DATA[7],
+            Self::Sepolia => CHAIN_DATA[8],
+            Self::Odyssey => CHAIN_DATA[9],
+            Self::Optimism => CHAIN_DATA[10],
+            Self::OptimismKovan => CHAIN_DATA[11],
+            Self::OptimismGoerli => CHAIN_DATA[12],
+            Self::OptimismSepolia => CHAIN_DATA[13],
+            Self::Bob => CHAIN_DATA[14],
+            Self::BobSepolia => CHAIN_DATA[15],
+            Self::Arbitrum => CHAIN_DATA[16],
+            Self::ArbitrumTestnet => CHAIN_DATA[17],
+            Self::ArbitrumGoerli => CHAIN_DATA[18],
+            Self::ArbitrumSepolia => CHAIN_DATA[19],
+            Self::ArbitrumNova => CHAIN_DATA[20],
+            Self::Cronos => CHAIN_DATA[21],
+            Self::CronosTestnet => CHAIN_DATA[22],
+            Self::Rsk => CHAIN_DATA[23],
+            Self::RskTestnet => CHAIN_DATA[24],
+            Self::TelosEvm => CHAIN_DATA[25],
+            Self::TelosEvmTestnet => CHAIN_DATA[26],
+            Self::Crab => CHAIN_DATA[27],
+            Self::Darwinia => CHAIN_DATA[28],
+            Self::Koi => CHAIN_DATA[29],
+            Self::BinanceSmartChain => CHAIN_DATA[30],
+            Self::BinanceSmartChainTestnet => CHAIN_DATA[31],
+            Self::Poa => CHAIN_DATA[32],
+            Self::Sokol => CHAIN_DATA[33],
+            Self::Scroll => CHAIN_DATA[34],
+            Self::ScrollSepolia => CHAIN_DATA[35],
+            Self::Metis => CHAIN_DATA[36],
+            Self::CfxTestnet => CHAIN_DATA[37],
+            Self::Cfx => CHAIN_DATA[38],
+            Self::Gnosis => CHAIN_DATA[39],
+            Self::Polygon => CHAIN_DATA[40],
+            Self::PolygonAmoy => CHAIN_DATA[41],
+            Self::Fantom => CHAIN_DATA[42],
+            Self::FantomTestnet => CHAIN_DATA[43],
+            Self::Moonbeam => CHAIN_DATA[44],
+            Self::MoonbeamDev => CHAIN_DATA[45],
+            Self::Moonriver => CHAIN_DATA[46],
+            Self::Moonbase => CHAIN_DATA[47],
+            Self::Dev => CHAIN_DATA[48],
+            Self::AnvilHardhat => CHAIN_DATA[49],
+            Self::GravityAlphaMainnet => CHAIN_DATA[50],
+            Self::GravityAlphaTestnetSepolia => CHAIN_DATA[51],
+            Self::Gravity => CHAIN_DATA[52],
+            Self::Evmos => CHAIN_DATA[53],
+            Self::EvmosTestnet => CHAIN_DATA[54],
+            Self::Plasma => CHAIN_DATA[55],
+            Self::PlasmaTestnet => CHAIN_DATA[56],
+            Self::Chiado => CHAIN_DATA[57],
+            Self::Oasis => CHAIN_DATA[58],
+            Self::Emerald => CHAIN_DATA[59],
+            Self::EmeraldTestnet => CHAIN_DATA[60],
+            Self::FilecoinMainnet => CHAIN_DATA[61],
+            Self::FilecoinCalibrationTestnet => CHAIN_DATA[62],
+            Self::Avalanche => CHAIN_DATA[63],
+            Self::AvalancheFuji => CHAIN_DATA[64],
+            Self::Celo => CHAIN_DATA[65],
+            Self::CeloSepolia => CHAIN_DATA[66],
+            Self::Aurora => CHAIN_DATA[67],
+            Self::AuroraTestnet => CHAIN_DATA[68],
+            Self::Canto => CHAIN_DATA[69],
+            Self::CantoTestnet => CHAIN_DATA[70],
+            Self::Boba => CHAIN_DATA[71],
+            Self::Base => CHAIN_DATA[72],
+            Self::BaseGoerli => CHAIN_DATA[73],
+            Self::BaseSepolia => CHAIN_DATA[74],
+            Self::Syndr => CHAIN_DATA[75],
+            Self::SyndrSepolia => CHAIN_DATA[76],
+            Self::Shimmer => CHAIN_DATA[77],
+            Self::Ink => CHAIN_DATA[78],
+            Self::InkSepolia => CHAIN_DATA[79],
+            Self::Fraxtal => CHAIN_DATA[80],
+            Self::FraxtalTestnet => CHAIN_DATA[81],
+            Self::Blast => CHAIN_DATA[82],
+            Self::BlastSepolia => CHAIN_DATA[83],
+            Self::Linea => CHAIN_DATA[84],
+            Self::LineaGoerli => CHAIN_DATA[85],
+            Self::LineaSepolia => CHAIN_DATA[86],
+            Self::ZkSync => CHAIN_DATA[87],
+            Self::ZkSyncTestnet => CHAIN_DATA[88],
+            Self::Mantle => CHAIN_DATA[89],
+            Self::MantleSepolia => CHAIN_DATA[90],
+            Self::Xai => CHAIN_DATA[91],
+            Self::XaiSepolia => CHAIN_DATA[92],
+            Self::HappychainTestnet => CHAIN_DATA[93],
+            Self::Viction => CHAIN_DATA[94],
+            Self::Zora => CHAIN_DATA[95],
+            Self::ZoraSepolia => CHAIN_DATA[96],
+            Self::Pgn => CHAIN_DATA[97],
+            Self::PgnSepolia => CHAIN_DATA[98],
+            Self::Mode => CHAIN_DATA[99],
+            Self::ModeSepolia => CHAIN_DATA[100],
+            Self::Elastos => CHAIN_DATA[101],
+            Self::Etherlink => CHAIN_DATA[102],
+            Self::EtherlinkShadownet => CHAIN_DATA[103],
+            Self::Degen => CHAIN_DATA[104],
+            Self::OpBNBMainnet => CHAIN_DATA[105],
+            Self::OpBNBTestnet => CHAIN_DATA[106],
+            Self::Ronin => CHAIN_DATA[107],
+            Self::RoninTestnet => CHAIN_DATA[108],
+            Self::Radius => CHAIN_DATA[109],
+            Self::RadiusTestnet => CHAIN_DATA[110],
+            Self::Taiko => CHAIN_DATA[111],
+            Self::TaikoHekla => CHAIN_DATA[112],
+            Self::AutonomysNovaTestnet => CHAIN_DATA[113],
+            Self::Flare => CHAIN_DATA[114],
+            Self::FlareCoston2 => CHAIN_DATA[115],
+            Self::Acala => CHAIN_DATA[116],
+            Self::AcalaMandalaTestnet => CHAIN_DATA[117],
+            Self::AcalaTestnet => CHAIN_DATA[118],
+            Self::Karura => CHAIN_DATA[119],
+            Self::KaruraTestnet => CHAIN_DATA[120],
+            Self::Pulsechain => CHAIN_DATA[121],
+            Self::PulsechainTestnet => CHAIN_DATA[122],
+            Self::Cannon => CHAIN_DATA[123],
+            Self::Immutable => CHAIN_DATA[124],
+            Self::ImmutableTestnet => CHAIN_DATA[125],
+            Self::Soneium => CHAIN_DATA[126],
+            Self::SoneiumMinatoTestnet => CHAIN_DATA[127],
+            Self::World => CHAIN_DATA[128],
+            Self::WorldSepolia => CHAIN_DATA[129],
+            Self::Iotex => CHAIN_DATA[130],
+            Self::Core => CHAIN_DATA[131],
+            Self::Merlin => CHAIN_DATA[132],
+            Self::Bitlayer => CHAIN_DATA[133],
+            Self::Vana => CHAIN_DATA[134],
+            Self::Zeta => CHAIN_DATA[135],
+            Self::Kaia => CHAIN_DATA[136],
+            Self::Story => CHAIN_DATA[137],
+            Self::Sei => CHAIN_DATA[138],
+            Self::SeiTestnet => CHAIN_DATA[139],
+            Self::StableMainnet => CHAIN_DATA[140],
+            Self::StableTestnet => CHAIN_DATA[141],
+            Self::MegaEth => CHAIN_DATA[142],
+            Self::MegaEthTestnet => CHAIN_DATA[143],
+            Self::XdcMainnet => CHAIN_DATA[144],
+            Self::XdcTestnet => CHAIN_DATA[145],
+            Self::Unichain => CHAIN_DATA[146],
+            Self::UnichainSepolia => CHAIN_DATA[147],
+            Self::SignetPecorino => CHAIN_DATA[148],
+            Self::ApeChain => CHAIN_DATA[149],
+            Self::Curtis => CHAIN_DATA[150],
+            Self::Sonic => CHAIN_DATA[151],
+            Self::SonicTestnet => CHAIN_DATA[152],
+            Self::Redbelly => CHAIN_DATA[153],
+            Self::RedbellyTestnet => CHAIN_DATA[154],
+            Self::PlumeTestnet => CHAIN_DATA[155],
+            Self::Plume => CHAIN_DATA[156],
+            Self::Treasure => CHAIN_DATA[157],
+            Self::TreasureTopaz => CHAIN_DATA[158],
+            Self::BerachainBepolia => CHAIN_DATA[159],
+            Self::Berachain => CHAIN_DATA[160],
+            Self::SuperpositionTestnet => CHAIN_DATA[161],
+            Self::Superposition => CHAIN_DATA[162],
+            Self::Monad => CHAIN_DATA[163],
+            Self::MonadTestnet => CHAIN_DATA[164],
+            Self::Hyperliquid => CHAIN_DATA[165],
+            Self::Abstract => CHAIN_DATA[166],
+            Self::AbstractTestnet => CHAIN_DATA[167],
+            Self::Corn => CHAIN_DATA[168],
+            Self::CornTestnet => CHAIN_DATA[169],
+            Self::Sophon => CHAIN_DATA[170],
+            Self::SophonTestnet => CHAIN_DATA[171],
+            Self::PolkadotTestnet => CHAIN_DATA[172],
+            Self::Kusama => CHAIN_DATA[173],
+            Self::Polkadot => CHAIN_DATA[174],
+            Self::Lens => CHAIN_DATA[175],
+            Self::LensTestnet => CHAIN_DATA[176],
+            Self::Injective => CHAIN_DATA[177],
+            Self::InjectiveTestnet => CHAIN_DATA[178],
+            Self::Katana => CHAIN_DATA[179],
+            Self::Lisk => CHAIN_DATA[180],
+            Self::Fuse => CHAIN_DATA[181],
+            Self::Fluent => CHAIN_DATA[182],
+            Self::FluentDevnet => CHAIN_DATA[183],
+            Self::FluentTestnet => CHAIN_DATA[184],
+            Self::SkaleBase => CHAIN_DATA[185],
+            Self::SkaleBaseSepoliaTestnet => CHAIN_DATA[186],
+            Self::MemeCore => CHAIN_DATA[187],
+            Self::Formicarium => CHAIN_DATA[188],
+            Self::Insectarium => CHAIN_DATA[189],
+            Self::Tempo => CHAIN_DATA[190],
+            Self::TempoModerato => CHAIN_DATA[191],
+            Self::TempoTestnet => CHAIN_DATA[192],
+            Self::TempoDevnet => CHAIN_DATA[193],
+            Self::ArcTestnet => CHAIN_DATA[194],
+            Self::BattleChainTestnet => CHAIN_DATA[195],
+            Self::RobinhoodTestnet => CHAIN_DATA[196],
+        }
+    }
+
+    #[inline]
+    fn from_chain_id_map(id: u64) -> Option<Self> {
+        CHAIN_IDS.get(&id).copied().map(Self::from_index)
+    }
+
+    #[inline]
+    const fn has_flag(self, flag: u8) -> bool {
+        self.data().flags & flag != 0
+    }
+
+    /// Returns the chain for the given EIP-155 chain ID.
+    #[inline]
+    pub const fn from_chain_id(id: u64) -> Option<Self> {
+        match id {
+            1 => Some(Self::Mainnet),
+            2 => Some(Self::Morden),
+            3 => Some(Self::Ropsten),
+            4 => Some(Self::Rinkeby),
+            5 => Some(Self::Goerli),
+            42 => Some(Self::Kovan),
+            17000 => Some(Self::Holesky),
+            560048 => Some(Self::Hoodi),
+            11155111 => Some(Self::Sepolia),
+            911867 => Some(Self::Odyssey),
+            10 => Some(Self::Optimism),
+            69 => Some(Self::OptimismKovan),
+            420 => Some(Self::OptimismGoerli),
+            11155420 => Some(Self::OptimismSepolia),
+            60808 => Some(Self::Bob),
+            808813 => Some(Self::BobSepolia),
+            42161 => Some(Self::Arbitrum),
+            421611 => Some(Self::ArbitrumTestnet),
+            421613 => Some(Self::ArbitrumGoerli),
+            421614 => Some(Self::ArbitrumSepolia),
+            42170 => Some(Self::ArbitrumNova),
+            25 => Some(Self::Cronos),
+            338 => Some(Self::CronosTestnet),
+            30 => Some(Self::Rsk),
+            31 => Some(Self::RskTestnet),
+            40 => Some(Self::TelosEvm),
+            41 => Some(Self::TelosEvmTestnet),
+            44 => Some(Self::Crab),
+            46 => Some(Self::Darwinia),
+            701 => Some(Self::Koi),
+            56 => Some(Self::BinanceSmartChain),
+            97 => Some(Self::BinanceSmartChainTestnet),
+            99 => Some(Self::Poa),
+            77 => Some(Self::Sokol),
+            534352 => Some(Self::Scroll),
+            534351 => Some(Self::ScrollSepolia),
+            1088 => Some(Self::Metis),
+            71 => Some(Self::CfxTestnet),
+            1030 => Some(Self::Cfx),
+            100 => Some(Self::Gnosis),
+            137 => Some(Self::Polygon),
+            80002 => Some(Self::PolygonAmoy),
+            250 => Some(Self::Fantom),
+            4002 => Some(Self::FantomTestnet),
+            1284 => Some(Self::Moonbeam),
+            1281 => Some(Self::MoonbeamDev),
+            1285 => Some(Self::Moonriver),
+            1287 => Some(Self::Moonbase),
+            1337 => Some(Self::Dev),
+            31337 => Some(Self::AnvilHardhat),
+            1625 => Some(Self::GravityAlphaMainnet),
+            13505 => Some(Self::GravityAlphaTestnetSepolia),
+            127001 => Some(Self::Gravity),
+            9001 => Some(Self::Evmos),
+            9000 => Some(Self::EvmosTestnet),
+            9745 => Some(Self::Plasma),
+            9746 => Some(Self::PlasmaTestnet),
+            10200 => Some(Self::Chiado),
+            26863 => Some(Self::Oasis),
+            42262 => Some(Self::Emerald),
+            42261 => Some(Self::EmeraldTestnet),
+            314 => Some(Self::FilecoinMainnet),
+            314159 => Some(Self::FilecoinCalibrationTestnet),
+            43114 => Some(Self::Avalanche),
+            43113 => Some(Self::AvalancheFuji),
+            42220 => Some(Self::Celo),
+            11142220 => Some(Self::CeloSepolia),
+            1313161554 => Some(Self::Aurora),
+            1313161555 => Some(Self::AuroraTestnet),
+            7700 => Some(Self::Canto),
+            740 => Some(Self::CantoTestnet),
+            288 => Some(Self::Boba),
+            8453 => Some(Self::Base),
+            84531 => Some(Self::BaseGoerli),
+            84532 => Some(Self::BaseSepolia),
+            404 => Some(Self::Syndr),
+            444444 => Some(Self::SyndrSepolia),
+            148 => Some(Self::Shimmer),
+            57073 => Some(Self::Ink),
+            763373 => Some(Self::InkSepolia),
+            252 => Some(Self::Fraxtal),
+            2522 => Some(Self::FraxtalTestnet),
+            81457 => Some(Self::Blast),
+            168587773 => Some(Self::BlastSepolia),
+            59144 => Some(Self::Linea),
+            59140 => Some(Self::LineaGoerli),
+            59141 => Some(Self::LineaSepolia),
+            324 => Some(Self::ZkSync),
+            300 => Some(Self::ZkSyncTestnet),
+            5000 => Some(Self::Mantle),
+            5003 => Some(Self::MantleSepolia),
+            660279 => Some(Self::Xai),
+            37714555429 => Some(Self::XaiSepolia),
+            216 => Some(Self::HappychainTestnet),
+            88 => Some(Self::Viction),
+            7777777 => Some(Self::Zora),
+            999999999 => Some(Self::ZoraSepolia),
+            424 => Some(Self::Pgn),
+            58008 => Some(Self::PgnSepolia),
+            34443 => Some(Self::Mode),
+            919 => Some(Self::ModeSepolia),
+            20 => Some(Self::Elastos),
+            42793 => Some(Self::Etherlink),
+            127823 => Some(Self::EtherlinkShadownet),
+            666666666 => Some(Self::Degen),
+            204 => Some(Self::OpBNBMainnet),
+            5611 => Some(Self::OpBNBTestnet),
+            2020 => Some(Self::Ronin),
+            202601 => Some(Self::RoninTestnet),
+            723487 => Some(Self::Radius),
+            72344 => Some(Self::RadiusTestnet),
+            167000 => Some(Self::Taiko),
+            167009 => Some(Self::TaikoHekla),
+            490000 => Some(Self::AutonomysNovaTestnet),
+            14 => Some(Self::Flare),
+            114 => Some(Self::FlareCoston2),
+            787 => Some(Self::Acala),
+            595 => Some(Self::AcalaMandalaTestnet),
+            597 => Some(Self::AcalaTestnet),
+            686 => Some(Self::Karura),
+            596 => Some(Self::KaruraTestnet),
+            369 => Some(Self::Pulsechain),
+            943 => Some(Self::PulsechainTestnet),
+            13370 => Some(Self::Cannon),
+            13371 => Some(Self::Immutable),
+            13473 => Some(Self::ImmutableTestnet),
+            1868 => Some(Self::Soneium),
+            1946 => Some(Self::SoneiumMinatoTestnet),
+            480 => Some(Self::World),
+            4801 => Some(Self::WorldSepolia),
+            4689 => Some(Self::Iotex),
+            1116 => Some(Self::Core),
+            4200 => Some(Self::Merlin),
+            200901 => Some(Self::Bitlayer),
+            1480 => Some(Self::Vana),
+            7000 => Some(Self::Zeta),
+            8217 => Some(Self::Kaia),
+            1514 => Some(Self::Story),
+            1329 => Some(Self::Sei),
+            1328 => Some(Self::SeiTestnet),
+            988 => Some(Self::StableMainnet),
+            2201 => Some(Self::StableTestnet),
+            4326 => Some(Self::MegaEth),
+            6343 => Some(Self::MegaEthTestnet),
+            50 => Some(Self::XdcMainnet),
+            51 => Some(Self::XdcTestnet),
+            130 => Some(Self::Unichain),
+            1301 => Some(Self::UnichainSepolia),
+            14174 => Some(Self::SignetPecorino),
+            33139 => Some(Self::ApeChain),
+            33111 => Some(Self::Curtis),
+            146 => Some(Self::Sonic),
+            14601 => Some(Self::SonicTestnet),
+            151 => Some(Self::Redbelly),
+            153 => Some(Self::RedbellyTestnet),
+            98867 => Some(Self::PlumeTestnet),
+            98866 => Some(Self::Plume),
+            61166 => Some(Self::Treasure),
+            978658 => Some(Self::TreasureTopaz),
+            80069 => Some(Self::BerachainBepolia),
+            80094 => Some(Self::Berachain),
+            98985 => Some(Self::SuperpositionTestnet),
+            55244 => Some(Self::Superposition),
+            143 => Some(Self::Monad),
+            10143 => Some(Self::MonadTestnet),
+            999 => Some(Self::Hyperliquid),
+            2741 => Some(Self::Abstract),
+            11124 => Some(Self::AbstractTestnet),
+            21000000 => Some(Self::Corn),
+            21000001 => Some(Self::CornTestnet),
+            50104 => Some(Self::Sophon),
+            531050104 => Some(Self::SophonTestnet),
+            420420417 => Some(Self::PolkadotTestnet),
+            420420418 => Some(Self::Kusama),
+            420420419 => Some(Self::Polkadot),
+            232 => Some(Self::Lens),
+            37111 => Some(Self::LensTestnet),
+            1776 => Some(Self::Injective),
+            1439 => Some(Self::InjectiveTestnet),
+            747474 => Some(Self::Katana),
+            1135 => Some(Self::Lisk),
+            122 => Some(Self::Fuse),
+            25363 => Some(Self::Fluent),
+            20993 => Some(Self::FluentDevnet),
+            20994 => Some(Self::FluentTestnet),
+            1187947933 => Some(Self::SkaleBase),
+            324705682 => Some(Self::SkaleBaseSepoliaTestnet),
+            4352 => Some(Self::MemeCore),
+            43521 => Some(Self::Formicarium),
+            43522 => Some(Self::Insectarium),
+            4217 => Some(Self::Tempo),
+            42431 => Some(Self::TempoModerato),
+            42429 => Some(Self::TempoTestnet),
+            31318 => Some(Self::TempoDevnet),
+            5042002 => Some(Self::ArcTestnet),
+            627 => Some(Self::BattleChainTestnet),
+            46630 => Some(Self::RobinhoodTestnet),
+            _ => None,
+        }
+    }
+
+    /// Returns the string representation of the chain.
+    #[inline]
+    pub const fn as_str(&self) -> &'static str {
+        self.data().name.get_unchecked()
+    }
+
+    /// Returns `true` if this chain is Ethereum or an Ethereum testnet.
+    #[inline]
+    pub const fn is_ethereum(&self) -> bool {
+        self.has_flag(FLAG_ETHEREUM)
+    }
+
+    /// Returns true if the chain contains Optimism configuration.
+    #[inline]
+    pub const fn is_optimism(self) -> bool {
+        self.has_flag(FLAG_OPTIMISM)
+    }
+
+    /// Returns true if the chain contains Gnosis configuration.
+    #[inline]
+    pub const fn is_gnosis(self) -> bool {
+        matches!(self, Self::Gnosis | Self::Chiado)
+    }
+
+    /// Returns true if the chain contains Polygon configuration.
+    #[inline]
+    pub const fn is_polygon(self) -> bool {
+        matches!(self, Self::Polygon | Self::PolygonAmoy)
+    }
+
+    /// Returns true if the chain contains Arbitrum configuration.
+    #[inline]
+    pub const fn is_arbitrum(self) -> bool {
+        matches!(
+            self,
+            Self::Arbitrum
+                | Self::ArbitrumTestnet
+                | Self::ArbitrumGoerli
+                | Self::ArbitrumSepolia
+                | Self::ArbitrumNova
+        )
+    }
+
+    /// Returns true if the chain contains Elastic Network configuration.
+    #[inline]
+    pub const fn is_elastic(self) -> bool {
+        self.has_flag(FLAG_ELASTIC)
+    }
+
+    /// Returns true if the chain contains Tempo configuration.
+    #[inline]
+    pub const fn is_tempo(self) -> bool {
+        matches!(self, Self::Tempo | Self::TempoModerato | Self::TempoTestnet | Self::TempoDevnet)
+    }
+
+    /// Returns true if the chain uses a custom Sourcify-compatible API.
+    #[inline]
+    pub const fn is_custom_sourcify(self) -> bool {
+        matches!(self, Self::Tempo | Self::TempoModerato | Self::TempoTestnet)
+    }
+
+    /// Returns the chain's average blocktime, if applicable.
+    #[inline]
+    pub const fn average_blocktime_hint(self) -> Option<Duration> {
+        let millis = self.data().average_blocktime_millis;
+        if millis == 0 { None } else { Some(Duration::from_millis(millis as u64)) }
+    }
+
+    /// Returns whether the chain implements EIP-1559.
+    #[inline]
+    pub const fn is_legacy(self) -> bool {
+        self.has_flag(FLAG_LEGACY)
+    }
+
+    /// Returns whether the chain supports the Shanghai hardfork.
+    #[inline]
+    pub const fn supports_shanghai(self) -> bool {
+        self.has_flag(FLAG_SUPPORTS_SHANGHAI)
+    }
+
+    /// Returns whether the chain is a testnet.
+    #[inline]
+    pub const fn is_testnet(self) -> bool {
+        self.has_flag(FLAG_TESTNET)
+    }
+
+    /// Returns the symbol of the chain's native currency.
+    #[inline]
+    pub const fn native_currency_symbol(self) -> Option<&'static str> {
+        self.data().native_currency_symbol.get()
+    }
+
+    /// Returns the chain's blockchain explorer and its API URLs.
+    #[inline]
+    pub const fn etherscan_urls(self) -> Option<(&'static str, &'static str)> {
+        let data = self.data();
+        match (data.etherscan_api_url.get(), data.etherscan_base_url.get()) {
+            (Some(api), Some(base)) => Some((api, base)),
+            _ => None,
+        }
+    }
+
+    /// Returns the chain's blockchain explorer API key environment variable name.
+    #[inline]
+    pub const fn etherscan_api_key_name(self) -> Option<&'static str> {
+        self.data().etherscan_api_key_name.get()
+    }
+
+    /// Returns the chain's blockchain explorer API key from the environment.
+    #[cfg(feature = "std")]
+    pub fn etherscan_api_key(self) -> Option<String> {
+        self.etherscan_api_key_name().and_then(|name| std::env::var(name).ok())
+    }
+
+    /// Returns the address of the public DNS node list for the given chain.
+    pub fn public_dns_network_protocol(self) -> Option<String> {
+        const DNS_PREFIX: &str = "enrtree://AKA3AM6LPBYEUDMVNU3BSVQJ5AD45Y7YPOHJLEF6W26QOE4VTUDPE@";
+        if matches!(
+            self,
+            Self::Mainnet
+                | Self::Goerli
+                | Self::Sepolia
+                | Self::Ropsten
+                | Self::Rinkeby
+                | Self::Holesky
+                | Self::Hoodi
+        ) {
+            let mut s = String::with_capacity(DNS_PREFIX.len() + 32);
+            s.push_str(DNS_PREFIX);
+            s.push_str("all.");
+            let chain_str = self.as_ref();
+            s.push_str(chain_str);
+            let l = s.len();
+            s[l - chain_str.len()..].make_ascii_lowercase();
+            s.push_str(".ethdisco.net");
+            Some(s)
+        } else {
+            None
+        }
+    }
+
+    /// Returns the address of the most popular wrapped native token address.
+    #[inline]
+    pub const fn wrapped_native_token(self) -> Option<Address> {
+        let index = self.data().wrapped_native_token;
+        if index == NO_WRAPPED_NATIVE_TOKEN {
+            None
+        } else {
+            Some(WRAPPED_NATIVE_TOKENS[index as usize])
+        }
+    }
+
+    #[cfg(feature = "serde")]
+    fn from_serde_str(value: &str) -> Option<Self> {
+        PARSE_NAMES.get(value).or_else(|| SERDE_NAMES.get(value)).copied().map(Self::from_index)
+    }
+}
+
+impl From<NamedChain> for &'static str {
+    #[inline]
+    fn from(chain: NamedChain) -> Self {
+        (&chain).into()
+    }
+}
+
+impl From<&NamedChain> for &'static str {
+    #[inline]
+    fn from(chain: &NamedChain) -> Self {
+        chain.as_str()
+    }
+}
+
+impl Default for NamedChain {
+    #[inline]
+    fn default() -> Self {
+        Self::Mainnet
+    }
+}
+
+macro_rules! impl_into_numeric {
+    ($($t:ty)+) => {$(
+        impl From<NamedChain> for $t {
+            #[inline]
+            fn from(chain: NamedChain) -> Self {
+                chain as $t
+            }
+        }
+    )+};
+}
+
+impl_into_numeric!(u64 i64 u128 i128);
+#[cfg(target_pointer_width = "64")]
+impl_into_numeric!(usize isize);
+
+impl num_enum::TryFromPrimitive for NamedChain {
+    type Primitive = u64;
+    type Error = num_enum::TryFromPrimitiveError<Self>;
+
+    const NAME: &'static str = "NamedChain";
+
+    #[inline]
+    fn try_from_primitive(number: Self::Primitive) -> Result<Self, Self::Error> {
+        Self::from_chain_id_map(number).ok_or_else(|| num_enum::TryFromPrimitiveError::new(number))
+    }
+}
+
+impl TryFrom<u64> for NamedChain {
+    type Error = num_enum::TryFromPrimitiveError<Self>;
+
+    #[inline]
+    fn try_from(value: u64) -> Result<Self, Self::Error> {
+        num_enum::TryFromPrimitive::try_from_primitive(value)
+    }
+}
+
+macro_rules! impl_try_from_numeric {
+    ($($native:ty)+) => {
+        $(
+            impl TryFrom<$native> for NamedChain {
+                type Error = num_enum::TryFromPrimitiveError<NamedChain>;
+
+                #[inline]
+                fn try_from(value: $native) -> Result<Self, Self::Error> {
+                    (value as u64).try_into()
+                }
+            }
+        )+
+    };
+}
+
+impl_try_from_numeric!(u8 i8 u16 i16 u32 i32 usize isize);
+
+impl fmt::Display for NamedChain {
+    #[inline]
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        self.as_str().fmt(f)
+    }
+}
+
+impl AsRef<str> for NamedChain {
+    #[inline]
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+
+impl FromStr for NamedChain {
+    type Err = ParseNamedChainError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        PARSE_NAMES.get(s).copied().map(Self::from_index).ok_or(ParseNamedChainError)
+    }
+}
+
+impl TryFrom<&str> for NamedChain {
+    type Error = ParseNamedChainError;
+
+    #[inline]
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        value.parse()
+    }
+}
+
+impl PartialEq<u64> for NamedChain {
+    #[inline]
+    fn eq(&self, other: &u64) -> bool {
+        (*self as u64) == *other
+    }
+}
+
+impl PartialOrd<u64> for NamedChain {
+    #[inline]
+    fn partial_cmp(&self, other: &u64) -> Option<Ordering> {
+        (*self as u64).partial_cmp(other)
+    }
+}
+
+#[cfg(feature = "serde")]
+impl serde::Serialize for NamedChain {
+    #[inline]
+    fn serialize<S: serde::Serializer>(&self, s: S) -> Result<S::Ok, S::Error> {
+        s.serialize_str(self.as_ref())
+    }
+}
+
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for NamedChain {
+    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+        struct NamedChainVisitor;
+
+        impl serde::de::Visitor<'_> for NamedChainVisitor {
+            type Value = NamedChain;
+
+            fn expecting(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
+                formatter.write_str("a named chain")
+            }
+
+            fn visit_str<E: serde::de::Error>(self, value: &str) -> Result<Self::Value, E> {
+                NamedChain::from_serde_str(value).ok_or_else(|| {
+                    serde::de::Error::unknown_variant(value, NamedChain::VARIANT_NAMES)
+                })
+            }
+        }
+
+        deserializer.deserialize_str(NamedChainVisitor)
+    }
+}
+
+#[cfg(feature = "rlp")]
+impl alloy_rlp::Encodable for NamedChain {
+    #[inline]
+    fn encode(&self, out: &mut dyn alloy_rlp::BufMut) {
+        (*self as u64).encode(out)
+    }
+
+    #[inline]
+    fn length(&self) -> usize {
+        (*self as u64).length()
+    }
+}
+
+#[cfg(feature = "rlp")]
+impl alloy_rlp::Decodable for NamedChain {
+    #[inline]
+    fn decode(buf: &mut &[u8]) -> alloy_rlp::Result<Self> {
+        let n = u64::decode(buf)?;
+        Self::try_from(n).map_err(|_| alloy_rlp::Error::Overflow)
+    }
+}
+
+#[cfg(feature = "arbitrary")]
+impl<'a> arbitrary::Arbitrary<'a> for NamedChain {
+    fn arbitrary(u: &mut arbitrary::Unstructured<'a>) -> arbitrary::Result<Self> {
+        let idx = u.choose_index(Self::COUNT)?;
+        Ok(Self::VARIANTS[idx])
+    }
+}
+
+#[cfg(test)]
+pub(crate) const PARSE_ALIASES: &[(NamedChain, &str)] = &[
+    (NamedChain::Mainnet, "ethlive"),
+    (NamedChain::BinanceSmartChain, "binance-smart-chain"),
+    (NamedChain::BinanceSmartChain, "bnb-smart-chain"),
+    (NamedChain::BinanceSmartChainTestnet, "binance-smart-chain-testnet"),
+    (NamedChain::BinanceSmartChainTestnet, "bnb-smart-chain-testnet"),
+    (NamedChain::Gnosis, "gnosis"),
+    (NamedChain::Gnosis, "gnosis-chain"),
+    (NamedChain::PolygonAmoy, "polygon-amoy"),
+    (NamedChain::AnvilHardhat, "anvil"),
+    (NamedChain::AnvilHardhat, "hardhat"),
+    (NamedChain::AvalancheFuji, "avalanche-fuji"),
+    (NamedChain::Curtis, "apechain-testnet"),
+    (NamedChain::TreasureTopaz, "treasure-topaz-testnet"),
+    (NamedChain::BerachainBepolia, "berachain-bepolia-testnet"),
+    (NamedChain::Formicarium, "memecore-formicarium"),
+    (NamedChain::Insectarium, "memecore-insectarium"),
+    (NamedChain::Tempo, "tempo-mainnet"),
+];
+
+#[cfg(all(test, feature = "serde"))]
+pub(crate) const SERDE_ALIASES: &[(NamedChain, &str)] = &[
+    (NamedChain::OptimismKovan, "optimism_kovan"),
+    (NamedChain::OptimismGoerli, "optimism_goerli"),
+    (NamedChain::OptimismSepolia, "optimism_sepolia"),
+    (NamedChain::BobSepolia, "bob_sepolia"),
+    (NamedChain::Arbitrum, "arbitrum_one"),
+    (NamedChain::Arbitrum, "arbitrum-one"),
+    (NamedChain::ArbitrumTestnet, "arbitrum_testnet"),
+    (NamedChain::ArbitrumGoerli, "arbitrum_goerli"),
+    (NamedChain::ArbitrumSepolia, "arbitrum_sepolia"),
+    (NamedChain::ArbitrumNova, "arbitrum_nova"),
+    (NamedChain::CronosTestnet, "cronos_testnet"),
+    (NamedChain::RskTestnet, "rsk_testnet"),
+    (NamedChain::TelosEvm, "telos_evm"),
+    (NamedChain::TelosEvmTestnet, "telos_evm_testnet"),
+    (NamedChain::TelosEvmTestnet, "telos_testnet"),
+    (NamedChain::TelosEvmTestnet, "telos-evm-testnet"),
+    (NamedChain::BinanceSmartChain, "binance_smart_chain"),
+    (NamedChain::BinanceSmartChainTestnet, "binance_smart_chain_testnet"),
+    (NamedChain::BinanceSmartChainTestnet, "bsc_testnet"),
+    (NamedChain::ScrollSepolia, "scroll_sepolia"),
+    (NamedChain::ScrollSepolia, "scroll_sepolia_testnet"),
+    (NamedChain::CfxTestnet, "cfx_testnet"),
+    (NamedChain::CfxTestnet, "conflux-espace-testnet"),
+    (NamedChain::Cfx, "conflux-espace"),
+    (NamedChain::PolygonAmoy, "polygon_amoy"),
+    (NamedChain::FantomTestnet, "fantom_testnet"),
+    (NamedChain::MoonbeamDev, "moonbeam_dev"),
+    (NamedChain::AnvilHardhat, "anvil_hardhat"),
+    (NamedChain::GravityAlphaMainnet, "gravity_alpha_mainnet"),
+    (NamedChain::GravityAlphaTestnetSepolia, "gravity_alpha_testnet_sepolia"),
+    (NamedChain::Gravity, "gravity"),
+    (NamedChain::EvmosTestnet, "evmos_testnet"),
+    (NamedChain::PlasmaTestnet, "plasma_testnet"),
+    (NamedChain::EmeraldTestnet, "emerald_testnet"),
+    (NamedChain::FilecoinMainnet, "filecoin_mainnet"),
+    (NamedChain::FilecoinCalibrationTestnet, "filecoin_calibration_testnet"),
+    (NamedChain::AvalancheFuji, "avalanche_fuji"),
+    (NamedChain::CeloSepolia, "celo_sepolia"),
+    (NamedChain::AuroraTestnet, "aurora_testnet"),
+    (NamedChain::CantoTestnet, "canto_testnet"),
+    (NamedChain::BaseGoerli, "base_goerli"),
+    (NamedChain::BaseSepolia, "base_sepolia"),
+    (NamedChain::SyndrSepolia, "syndr_sepolia"),
+    (NamedChain::InkSepolia, "ink_sepolia"),
+    (NamedChain::InkSepolia, "ink_sepolia_testnet"),
+    (NamedChain::FraxtalTestnet, "fraxtal_testnet"),
+    (NamedChain::BlastSepolia, "blast_sepolia"),
+    (NamedChain::LineaGoerli, "linea_goerli"),
+    (NamedChain::LineaSepolia, "linea_sepolia"),
+    (NamedChain::ZkSync, "zk_sync"),
+    (NamedChain::ZkSyncTestnet, "zk_sync_testnet"),
+    (NamedChain::ZkSyncTestnet, "zksync_testnet"),
+    (NamedChain::MantleSepolia, "mantle_sepolia"),
+    (NamedChain::XaiSepolia, "xai_sepolia"),
+    (NamedChain::HappychainTestnet, "happychain_testnet"),
+    (NamedChain::ZoraSepolia, "zora_sepolia"),
+    (NamedChain::PgnSepolia, "pgn_sepolia"),
+    (NamedChain::ModeSepolia, "mode_sepolia"),
+    (NamedChain::EtherlinkShadownet, "etherlink_shadownet"),
+    (NamedChain::OpBNBMainnet, "opbnb_mainnet"),
+    (NamedChain::OpBNBMainnet, "op-bnb-mainnet"),
+    (NamedChain::OpBNBTestnet, "opbnb_testnet"),
+    (NamedChain::OpBNBTestnet, "op-bnb-testnet"),
+    (NamedChain::RoninTestnet, "ronin_testnet"),
+    (NamedChain::RadiusTestnet, "radius_testnet"),
+    (NamedChain::TaikoHekla, "taiko_hekla"),
+    (NamedChain::AutonomysNovaTestnet, "autonomys_nova_testnet"),
+    (NamedChain::FlareCoston2, "flare_coston2"),
+    (NamedChain::AcalaMandalaTestnet, "acala_mandala_testnet"),
+    (NamedChain::AcalaTestnet, "acala_testnet"),
+    (NamedChain::KaruraTestnet, "karura_testnet"),
+    (NamedChain::PulsechainTestnet, "pulsechain_testnet"),
+    (NamedChain::ImmutableTestnet, "immutable_testnet"),
+    (NamedChain::SoneiumMinatoTestnet, "soneium_minato_testnet"),
+    (NamedChain::World, "worldchain"),
+    (NamedChain::WorldSepolia, "world_sepolia"),
+    (NamedChain::WorldSepolia, "worldchain-sepolia"),
+    (NamedChain::SeiTestnet, "sei_testnet"),
+    (NamedChain::StableMainnet, "stable_mainnet"),
+    (NamedChain::StableTestnet, "stable_testnet"),
+    (NamedChain::MegaEth, "mega_eth"),
+    (NamedChain::MegaEthTestnet, "mega_eth_testnet"),
+    (NamedChain::MegaEthTestnet, "megaeth_testnet"),
+    (NamedChain::XdcMainnet, "xdc_mainnet"),
+    (NamedChain::XdcTestnet, "xdc_testnet"),
+    (NamedChain::UnichainSepolia, "unichain_sepolia"),
+    (NamedChain::SignetPecorino, "signet_pecorino"),
+    (NamedChain::ApeChain, "ape_chain"),
+    (NamedChain::SonicTestnet, "sonic_testnet"),
+    (NamedChain::RedbellyTestnet, "redbelly_testnet"),
+    (NamedChain::PlumeTestnet, "plume_testnet"),
+    (NamedChain::TreasureTopaz, "treasure_topaz"),
+    (NamedChain::BerachainBepolia, "berachain_bepolia"),
+    (NamedChain::SuperpositionTestnet, "superposition_testnet"),
+    (NamedChain::MonadTestnet, "monad_testnet"),
+    (NamedChain::AbstractTestnet, "abstract_testnet"),
+    (NamedChain::CornTestnet, "corn_testnet"),
+    (NamedChain::SophonTestnet, "sophon_testnet"),
+    (NamedChain::PolkadotTestnet, "polkadot_testnet"),
+    (NamedChain::LensTestnet, "lens_testnet"),
+    (NamedChain::InjectiveTestnet, "injective_testnet"),
+    (NamedChain::FluentDevnet, "fluent_devnet"),
+    (NamedChain::FluentTestnet, "fluent_testnet"),
+    (NamedChain::SkaleBase, "skale_base"),
+    (NamedChain::SkaleBaseSepoliaTestnet, "skale_base_sepolia_testnet"),
+    (NamedChain::MemeCore, "meme_core"),
+    (NamedChain::Formicarium, "formicairum"),
+    (NamedChain::TempoModerato, "tempo_moderato"),
+    (NamedChain::TempoTestnet, "tempo_testnet"),
+    (NamedChain::TempoDevnet, "tempo_devnet"),
+    (NamedChain::ArcTestnet, "arc_testnet"),
+    (NamedChain::BattleChainTestnet, "battle_chain_testnet"),
+    (NamedChain::BattleChainTestnet, "battlechain_testnet"),
+    (NamedChain::RobinhoodTestnet, "robinhood_testnet"),
+];
+
 static STRING_DATA: &[u8] = concat!(
     "mainnet",
     "ETH",
@@ -2223,1385 +3605,3 @@ static SERDE_NAMES: phf::Map<&'static str, ChainIndex> = ::phf::Map {
         ("mega_eth_testnet", 143),
     ],
 };
-
-const fn variant_names() -> [&'static str; 197] {
-    let mut names = [""; 197];
-    let mut index = 0;
-    while index < CHAIN_DATA.len() {
-        names[index] = CHAIN_DATA[index].name.get_unchecked();
-        index += 1;
-    }
-    names
-}
-
-/// An Ethereum EIP-155 chain.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
-#[cfg_attr(feature = "schema", schemars(rename_all = "snake_case"))]
-#[repr(u64)]
-#[allow(missing_docs)]
-#[non_exhaustive]
-pub enum NamedChain {
-    Mainnet = 1,
-    Morden = 2,
-    Ropsten = 3,
-    Rinkeby = 4,
-    Goerli = 5,
-    Kovan = 42,
-    Holesky = 17000,
-    Hoodi = 560048,
-    Sepolia = 11155111,
-    Odyssey = 911867,
-    Optimism = 10,
-    OptimismKovan = 69,
-    OptimismGoerli = 420,
-    OptimismSepolia = 11155420,
-    Bob = 60808,
-    BobSepolia = 808813,
-    Arbitrum = 42161,
-    ArbitrumTestnet = 421611,
-    ArbitrumGoerli = 421613,
-    ArbitrumSepolia = 421614,
-    ArbitrumNova = 42170,
-    Cronos = 25,
-    CronosTestnet = 338,
-    Rsk = 30,
-    RskTestnet = 31,
-    TelosEvm = 40,
-    TelosEvmTestnet = 41,
-    Crab = 44,
-    Darwinia = 46,
-    Koi = 701,
-    BinanceSmartChain = 56,
-    BinanceSmartChainTestnet = 97,
-    Poa = 99,
-    Sokol = 77,
-    Scroll = 534352,
-    ScrollSepolia = 534351,
-    Metis = 1088,
-    CfxTestnet = 71,
-    Cfx = 1030,
-    Gnosis = 100,
-    Polygon = 137,
-    PolygonAmoy = 80002,
-    Fantom = 250,
-    FantomTestnet = 4002,
-    Moonbeam = 1284,
-    MoonbeamDev = 1281,
-    Moonriver = 1285,
-    Moonbase = 1287,
-    Dev = 1337,
-    AnvilHardhat = 31337,
-    GravityAlphaMainnet = 1625,
-    GravityAlphaTestnetSepolia = 13505,
-    Gravity = 127001,
-    Evmos = 9001,
-    EvmosTestnet = 9000,
-    Plasma = 9745,
-    PlasmaTestnet = 9746,
-    Chiado = 10200,
-    Oasis = 26863,
-    Emerald = 42262,
-    EmeraldTestnet = 42261,
-    FilecoinMainnet = 314,
-    FilecoinCalibrationTestnet = 314159,
-    Avalanche = 43114,
-    AvalancheFuji = 43113,
-    Celo = 42220,
-    CeloSepolia = 11142220,
-    Aurora = 1313161554,
-    AuroraTestnet = 1313161555,
-    Canto = 7700,
-    CantoTestnet = 740,
-    Boba = 288,
-    Base = 8453,
-    BaseGoerli = 84531,
-    BaseSepolia = 84532,
-    Syndr = 404,
-    SyndrSepolia = 444444,
-    Shimmer = 148,
-    Ink = 57073,
-    InkSepolia = 763373,
-    Fraxtal = 252,
-    FraxtalTestnet = 2522,
-    Blast = 81457,
-    BlastSepolia = 168587773,
-    Linea = 59144,
-    LineaGoerli = 59140,
-    LineaSepolia = 59141,
-    ZkSync = 324,
-    ZkSyncTestnet = 300,
-    Mantle = 5000,
-    MantleSepolia = 5003,
-    Xai = 660279,
-    XaiSepolia = 37714555429,
-    HappychainTestnet = 216,
-    Viction = 88,
-    Zora = 7777777,
-    ZoraSepolia = 999999999,
-    Pgn = 424,
-    PgnSepolia = 58008,
-    Mode = 34443,
-    ModeSepolia = 919,
-    Elastos = 20,
-    Etherlink = 42793,
-    EtherlinkShadownet = 127823,
-    Degen = 666666666,
-    OpBNBMainnet = 204,
-    OpBNBTestnet = 5611,
-    Ronin = 2020,
-    RoninTestnet = 202601,
-    Radius = 723487,
-    RadiusTestnet = 72344,
-    Taiko = 167000,
-    TaikoHekla = 167009,
-    AutonomysNovaTestnet = 490000,
-    Flare = 14,
-    FlareCoston2 = 114,
-    Acala = 787,
-    AcalaMandalaTestnet = 595,
-    AcalaTestnet = 597,
-    Karura = 686,
-    KaruraTestnet = 596,
-    Pulsechain = 369,
-    PulsechainTestnet = 943,
-    Cannon = 13370,
-    Immutable = 13371,
-    ImmutableTestnet = 13473,
-    Soneium = 1868,
-    SoneiumMinatoTestnet = 1946,
-    World = 480,
-    WorldSepolia = 4801,
-    Iotex = 4689,
-    Core = 1116,
-    Merlin = 4200,
-    Bitlayer = 200901,
-    Vana = 1480,
-    Zeta = 7000,
-    Kaia = 8217,
-    Story = 1514,
-    Sei = 1329,
-    SeiTestnet = 1328,
-    StableMainnet = 988,
-    StableTestnet = 2201,
-    MegaEth = 4326,
-    MegaEthTestnet = 6343,
-    XdcMainnet = 50,
-    XdcTestnet = 51,
-    Unichain = 130,
-    UnichainSepolia = 1301,
-    SignetPecorino = 14174,
-    ApeChain = 33139,
-    Curtis = 33111,
-    Sonic = 146,
-    SonicTestnet = 14601,
-    Redbelly = 151,
-    RedbellyTestnet = 153,
-    PlumeTestnet = 98867,
-    Plume = 98866,
-    Treasure = 61166,
-    TreasureTopaz = 978658,
-    BerachainBepolia = 80069,
-    Berachain = 80094,
-    SuperpositionTestnet = 98985,
-    Superposition = 55244,
-    Monad = 143,
-    MonadTestnet = 10143,
-    Hyperliquid = 999,
-    Abstract = 2741,
-    AbstractTestnet = 11124,
-    Corn = 21000000,
-    CornTestnet = 21000001,
-    Sophon = 50104,
-    SophonTestnet = 531050104,
-    PolkadotTestnet = 420420417,
-    Kusama = 420420418,
-    Polkadot = 420420419,
-    Lens = 232,
-    LensTestnet = 37111,
-    Injective = 1776,
-    InjectiveTestnet = 1439,
-    Katana = 747474,
-    Lisk = 1135,
-    Fuse = 122,
-    Fluent = 25363,
-    FluentDevnet = 20993,
-    FluentTestnet = 20994,
-    SkaleBase = 1187947933,
-    SkaleBaseSepoliaTestnet = 324705682,
-    MemeCore = 4352,
-    Formicarium = 43521,
-    Insectarium = 43522,
-    Tempo = 4217,
-    TempoModerato = 42431,
-    TempoTestnet = 42429,
-    TempoDevnet = 31318,
-    ArcTestnet = 5042002,
-    BattleChainTestnet = 627,
-    RobinhoodTestnet = 46630,
-}
-
-/// Error returned when parsing a named chain from a string fails.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-pub struct ParseNamedChainError;
-
-impl fmt::Display for ParseNamedChainError {
-    #[inline]
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("matching variant not found")
-    }
-}
-
-#[cfg(feature = "std")]
-impl std::error::Error for ParseNamedChainError {}
-
-/// Iterator over all named chains.
-#[derive(Clone, Debug)]
-pub struct NamedChainIter {
-    inner: core::iter::Copied<core::slice::Iter<'static, NamedChain>>,
-}
-
-impl Default for NamedChainIter {
-    #[inline]
-    fn default() -> Self {
-        NamedChain::iter()
-    }
-}
-
-impl Iterator for NamedChainIter {
-    type Item = NamedChain;
-
-    #[inline]
-    fn next(&mut self) -> Option<Self::Item> {
-        self.inner.next()
-    }
-
-    #[inline]
-    fn size_hint(&self) -> (usize, Option<usize>) {
-        self.inner.size_hint()
-    }
-}
-
-impl DoubleEndedIterator for NamedChainIter {
-    #[inline]
-    fn next_back(&mut self) -> Option<Self::Item> {
-        self.inner.next_back()
-    }
-}
-
-impl ExactSizeIterator for NamedChainIter {}
-impl core::iter::FusedIterator for NamedChainIter {}
-
-impl NamedChain {
-    /// The number of named chains.
-    pub const COUNT: usize = 197;
-
-    /// All named chains in declaration order.
-    pub const VARIANTS: &'static [Self] = &[
-        Self::Mainnet,
-        Self::Morden,
-        Self::Ropsten,
-        Self::Rinkeby,
-        Self::Goerli,
-        Self::Kovan,
-        Self::Holesky,
-        Self::Hoodi,
-        Self::Sepolia,
-        Self::Odyssey,
-        Self::Optimism,
-        Self::OptimismKovan,
-        Self::OptimismGoerli,
-        Self::OptimismSepolia,
-        Self::Bob,
-        Self::BobSepolia,
-        Self::Arbitrum,
-        Self::ArbitrumTestnet,
-        Self::ArbitrumGoerli,
-        Self::ArbitrumSepolia,
-        Self::ArbitrumNova,
-        Self::Cronos,
-        Self::CronosTestnet,
-        Self::Rsk,
-        Self::RskTestnet,
-        Self::TelosEvm,
-        Self::TelosEvmTestnet,
-        Self::Crab,
-        Self::Darwinia,
-        Self::Koi,
-        Self::BinanceSmartChain,
-        Self::BinanceSmartChainTestnet,
-        Self::Poa,
-        Self::Sokol,
-        Self::Scroll,
-        Self::ScrollSepolia,
-        Self::Metis,
-        Self::CfxTestnet,
-        Self::Cfx,
-        Self::Gnosis,
-        Self::Polygon,
-        Self::PolygonAmoy,
-        Self::Fantom,
-        Self::FantomTestnet,
-        Self::Moonbeam,
-        Self::MoonbeamDev,
-        Self::Moonriver,
-        Self::Moonbase,
-        Self::Dev,
-        Self::AnvilHardhat,
-        Self::GravityAlphaMainnet,
-        Self::GravityAlphaTestnetSepolia,
-        Self::Gravity,
-        Self::Evmos,
-        Self::EvmosTestnet,
-        Self::Plasma,
-        Self::PlasmaTestnet,
-        Self::Chiado,
-        Self::Oasis,
-        Self::Emerald,
-        Self::EmeraldTestnet,
-        Self::FilecoinMainnet,
-        Self::FilecoinCalibrationTestnet,
-        Self::Avalanche,
-        Self::AvalancheFuji,
-        Self::Celo,
-        Self::CeloSepolia,
-        Self::Aurora,
-        Self::AuroraTestnet,
-        Self::Canto,
-        Self::CantoTestnet,
-        Self::Boba,
-        Self::Base,
-        Self::BaseGoerli,
-        Self::BaseSepolia,
-        Self::Syndr,
-        Self::SyndrSepolia,
-        Self::Shimmer,
-        Self::Ink,
-        Self::InkSepolia,
-        Self::Fraxtal,
-        Self::FraxtalTestnet,
-        Self::Blast,
-        Self::BlastSepolia,
-        Self::Linea,
-        Self::LineaGoerli,
-        Self::LineaSepolia,
-        Self::ZkSync,
-        Self::ZkSyncTestnet,
-        Self::Mantle,
-        Self::MantleSepolia,
-        Self::Xai,
-        Self::XaiSepolia,
-        Self::HappychainTestnet,
-        Self::Viction,
-        Self::Zora,
-        Self::ZoraSepolia,
-        Self::Pgn,
-        Self::PgnSepolia,
-        Self::Mode,
-        Self::ModeSepolia,
-        Self::Elastos,
-        Self::Etherlink,
-        Self::EtherlinkShadownet,
-        Self::Degen,
-        Self::OpBNBMainnet,
-        Self::OpBNBTestnet,
-        Self::Ronin,
-        Self::RoninTestnet,
-        Self::Radius,
-        Self::RadiusTestnet,
-        Self::Taiko,
-        Self::TaikoHekla,
-        Self::AutonomysNovaTestnet,
-        Self::Flare,
-        Self::FlareCoston2,
-        Self::Acala,
-        Self::AcalaMandalaTestnet,
-        Self::AcalaTestnet,
-        Self::Karura,
-        Self::KaruraTestnet,
-        Self::Pulsechain,
-        Self::PulsechainTestnet,
-        Self::Cannon,
-        Self::Immutable,
-        Self::ImmutableTestnet,
-        Self::Soneium,
-        Self::SoneiumMinatoTestnet,
-        Self::World,
-        Self::WorldSepolia,
-        Self::Iotex,
-        Self::Core,
-        Self::Merlin,
-        Self::Bitlayer,
-        Self::Vana,
-        Self::Zeta,
-        Self::Kaia,
-        Self::Story,
-        Self::Sei,
-        Self::SeiTestnet,
-        Self::StableMainnet,
-        Self::StableTestnet,
-        Self::MegaEth,
-        Self::MegaEthTestnet,
-        Self::XdcMainnet,
-        Self::XdcTestnet,
-        Self::Unichain,
-        Self::UnichainSepolia,
-        Self::SignetPecorino,
-        Self::ApeChain,
-        Self::Curtis,
-        Self::Sonic,
-        Self::SonicTestnet,
-        Self::Redbelly,
-        Self::RedbellyTestnet,
-        Self::PlumeTestnet,
-        Self::Plume,
-        Self::Treasure,
-        Self::TreasureTopaz,
-        Self::BerachainBepolia,
-        Self::Berachain,
-        Self::SuperpositionTestnet,
-        Self::Superposition,
-        Self::Monad,
-        Self::MonadTestnet,
-        Self::Hyperliquid,
-        Self::Abstract,
-        Self::AbstractTestnet,
-        Self::Corn,
-        Self::CornTestnet,
-        Self::Sophon,
-        Self::SophonTestnet,
-        Self::PolkadotTestnet,
-        Self::Kusama,
-        Self::Polkadot,
-        Self::Lens,
-        Self::LensTestnet,
-        Self::Injective,
-        Self::InjectiveTestnet,
-        Self::Katana,
-        Self::Lisk,
-        Self::Fuse,
-        Self::Fluent,
-        Self::FluentDevnet,
-        Self::FluentTestnet,
-        Self::SkaleBase,
-        Self::SkaleBaseSepoliaTestnet,
-        Self::MemeCore,
-        Self::Formicarium,
-        Self::Insectarium,
-        Self::Tempo,
-        Self::TempoModerato,
-        Self::TempoTestnet,
-        Self::TempoDevnet,
-        Self::ArcTestnet,
-        Self::BattleChainTestnet,
-        Self::RobinhoodTestnet,
-    ];
-
-    /// All named chain string representations in declaration order.
-    pub const VARIANT_NAMES: &'static [&'static str] = &VARIANT_NAMES_DATA;
-
-    /// Returns an iterator over all named chains.
-    #[inline]
-    pub fn iter() -> NamedChainIter {
-        NamedChainIter { inner: Self::VARIANTS.iter().copied() }
-    }
-
-    #[inline]
-    const fn from_index(index: ChainIndex) -> Self {
-        Self::VARIANTS[index as usize]
-    }
-
-    #[inline]
-    const fn data(self) -> ChainData {
-        match self {
-            Self::Mainnet => CHAIN_DATA[0],
-            Self::Morden => CHAIN_DATA[1],
-            Self::Ropsten => CHAIN_DATA[2],
-            Self::Rinkeby => CHAIN_DATA[3],
-            Self::Goerli => CHAIN_DATA[4],
-            Self::Kovan => CHAIN_DATA[5],
-            Self::Holesky => CHAIN_DATA[6],
-            Self::Hoodi => CHAIN_DATA[7],
-            Self::Sepolia => CHAIN_DATA[8],
-            Self::Odyssey => CHAIN_DATA[9],
-            Self::Optimism => CHAIN_DATA[10],
-            Self::OptimismKovan => CHAIN_DATA[11],
-            Self::OptimismGoerli => CHAIN_DATA[12],
-            Self::OptimismSepolia => CHAIN_DATA[13],
-            Self::Bob => CHAIN_DATA[14],
-            Self::BobSepolia => CHAIN_DATA[15],
-            Self::Arbitrum => CHAIN_DATA[16],
-            Self::ArbitrumTestnet => CHAIN_DATA[17],
-            Self::ArbitrumGoerli => CHAIN_DATA[18],
-            Self::ArbitrumSepolia => CHAIN_DATA[19],
-            Self::ArbitrumNova => CHAIN_DATA[20],
-            Self::Cronos => CHAIN_DATA[21],
-            Self::CronosTestnet => CHAIN_DATA[22],
-            Self::Rsk => CHAIN_DATA[23],
-            Self::RskTestnet => CHAIN_DATA[24],
-            Self::TelosEvm => CHAIN_DATA[25],
-            Self::TelosEvmTestnet => CHAIN_DATA[26],
-            Self::Crab => CHAIN_DATA[27],
-            Self::Darwinia => CHAIN_DATA[28],
-            Self::Koi => CHAIN_DATA[29],
-            Self::BinanceSmartChain => CHAIN_DATA[30],
-            Self::BinanceSmartChainTestnet => CHAIN_DATA[31],
-            Self::Poa => CHAIN_DATA[32],
-            Self::Sokol => CHAIN_DATA[33],
-            Self::Scroll => CHAIN_DATA[34],
-            Self::ScrollSepolia => CHAIN_DATA[35],
-            Self::Metis => CHAIN_DATA[36],
-            Self::CfxTestnet => CHAIN_DATA[37],
-            Self::Cfx => CHAIN_DATA[38],
-            Self::Gnosis => CHAIN_DATA[39],
-            Self::Polygon => CHAIN_DATA[40],
-            Self::PolygonAmoy => CHAIN_DATA[41],
-            Self::Fantom => CHAIN_DATA[42],
-            Self::FantomTestnet => CHAIN_DATA[43],
-            Self::Moonbeam => CHAIN_DATA[44],
-            Self::MoonbeamDev => CHAIN_DATA[45],
-            Self::Moonriver => CHAIN_DATA[46],
-            Self::Moonbase => CHAIN_DATA[47],
-            Self::Dev => CHAIN_DATA[48],
-            Self::AnvilHardhat => CHAIN_DATA[49],
-            Self::GravityAlphaMainnet => CHAIN_DATA[50],
-            Self::GravityAlphaTestnetSepolia => CHAIN_DATA[51],
-            Self::Gravity => CHAIN_DATA[52],
-            Self::Evmos => CHAIN_DATA[53],
-            Self::EvmosTestnet => CHAIN_DATA[54],
-            Self::Plasma => CHAIN_DATA[55],
-            Self::PlasmaTestnet => CHAIN_DATA[56],
-            Self::Chiado => CHAIN_DATA[57],
-            Self::Oasis => CHAIN_DATA[58],
-            Self::Emerald => CHAIN_DATA[59],
-            Self::EmeraldTestnet => CHAIN_DATA[60],
-            Self::FilecoinMainnet => CHAIN_DATA[61],
-            Self::FilecoinCalibrationTestnet => CHAIN_DATA[62],
-            Self::Avalanche => CHAIN_DATA[63],
-            Self::AvalancheFuji => CHAIN_DATA[64],
-            Self::Celo => CHAIN_DATA[65],
-            Self::CeloSepolia => CHAIN_DATA[66],
-            Self::Aurora => CHAIN_DATA[67],
-            Self::AuroraTestnet => CHAIN_DATA[68],
-            Self::Canto => CHAIN_DATA[69],
-            Self::CantoTestnet => CHAIN_DATA[70],
-            Self::Boba => CHAIN_DATA[71],
-            Self::Base => CHAIN_DATA[72],
-            Self::BaseGoerli => CHAIN_DATA[73],
-            Self::BaseSepolia => CHAIN_DATA[74],
-            Self::Syndr => CHAIN_DATA[75],
-            Self::SyndrSepolia => CHAIN_DATA[76],
-            Self::Shimmer => CHAIN_DATA[77],
-            Self::Ink => CHAIN_DATA[78],
-            Self::InkSepolia => CHAIN_DATA[79],
-            Self::Fraxtal => CHAIN_DATA[80],
-            Self::FraxtalTestnet => CHAIN_DATA[81],
-            Self::Blast => CHAIN_DATA[82],
-            Self::BlastSepolia => CHAIN_DATA[83],
-            Self::Linea => CHAIN_DATA[84],
-            Self::LineaGoerli => CHAIN_DATA[85],
-            Self::LineaSepolia => CHAIN_DATA[86],
-            Self::ZkSync => CHAIN_DATA[87],
-            Self::ZkSyncTestnet => CHAIN_DATA[88],
-            Self::Mantle => CHAIN_DATA[89],
-            Self::MantleSepolia => CHAIN_DATA[90],
-            Self::Xai => CHAIN_DATA[91],
-            Self::XaiSepolia => CHAIN_DATA[92],
-            Self::HappychainTestnet => CHAIN_DATA[93],
-            Self::Viction => CHAIN_DATA[94],
-            Self::Zora => CHAIN_DATA[95],
-            Self::ZoraSepolia => CHAIN_DATA[96],
-            Self::Pgn => CHAIN_DATA[97],
-            Self::PgnSepolia => CHAIN_DATA[98],
-            Self::Mode => CHAIN_DATA[99],
-            Self::ModeSepolia => CHAIN_DATA[100],
-            Self::Elastos => CHAIN_DATA[101],
-            Self::Etherlink => CHAIN_DATA[102],
-            Self::EtherlinkShadownet => CHAIN_DATA[103],
-            Self::Degen => CHAIN_DATA[104],
-            Self::OpBNBMainnet => CHAIN_DATA[105],
-            Self::OpBNBTestnet => CHAIN_DATA[106],
-            Self::Ronin => CHAIN_DATA[107],
-            Self::RoninTestnet => CHAIN_DATA[108],
-            Self::Radius => CHAIN_DATA[109],
-            Self::RadiusTestnet => CHAIN_DATA[110],
-            Self::Taiko => CHAIN_DATA[111],
-            Self::TaikoHekla => CHAIN_DATA[112],
-            Self::AutonomysNovaTestnet => CHAIN_DATA[113],
-            Self::Flare => CHAIN_DATA[114],
-            Self::FlareCoston2 => CHAIN_DATA[115],
-            Self::Acala => CHAIN_DATA[116],
-            Self::AcalaMandalaTestnet => CHAIN_DATA[117],
-            Self::AcalaTestnet => CHAIN_DATA[118],
-            Self::Karura => CHAIN_DATA[119],
-            Self::KaruraTestnet => CHAIN_DATA[120],
-            Self::Pulsechain => CHAIN_DATA[121],
-            Self::PulsechainTestnet => CHAIN_DATA[122],
-            Self::Cannon => CHAIN_DATA[123],
-            Self::Immutable => CHAIN_DATA[124],
-            Self::ImmutableTestnet => CHAIN_DATA[125],
-            Self::Soneium => CHAIN_DATA[126],
-            Self::SoneiumMinatoTestnet => CHAIN_DATA[127],
-            Self::World => CHAIN_DATA[128],
-            Self::WorldSepolia => CHAIN_DATA[129],
-            Self::Iotex => CHAIN_DATA[130],
-            Self::Core => CHAIN_DATA[131],
-            Self::Merlin => CHAIN_DATA[132],
-            Self::Bitlayer => CHAIN_DATA[133],
-            Self::Vana => CHAIN_DATA[134],
-            Self::Zeta => CHAIN_DATA[135],
-            Self::Kaia => CHAIN_DATA[136],
-            Self::Story => CHAIN_DATA[137],
-            Self::Sei => CHAIN_DATA[138],
-            Self::SeiTestnet => CHAIN_DATA[139],
-            Self::StableMainnet => CHAIN_DATA[140],
-            Self::StableTestnet => CHAIN_DATA[141],
-            Self::MegaEth => CHAIN_DATA[142],
-            Self::MegaEthTestnet => CHAIN_DATA[143],
-            Self::XdcMainnet => CHAIN_DATA[144],
-            Self::XdcTestnet => CHAIN_DATA[145],
-            Self::Unichain => CHAIN_DATA[146],
-            Self::UnichainSepolia => CHAIN_DATA[147],
-            Self::SignetPecorino => CHAIN_DATA[148],
-            Self::ApeChain => CHAIN_DATA[149],
-            Self::Curtis => CHAIN_DATA[150],
-            Self::Sonic => CHAIN_DATA[151],
-            Self::SonicTestnet => CHAIN_DATA[152],
-            Self::Redbelly => CHAIN_DATA[153],
-            Self::RedbellyTestnet => CHAIN_DATA[154],
-            Self::PlumeTestnet => CHAIN_DATA[155],
-            Self::Plume => CHAIN_DATA[156],
-            Self::Treasure => CHAIN_DATA[157],
-            Self::TreasureTopaz => CHAIN_DATA[158],
-            Self::BerachainBepolia => CHAIN_DATA[159],
-            Self::Berachain => CHAIN_DATA[160],
-            Self::SuperpositionTestnet => CHAIN_DATA[161],
-            Self::Superposition => CHAIN_DATA[162],
-            Self::Monad => CHAIN_DATA[163],
-            Self::MonadTestnet => CHAIN_DATA[164],
-            Self::Hyperliquid => CHAIN_DATA[165],
-            Self::Abstract => CHAIN_DATA[166],
-            Self::AbstractTestnet => CHAIN_DATA[167],
-            Self::Corn => CHAIN_DATA[168],
-            Self::CornTestnet => CHAIN_DATA[169],
-            Self::Sophon => CHAIN_DATA[170],
-            Self::SophonTestnet => CHAIN_DATA[171],
-            Self::PolkadotTestnet => CHAIN_DATA[172],
-            Self::Kusama => CHAIN_DATA[173],
-            Self::Polkadot => CHAIN_DATA[174],
-            Self::Lens => CHAIN_DATA[175],
-            Self::LensTestnet => CHAIN_DATA[176],
-            Self::Injective => CHAIN_DATA[177],
-            Self::InjectiveTestnet => CHAIN_DATA[178],
-            Self::Katana => CHAIN_DATA[179],
-            Self::Lisk => CHAIN_DATA[180],
-            Self::Fuse => CHAIN_DATA[181],
-            Self::Fluent => CHAIN_DATA[182],
-            Self::FluentDevnet => CHAIN_DATA[183],
-            Self::FluentTestnet => CHAIN_DATA[184],
-            Self::SkaleBase => CHAIN_DATA[185],
-            Self::SkaleBaseSepoliaTestnet => CHAIN_DATA[186],
-            Self::MemeCore => CHAIN_DATA[187],
-            Self::Formicarium => CHAIN_DATA[188],
-            Self::Insectarium => CHAIN_DATA[189],
-            Self::Tempo => CHAIN_DATA[190],
-            Self::TempoModerato => CHAIN_DATA[191],
-            Self::TempoTestnet => CHAIN_DATA[192],
-            Self::TempoDevnet => CHAIN_DATA[193],
-            Self::ArcTestnet => CHAIN_DATA[194],
-            Self::BattleChainTestnet => CHAIN_DATA[195],
-            Self::RobinhoodTestnet => CHAIN_DATA[196],
-        }
-    }
-
-    #[inline]
-    fn from_chain_id_map(id: u64) -> Option<Self> {
-        CHAIN_IDS.get(&id).copied().map(Self::from_index)
-    }
-
-    #[inline]
-    const fn has_flag(self, flag: u8) -> bool {
-        self.data().flags & flag != 0
-    }
-
-    /// Returns the chain for the given EIP-155 chain ID.
-    #[inline]
-    pub const fn from_chain_id(id: u64) -> Option<Self> {
-        match id {
-            1 => Some(Self::Mainnet),
-            2 => Some(Self::Morden),
-            3 => Some(Self::Ropsten),
-            4 => Some(Self::Rinkeby),
-            5 => Some(Self::Goerli),
-            42 => Some(Self::Kovan),
-            17000 => Some(Self::Holesky),
-            560048 => Some(Self::Hoodi),
-            11155111 => Some(Self::Sepolia),
-            911867 => Some(Self::Odyssey),
-            10 => Some(Self::Optimism),
-            69 => Some(Self::OptimismKovan),
-            420 => Some(Self::OptimismGoerli),
-            11155420 => Some(Self::OptimismSepolia),
-            60808 => Some(Self::Bob),
-            808813 => Some(Self::BobSepolia),
-            42161 => Some(Self::Arbitrum),
-            421611 => Some(Self::ArbitrumTestnet),
-            421613 => Some(Self::ArbitrumGoerli),
-            421614 => Some(Self::ArbitrumSepolia),
-            42170 => Some(Self::ArbitrumNova),
-            25 => Some(Self::Cronos),
-            338 => Some(Self::CronosTestnet),
-            30 => Some(Self::Rsk),
-            31 => Some(Self::RskTestnet),
-            40 => Some(Self::TelosEvm),
-            41 => Some(Self::TelosEvmTestnet),
-            44 => Some(Self::Crab),
-            46 => Some(Self::Darwinia),
-            701 => Some(Self::Koi),
-            56 => Some(Self::BinanceSmartChain),
-            97 => Some(Self::BinanceSmartChainTestnet),
-            99 => Some(Self::Poa),
-            77 => Some(Self::Sokol),
-            534352 => Some(Self::Scroll),
-            534351 => Some(Self::ScrollSepolia),
-            1088 => Some(Self::Metis),
-            71 => Some(Self::CfxTestnet),
-            1030 => Some(Self::Cfx),
-            100 => Some(Self::Gnosis),
-            137 => Some(Self::Polygon),
-            80002 => Some(Self::PolygonAmoy),
-            250 => Some(Self::Fantom),
-            4002 => Some(Self::FantomTestnet),
-            1284 => Some(Self::Moonbeam),
-            1281 => Some(Self::MoonbeamDev),
-            1285 => Some(Self::Moonriver),
-            1287 => Some(Self::Moonbase),
-            1337 => Some(Self::Dev),
-            31337 => Some(Self::AnvilHardhat),
-            1625 => Some(Self::GravityAlphaMainnet),
-            13505 => Some(Self::GravityAlphaTestnetSepolia),
-            127001 => Some(Self::Gravity),
-            9001 => Some(Self::Evmos),
-            9000 => Some(Self::EvmosTestnet),
-            9745 => Some(Self::Plasma),
-            9746 => Some(Self::PlasmaTestnet),
-            10200 => Some(Self::Chiado),
-            26863 => Some(Self::Oasis),
-            42262 => Some(Self::Emerald),
-            42261 => Some(Self::EmeraldTestnet),
-            314 => Some(Self::FilecoinMainnet),
-            314159 => Some(Self::FilecoinCalibrationTestnet),
-            43114 => Some(Self::Avalanche),
-            43113 => Some(Self::AvalancheFuji),
-            42220 => Some(Self::Celo),
-            11142220 => Some(Self::CeloSepolia),
-            1313161554 => Some(Self::Aurora),
-            1313161555 => Some(Self::AuroraTestnet),
-            7700 => Some(Self::Canto),
-            740 => Some(Self::CantoTestnet),
-            288 => Some(Self::Boba),
-            8453 => Some(Self::Base),
-            84531 => Some(Self::BaseGoerli),
-            84532 => Some(Self::BaseSepolia),
-            404 => Some(Self::Syndr),
-            444444 => Some(Self::SyndrSepolia),
-            148 => Some(Self::Shimmer),
-            57073 => Some(Self::Ink),
-            763373 => Some(Self::InkSepolia),
-            252 => Some(Self::Fraxtal),
-            2522 => Some(Self::FraxtalTestnet),
-            81457 => Some(Self::Blast),
-            168587773 => Some(Self::BlastSepolia),
-            59144 => Some(Self::Linea),
-            59140 => Some(Self::LineaGoerli),
-            59141 => Some(Self::LineaSepolia),
-            324 => Some(Self::ZkSync),
-            300 => Some(Self::ZkSyncTestnet),
-            5000 => Some(Self::Mantle),
-            5003 => Some(Self::MantleSepolia),
-            660279 => Some(Self::Xai),
-            37714555429 => Some(Self::XaiSepolia),
-            216 => Some(Self::HappychainTestnet),
-            88 => Some(Self::Viction),
-            7777777 => Some(Self::Zora),
-            999999999 => Some(Self::ZoraSepolia),
-            424 => Some(Self::Pgn),
-            58008 => Some(Self::PgnSepolia),
-            34443 => Some(Self::Mode),
-            919 => Some(Self::ModeSepolia),
-            20 => Some(Self::Elastos),
-            42793 => Some(Self::Etherlink),
-            127823 => Some(Self::EtherlinkShadownet),
-            666666666 => Some(Self::Degen),
-            204 => Some(Self::OpBNBMainnet),
-            5611 => Some(Self::OpBNBTestnet),
-            2020 => Some(Self::Ronin),
-            202601 => Some(Self::RoninTestnet),
-            723487 => Some(Self::Radius),
-            72344 => Some(Self::RadiusTestnet),
-            167000 => Some(Self::Taiko),
-            167009 => Some(Self::TaikoHekla),
-            490000 => Some(Self::AutonomysNovaTestnet),
-            14 => Some(Self::Flare),
-            114 => Some(Self::FlareCoston2),
-            787 => Some(Self::Acala),
-            595 => Some(Self::AcalaMandalaTestnet),
-            597 => Some(Self::AcalaTestnet),
-            686 => Some(Self::Karura),
-            596 => Some(Self::KaruraTestnet),
-            369 => Some(Self::Pulsechain),
-            943 => Some(Self::PulsechainTestnet),
-            13370 => Some(Self::Cannon),
-            13371 => Some(Self::Immutable),
-            13473 => Some(Self::ImmutableTestnet),
-            1868 => Some(Self::Soneium),
-            1946 => Some(Self::SoneiumMinatoTestnet),
-            480 => Some(Self::World),
-            4801 => Some(Self::WorldSepolia),
-            4689 => Some(Self::Iotex),
-            1116 => Some(Self::Core),
-            4200 => Some(Self::Merlin),
-            200901 => Some(Self::Bitlayer),
-            1480 => Some(Self::Vana),
-            7000 => Some(Self::Zeta),
-            8217 => Some(Self::Kaia),
-            1514 => Some(Self::Story),
-            1329 => Some(Self::Sei),
-            1328 => Some(Self::SeiTestnet),
-            988 => Some(Self::StableMainnet),
-            2201 => Some(Self::StableTestnet),
-            4326 => Some(Self::MegaEth),
-            6343 => Some(Self::MegaEthTestnet),
-            50 => Some(Self::XdcMainnet),
-            51 => Some(Self::XdcTestnet),
-            130 => Some(Self::Unichain),
-            1301 => Some(Self::UnichainSepolia),
-            14174 => Some(Self::SignetPecorino),
-            33139 => Some(Self::ApeChain),
-            33111 => Some(Self::Curtis),
-            146 => Some(Self::Sonic),
-            14601 => Some(Self::SonicTestnet),
-            151 => Some(Self::Redbelly),
-            153 => Some(Self::RedbellyTestnet),
-            98867 => Some(Self::PlumeTestnet),
-            98866 => Some(Self::Plume),
-            61166 => Some(Self::Treasure),
-            978658 => Some(Self::TreasureTopaz),
-            80069 => Some(Self::BerachainBepolia),
-            80094 => Some(Self::Berachain),
-            98985 => Some(Self::SuperpositionTestnet),
-            55244 => Some(Self::Superposition),
-            143 => Some(Self::Monad),
-            10143 => Some(Self::MonadTestnet),
-            999 => Some(Self::Hyperliquid),
-            2741 => Some(Self::Abstract),
-            11124 => Some(Self::AbstractTestnet),
-            21000000 => Some(Self::Corn),
-            21000001 => Some(Self::CornTestnet),
-            50104 => Some(Self::Sophon),
-            531050104 => Some(Self::SophonTestnet),
-            420420417 => Some(Self::PolkadotTestnet),
-            420420418 => Some(Self::Kusama),
-            420420419 => Some(Self::Polkadot),
-            232 => Some(Self::Lens),
-            37111 => Some(Self::LensTestnet),
-            1776 => Some(Self::Injective),
-            1439 => Some(Self::InjectiveTestnet),
-            747474 => Some(Self::Katana),
-            1135 => Some(Self::Lisk),
-            122 => Some(Self::Fuse),
-            25363 => Some(Self::Fluent),
-            20993 => Some(Self::FluentDevnet),
-            20994 => Some(Self::FluentTestnet),
-            1187947933 => Some(Self::SkaleBase),
-            324705682 => Some(Self::SkaleBaseSepoliaTestnet),
-            4352 => Some(Self::MemeCore),
-            43521 => Some(Self::Formicarium),
-            43522 => Some(Self::Insectarium),
-            4217 => Some(Self::Tempo),
-            42431 => Some(Self::TempoModerato),
-            42429 => Some(Self::TempoTestnet),
-            31318 => Some(Self::TempoDevnet),
-            5042002 => Some(Self::ArcTestnet),
-            627 => Some(Self::BattleChainTestnet),
-            46630 => Some(Self::RobinhoodTestnet),
-            _ => None,
-        }
-    }
-
-    /// Returns the string representation of the chain.
-    #[inline]
-    pub const fn as_str(&self) -> &'static str {
-        self.data().name.get_unchecked()
-    }
-
-    /// Returns `true` if this chain is Ethereum or an Ethereum testnet.
-    #[inline]
-    pub const fn is_ethereum(&self) -> bool {
-        self.has_flag(FLAG_ETHEREUM)
-    }
-
-    /// Returns true if the chain contains Optimism configuration.
-    #[inline]
-    pub const fn is_optimism(self) -> bool {
-        self.has_flag(FLAG_OPTIMISM)
-    }
-
-    /// Returns true if the chain contains Gnosis configuration.
-    #[inline]
-    pub const fn is_gnosis(self) -> bool {
-        matches!(self, Self::Gnosis | Self::Chiado)
-    }
-
-    /// Returns true if the chain contains Polygon configuration.
-    #[inline]
-    pub const fn is_polygon(self) -> bool {
-        matches!(self, Self::Polygon | Self::PolygonAmoy)
-    }
-
-    /// Returns true if the chain contains Arbitrum configuration.
-    #[inline]
-    pub const fn is_arbitrum(self) -> bool {
-        matches!(
-            self,
-            Self::Arbitrum
-                | Self::ArbitrumTestnet
-                | Self::ArbitrumGoerli
-                | Self::ArbitrumSepolia
-                | Self::ArbitrumNova
-        )
-    }
-
-    /// Returns true if the chain contains Elastic Network configuration.
-    #[inline]
-    pub const fn is_elastic(self) -> bool {
-        self.has_flag(FLAG_ELASTIC)
-    }
-
-    /// Returns true if the chain contains Tempo configuration.
-    #[inline]
-    pub const fn is_tempo(self) -> bool {
-        matches!(self, Self::Tempo | Self::TempoModerato | Self::TempoTestnet | Self::TempoDevnet)
-    }
-
-    /// Returns true if the chain uses a custom Sourcify-compatible API.
-    #[inline]
-    pub const fn is_custom_sourcify(self) -> bool {
-        matches!(self, Self::Tempo | Self::TempoModerato | Self::TempoTestnet)
-    }
-
-    /// Returns the chain's average blocktime, if applicable.
-    #[inline]
-    pub const fn average_blocktime_hint(self) -> Option<Duration> {
-        let millis = self.data().average_blocktime_millis;
-        if millis == 0 { None } else { Some(Duration::from_millis(millis as u64)) }
-    }
-
-    /// Returns whether the chain implements EIP-1559.
-    #[inline]
-    pub const fn is_legacy(self) -> bool {
-        self.has_flag(FLAG_LEGACY)
-    }
-
-    /// Returns whether the chain supports the Shanghai hardfork.
-    #[inline]
-    pub const fn supports_shanghai(self) -> bool {
-        self.has_flag(FLAG_SUPPORTS_SHANGHAI)
-    }
-
-    /// Returns whether the chain is a testnet.
-    #[inline]
-    pub const fn is_testnet(self) -> bool {
-        self.has_flag(FLAG_TESTNET)
-    }
-
-    /// Returns the symbol of the chain's native currency.
-    #[inline]
-    pub const fn native_currency_symbol(self) -> Option<&'static str> {
-        self.data().native_currency_symbol.get()
-    }
-
-    /// Returns the chain's blockchain explorer and its API URLs.
-    #[inline]
-    pub const fn etherscan_urls(self) -> Option<(&'static str, &'static str)> {
-        let data = self.data();
-        match (data.etherscan_api_url.get(), data.etherscan_base_url.get()) {
-            (Some(api), Some(base)) => Some((api, base)),
-            _ => None,
-        }
-    }
-
-    /// Returns the chain's blockchain explorer API key environment variable name.
-    #[inline]
-    pub const fn etherscan_api_key_name(self) -> Option<&'static str> {
-        self.data().etherscan_api_key_name.get()
-    }
-
-    /// Returns the chain's blockchain explorer API key from the environment.
-    #[cfg(feature = "std")]
-    pub fn etherscan_api_key(self) -> Option<String> {
-        self.etherscan_api_key_name().and_then(|name| std::env::var(name).ok())
-    }
-
-    /// Returns the address of the public DNS node list for the given chain.
-    pub fn public_dns_network_protocol(self) -> Option<String> {
-        const DNS_PREFIX: &str = "enrtree://AKA3AM6LPBYEUDMVNU3BSVQJ5AD45Y7YPOHJLEF6W26QOE4VTUDPE@";
-        if matches!(
-            self,
-            Self::Mainnet
-                | Self::Goerli
-                | Self::Sepolia
-                | Self::Ropsten
-                | Self::Rinkeby
-                | Self::Holesky
-                | Self::Hoodi
-        ) {
-            let mut s = String::with_capacity(DNS_PREFIX.len() + 32);
-            s.push_str(DNS_PREFIX);
-            s.push_str("all.");
-            let chain_str = self.as_ref();
-            s.push_str(chain_str);
-            let l = s.len();
-            s[l - chain_str.len()..].make_ascii_lowercase();
-            s.push_str(".ethdisco.net");
-            Some(s)
-        } else {
-            None
-        }
-    }
-
-    /// Returns the address of the most popular wrapped native token address.
-    #[inline]
-    pub const fn wrapped_native_token(self) -> Option<Address> {
-        let index = self.data().wrapped_native_token;
-        if index == NO_WRAPPED_NATIVE_TOKEN {
-            None
-        } else {
-            Some(WRAPPED_NATIVE_TOKENS[index as usize])
-        }
-    }
-
-    #[cfg(feature = "serde")]
-    fn from_serde_str(value: &str) -> Option<Self> {
-        PARSE_NAMES.get(value).or_else(|| SERDE_NAMES.get(value)).copied().map(Self::from_index)
-    }
-}
-
-impl From<NamedChain> for &'static str {
-    #[inline]
-    fn from(chain: NamedChain) -> Self {
-        (&chain).into()
-    }
-}
-
-impl From<&NamedChain> for &'static str {
-    #[inline]
-    fn from(chain: &NamedChain) -> Self {
-        chain.as_str()
-    }
-}
-
-impl Default for NamedChain {
-    #[inline]
-    fn default() -> Self {
-        Self::Mainnet
-    }
-}
-
-macro_rules! impl_into_numeric {
-    ($($t:ty)+) => {$(
-        impl From<NamedChain> for $t {
-            #[inline]
-            fn from(chain: NamedChain) -> Self {
-                chain as $t
-            }
-        }
-    )+};
-}
-
-impl_into_numeric!(u64 i64 u128 i128);
-#[cfg(target_pointer_width = "64")]
-impl_into_numeric!(usize isize);
-
-impl num_enum::TryFromPrimitive for NamedChain {
-    type Primitive = u64;
-    type Error = num_enum::TryFromPrimitiveError<Self>;
-
-    const NAME: &'static str = "NamedChain";
-
-    #[inline]
-    fn try_from_primitive(number: Self::Primitive) -> Result<Self, Self::Error> {
-        Self::from_chain_id_map(number).ok_or_else(|| num_enum::TryFromPrimitiveError::new(number))
-    }
-}
-
-impl TryFrom<u64> for NamedChain {
-    type Error = num_enum::TryFromPrimitiveError<Self>;
-
-    #[inline]
-    fn try_from(value: u64) -> Result<Self, Self::Error> {
-        num_enum::TryFromPrimitive::try_from_primitive(value)
-    }
-}
-
-macro_rules! impl_try_from_numeric {
-    ($($native:ty)+) => {
-        $(
-            impl TryFrom<$native> for NamedChain {
-                type Error = num_enum::TryFromPrimitiveError<NamedChain>;
-
-                #[inline]
-                fn try_from(value: $native) -> Result<Self, Self::Error> {
-                    (value as u64).try_into()
-                }
-            }
-        )+
-    };
-}
-
-impl_try_from_numeric!(u8 i8 u16 i16 u32 i32 usize isize);
-
-impl fmt::Display for NamedChain {
-    #[inline]
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        self.as_str().fmt(f)
-    }
-}
-
-impl AsRef<str> for NamedChain {
-    #[inline]
-    fn as_ref(&self) -> &str {
-        self.as_str()
-    }
-}
-
-impl FromStr for NamedChain {
-    type Err = ParseNamedChainError;
-
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        PARSE_NAMES.get(s).copied().map(Self::from_index).ok_or(ParseNamedChainError)
-    }
-}
-
-impl TryFrom<&str> for NamedChain {
-    type Error = ParseNamedChainError;
-
-    #[inline]
-    fn try_from(value: &str) -> Result<Self, Self::Error> {
-        value.parse()
-    }
-}
-
-impl PartialEq<u64> for NamedChain {
-    #[inline]
-    fn eq(&self, other: &u64) -> bool {
-        (*self as u64) == *other
-    }
-}
-
-impl PartialOrd<u64> for NamedChain {
-    #[inline]
-    fn partial_cmp(&self, other: &u64) -> Option<Ordering> {
-        (*self as u64).partial_cmp(other)
-    }
-}
-
-#[cfg(feature = "serde")]
-impl serde::Serialize for NamedChain {
-    #[inline]
-    fn serialize<S: serde::Serializer>(&self, s: S) -> Result<S::Ok, S::Error> {
-        s.serialize_str(self.as_ref())
-    }
-}
-
-#[cfg(feature = "serde")]
-impl<'de> serde::Deserialize<'de> for NamedChain {
-    fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
-        struct NamedChainVisitor;
-
-        impl serde::de::Visitor<'_> for NamedChainVisitor {
-            type Value = NamedChain;
-
-            fn expecting(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
-                formatter.write_str("a named chain")
-            }
-
-            fn visit_str<E: serde::de::Error>(self, value: &str) -> Result<Self::Value, E> {
-                NamedChain::from_serde_str(value).ok_or_else(|| {
-                    serde::de::Error::unknown_variant(value, NamedChain::VARIANT_NAMES)
-                })
-            }
-        }
-
-        deserializer.deserialize_str(NamedChainVisitor)
-    }
-}
-
-#[cfg(feature = "rlp")]
-impl alloy_rlp::Encodable for NamedChain {
-    #[inline]
-    fn encode(&self, out: &mut dyn alloy_rlp::BufMut) {
-        (*self as u64).encode(out)
-    }
-
-    #[inline]
-    fn length(&self) -> usize {
-        (*self as u64).length()
-    }
-}
-
-#[cfg(feature = "rlp")]
-impl alloy_rlp::Decodable for NamedChain {
-    #[inline]
-    fn decode(buf: &mut &[u8]) -> alloy_rlp::Result<Self> {
-        let n = u64::decode(buf)?;
-        Self::try_from(n).map_err(|_| alloy_rlp::Error::Overflow)
-    }
-}
-
-#[cfg(feature = "arbitrary")]
-impl<'a> arbitrary::Arbitrary<'a> for NamedChain {
-    fn arbitrary(u: &mut arbitrary::Unstructured<'a>) -> arbitrary::Result<Self> {
-        let idx = u.choose_index(Self::COUNT)?;
-        Ok(Self::VARIANTS[idx])
-    }
-}
-
-#[cfg(test)]
-pub(crate) const PARSE_ALIASES: &[(NamedChain, &str)] = &[
-    (NamedChain::Mainnet, "ethlive"),
-    (NamedChain::BinanceSmartChain, "binance-smart-chain"),
-    (NamedChain::BinanceSmartChain, "bnb-smart-chain"),
-    (NamedChain::BinanceSmartChainTestnet, "binance-smart-chain-testnet"),
-    (NamedChain::BinanceSmartChainTestnet, "bnb-smart-chain-testnet"),
-    (NamedChain::Gnosis, "gnosis"),
-    (NamedChain::Gnosis, "gnosis-chain"),
-    (NamedChain::PolygonAmoy, "polygon-amoy"),
-    (NamedChain::AnvilHardhat, "anvil"),
-    (NamedChain::AnvilHardhat, "hardhat"),
-    (NamedChain::AvalancheFuji, "avalanche-fuji"),
-    (NamedChain::Curtis, "apechain-testnet"),
-    (NamedChain::TreasureTopaz, "treasure-topaz-testnet"),
-    (NamedChain::BerachainBepolia, "berachain-bepolia-testnet"),
-    (NamedChain::Formicarium, "memecore-formicarium"),
-    (NamedChain::Insectarium, "memecore-insectarium"),
-    (NamedChain::Tempo, "tempo-mainnet"),
-];
-
-#[cfg(all(test, feature = "serde"))]
-pub(crate) const SERDE_ALIASES: &[(NamedChain, &str)] = &[
-    (NamedChain::OptimismKovan, "optimism_kovan"),
-    (NamedChain::OptimismGoerli, "optimism_goerli"),
-    (NamedChain::OptimismSepolia, "optimism_sepolia"),
-    (NamedChain::BobSepolia, "bob_sepolia"),
-    (NamedChain::Arbitrum, "arbitrum_one"),
-    (NamedChain::Arbitrum, "arbitrum-one"),
-    (NamedChain::ArbitrumTestnet, "arbitrum_testnet"),
-    (NamedChain::ArbitrumGoerli, "arbitrum_goerli"),
-    (NamedChain::ArbitrumSepolia, "arbitrum_sepolia"),
-    (NamedChain::ArbitrumNova, "arbitrum_nova"),
-    (NamedChain::CronosTestnet, "cronos_testnet"),
-    (NamedChain::RskTestnet, "rsk_testnet"),
-    (NamedChain::TelosEvm, "telos_evm"),
-    (NamedChain::TelosEvmTestnet, "telos_evm_testnet"),
-    (NamedChain::TelosEvmTestnet, "telos_testnet"),
-    (NamedChain::TelosEvmTestnet, "telos-evm-testnet"),
-    (NamedChain::BinanceSmartChain, "binance_smart_chain"),
-    (NamedChain::BinanceSmartChainTestnet, "binance_smart_chain_testnet"),
-    (NamedChain::BinanceSmartChainTestnet, "bsc_testnet"),
-    (NamedChain::ScrollSepolia, "scroll_sepolia"),
-    (NamedChain::ScrollSepolia, "scroll_sepolia_testnet"),
-    (NamedChain::CfxTestnet, "cfx_testnet"),
-    (NamedChain::CfxTestnet, "conflux-espace-testnet"),
-    (NamedChain::Cfx, "conflux-espace"),
-    (NamedChain::PolygonAmoy, "polygon_amoy"),
-    (NamedChain::FantomTestnet, "fantom_testnet"),
-    (NamedChain::MoonbeamDev, "moonbeam_dev"),
-    (NamedChain::AnvilHardhat, "anvil_hardhat"),
-    (NamedChain::GravityAlphaMainnet, "gravity_alpha_mainnet"),
-    (NamedChain::GravityAlphaTestnetSepolia, "gravity_alpha_testnet_sepolia"),
-    (NamedChain::Gravity, "gravity"),
-    (NamedChain::EvmosTestnet, "evmos_testnet"),
-    (NamedChain::PlasmaTestnet, "plasma_testnet"),
-    (NamedChain::EmeraldTestnet, "emerald_testnet"),
-    (NamedChain::FilecoinMainnet, "filecoin_mainnet"),
-    (NamedChain::FilecoinCalibrationTestnet, "filecoin_calibration_testnet"),
-    (NamedChain::AvalancheFuji, "avalanche_fuji"),
-    (NamedChain::CeloSepolia, "celo_sepolia"),
-    (NamedChain::AuroraTestnet, "aurora_testnet"),
-    (NamedChain::CantoTestnet, "canto_testnet"),
-    (NamedChain::BaseGoerli, "base_goerli"),
-    (NamedChain::BaseSepolia, "base_sepolia"),
-    (NamedChain::SyndrSepolia, "syndr_sepolia"),
-    (NamedChain::InkSepolia, "ink_sepolia"),
-    (NamedChain::InkSepolia, "ink_sepolia_testnet"),
-    (NamedChain::FraxtalTestnet, "fraxtal_testnet"),
-    (NamedChain::BlastSepolia, "blast_sepolia"),
-    (NamedChain::LineaGoerli, "linea_goerli"),
-    (NamedChain::LineaSepolia, "linea_sepolia"),
-    (NamedChain::ZkSync, "zk_sync"),
-    (NamedChain::ZkSyncTestnet, "zk_sync_testnet"),
-    (NamedChain::ZkSyncTestnet, "zksync_testnet"),
-    (NamedChain::MantleSepolia, "mantle_sepolia"),
-    (NamedChain::XaiSepolia, "xai_sepolia"),
-    (NamedChain::HappychainTestnet, "happychain_testnet"),
-    (NamedChain::ZoraSepolia, "zora_sepolia"),
-    (NamedChain::PgnSepolia, "pgn_sepolia"),
-    (NamedChain::ModeSepolia, "mode_sepolia"),
-    (NamedChain::EtherlinkShadownet, "etherlink_shadownet"),
-    (NamedChain::OpBNBMainnet, "opbnb_mainnet"),
-    (NamedChain::OpBNBMainnet, "op-bnb-mainnet"),
-    (NamedChain::OpBNBTestnet, "opbnb_testnet"),
-    (NamedChain::OpBNBTestnet, "op-bnb-testnet"),
-    (NamedChain::RoninTestnet, "ronin_testnet"),
-    (NamedChain::RadiusTestnet, "radius_testnet"),
-    (NamedChain::TaikoHekla, "taiko_hekla"),
-    (NamedChain::AutonomysNovaTestnet, "autonomys_nova_testnet"),
-    (NamedChain::FlareCoston2, "flare_coston2"),
-    (NamedChain::AcalaMandalaTestnet, "acala_mandala_testnet"),
-    (NamedChain::AcalaTestnet, "acala_testnet"),
-    (NamedChain::KaruraTestnet, "karura_testnet"),
-    (NamedChain::PulsechainTestnet, "pulsechain_testnet"),
-    (NamedChain::ImmutableTestnet, "immutable_testnet"),
-    (NamedChain::SoneiumMinatoTestnet, "soneium_minato_testnet"),
-    (NamedChain::World, "worldchain"),
-    (NamedChain::WorldSepolia, "world_sepolia"),
-    (NamedChain::WorldSepolia, "worldchain-sepolia"),
-    (NamedChain::SeiTestnet, "sei_testnet"),
-    (NamedChain::StableMainnet, "stable_mainnet"),
-    (NamedChain::StableTestnet, "stable_testnet"),
-    (NamedChain::MegaEth, "mega_eth"),
-    (NamedChain::MegaEthTestnet, "mega_eth_testnet"),
-    (NamedChain::MegaEthTestnet, "megaeth_testnet"),
-    (NamedChain::XdcMainnet, "xdc_mainnet"),
-    (NamedChain::XdcTestnet, "xdc_testnet"),
-    (NamedChain::UnichainSepolia, "unichain_sepolia"),
-    (NamedChain::SignetPecorino, "signet_pecorino"),
-    (NamedChain::ApeChain, "ape_chain"),
-    (NamedChain::SonicTestnet, "sonic_testnet"),
-    (NamedChain::RedbellyTestnet, "redbelly_testnet"),
-    (NamedChain::PlumeTestnet, "plume_testnet"),
-    (NamedChain::TreasureTopaz, "treasure_topaz"),
-    (NamedChain::BerachainBepolia, "berachain_bepolia"),
-    (NamedChain::SuperpositionTestnet, "superposition_testnet"),
-    (NamedChain::MonadTestnet, "monad_testnet"),
-    (NamedChain::AbstractTestnet, "abstract_testnet"),
-    (NamedChain::CornTestnet, "corn_testnet"),
-    (NamedChain::SophonTestnet, "sophon_testnet"),
-    (NamedChain::PolkadotTestnet, "polkadot_testnet"),
-    (NamedChain::LensTestnet, "lens_testnet"),
-    (NamedChain::InjectiveTestnet, "injective_testnet"),
-    (NamedChain::FluentDevnet, "fluent_devnet"),
-    (NamedChain::FluentTestnet, "fluent_testnet"),
-    (NamedChain::SkaleBase, "skale_base"),
-    (NamedChain::SkaleBaseSepoliaTestnet, "skale_base_sepolia_testnet"),
-    (NamedChain::MemeCore, "meme_core"),
-    (NamedChain::Formicarium, "formicairum"),
-    (NamedChain::TempoModerato, "tempo_moderato"),
-    (NamedChain::TempoTestnet, "tempo_testnet"),
-    (NamedChain::TempoDevnet, "tempo_devnet"),
-    (NamedChain::ArcTestnet, "arc_testnet"),
-    (NamedChain::BattleChainTestnet, "battle_chain_testnet"),
-    (NamedChain::BattleChainTestnet, "battlechain_testnet"),
-    (NamedChain::RobinhoodTestnet, "robinhood_testnet"),
-];
