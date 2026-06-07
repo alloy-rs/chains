@@ -2659,3 +2659,42 @@ static SERDE_NAMES: phf::Map<&'static str, ChainIndex> = ::phf::Map {
         ("mega_eth_testnet", NamedChain::MegaEthTestnet.index()),
     ],
 };
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn no_index_is_not_used_as_index() {
+        assert_table_len(CHAIN_NAMES.len());
+        assert_table_len(NATIVE_CURRENCY_SYMBOLS.len());
+        assert_table_len(ETHERSCAN_API_URLS.len());
+        assert_table_len(ETHERSCAN_BASE_URLS.len());
+        assert_table_len(ETHERSCAN_API_KEY_NAMES.len());
+        assert_table_len(WRAPPED_NATIVE_TOKENS.len());
+
+        for data in CHAIN_DATA.iter().copied() {
+            assert_index(data.name, CHAIN_NAMES.len());
+            assert_optional_index(data.native_currency_symbol, NATIVE_CURRENCY_SYMBOLS.len());
+            assert_optional_index(data.etherscan_api_url, ETHERSCAN_API_URLS.len());
+            assert_optional_index(data.etherscan_base_url, ETHERSCAN_BASE_URLS.len());
+            assert_optional_index(data.etherscan_api_key_name, ETHERSCAN_API_KEY_NAMES.len());
+            assert_optional_index(data.wrapped_native_token, WRAPPED_NATIVE_TOKENS.len());
+        }
+    }
+
+    fn assert_table_len(len: usize) {
+        assert!(len <= NO_INDEX as usize);
+    }
+
+    fn assert_index(index: u8, len: usize) {
+        assert_ne!(index, NO_INDEX);
+        assert!((index as usize) < len);
+    }
+
+    fn assert_optional_index(index: u8, len: usize) {
+        if index != NO_INDEX {
+            assert!((index as usize) < len);
+        }
+    }
+}
