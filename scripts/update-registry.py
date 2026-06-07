@@ -217,7 +217,6 @@ def generated_named(chains: list[Chain]) -> str:
         "ETHERSCAN_BASE_URLS": StaticStringTable(),
         "ETHERSCAN_API_KEY_NAMES": StaticStringTable(),
     }
-    chain_indexes = {chain.internal_id: index for index, chain in enumerate(chains)}
     wrapped_native_tokens = unique(
         [chain.wrapped_native_token for chain in chains if chain.wrapped_native_token is not None]
     )
@@ -230,8 +229,8 @@ def generated_named(chains: list[Chain]) -> str:
     chain_id_arms = "\n".join(
         f"            {chain.chain_id} => Some(Self::{chain.internal_id})," for chain in chains
     )
-    chain_data_arms = "\n".join(
-        f"            Self::{chain.internal_id} => CHAIN_DATA[{index}],"
+    chain_index_arms = "\n".join(
+        f"            Self::{chain.internal_id} => {index},"
         for index, chain in enumerate(chains)
     )
     stored_tag_flags = stored_chain_tag_flags(chains)
@@ -263,17 +262,17 @@ def generated_named(chains: list[Chain]) -> str:
         for alias in serde_extra_names(chain)
     )
     parse_entries = [
-        (name, chain_indexes[chain.internal_id])
+        (name, chain_index_expr(chain))
         for chain in chains
         for name in parse_names(chain)
     ]
     serde_entries = [
-        (name, chain_indexes[chain.internal_id])
+        (name, chain_index_expr(chain))
         for chain in chains
         for name in serde_extra_names(chain)
     ]
     chain_id_entries = [
-        (str(chain.chain_id), chain_indexes[chain.internal_id])
+        (str(chain.chain_id), chain_index_expr(chain))
         for chain in chains
     ]
     phf_maps = generate_phf_maps(chain_id_entries, parse_entries, serde_entries)
@@ -287,9 +286,9 @@ def generated_named(chains: list[Chain]) -> str:
     return render_template(
         ROOT / "scripts" / "templates" / "generated_named.rs",
         chain_data=chain_data,
-        chain_data_arms=chain_data_arms,
         chain_data_len=chain_data_len,
         chain_id_arms=chain_id_arms,
+        chain_index_arms=chain_index_arms,
         chain_index_type=chain_index_type,
         custom_sourcify_predicate=tag_predicates["custom_sourcify"],
         elastic_predicate=tag_predicates["elastic"],
@@ -403,6 +402,10 @@ def chain_flags(chain: Chain, stored_tag_flags: list[tuple[str, str]]) -> str:
     return " | ".join(flag_alias(flag) for flag in flags) if flags else "0"
 
 
+def chain_index_expr(chain: Chain) -> str:
+    return f"NamedChain::{chain.internal_id}.index()"
+
+
 def chain_flag_names(chain: Chain, stored_tag_flags: list[tuple[str, str]]) -> list[str]:
     flags = []
     if chain.is_legacy:
@@ -440,9 +443,9 @@ def wrapped_native_token_index(chain: Chain, indexes: dict[str, int]) -> str:
 
 
 def generate_phf_maps(
-    chain_id_entries: list[tuple[str, int]],
-    parse_entries: list[tuple[str, int]],
-    serde_entries: list[tuple[str, int]],
+    chain_id_entries: list[tuple[str, str]],
+    parse_entries: list[tuple[str, str]],
+    serde_entries: list[tuple[str, str]],
 ) -> str:
     lines = ["map_u64\tCHAIN_IDS"]
     lines.extend(phf_entry_lines(chain_id_entries))
@@ -465,7 +468,7 @@ def generate_phf_maps(
     return output.stdout.strip()
 
 
-def phf_entry_lines(entries: list[tuple[str, int]]) -> list[str]:
+def phf_entry_lines(entries: list[tuple[str, str]]) -> list[str]:
     lines = []
     for key, value in entries:
         if "\t" in key or "\n" in key:

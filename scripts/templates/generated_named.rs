@@ -148,10 +148,15 @@ impl NamedChain {
     }
 
     #[inline]
-    const fn data(self) -> ChainData {
+    const fn index(self) -> ChainIndex {
         match self {
-%%chain_data_arms
+%%chain_index_arms
         }
+    }
+
+    #[inline]
+    const fn data(self) -> ChainData {
+        CHAIN_DATA[self.index() as usize]
     }
 
     #[inline]
