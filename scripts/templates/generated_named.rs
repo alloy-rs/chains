@@ -8,8 +8,7 @@ type ChainIndex = %%chain_index_type;
 type ChainFlags = %%flag_type;
 
 %%flag_consts
-const N: u8 = u8::MAX;
-const NO_WRAPPED_NATIVE_TOKEN: u8 = u8::MAX;
+const NO_INDEX: u8 = u8::MAX;
 
 #[derive(Clone, Copy)]
 #[repr(C, packed)]
@@ -52,7 +51,7 @@ impl ChainData {
 }
 
 const fn static_str(table: &'static [&'static str], index: u8) -> Option<&'static str> {
-    if index == N { None } else { Some(table[index as usize]) }
+    if index == NO_INDEX { None } else { Some(table[index as usize]) }
 }
 
 /// An Ethereum EIP-155 chain.
@@ -317,7 +316,7 @@ impl NamedChain {
     #[inline]
     pub const fn wrapped_native_token(self) -> Option<Address> {
         let index = self.data().wrapped_native_token;
-        if index == NO_WRAPPED_NATIVE_TOKEN {
+        if index == NO_INDEX {
             None
         } else {
             Some(WRAPPED_NATIVE_TOKENS[index as usize])
@@ -530,7 +529,8 @@ pub(crate) const SERDE_ALIASES: &[(NamedChain, &str)] = &[
 %%string_table_data
 
 static CHAIN_DATA: [ChainData; %%chain_data_len] = {
-    use NO_WRAPPED_NATIVE_TOKEN as W;
+    use NO_INDEX as N;
+    use NO_INDEX as W;
 %%flag_aliases
 
     #[allow(clippy::too_many_arguments)]

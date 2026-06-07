@@ -13,8 +13,7 @@ const FLAG_TESTNET: ChainFlags = 1 << 2;
 const FLAG_ETHEREUM: ChainFlags = 1 << 3;
 const FLAG_OPTIMISM: ChainFlags = 1 << 4;
 const FLAG_ELASTIC: ChainFlags = 1 << 5;
-const N: u8 = u8::MAX;
-const NO_WRAPPED_NATIVE_TOKEN: u8 = u8::MAX;
+const NO_INDEX: u8 = u8::MAX;
 
 #[derive(Clone, Copy)]
 #[repr(C, packed)]
@@ -57,7 +56,7 @@ impl ChainData {
 }
 
 const fn static_str(table: &'static [&'static str], index: u8) -> Option<&'static str> {
-    if index == N { None } else { Some(table[index as usize]) }
+    if index == NO_INDEX { None } else { Some(table[index as usize]) }
 }
 
 /// An Ethereum EIP-155 chain.
@@ -1108,11 +1107,7 @@ impl NamedChain {
     #[inline]
     pub const fn wrapped_native_token(self) -> Option<Address> {
         let index = self.data().wrapped_native_token;
-        if index == NO_WRAPPED_NATIVE_TOKEN {
-            None
-        } else {
-            Some(WRAPPED_NATIVE_TOKENS[index as usize])
-        }
+        if index == NO_INDEX { None } else { Some(WRAPPED_NATIVE_TOKENS[index as usize]) }
     }
 
     #[cfg(feature = "serde")]
@@ -1997,7 +1992,8 @@ static CHAIN_DATA: [ChainData; 197] = {
     use FLAG_OPTIMISM as O;
     use FLAG_SUPPORTS_SHANGHAI as S;
     use FLAG_TESTNET as T;
-    use NO_WRAPPED_NATIVE_TOKEN as W;
+    use NO_INDEX as N;
+    use NO_INDEX as W;
 
     #[allow(clippy::too_many_arguments)]
     const fn d(
