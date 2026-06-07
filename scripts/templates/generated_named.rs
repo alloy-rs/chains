@@ -8,7 +8,6 @@ type ChainIndex = %%chain_index_type;
 
 %%flag_consts
 const NO_WRAPPED_NATIVE_TOKEN: u8 = u8::MAX;
-const N: u8 = u8::MAX;
 
 #[derive(Clone, Copy)]
 #[repr(C, packed)]
@@ -20,7 +19,7 @@ struct StaticStr {
 impl StaticStr {
     #[inline]
     const fn get(self) -> Option<&'static str> {
-        if self.len == N {
+        if self.len == 0 {
             None
         } else {
             Some(self.get_unchecked())
@@ -52,9 +51,7 @@ impl ChainData {
         let mut current = 0;
         while current < index {
             let len = self.string_lens[current];
-            if len != N {
-                offset += len as u16;
-            }
+            offset += len as u16;
             current += 1;
         }
         s(offset, self.string_lens[index])

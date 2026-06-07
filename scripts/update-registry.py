@@ -69,6 +69,8 @@ class StaticStringTable:
                 continue
 
             encoded = value.encode()
+            if not encoded:
+                raise ValueError("Static string cannot be empty")
             if len(encoded) >= 0xFF:
                 raise ValueError(f"Static string is too long for compact storage: {value!r}")
             encoded_values.append(encoded)
@@ -399,14 +401,8 @@ def chain_string_data(string_table: StaticStringTable, chain: Chain) -> str:
             chain.etherscan_api_key_name,
         )
     )
-    lengths = ", ".join(static_str_len(length) for length in block.lengths)
+    lengths = ", ".join(str(length or 0) for length in block.lengths)
     return f"{block.offset}, [{lengths}]"
-
-
-def static_str_len(value: int | None) -> str:
-    if value is None:
-        return "N"
-    return str(value)
 
 
 def wrapped_native_token_index(chain: Chain, indexes: dict[str, int]) -> str:
