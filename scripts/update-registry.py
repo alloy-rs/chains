@@ -13,6 +13,9 @@ from string import Template
 
 
 ROOT = Path(__file__).resolve().parents[1]
+INLINE_FLAG_CHAIN_COUNT = 2
+MAX_U8_FLAGS = 8
+
 
 class RustTemplate(Template):
     delimiter = "%%"
@@ -326,7 +329,13 @@ def average_blocktime_millis(chain: Chain) -> int:
 
 
 def stored_chain_flags(chains: list[Chain]) -> list[ChainFlag]:
-    return [flag for flag in CHAIN_FLAGS if len(chains_with_flag(chains, flag)) > 2]
+    counts = {flag: len(chains_with_flag(chains, flag)) for flag in CHAIN_FLAGS}
+    candidates = [flag for flag in CHAIN_FLAGS if counts[flag] > INLINE_FLAG_CHAIN_COUNT]
+    if len(candidates) <= MAX_U8_FLAGS:
+        return candidates
+
+    stored = set(sorted(candidates, key=lambda flag: counts[flag], reverse=True)[:MAX_U8_FLAGS])
+    return [flag for flag in CHAIN_FLAGS if flag in stored]
 
 
 def generated_flag_consts(stored_flags: list[ChainFlag]) -> tuple[str, str]:

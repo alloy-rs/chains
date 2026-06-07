@@ -905,7 +905,7 @@ impl NamedChain {
     /// Returns true if the chain uses a custom Sourcify-compatible API.
     #[inline]
     pub const fn is_custom_sourcify(self) -> bool {
-        self.has_flag(FLAG_CUSTOM_SOURCIFY)
+        matches!(self, Self::Tempo | Self::TempoTestnet | Self::TempoModerato)
     }
 
     /// Returns the chain's average blocktime, if applicable.
@@ -1232,7 +1232,7 @@ impl<'a> arbitrary::Arbitrary<'a> for NamedChain {
 }
 
 type ChainIndex = u8;
-type ChainFlags = u16;
+type ChainFlags = u8;
 
 const FLAG_LEGACY: ChainFlags = 1 << 0;
 const FLAG_SUPPORTS_SHANGHAI: ChainFlags = 1 << 1;
@@ -1242,7 +1242,6 @@ const FLAG_OPTIMISM: ChainFlags = 1 << 4;
 const FLAG_ARBITRUM: ChainFlags = 1 << 5;
 const FLAG_ELASTIC: ChainFlags = 1 << 6;
 const FLAG_TEMPO: ChainFlags = 1 << 7;
-const FLAG_CUSTOM_SOURCIFY: ChainFlags = 1 << 8;
 const NO_INDEX: u8 = u8::MAX;
 
 #[derive(Clone, Copy)]
@@ -2017,7 +2016,6 @@ static WRAPPED_NATIVE_TOKENS: [Address; 34] = [
 
 static CHAIN_DATA: [ChainData; 197] = {
     use FLAG_ARBITRUM as A;
-    use FLAG_CUSTOM_SOURCIFY as CS;
     use FLAG_ELASTIC as X;
     use FLAG_ETHEREUM as E;
     use FLAG_LEGACY as L;
@@ -2139,7 +2137,7 @@ static CHAIN_DATA: [ChainData; 197] = {
         d(84, 0, 65, 65, 0, 1000, X, 15),
         d(85, N, N, N, 3, 1200, L | T, W),
         d(86, 34, 66, 66, 7, 3000, 0, 16),
-        d(87, 35, 67, 67, N, 500, S | TP | CS, W),
+        d(87, 35, 67, 67, N, 500, S | TP, W),
         d(88, 0, 68, 68, 0, 1000, S, W),
         d(89, 36, 69, 69, 0, 7000, S, 17),
         d(90, 37, N, N, N, 5000, S, 18),
@@ -2181,8 +2179,8 @@ static CHAIN_DATA: [ChainData; 197] = {
         d(126, 47, 98, 98, 0, 1000, S | O, W),
         d(127, N, 99, 99, N, 0, L | T, W),
         d(128, N, 100, 100, N, 6000, L, W),
-        d(129, 35, 67, 101, N, 500, S | T | TP | CS, W),
-        d(130, 35, 67, 102, N, 500, S | T | TP | CS, W),
+        d(129, 35, 67, 101, N, 500, S | T | TP, W),
+        d(130, 35, 67, 102, N, 500, S | T | TP, W),
         d(131, 48, 101, 103, 1, 5000, S, W),
         d(132, N, 102, 104, 0, 2000, S | T, W),
         d(133, N, 103, 105, 0, 2000, S, 24),
