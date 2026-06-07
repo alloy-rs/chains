@@ -30,12 +30,6 @@ class RustTemplate(Template):
 
 
 @dataclass(frozen=True)
-class StaticStringBlock:
-    offset: int
-    lengths: tuple[int | None, ...]
-
-
-@dataclass(frozen=True)
 class Chain:
     chain_id: int
     internal_id: str
@@ -57,39 +51,24 @@ class Chain:
 
 class StaticStringTable:
     def __init__(self):
-        self.data = bytearray()
-        self.offsets: dict[bytes, int] = {}
+        self.values = [""]
+        self.indexes: dict[str, int] = {}
 
-    def add_block(self, values: tuple[str | None, ...]) -> StaticStringBlock:
-        encoded_values = []
-        lengths = []
-        for value in values:
-            if value is None:
-                lengths.append(None)
-                continue
+    def add(self, value: str | None) -> int:
+        if value is None:
+            return 0
+        if not value:
+            raise ValueError("Static string cannot be empty")
 
-            encoded = value.encode()
-            if not encoded:
-                raise ValueError("Static string cannot be empty")
-            if len(encoded) >= 0xFF:
-                raise ValueError(f"Static string is too long for compact storage: {value!r}")
-            encoded_values.append(encoded)
-            lengths.append(len(encoded))
+        index = self.indexes.get(value)
+        if index is None:
+            index = len(self.values)
+            if index > 0xFF:
+                raise ValueError("Too many static strings for compact storage")
+            self.values.append(value)
+            self.indexes[value] = index
 
-        encoded_block = b"".join(encoded_values)
-
-        offset = self.offsets.get(encoded_block)
-        if offset is None:
-            offset = self.data.find(encoded_block)
-
-        if offset < 0:
-            offset = len(self.data)
-            self.data.extend(encoded_block)
-            self.offsets[encoded_block] = offset
-
-        if offset > 0xFFFF:
-            raise ValueError("Static string table offset is too large for compact storage")
-        return StaticStringBlock(offset, tuple(lengths))
+        return index
 
 
 def main() -> int:
@@ -210,6 +189,7 @@ def generated_mod() -> str:
 
 
 def generated_named(chains: list[Chain]) -> str:
+    chains = sorted(chains, key=lambda chain: chain.chain_id)
     if len(chains) > 0xFFFF:
         raise ValueError("Too many chains for compact index storage")
     if len(chains) > 0xFF:
@@ -217,7 +197,13 @@ def generated_named(chains: list[Chain]) -> str:
     else:
         chain_index_type = "u8"
 
-    string_table = StaticStringTable()
+    string_tables = {
+        "CHAIN_NAMES": StaticStringTable(),
+        "NATIVE_CURRENCY_SYMBOLS": StaticStringTable(),
+        "ETHERSCAN_API_URLS": StaticStringTable(),
+        "ETHERSCAN_BASE_URLS": StaticStringTable(),
+        "ETHERSCAN_API_KEY_NAMES": StaticStringTable(),
+    }
     chain_indexes = {chain.internal_id: index for index, chain in enumerate(chains)}
     wrapped_native_tokens = unique(
         [chain.wrapped_native_token for chain in chains if chain.wrapped_native_token is not None]
@@ -239,14 +225,16 @@ def generated_named(chains: list[Chain]) -> str:
     flag_type, flag_consts = generated_flag_consts(stored_tag_flags)
     chain_data = "\n".join(
         "    d("
-        f"{chain_string_data(string_table, chain)}, "
+        f"{chain_string_indexes(string_tables, chain)}, "
         f"{average_blocktime_millis(chain)}, "
         f"{chain_flags(chain, stored_tag_flags)}, "
         f"{wrapped_native_token_index(chain, wrapped_native_token_indexes)}"
         "),"
         for chain in chains
     )
-    string_data = rs_byte_str(string_table.data)
+    string_table_data = "\n\n".join(
+        static_string_table(name, table) for name, table in string_tables.items()
+    )
     wrapped_native_token_data = "\n".join(
         f"    address!({rs_str(token)})," for token in wrapped_native_tokens
     )
@@ -277,9 +265,6 @@ def generated_named(chains: list[Chain]) -> str:
     phf_maps = generate_phf_maps(chain_id_entries, parse_entries, serde_entries)
     chain_data_len = len(chains)
     wrapped_native_token_len = len(wrapped_native_tokens)
-    string_data_len = len(string_table.data)
-    if string_data_len > 0xFFFF:
-        raise ValueError("Static string data is too large for compact storage")
     tag_predicates = {
         tag.replace("-", "_"): tag_predicate_expr(chains, stored_tag_flags, tag, "self")
         for tag, _flag in CHAIN_TAG_FLAGS
@@ -305,7 +290,7 @@ def generated_named(chains: list[Chain]) -> str:
         polygon_predicate=tag_predicates["polygon"],
         arbitrum_predicate=tag_predicates["arbitrum"],
         serde_aliases=serde_aliases,
-        string_data=string_data,
+        string_table_data=string_table_data,
         tempo_predicate=tag_predicates["tempo"],
         variants=variants,
         wrapped_native_token_data=wrapped_native_token_data,
@@ -391,18 +376,20 @@ def chain_flags(chain: Chain, stored_tag_flags: list[tuple[str, str]]) -> str:
     return " | ".join(flags) if flags else "0"
 
 
-def chain_string_data(string_table: StaticStringTable, chain: Chain) -> str:
-    block = string_table.add_block(
-        (
-            chain.name,
-            chain.native_currency_symbol,
-            chain.etherscan_api_url,
-            chain.etherscan_base_url,
-            chain.etherscan_api_key_name,
-        )
+def chain_string_indexes(string_tables: dict[str, StaticStringTable], chain: Chain) -> str:
+    indexes = (
+        string_tables["CHAIN_NAMES"].add(chain.name),
+        string_tables["NATIVE_CURRENCY_SYMBOLS"].add(chain.native_currency_symbol),
+        string_tables["ETHERSCAN_API_URLS"].add(chain.etherscan_api_url),
+        string_tables["ETHERSCAN_BASE_URLS"].add(chain.etherscan_base_url),
+        string_tables["ETHERSCAN_API_KEY_NAMES"].add(chain.etherscan_api_key_name),
     )
-    lengths = ", ".join(str(length or 0) for length in block.lengths)
-    return f"{block.offset}, [{lengths}]"
+    return f"[{', '.join(str(index) for index in indexes)}]"
+
+
+def static_string_table(name: str, table: StaticStringTable) -> str:
+    values = "\n".join(f"    {rs_str(value)}," for value in table.values)
+    return f"static {name}: [&str; {len(table.values)}] = [\n{values}\n];"
 
 
 def wrapped_native_token_index(chain: Chain, indexes: dict[str, int]) -> str:
@@ -486,27 +473,6 @@ def unique(items: list[str]) -> list[str]:
 
 def rs_str(value: str) -> str:
     return json.dumps(value)
-
-
-def rs_byte_str(value: bytes | bytearray) -> str:
-    output = ['b"']
-    for byte in value:
-        if byte == 0x09:
-            output.append(r"\t")
-        elif byte == 0x0A:
-            output.append(r"\n")
-        elif byte == 0x0D:
-            output.append(r"\r")
-        elif byte == 0x22:
-            output.append(r'\"')
-        elif byte == 0x5C:
-            output.append(r"\\")
-        elif 0x20 <= byte <= 0x7E:
-            output.append(chr(byte))
-        else:
-            output.append(f"\\x{byte:02x}")
-    output.append('"')
-    return "".join(output)
 
 
 def json_dump(value) -> str:

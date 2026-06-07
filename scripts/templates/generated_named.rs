@@ -12,34 +12,8 @@ const NO_WRAPPED_NATIVE_TOKEN: u8 = u8::MAX;
 
 #[derive(Clone, Copy)]
 #[repr(C, packed)]
-struct StaticStr {
-    offset: u16,
-    len: u8,
-}
-
-impl StaticStr {
-    #[inline]
-    const fn get(self) -> Option<&'static str> {
-        if self.len == 0 {
-            None
-        } else {
-            Some(self.get_unchecked())
-        }
-    }
-
-    #[inline]
-    const fn get_unchecked(self) -> &'static str {
-        let ptr = unsafe { STRING_DATA.as_ptr().add(self.offset as usize) };
-        let bytes = unsafe { core::slice::from_raw_parts(ptr, self.len as usize) };
-        unsafe { core::str::from_utf8_unchecked(bytes) }
-    }
-}
-
-#[derive(Clone, Copy)]
-#[repr(C, packed)]
 struct ChainData {
-    string_offset: u16,
-    string_lens: [u8; 5],
+    string_indexes: [u8; 5],
     average_blocktime_millis: u16,
     flags: ChainFlags,
     wrapped_native_token: u8,
@@ -47,41 +21,33 @@ struct ChainData {
 
 impl ChainData {
     #[inline]
-    const fn string(self, index: usize) -> StaticStr {
-        let mut offset = self.string_offset;
-        let mut current = 0;
-        while current < index {
-            let len = self.string_lens[current];
-            offset += len as u16;
-            current += 1;
-        }
-        StaticStr { offset, len: self.string_lens[index] }
+    const fn name(self) -> &'static str {
+        CHAIN_NAMES[self.string_indexes[0] as usize]
     }
 
     #[inline]
-    const fn name(self) -> StaticStr {
-        self.string(0)
+    const fn native_currency_symbol(self) -> Option<&'static str> {
+        static_str(&NATIVE_CURRENCY_SYMBOLS, self.string_indexes[1])
     }
 
     #[inline]
-    const fn native_currency_symbol(self) -> StaticStr {
-        self.string(1)
+    const fn etherscan_api_url(self) -> Option<&'static str> {
+        static_str(&ETHERSCAN_API_URLS, self.string_indexes[2])
     }
 
     #[inline]
-    const fn etherscan_api_url(self) -> StaticStr {
-        self.string(2)
+    const fn etherscan_base_url(self) -> Option<&'static str> {
+        static_str(&ETHERSCAN_BASE_URLS, self.string_indexes[3])
     }
 
     #[inline]
-    const fn etherscan_base_url(self) -> StaticStr {
-        self.string(3)
+    const fn etherscan_api_key_name(self) -> Option<&'static str> {
+        static_str(&ETHERSCAN_API_KEY_NAMES, self.string_indexes[4])
     }
+}
 
-    #[inline]
-    const fn etherscan_api_key_name(self) -> StaticStr {
-        self.string(4)
-    }
+const fn static_str(table: &'static [&'static str], index: u8) -> Option<&'static str> {
+    if index == 0 { None } else { Some(table[index as usize]) }
 }
 
 /// An Ethereum EIP-155 chain.
@@ -156,7 +122,15 @@ impl NamedChain {
     ];
 
     /// All named chain string representations in declaration order.
-    pub const VARIANT_NAMES: &'static [&'static str] = &VARIANT_NAMES_DATA;
+    pub const VARIANT_NAMES: &'static [&'static str] = &{
+        let mut names = [""; %%chain_data_len];
+        let mut index = 0;
+        while index < CHAIN_DATA.len() {
+            names[index] = CHAIN_DATA[index].name();
+            index += 1;
+        }
+        names
+    };
 
     /// Returns an iterator over all named chains.
     #[inline]
@@ -198,7 +172,7 @@ impl NamedChain {
     /// Returns the string representation of the chain.
     #[inline]
     pub const fn as_str(&self) -> &'static str {
-        self.data().name().get_unchecked()
+        self.data().name()
     }
 
     /// Returns `true` if this chain is Ethereum or an Ethereum testnet.
@@ -281,14 +255,14 @@ impl NamedChain {
     /// Returns the symbol of the chain's native currency.
     #[inline]
     pub const fn native_currency_symbol(self) -> Option<&'static str> {
-        self.data().native_currency_symbol().get()
+        self.data().native_currency_symbol()
     }
 
     /// Returns the chain's blockchain explorer and its API URLs.
     #[inline]
     pub const fn etherscan_urls(self) -> Option<(&'static str, &'static str)> {
         let data = self.data();
-        match (data.etherscan_api_url().get(), data.etherscan_base_url().get()) {
+        match (data.etherscan_api_url(), data.etherscan_base_url()) {
             (Some(api), Some(base)) => Some((api, base)),
             _ => None,
         }
@@ -297,7 +271,7 @@ impl NamedChain {
     /// Returns the chain's blockchain explorer API key environment variable name.
     #[inline]
     pub const fn etherscan_api_key_name(self) -> Option<&'static str> {
-        self.data().etherscan_api_key_name().get()
+        self.data().etherscan_api_key_name()
     }
 
     /// Returns the chain's blockchain explorer API key from the environment.
@@ -548,19 +522,17 @@ pub(crate) const SERDE_ALIASES: &[(NamedChain, &str)] = &[
 %%serde_aliases
 ];
 
-static STRING_DATA: &[u8] = %%string_data;
+%%string_table_data
 
 static CHAIN_DATA: [ChainData; %%chain_data_len] = {
     const fn d(
-        string_offset: u16,
-        string_lens: [u8; 5],
+        string_indexes: [u8; 5],
         average_blocktime_millis: u16,
         flags: ChainFlags,
         wrapped_native_token: u8,
     ) -> ChainData {
         ChainData {
-            string_offset,
-            string_lens,
+            string_indexes,
             average_blocktime_millis,
             flags,
             wrapped_native_token,
@@ -575,15 +547,5 @@ static CHAIN_DATA: [ChainData; %%chain_data_len] = {
 static WRAPPED_NATIVE_TOKENS: [Address; %%wrapped_native_token_len] = [
 %%wrapped_native_token_data
 ];
-
-static VARIANT_NAMES_DATA: [&str; %%chain_data_len] = {
-    let mut names = [""; %%chain_data_len];
-    let mut index = 0;
-    while index < CHAIN_DATA.len() {
-        names[index] = CHAIN_DATA[index].name().get_unchecked();
-        index += 1;
-    }
-    names
-};
 
 %%phf_maps
