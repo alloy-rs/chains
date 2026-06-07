@@ -3,7 +3,7 @@
 use alloy_primitives::{Address, address};
 
 /// An Ethereum EIP-155 chain.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[cfg_attr(feature = "schema", schemars(rename_all = "snake_case"))]
 #[repr(u64)]

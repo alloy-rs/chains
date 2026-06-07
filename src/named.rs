@@ -206,6 +206,20 @@ impl TryFrom<&str> for NamedChain {
     }
 }
 
+impl Ord for NamedChain {
+    #[inline]
+    fn cmp(&self, other: &Self) -> Ordering {
+        (*self as u64).cmp(&(*other as u64))
+    }
+}
+
+impl PartialOrd for NamedChain {
+    #[inline]
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
 impl PartialEq<u64> for NamedChain {
     #[inline]
     fn eq(&self, other: &u64) -> bool {
