@@ -101,16 +101,6 @@ const fn d(
     ChainData { string_offset, string_lens, average_blocktime_millis, flags, wrapped_native_token }
 }
 
-const fn variant_names() -> [&'static str; 197] {
-    let mut names = [""; 197];
-    let mut index = 0;
-    while index < CHAIN_DATA.len() {
-        names[index] = CHAIN_DATA[index].name().get_unchecked();
-        index += 1;
-    }
-    names
-}
-
 /// An Ethereum EIP-155 chain.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
@@ -2130,7 +2120,15 @@ static WRAPPED_NATIVE_TOKENS: [Address; 34] = [
     address!("0x653e645e3d81a72e71328Bc01A04002945E3ef7A"),
 ];
 
-static VARIANT_NAMES_DATA: [&str; 197] = variant_names();
+static VARIANT_NAMES_DATA: [&str; 197] = {
+    let mut names = [""; 197];
+    let mut index = 0;
+    while index < CHAIN_DATA.len() {
+        names[index] = CHAIN_DATA[index].name().get_unchecked();
+        index += 1;
+    }
+    names
+};
 
 static CHAIN_IDS: phf::Map<u64, ChainIndex> = ::phf::Map {
     key: 16287231350648472473,
