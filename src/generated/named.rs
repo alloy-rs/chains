@@ -4,61 +4,6 @@ use alloc::string::String;
 use alloy_primitives::{Address, address};
 use core::{cmp::Ordering, fmt, str::FromStr, time::Duration};
 
-type ChainIndex = u8;
-type ChainFlags = u8;
-
-const FLAG_LEGACY: ChainFlags = 1 << 0;
-const FLAG_SUPPORTS_SHANGHAI: ChainFlags = 1 << 1;
-const FLAG_TESTNET: ChainFlags = 1 << 2;
-const FLAG_ETHEREUM: ChainFlags = 1 << 3;
-const FLAG_OPTIMISM: ChainFlags = 1 << 4;
-const FLAG_ELASTIC: ChainFlags = 1 << 5;
-const NO_INDEX: u8 = u8::MAX;
-
-#[derive(Clone, Copy)]
-#[repr(C, packed)]
-struct ChainData {
-    name: u8,
-    native_currency_symbol: u8,
-    etherscan_api_url: u8,
-    etherscan_base_url: u8,
-    etherscan_api_key_name: u8,
-    average_blocktime_millis: u16,
-    flags: ChainFlags,
-    wrapped_native_token: u8,
-}
-
-impl ChainData {
-    #[inline]
-    const fn name(self) -> &'static str {
-        CHAIN_NAMES[self.name as usize]
-    }
-
-    #[inline]
-    const fn native_currency_symbol(self) -> Option<&'static str> {
-        static_str(&NATIVE_CURRENCY_SYMBOLS, self.native_currency_symbol)
-    }
-
-    #[inline]
-    const fn etherscan_api_url(self) -> Option<&'static str> {
-        static_str(&ETHERSCAN_API_URLS, self.etherscan_api_url)
-    }
-
-    #[inline]
-    const fn etherscan_base_url(self) -> Option<&'static str> {
-        static_str(&ETHERSCAN_BASE_URLS, self.etherscan_base_url)
-    }
-
-    #[inline]
-    const fn etherscan_api_key_name(self) -> Option<&'static str> {
-        static_str(&ETHERSCAN_API_KEY_NAMES, self.etherscan_api_key_name)
-    }
-}
-
-const fn static_str(table: &'static [&'static str], index: u8) -> Option<&'static str> {
-    if index == NO_INDEX { None } else { Some(table[index as usize]) }
-}
-
 /// An Ethereum EIP-155 chain.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
@@ -265,57 +210,6 @@ pub enum NamedChain {
     AuroraTestnet = 1313161555,
     XaiSepolia = 37714555429,
 }
-
-/// Error returned when parsing a named chain from a string fails.
-#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
-pub struct ParseNamedChainError;
-
-impl fmt::Display for ParseNamedChainError {
-    #[inline]
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        f.write_str("matching variant not found")
-    }
-}
-
-#[cfg(feature = "std")]
-impl std::error::Error for ParseNamedChainError {}
-
-/// Iterator over all named chains.
-#[derive(Clone, Debug)]
-pub struct NamedChainIter {
-    inner: core::iter::Copied<core::slice::Iter<'static, NamedChain>>,
-}
-
-impl Default for NamedChainIter {
-    #[inline]
-    fn default() -> Self {
-        NamedChain::iter()
-    }
-}
-
-impl Iterator for NamedChainIter {
-    type Item = NamedChain;
-
-    #[inline]
-    fn next(&mut self) -> Option<Self::Item> {
-        self.inner.next()
-    }
-
-    #[inline]
-    fn size_hint(&self) -> (usize, Option<usize>) {
-        self.inner.size_hint()
-    }
-}
-
-impl DoubleEndedIterator for NamedChainIter {
-    #[inline]
-    fn next_back(&mut self) -> Option<Self::Item> {
-        self.inner.next_back()
-    }
-}
-
-impl ExactSizeIterator for NamedChainIter {}
-impl core::iter::FusedIterator for NamedChainIter {}
 
 impl NamedChain {
     /// The number of named chains.
@@ -1121,6 +1015,57 @@ impl NamedChain {
     }
 }
 
+/// Error returned when parsing a named chain from a string fails.
+#[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
+pub struct ParseNamedChainError;
+
+impl fmt::Display for ParseNamedChainError {
+    #[inline]
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str("matching variant not found")
+    }
+}
+
+#[cfg(feature = "std")]
+impl std::error::Error for ParseNamedChainError {}
+
+/// Iterator over all named chains.
+#[derive(Clone, Debug)]
+pub struct NamedChainIter {
+    inner: core::iter::Copied<core::slice::Iter<'static, NamedChain>>,
+}
+
+impl Default for NamedChainIter {
+    #[inline]
+    fn default() -> Self {
+        NamedChain::iter()
+    }
+}
+
+impl Iterator for NamedChainIter {
+    type Item = NamedChain;
+
+    #[inline]
+    fn next(&mut self) -> Option<Self::Item> {
+        self.inner.next()
+    }
+
+    #[inline]
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        self.inner.size_hint()
+    }
+}
+
+impl DoubleEndedIterator for NamedChainIter {
+    #[inline]
+    fn next_back(&mut self) -> Option<Self::Item> {
+        self.inner.next_back()
+    }
+}
+
+impl ExactSizeIterator for NamedChainIter {}
+impl core::iter::FusedIterator for NamedChainIter {}
+
 impl From<NamedChain> for &'static str {
     #[inline]
     fn from(chain: NamedChain) -> Self {
@@ -1299,6 +1244,61 @@ impl<'a> arbitrary::Arbitrary<'a> for NamedChain {
         let idx = u.choose_index(Self::COUNT)?;
         Ok(Self::VARIANTS[idx])
     }
+}
+
+type ChainIndex = u8;
+type ChainFlags = u8;
+
+const FLAG_LEGACY: ChainFlags = 1 << 0;
+const FLAG_SUPPORTS_SHANGHAI: ChainFlags = 1 << 1;
+const FLAG_TESTNET: ChainFlags = 1 << 2;
+const FLAG_ETHEREUM: ChainFlags = 1 << 3;
+const FLAG_OPTIMISM: ChainFlags = 1 << 4;
+const FLAG_ELASTIC: ChainFlags = 1 << 5;
+const NO_INDEX: u8 = u8::MAX;
+
+#[derive(Clone, Copy)]
+#[repr(C, packed)]
+struct ChainData {
+    name: u8,
+    native_currency_symbol: u8,
+    etherscan_api_url: u8,
+    etherscan_base_url: u8,
+    etherscan_api_key_name: u8,
+    average_blocktime_millis: u16,
+    flags: ChainFlags,
+    wrapped_native_token: u8,
+}
+
+impl ChainData {
+    #[inline]
+    const fn name(self) -> &'static str {
+        CHAIN_NAMES[self.name as usize]
+    }
+
+    #[inline]
+    const fn native_currency_symbol(self) -> Option<&'static str> {
+        static_str(&NATIVE_CURRENCY_SYMBOLS, self.native_currency_symbol)
+    }
+
+    #[inline]
+    const fn etherscan_api_url(self) -> Option<&'static str> {
+        static_str(&ETHERSCAN_API_URLS, self.etherscan_api_url)
+    }
+
+    #[inline]
+    const fn etherscan_base_url(self) -> Option<&'static str> {
+        static_str(&ETHERSCAN_BASE_URLS, self.etherscan_base_url)
+    }
+
+    #[inline]
+    const fn etherscan_api_key_name(self) -> Option<&'static str> {
+        static_str(&ETHERSCAN_API_KEY_NAMES, self.etherscan_api_key_name)
+    }
+}
+
+const fn static_str(table: &'static [&'static str], index: u8) -> Option<&'static str> {
+    if index == NO_INDEX { None } else { Some(table[index as usize]) }
 }
 
 #[cfg(test)]
