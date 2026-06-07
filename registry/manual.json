@@ -1040,6 +1040,7 @@
       "internalId": "Linea",
       "name": "linea",
       "supportsShanghai": true,
+      "averageBlocktimeHint": 2000,
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=59144",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY",
       "wrappedNativeToken": "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f",
@@ -1051,6 +1052,7 @@
       "internalId": "LineaGoerli",
       "name": "linea-goerli",
       "isTestnet": true,
+      "averageBlocktimeHint": 2000,
       "nativeCurrencySymbol": null,
       "etherscanBaseUrl": null
     },
@@ -1059,6 +1061,7 @@
       "internalId": "LineaSepolia",
       "name": "linea-sepolia",
       "isTestnet": true,
+      "averageBlocktimeHint": 2000,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=59141",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY",
