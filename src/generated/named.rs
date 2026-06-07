@@ -5,13 +5,14 @@ use alloy_primitives::{Address, address};
 use core::{cmp::Ordering, fmt, str::FromStr, time::Duration};
 
 type ChainIndex = u8;
+type ChainFlags = u8;
 
-const FLAG_LEGACY: u8 = 1 << 0;
-const FLAG_SUPPORTS_SHANGHAI: u8 = 1 << 1;
-const FLAG_TESTNET: u8 = 1 << 2;
-const FLAG_ETHEREUM: u8 = 1 << 3;
-const FLAG_OPTIMISM: u8 = 1 << 4;
-const FLAG_ELASTIC: u8 = 1 << 5;
+const FLAG_LEGACY: ChainFlags = 1 << 0;
+const FLAG_SUPPORTS_SHANGHAI: ChainFlags = 1 << 1;
+const FLAG_TESTNET: ChainFlags = 1 << 2;
+const FLAG_ETHEREUM: ChainFlags = 1 << 3;
+const FLAG_OPTIMISM: ChainFlags = 1 << 4;
+const FLAG_ELASTIC: ChainFlags = 1 << 5;
 const NO_WRAPPED_NATIVE_TOKEN: u8 = u8::MAX;
 
 #[derive(Clone, Copy)]
@@ -41,7 +42,7 @@ struct ChainData {
     string_offset: u16,
     string_lens: [u8; 5],
     average_blocktime_millis: u16,
-    flags: u8,
+    flags: ChainFlags,
     wrapped_native_token: u8,
 }
 
@@ -60,7 +61,7 @@ impl ChainData {
 
     #[inline]
     const fn name(self) -> StaticStr {
-        StaticStr { offset: self.string_offset, len: self.string_lens[0] }
+        self.string(0)
     }
 
     #[inline]
@@ -770,7 +771,7 @@ impl NamedChain {
     }
 
     #[inline]
-    const fn has_flag(self, flag: u8) -> bool {
+    const fn has_flag(self, flag: ChainFlags) -> bool {
         self.data().flags & flag != 0
     }
 
@@ -1463,7 +1464,7 @@ static CHAIN_DATA: [ChainData; 197] = {
         string_offset: u16,
         string_lens: [u8; 5],
         average_blocktime_millis: u16,
-        flags: u8,
+        flags: ChainFlags,
         wrapped_native_token: u8,
     ) -> ChainData {
         ChainData {

@@ -5,6 +5,7 @@ use alloc::string::String;
 use core::{cmp::Ordering, fmt, str::FromStr, time::Duration};
 
 type ChainIndex = %%chain_index_type;
+type ChainFlags = %%flag_type;
 
 %%flag_consts
 const NO_WRAPPED_NATIVE_TOKEN: u8 = u8::MAX;
@@ -40,7 +41,7 @@ struct ChainData {
     string_offset: u16,
     string_lens: [u8; 5],
     average_blocktime_millis: u16,
-    flags: %%flag_type,
+    flags: ChainFlags,
     wrapped_native_token: u8,
 }
 
@@ -59,7 +60,7 @@ impl ChainData {
 
     #[inline]
     const fn name(self) -> StaticStr {
-        StaticStr { offset: self.string_offset, len: self.string_lens[0] }
+        self.string(0)
     }
 
     #[inline]
@@ -181,7 +182,7 @@ impl NamedChain {
     }
 
     #[inline]
-    const fn has_flag(self, flag: %%flag_type) -> bool {
+    const fn has_flag(self, flag: ChainFlags) -> bool {
         self.data().flags & flag != 0
     }
 
@@ -554,7 +555,7 @@ static CHAIN_DATA: [ChainData; %%chain_data_len] = {
         string_offset: u16,
         string_lens: [u8; 5],
         average_blocktime_millis: u16,
-        flags: %%flag_type,
+        flags: ChainFlags,
         wrapped_native_token: u8,
     ) -> ChainData {
         ChainData {

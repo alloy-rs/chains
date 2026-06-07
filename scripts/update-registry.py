@@ -349,7 +349,7 @@ def generated_flag_consts(stored_tag_flags: list[tuple[str, str]]) -> tuple[str,
         raise ValueError("Too many chain flags for compact storage")
 
     return flag_type, "\n".join(
-        f"const {flag}: {flag_type} = 1 << {index};" for index, flag in enumerate(flags)
+        f"const {flag}: ChainFlags = 1 << {index};" for index, flag in enumerate(flags)
     )
 
 
