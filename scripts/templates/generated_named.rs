@@ -138,19 +138,19 @@ impl NamedChain {
     /// Returns whether the chain implements EIP-1559.
     #[inline]
     pub const fn is_legacy(self) -> bool {
-        self.has_flag(FLAG_LEGACY)
+        %%legacy_predicate
     }
 
     /// Returns whether the chain supports the Shanghai hardfork.
     #[inline]
     pub const fn supports_shanghai(self) -> bool {
-        self.has_flag(FLAG_SUPPORTS_SHANGHAI)
+        %%shanghai_predicate
     }
 
     /// Returns whether the chain is a testnet.
     #[inline]
     pub const fn is_testnet(self) -> bool {
-        self.has_flag(FLAG_TESTNET)
+        %%testnet_predicate
     }
 
     /// Returns the symbol of the chain's native currency.
