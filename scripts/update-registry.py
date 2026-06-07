@@ -51,24 +51,24 @@ class Chain:
 
 class StaticStringTable:
     def __init__(self):
-        self.values = [""]
+        self.values: list[str] = []
         self.indexes: dict[str, int] = {}
 
-    def add(self, value: str | None) -> int:
+    def add(self, value: str | None) -> str:
         if value is None:
-            return 0
+            return "N"
         if not value:
             raise ValueError("Static string cannot be empty")
 
         index = self.indexes.get(value)
         if index is None:
             index = len(self.values)
-            if index > 0xFF:
+            if index >= 0xFF:
                 raise ValueError("Too many static strings for compact storage")
             self.values.append(value)
             self.indexes[value] = index
 
-        return index
+        return str(index)
 
 
 def main() -> int:
@@ -224,12 +224,12 @@ def generated_named(chains: list[Chain]) -> str:
     stored_tag_flags = stored_chain_tag_flags(chains)
     flag_type, flag_consts = generated_flag_consts(stored_tag_flags)
     chain_data = "\n".join(
-        "    ChainData { "
-        f"{chain_string_fields(string_tables, chain)}, "
-        f"average_blocktime_millis: {average_blocktime_millis(chain)}, "
-        f"flags: {chain_flags(chain, stored_tag_flags)}, "
-        f"wrapped_native_token: {wrapped_native_token_index(chain, wrapped_native_token_indexes)}"
-        " },"
+        "        d("
+        f"{chain_string_indexes(string_tables, chain)}, "
+        f"{average_blocktime_millis(chain)}, "
+        f"{chain_flags(chain, stored_tag_flags)}, "
+        f"{wrapped_native_token_index(chain, wrapped_native_token_indexes)}"
+        "),"
         for chain in chains
     )
     string_table_data = "\n\n".join(
@@ -376,24 +376,15 @@ def chain_flags(chain: Chain, stored_tag_flags: list[tuple[str, str]]) -> str:
     return " | ".join(flags) if flags else "0"
 
 
-def chain_string_fields(string_tables: dict[str, StaticStringTable], chain: Chain) -> str:
+def chain_string_indexes(string_tables: dict[str, StaticStringTable], chain: Chain) -> str:
     indexes = (
-        ("name", string_tables["CHAIN_NAMES"].add(chain.name)),
-        (
-            "native_currency_symbol",
-            string_tables["NATIVE_CURRENCY_SYMBOLS"].add(chain.native_currency_symbol),
-        ),
-        ("etherscan_api_url", string_tables["ETHERSCAN_API_URLS"].add(chain.etherscan_api_url)),
-        (
-            "etherscan_base_url",
-            string_tables["ETHERSCAN_BASE_URLS"].add(chain.etherscan_base_url),
-        ),
-        (
-            "etherscan_api_key_name",
-            string_tables["ETHERSCAN_API_KEY_NAMES"].add(chain.etherscan_api_key_name),
-        ),
+        string_tables["CHAIN_NAMES"].add(chain.name),
+        string_tables["NATIVE_CURRENCY_SYMBOLS"].add(chain.native_currency_symbol),
+        string_tables["ETHERSCAN_API_URLS"].add(chain.etherscan_api_url),
+        string_tables["ETHERSCAN_BASE_URLS"].add(chain.etherscan_base_url),
+        string_tables["ETHERSCAN_API_KEY_NAMES"].add(chain.etherscan_api_key_name),
     )
-    return ", ".join(f"{field}: {index}" for field, index in indexes)
+    return ", ".join(indexes)
 
 
 def static_string_table(name: str, table: StaticStringTable) -> str:
@@ -403,7 +394,7 @@ def static_string_table(name: str, table: StaticStringTable) -> str:
 
 def wrapped_native_token_index(chain: Chain, indexes: dict[str, int]) -> str:
     if chain.wrapped_native_token is None:
-        return "NO_WRAPPED_NATIVE_TOKEN"
+        return "W"
     return str(indexes[chain.wrapped_native_token])
 
 

@@ -8,6 +8,7 @@ type ChainIndex = %%chain_index_type;
 type ChainFlags = %%flag_type;
 
 %%flag_consts
+const N: u8 = u8::MAX;
 const NO_WRAPPED_NATIVE_TOKEN: u8 = u8::MAX;
 
 #[derive(Clone, Copy)]
@@ -51,7 +52,7 @@ impl ChainData {
 }
 
 const fn static_str(table: &'static [&'static str], index: u8) -> Option<&'static str> {
-    if index == 0 { None } else { Some(table[index as usize]) }
+    if index == N { None } else { Some(table[index as usize]) }
 }
 
 /// An Ethereum EIP-155 chain.
@@ -528,9 +529,36 @@ pub(crate) const SERDE_ALIASES: &[(NamedChain, &str)] = &[
 
 %%string_table_data
 
-static CHAIN_DATA: [ChainData; %%chain_data_len] = [
+static CHAIN_DATA: [ChainData; %%chain_data_len] = {
+    const W: u8 = NO_WRAPPED_NATIVE_TOKEN;
+
+    #[allow(clippy::too_many_arguments)]
+    const fn d(
+        name: u8,
+        native_currency_symbol: u8,
+        etherscan_api_url: u8,
+        etherscan_base_url: u8,
+        etherscan_api_key_name: u8,
+        average_blocktime_millis: u16,
+        flags: ChainFlags,
+        wrapped_native_token: u8,
+    ) -> ChainData {
+        ChainData {
+            name,
+            native_currency_symbol,
+            etherscan_api_url,
+            etherscan_base_url,
+            etherscan_api_key_name,
+            average_blocktime_millis,
+            flags,
+            wrapped_native_token,
+        }
+    }
+
+    [
 %%chain_data
-];
+    ]
+};
 
 static WRAPPED_NATIVE_TOKENS: [Address; %%wrapped_native_token_len] = [
 %%wrapped_native_token_data
