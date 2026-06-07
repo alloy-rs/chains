@@ -525,6 +525,10 @@ pub(crate) const SERDE_ALIASES: &[(NamedChain, &str)] = &[
 
 %%string_table_data
 
+static WRAPPED_NATIVE_TOKENS: [Address; %%wrapped_native_token_len] = [
+%%wrapped_native_token_data
+];
+
 static CHAIN_DATA: [ChainData; %%chain_data_len] = {
     use NO_INDEX as N;
     use NO_INDEX as W;
@@ -557,9 +561,5 @@ static CHAIN_DATA: [ChainData; %%chain_data_len] = {
 %%chain_data
     ]
 };
-
-static WRAPPED_NATIVE_TOKENS: [Address; %%wrapped_native_token_len] = [
-%%wrapped_native_token_data
-];
 
 %%phf_maps
