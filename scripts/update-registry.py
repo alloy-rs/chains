@@ -271,11 +271,7 @@ def generated_named(chains: list[Chain]) -> str:
         for chain in chains
         for name in serde_extra_names(chain)
     ]
-    chain_id_entries = [
-        (str(chain.chain_id), chain_index_expr(chain))
-        for chain in chains
-    ]
-    phf_maps = generate_phf_maps(chain_id_entries, parse_entries, serde_entries)
+    phf_maps = generate_phf_maps(parse_entries, serde_entries)
     chain_data_len = len(chains)
     wrapped_native_token_len = len(wrapped_native_tokens)
     tag_predicates = {
@@ -443,14 +439,10 @@ def wrapped_native_token_index(chain: Chain, indexes: dict[str, int]) -> str:
 
 
 def generate_phf_maps(
-    chain_id_entries: list[tuple[str, str]],
     parse_entries: list[tuple[str, str]],
     serde_entries: list[tuple[str, str]],
 ) -> str:
-    lines = ["map_u64\tCHAIN_IDS"]
-    lines.extend(phf_entry_lines(chain_id_entries))
-    lines.append("end")
-    lines.append("map\tPARSE_NAMES\t")
+    lines = ["map\tPARSE_NAMES\t"]
     lines.extend(phf_entry_lines(parse_entries))
     lines.append("end")
     lines.append('map\tSERDE_NAMES\t#[cfg(feature = "serde")]')

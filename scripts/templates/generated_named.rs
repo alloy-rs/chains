@@ -46,7 +46,6 @@ impl NamedChain {
         Self::VARIANTS[index as usize]
     }
 
-    #[inline]
     const fn index(self) -> ChainIndex {
         match self {
 %%chain_index_arms
@@ -59,17 +58,11 @@ impl NamedChain {
     }
 
     #[inline]
-    fn from_chain_id_map(id: u64) -> Option<Self> {
-        CHAIN_IDS.get(&id).copied().map(Self::from_index)
-    }
-
-    #[inline]
     const fn has_flag(self, flag: ChainFlags) -> bool {
         self.data().flags & flag != 0
     }
 
     /// Returns the chain for the given EIP-155 chain ID.
-    #[inline]
     pub const fn from_chain_id(id: u64) -> Option<Self> {
         match id {
 %%chain_id_arms
@@ -330,9 +323,8 @@ impl num_enum::TryFromPrimitive for NamedChain {
 
     const NAME: &'static str = "NamedChain";
 
-    #[inline]
     fn try_from_primitive(number: Self::Primitive) -> Result<Self, Self::Error> {
-        Self::from_chain_id_map(number).ok_or_else(|| num_enum::TryFromPrimitiveError::new(number))
+        Self::from_chain_id(number).ok_or_else(|| num_enum::TryFromPrimitiveError::new(number))
     }
 }
 
