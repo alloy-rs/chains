@@ -13,19 +13,6 @@ from string import Template
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MANUAL_PATH = ROOT / "registry" / "manual.json"
-ASSET_CHAINS_PATH = ROOT / "assets" / "chains.json"
-GENERATED_MOD_PATH = ROOT / "src" / "generated" / "mod.rs"
-GENERATED_NAMED_PATH = ROOT / "src" / "generated" / "named.rs"
-PHF_CODEGEN_PATH = ROOT / "scripts" / "phf-codegen.rs"
-MOD_TEMPLATE_PATH = ROOT / "scripts" / "templates" / "generated_mod.rs"
-NAMED_TEMPLATE_PATH = ROOT / "scripts" / "templates" / "generated_named.rs"
-MATCHES_TAG_LIMIT = 5
-BASE_CHAIN_FLAGS = (
-    ("legacy", "FLAG_LEGACY"),
-    ("supports_shanghai", "FLAG_SUPPORTS_SHANGHAI"),
-    ("testnet", "FLAG_TESTNET"),
-)
 CHAIN_TAG_FLAGS = (
     ("ethereum", "FLAG_ETHEREUM"),
     ("optimism", "FLAG_OPTIMISM"),
@@ -105,7 +92,7 @@ class StaticStringTable:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--manual", type=Path, default=MANUAL_PATH)
+    parser.add_argument("--manual", type=Path, default=ROOT / "registry" / "manual.json")
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
 
@@ -114,9 +101,9 @@ def main() -> int:
     validate_chains(chains)
 
     outputs = {
-        ASSET_CHAINS_PATH: json_dump(asset_chains(chains)),
-        GENERATED_MOD_PATH: format_rust(generated_mod()),
-        GENERATED_NAMED_PATH: format_rust(generated_named(chains)),
+        ROOT / "assets" / "chains.json": json_dump(asset_chains(chains)),
+        ROOT / "src" / "generated" / "mod.rs": format_rust(generated_mod()),
+        ROOT / "src" / "generated" / "named.rs": format_rust(generated_named(chains)),
     }
 
     changed = [path for path, contents in outputs.items() if read_text(path) != contents]
@@ -217,7 +204,7 @@ def asset_chains(chains: list[Chain]) -> dict:
 
 
 def generated_mod() -> str:
-    return render_template(MOD_TEMPLATE_PATH)
+    return render_template(ROOT / "scripts" / "templates" / "generated_mod.rs")
 
 
 def generated_named(chains: list[Chain]) -> str:
@@ -297,7 +284,7 @@ def generated_named(chains: list[Chain]) -> str:
     }
 
     return render_template(
-        NAMED_TEMPLATE_PATH,
+        ROOT / "scripts" / "templates" / "generated_named.rs",
         chain_data=chain_data,
         chain_data_arms=chain_data_arms,
         chain_data_len=chain_data_len,
@@ -339,12 +326,17 @@ def stored_chain_tag_flags(chains: list[Chain]) -> list[tuple[str, str]]:
     return [
         (tag, flag)
         for tag, flag in CHAIN_TAG_FLAGS
-        if len(chains_with_tag(chains, tag)) > MATCHES_TAG_LIMIT
+        if len(chains_with_tag(chains, tag)) > 5
     ]
 
 
 def generated_flag_consts(stored_tag_flags: list[tuple[str, str]]) -> tuple[str, str]:
-    flags = [flag for _name, flag in [*BASE_CHAIN_FLAGS, *stored_tag_flags]]
+    base_chain_flags = (
+        "FLAG_LEGACY",
+        "FLAG_SUPPORTS_SHANGHAI",
+        "FLAG_TESTNET",
+    )
+    flags = [*base_chain_flags, *(flag for _name, flag in stored_tag_flags)]
     if len(flags) <= 8:
         flag_type = "u8"
     elif len(flags) <= 16:
@@ -439,7 +431,7 @@ def generate_phf_maps(
     lines.append("end")
 
     output = subprocess.run(
-        ["cargo", "-Zscript", str(PHF_CODEGEN_PATH)],
+        ["cargo", "-Zscript", str(ROOT / "scripts" / "phf-codegen.rs")],
         input="\n".join(lines) + "\n",
         cwd=ROOT,
         text=True,
