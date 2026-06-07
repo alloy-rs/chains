@@ -13,7 +13,11 @@ const NO_WRAPPED_NATIVE_TOKEN: u8 = u8::MAX;
 #[derive(Clone, Copy)]
 #[repr(C, packed)]
 struct ChainData {
-    string_indexes: [u8; 5],
+    name: u8,
+    native_currency_symbol: u8,
+    etherscan_api_url: u8,
+    etherscan_base_url: u8,
+    etherscan_api_key_name: u8,
     average_blocktime_millis: u16,
     flags: ChainFlags,
     wrapped_native_token: u8,
@@ -22,27 +26,27 @@ struct ChainData {
 impl ChainData {
     #[inline]
     const fn name(self) -> &'static str {
-        CHAIN_NAMES[self.string_indexes[0] as usize]
+        CHAIN_NAMES[self.name as usize]
     }
 
     #[inline]
     const fn native_currency_symbol(self) -> Option<&'static str> {
-        static_str(&NATIVE_CURRENCY_SYMBOLS, self.string_indexes[1])
+        static_str(&NATIVE_CURRENCY_SYMBOLS, self.native_currency_symbol)
     }
 
     #[inline]
     const fn etherscan_api_url(self) -> Option<&'static str> {
-        static_str(&ETHERSCAN_API_URLS, self.string_indexes[2])
+        static_str(&ETHERSCAN_API_URLS, self.etherscan_api_url)
     }
 
     #[inline]
     const fn etherscan_base_url(self) -> Option<&'static str> {
-        static_str(&ETHERSCAN_BASE_URLS, self.string_indexes[3])
+        static_str(&ETHERSCAN_BASE_URLS, self.etherscan_base_url)
     }
 
     #[inline]
     const fn etherscan_api_key_name(self) -> Option<&'static str> {
-        static_str(&ETHERSCAN_API_KEY_NAMES, self.string_indexes[4])
+        static_str(&ETHERSCAN_API_KEY_NAMES, self.etherscan_api_key_name)
     }
 }
 
@@ -524,25 +528,9 @@ pub(crate) const SERDE_ALIASES: &[(NamedChain, &str)] = &[
 
 %%string_table_data
 
-static CHAIN_DATA: [ChainData; %%chain_data_len] = {
-    const fn d(
-        string_indexes: [u8; 5],
-        average_blocktime_millis: u16,
-        flags: ChainFlags,
-        wrapped_native_token: u8,
-    ) -> ChainData {
-        ChainData {
-            string_indexes,
-            average_blocktime_millis,
-            flags,
-            wrapped_native_token,
-        }
-    }
-
-    [
+static CHAIN_DATA: [ChainData; %%chain_data_len] = [
 %%chain_data
-    ]
-};
+];
 
 static WRAPPED_NATIVE_TOKENS: [Address; %%wrapped_native_token_len] = [
 %%wrapped_native_token_data

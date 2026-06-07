@@ -224,12 +224,12 @@ def generated_named(chains: list[Chain]) -> str:
     stored_tag_flags = stored_chain_tag_flags(chains)
     flag_type, flag_consts = generated_flag_consts(stored_tag_flags)
     chain_data = "\n".join(
-        "    d("
-        f"{chain_string_indexes(string_tables, chain)}, "
-        f"{average_blocktime_millis(chain)}, "
-        f"{chain_flags(chain, stored_tag_flags)}, "
-        f"{wrapped_native_token_index(chain, wrapped_native_token_indexes)}"
-        "),"
+        "    ChainData { "
+        f"{chain_string_fields(string_tables, chain)}, "
+        f"average_blocktime_millis: {average_blocktime_millis(chain)}, "
+        f"flags: {chain_flags(chain, stored_tag_flags)}, "
+        f"wrapped_native_token: {wrapped_native_token_index(chain, wrapped_native_token_indexes)}"
+        " },"
         for chain in chains
     )
     string_table_data = "\n\n".join(
@@ -376,15 +376,24 @@ def chain_flags(chain: Chain, stored_tag_flags: list[tuple[str, str]]) -> str:
     return " | ".join(flags) if flags else "0"
 
 
-def chain_string_indexes(string_tables: dict[str, StaticStringTable], chain: Chain) -> str:
+def chain_string_fields(string_tables: dict[str, StaticStringTable], chain: Chain) -> str:
     indexes = (
-        string_tables["CHAIN_NAMES"].add(chain.name),
-        string_tables["NATIVE_CURRENCY_SYMBOLS"].add(chain.native_currency_symbol),
-        string_tables["ETHERSCAN_API_URLS"].add(chain.etherscan_api_url),
-        string_tables["ETHERSCAN_BASE_URLS"].add(chain.etherscan_base_url),
-        string_tables["ETHERSCAN_API_KEY_NAMES"].add(chain.etherscan_api_key_name),
+        ("name", string_tables["CHAIN_NAMES"].add(chain.name)),
+        (
+            "native_currency_symbol",
+            string_tables["NATIVE_CURRENCY_SYMBOLS"].add(chain.native_currency_symbol),
+        ),
+        ("etherscan_api_url", string_tables["ETHERSCAN_API_URLS"].add(chain.etherscan_api_url)),
+        (
+            "etherscan_base_url",
+            string_tables["ETHERSCAN_BASE_URLS"].add(chain.etherscan_base_url),
+        ),
+        (
+            "etherscan_api_key_name",
+            string_tables["ETHERSCAN_API_KEY_NAMES"].add(chain.etherscan_api_key_name),
+        ),
     )
-    return f"[{', '.join(str(index) for index in indexes)}]"
+    return ", ".join(f"{field}: {index}" for field, index in indexes)
 
 
 def static_string_table(name: str, table: StaticStringTable) -> str:
