@@ -20,10 +20,12 @@
 #[macro_use]
 extern crate alloc;
 
+mod generated;
+
 mod chain;
 pub use chain::{Chain, ChainKind};
 
 mod named;
-pub use named::{NamedChain, NamedChainIter};
+pub use named::{NamedChain, NamedChainIter, ParseNamedChainError};
 
 pub mod spec;

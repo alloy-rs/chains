@@ -20,7 +20,14 @@ release.
 
 ## Adding a new chain
 
-Check `src/named.rs`'s comment for the guidelines on how to add a new chain.
+Add or update the chain in `registry/manual.json`, then run:
+
+```bash
+uv run python scripts/update-registry.py
+```
+
+The script updates `assets/chains.json` and regenerates `src/generated/` from
+the manual registry. Do not edit generated files directly.
 
 ## Note on `no_std`
 

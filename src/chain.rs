@@ -9,8 +9,6 @@ use proptest::{
     sample::Selector,
     strategy::{Map, TupleUnion, WA},
 };
-#[cfg(feature = "arbitrary")]
-use strum::{EnumCount, IntoEnumIterator};
 
 /// Either a known [`NamedChain`] or a EIP-155 chain ID.
 #[derive(Clone, Copy, PartialEq, Eq, Hash)]
