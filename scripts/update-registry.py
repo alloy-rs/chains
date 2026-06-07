@@ -20,8 +20,6 @@ GENERATED_NAMED_PATH = ROOT / "src" / "generated" / "named.rs"
 PHF_CODEGEN_PATH = ROOT / "scripts" / "phf-codegen.rs"
 MOD_TEMPLATE_PATH = ROOT / "scripts" / "templates" / "generated_mod.rs"
 NAMED_TEMPLATE_PATH = ROOT / "scripts" / "templates" / "generated_named.rs"
-STATIC_STR_NONE = "N"
-NO_WRAPPED_NATIVE_TOKEN = "NO_WRAPPED_NATIVE_TOKEN"
 MATCHES_TAG_LIMIT = 5
 BASE_CHAIN_FLAGS = (
     ("legacy", "FLAG_LEGACY"),
@@ -227,10 +225,8 @@ def generated_named(chains: list[Chain]) -> str:
         raise ValueError("Too many chains for compact index storage")
     if len(chains) > 0xFF:
         chain_index_type = "u16"
-        chain_index_from = "index as usize"
     else:
         chain_index_type = "u8"
-        chain_index_from = "index as usize"
 
     string_table = StaticStringTable()
     chain_indexes = {chain.internal_id: index for index, chain in enumerate(chains)}
@@ -306,7 +302,6 @@ def generated_named(chains: list[Chain]) -> str:
         chain_data_arms=chain_data_arms,
         chain_data_len=chain_data_len,
         chain_id_arms=chain_id_arms,
-        chain_index_from=chain_index_from,
         chain_index_type=chain_index_type,
         custom_sourcify_predicate=tag_predicates["custom_sourcify"],
         elastic_predicate=tag_predicates["elastic"],
@@ -315,14 +310,12 @@ def generated_named(chains: list[Chain]) -> str:
         flag_consts=flag_consts,
         flag_type=flag_type,
         gnosis_predicate=tag_predicates["gnosis"],
-        NO_WRAPPED_NATIVE_TOKEN=NO_WRAPPED_NATIVE_TOKEN,
         optimism_predicate=tag_predicates["optimism"],
         parse_aliases=parse_aliases,
         phf_maps=phf_maps,
         polygon_predicate=tag_predicates["polygon"],
         arbitrum_predicate=tag_predicates["arbitrum"],
         serde_aliases=serde_aliases,
-        STATIC_STR_NONE=STATIC_STR_NONE,
         string_data=string_data,
         tempo_predicate=tag_predicates["tempo"],
         variants=variants,
@@ -420,13 +413,13 @@ def chain_string_data(string_table: StaticStringTable, chain: Chain) -> str:
 
 def static_str_len(value: int | None) -> str:
     if value is None:
-        return STATIC_STR_NONE
+        return "N"
     return str(value)
 
 
 def wrapped_native_token_index(chain: Chain, indexes: dict[str, int]) -> str:
     if chain.wrapped_native_token is None:
-        return NO_WRAPPED_NATIVE_TOKEN
+        return "NO_WRAPPED_NATIVE_TOKEN"
     return str(indexes[chain.wrapped_native_token])
 
 

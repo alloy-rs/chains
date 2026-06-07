@@ -7,8 +7,8 @@ use core::{cmp::Ordering, fmt, str::FromStr, time::Duration};
 type ChainIndex = %%chain_index_type;
 
 %%flag_consts
-const %%NO_WRAPPED_NATIVE_TOKEN: u8 = u8::MAX;
-const %%STATIC_STR_NONE: u8 = u8::MAX;
+const NO_WRAPPED_NATIVE_TOKEN: u8 = u8::MAX;
+const N: u8 = u8::MAX;
 
 #[derive(Clone, Copy)]
 #[repr(C, packed)]
@@ -20,7 +20,7 @@ struct StaticStr {
 impl StaticStr {
     #[inline]
     const fn get(self) -> Option<&'static str> {
-        if self.len == %%STATIC_STR_NONE {
+        if self.len == N {
             None
         } else {
             Some(self.get_unchecked())
@@ -52,7 +52,7 @@ impl ChainData {
         let mut current = 0;
         while current < index {
             let len = self.string_lens[current];
-            if len != %%STATIC_STR_NONE {
+            if len != N {
                 offset += len as u16;
             }
             current += 1;
@@ -198,7 +198,7 @@ impl NamedChain {
 
     #[inline]
     const fn from_index(index: ChainIndex) -> Self {
-        Self::VARIANTS[%%chain_index_from]
+        Self::VARIANTS[index as usize]
     }
 
     #[inline]
@@ -370,7 +370,7 @@ impl NamedChain {
     #[inline]
     pub const fn wrapped_native_token(self) -> Option<Address> {
         let index = self.data().wrapped_native_token;
-        if index == %%NO_WRAPPED_NATIVE_TOKEN {
+        if index == NO_WRAPPED_NATIVE_TOKEN {
             None
         } else {
             Some(WRAPPED_NATIVE_TOKENS[index as usize])
