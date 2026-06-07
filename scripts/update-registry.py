@@ -23,6 +23,19 @@ CHAIN_TAG_FLAGS = (
     ("tempo", "FLAG_TEMPO"),
     ("custom-sourcify", "FLAG_CUSTOM_SOURCIFY"),
 )
+FLAG_ALIASES = {
+    "FLAG_LEGACY": "L",
+    "FLAG_SUPPORTS_SHANGHAI": "S",
+    "FLAG_TESTNET": "T",
+    "FLAG_ETHEREUM": "E",
+    "FLAG_OPTIMISM": "O",
+    "FLAG_GNOSIS": "G",
+    "FLAG_POLYGON": "P",
+    "FLAG_ARBITRUM": "A",
+    "FLAG_ELASTIC": "X",
+    "FLAG_TEMPO": "TP",
+    "FLAG_CUSTOM_SOURCIFY": "CS",
+}
 
 
 class RustTemplate(Template):
@@ -223,6 +236,7 @@ def generated_named(chains: list[Chain]) -> str:
     )
     stored_tag_flags = stored_chain_tag_flags(chains)
     flag_type, flag_consts = generated_flag_consts(stored_tag_flags)
+    flag_aliases = generated_flag_aliases(chains, stored_tag_flags)
     chain_data = "\n".join(
         "        d("
         f"{chain_string_indexes(string_tables, chain)}, "
@@ -281,6 +295,7 @@ def generated_named(chains: list[Chain]) -> str:
         elastic_predicate=tag_predicates["elastic"],
         enum_variants=enum_variants,
         ethereum_predicate=tag_predicates["ethereum"],
+        flag_aliases=flag_aliases,
         flag_consts=flag_consts,
         flag_type=flag_type,
         gnosis_predicate=tag_predicates["gnosis"],
@@ -318,12 +333,7 @@ def stored_chain_tag_flags(chains: list[Chain]) -> list[tuple[str, str]]:
 
 
 def generated_flag_consts(stored_tag_flags: list[tuple[str, str]]) -> tuple[str, str]:
-    base_chain_flags = (
-        "FLAG_LEGACY",
-        "FLAG_SUPPORTS_SHANGHAI",
-        "FLAG_TESTNET",
-    )
-    flags = [*base_chain_flags, *(flag for _name, flag in stored_tag_flags)]
+    flags = generated_flag_names(stored_tag_flags)
     if len(flags) <= 8:
         flag_type = "u8"
     elif len(flags) <= 16:
@@ -336,6 +346,32 @@ def generated_flag_consts(stored_tag_flags: list[tuple[str, str]]) -> tuple[str,
     return flag_type, "\n".join(
         f"const {flag}: ChainFlags = 1 << {index};" for index, flag in enumerate(flags)
     )
+
+
+def generated_flag_names(stored_tag_flags: list[tuple[str, str]]) -> list[str]:
+    return [
+        "FLAG_LEGACY",
+        "FLAG_SUPPORTS_SHANGHAI",
+        "FLAG_TESTNET",
+        *(flag for _name, flag in stored_tag_flags),
+    ]
+
+
+def generated_flag_aliases(chains: list[Chain], stored_tag_flags: list[tuple[str, str]]) -> str:
+    used_flags = {
+        flag
+        for chain in chains
+        for flag in chain_flag_names(chain, stored_tag_flags)
+    }
+    return "\n".join(
+        f"    use {flag} as {flag_alias(flag)};"
+        for flag in generated_flag_names(stored_tag_flags)
+        if flag in used_flags
+    )
+
+
+def flag_alias(flag: str) -> str:
+    return FLAG_ALIASES[flag]
 
 
 def tag_predicate_expr(
@@ -363,6 +399,11 @@ def chains_with_tag(chains: list[Chain], tag: str) -> list[Chain]:
 
 
 def chain_flags(chain: Chain, stored_tag_flags: list[tuple[str, str]]) -> str:
+    flags = chain_flag_names(chain, stored_tag_flags)
+    return " | ".join(flag_alias(flag) for flag in flags) if flags else "0"
+
+
+def chain_flag_names(chain: Chain, stored_tag_flags: list[tuple[str, str]]) -> list[str]:
     flags = []
     if chain.is_legacy:
         flags.append("FLAG_LEGACY")
@@ -373,7 +414,7 @@ def chain_flags(chain: Chain, stored_tag_flags: list[tuple[str, str]]) -> str:
     for tag, flag in stored_tag_flags:
         if tag in chain.tags:
             flags.append(flag)
-    return " | ".join(flags) if flags else "0"
+    return flags
 
 
 def chain_string_indexes(string_tables: dict[str, StaticStringTable], chain: Chain) -> str:

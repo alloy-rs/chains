@@ -530,7 +530,8 @@ pub(crate) const SERDE_ALIASES: &[(NamedChain, &str)] = &[
 %%string_table_data
 
 static CHAIN_DATA: [ChainData; %%chain_data_len] = {
-    const W: u8 = NO_WRAPPED_NATIVE_TOKEN;
+    use NO_WRAPPED_NATIVE_TOKEN as W;
+%%flag_aliases
 
     #[allow(clippy::too_many_arguments)]
     const fn d(
