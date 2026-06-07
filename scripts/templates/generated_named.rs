@@ -54,12 +54,12 @@ impl ChainData {
             offset += len as u16;
             current += 1;
         }
-        s(offset, self.string_lens[index])
+        StaticStr { offset, len: self.string_lens[index] }
     }
 
     #[inline]
     const fn name(self) -> StaticStr {
-        s(self.string_offset, self.string_lens[0])
+        StaticStr { offset: self.string_offset, len: self.string_lens[0] }
     }
 
     #[inline]
@@ -80,26 +80,6 @@ impl ChainData {
     #[inline]
     const fn etherscan_api_key_name(self) -> StaticStr {
         self.string(4)
-    }
-}
-
-const fn s(offset: u16, len: u8) -> StaticStr {
-    StaticStr { offset, len }
-}
-
-const fn d(
-    string_offset: u16,
-    string_lens: [u8; 5],
-    average_blocktime_millis: u16,
-    flags: %%flag_type,
-    wrapped_native_token: u8,
-) -> ChainData {
-    ChainData {
-        string_offset,
-        string_lens,
-        average_blocktime_millis,
-        flags,
-        wrapped_native_token,
     }
 }
 
@@ -569,9 +549,27 @@ pub(crate) const SERDE_ALIASES: &[(NamedChain, &str)] = &[
 
 static STRING_DATA: &[u8] = %%string_data;
 
-static CHAIN_DATA: [ChainData; %%chain_data_len] = [
+static CHAIN_DATA: [ChainData; %%chain_data_len] = {
+    const fn d(
+        string_offset: u16,
+        string_lens: [u8; 5],
+        average_blocktime_millis: u16,
+        flags: %%flag_type,
+        wrapped_native_token: u8,
+    ) -> ChainData {
+        ChainData {
+            string_offset,
+            string_lens,
+            average_blocktime_millis,
+            flags,
+            wrapped_native_token,
+        }
+    }
+
+    [
 %%chain_data
-];
+    ]
+};
 
 static WRAPPED_NATIVE_TOKENS: [Address; %%wrapped_native_token_len] = [
 %%wrapped_native_token_data
