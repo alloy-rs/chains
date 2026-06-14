@@ -1,7 +1,6 @@
 //! Specification of Ethereum EIP-155 chains.
 
 use crate::NamedChain;
-use strum::IntoEnumIterator;
 
 #[allow(unused_imports)]
 use alloc::{
@@ -97,11 +96,17 @@ mod tests {
     const SCHEMA_PATH: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/assets/chains.schema.json");
 
     fn json_chains() -> String {
-        serde_json::to_string_pretty(&Chains::new()).unwrap()
+        pretty_json(&Chains::new())
     }
 
     fn json_schema() -> String {
-        serde_json::to_string_pretty(&schemars::schema_for!(Chains)).unwrap()
+        pretty_json(&schemars::schema_for!(Chains))
+    }
+
+    fn pretty_json<T: serde::Serialize>(value: &T) -> String {
+        let mut json = serde_json::to_string_pretty(value).unwrap();
+        json.push('\n');
+        json
     }
 
     #[test]

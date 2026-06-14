@@ -138,6 +138,24 @@ jobs:
         env:
           RUSTDOCFLAGS: "--cfg docsrs -D warnings"
 
+  generated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@5b842231ba77f5c045dba54ac5560fed2db780e2 # nightly
+        with:
+          components: rustfmt
+      - uses: astral-sh/setup-uv@v7
+      - uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+        with:
+          cache-on-failure: true
+      - run: uv run python scripts/update-registry.py --check
+
   fmt:
     runs-on: ubuntu-latest
     timeout-minutes: 30

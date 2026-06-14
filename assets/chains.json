@@ -219,7 +219,7 @@
     "56": {
       "internalId": "BinanceSmartChain",
       "name": "bsc",
-      "averageBlocktimeHint": 750,
+      "averageBlocktimeHint": 450,
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
@@ -279,7 +279,7 @@
     "97": {
       "internalId": "BinanceSmartChainTestnet",
       "name": "bsc-testnet",
-      "averageBlocktimeHint": 750,
+      "averageBlocktimeHint": 450,
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": true,
@@ -1707,7 +1707,7 @@
     "59140": {
       "internalId": "LineaGoerli",
       "name": "linea-goerli",
-      "averageBlocktimeHint": null,
+      "averageBlocktimeHint": 2000,
       "isLegacy": false,
       "supportsShanghai": false,
       "isTestnet": true,
@@ -1719,7 +1719,7 @@
     "59141": {
       "internalId": "LineaSepolia",
       "name": "linea-sepolia",
-      "averageBlocktimeHint": null,
+      "averageBlocktimeHint": 2000,
       "isLegacy": false,
       "supportsShanghai": false,
       "isTestnet": true,
@@ -1731,7 +1731,7 @@
     "59144": {
       "internalId": "Linea",
       "name": "linea",
-      "averageBlocktimeHint": null,
+      "averageBlocktimeHint": 2000,
       "isLegacy": false,
       "supportsShanghai": true,
       "isTestnet": false,
