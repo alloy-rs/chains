@@ -2387,6 +2387,19 @@
       "etherscanBaseUrl": "https://testnet.arcscan.app"
     },
     {
+      "chainId": 626,
+      "internalId": "BattleChain",
+      "name": "battlechain",
+      "averageBlocktimeHint": 250,
+      "supportsShanghai": true,
+      "etherscanApiUrl": "https://block-explorer-api.battlechain.com/api",
+      "tags": [
+        "elastic"
+      ],
+      "nativeCurrencySymbol": "ETH",
+      "etherscanBaseUrl": "https://explorer.battlechain.com"
+    },
+    {
       "chainId": 627,
       "internalId": "BattleChainTestnet",
       "name": "battlechain-testnet",
