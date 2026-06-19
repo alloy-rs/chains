@@ -40,14 +40,14 @@
           ]
         },
         "etherscanApiUrl": {
-          "description": "The chain's base block explorer API URL (e.g. `https://api.etherscan.io/`).",
+          "description": "The chain's base block explorer API URL (e.g. `https://api.etherscan.io/v2/api?chainid=1`).",
           "type": [
             "string",
             "null"
           ]
         },
         "etherscanBaseUrl": {
-          "description": "The chain's base block explorer base URL (e.g. `https://etherscan.io/`).",
+          "description": "The chain's base block explorer base URL (e.g. `https://etherscan.io`).",
           "type": [
             "string",
             "null"
