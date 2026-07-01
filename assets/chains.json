@@ -1092,6 +1092,18 @@
       "etherscanBaseUrl": "https://memecorescan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "4663": {
+      "internalId": "Robinhood",
+      "name": "robinhood",
+      "averageBlocktimeHint": 400,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://robinhoodchain.blockscout.com/api",
+      "etherscanBaseUrl": "https://robinhoodchain.blockscout.com",
+      "etherscanApiKeyName": null
+    },
     "4689": {
       "internalId": "Iotex",
       "name": "iotex",
@@ -1647,11 +1659,11 @@
     "46630": {
       "internalId": "RobinhoodTestnet",
       "name": "robinhood-testnet",
-      "averageBlocktimeHint": null,
+      "averageBlocktimeHint": 400,
       "isLegacy": false,
       "supportsShanghai": false,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://explorer.testnet.chain.robinhood.com/api",
       "etherscanBaseUrl": "https://explorer.testnet.chain.robinhood.com",
       "etherscanApiKeyName": null

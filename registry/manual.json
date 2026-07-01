@@ -2417,11 +2417,21 @@
       "etherscanBaseUrl": "https://explorer.testnet.battlechain.com"
     },
     {
+      "chainId": 4663,
+      "internalId": "Robinhood",
+      "name": "robinhood",
+      "averageBlocktimeHint": 400,
+      "nativeCurrencySymbol": "ETH",
+      "etherscanApiUrl": "https://robinhoodchain.blockscout.com/api",
+      "etherscanBaseUrl": "https://robinhoodchain.blockscout.com"
+    },
+    {
       "chainId": 46630,
       "internalId": "RobinhoodTestnet",
       "name": "robinhood-testnet",
+      "averageBlocktimeHint": 400,
       "isTestnet": true,
-      "nativeCurrencySymbol": null,
+      "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://explorer.testnet.chain.robinhood.com/api",
       "etherscanBaseUrl": "https://explorer.testnet.chain.robinhood.com"
     }
