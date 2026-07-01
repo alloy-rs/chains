@@ -2421,6 +2421,10 @@
       "internalId": "Robinhood",
       "name": "robinhood",
       "averageBlocktimeHint": 400,
+      "supportsShanghai": true,
+      "tags": [
+        "arbitrum"
+      ],
       "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://robinhoodchain.blockscout.com/api",
       "etherscanBaseUrl": "https://robinhoodchain.blockscout.com"
@@ -2430,7 +2434,11 @@
       "internalId": "RobinhoodTestnet",
       "name": "robinhood-testnet",
       "averageBlocktimeHint": 400,
+      "supportsShanghai": true,
       "isTestnet": true,
+      "tags": [
+        "arbitrum"
+      ],
       "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://explorer.testnet.chain.robinhood.com/api",
       "etherscanBaseUrl": "https://explorer.testnet.chain.robinhood.com"
