@@ -58,9 +58,9 @@ pub struct Chain {
     pub is_testnet: bool,
     /// The chain's native currency symbol (e.g. `ETH`).
     pub native_currency_symbol: Option<String>,
-    /// The chain's base block explorer API URL (e.g. `https://api.etherscan.io/`).
+    /// The chain's base block explorer API URL (e.g. `https://api.etherscan.io/v2/api?chainid=1`).
     pub etherscan_api_url: Option<String>,
-    /// The chain's base block explorer base URL (e.g. `https://etherscan.io/`).
+    /// The chain's base block explorer base URL (e.g. `https://etherscan.io`).
     pub etherscan_base_url: Option<String>,
     /// The name of the environment variable that contains the Etherscan API key.
     pub etherscan_api_key_name: Option<String>,
