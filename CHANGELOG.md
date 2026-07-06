@@ -5,18 +5,59 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.2.34](https://github.com/alloy-rs/chains/releases/tag/v0.2.34) - 2026-04-14
+## [0.2.35](https://github.com/alloy-rs/chains/releases/tag/v0.2.35) - 2026-07-06
+
+### Bug Fixes
+
+- Quote dependabot schedule time ([#297](https://github.com/alloy-rs/chains/issues/297))
+- Update BSC blocktime spec asset ([#290](https://github.com/alloy-rs/chains/issues/290))
+-  Fix megaeth blockchain explorer url ([#286](https://github.com/alloy-rs/chains/issues/286))
+- Move BattleChainTestnet from legacy -> EIP-1559-supporting chains ([#270](https://github.com/alloy-rs/chains/issues/270))
+
+### Dependencies
+
+- [deps] Bump the ci-weekly group with 2 updates ([#304](https://github.com/alloy-rs/chains/issues/304))
+- [deps] Bump the ci-weekly group across 1 directory with 2 updates ([#298](https://github.com/alloy-rs/chains/issues/298))
+- [deps] Update phf requirement from 0.13 to 0.14 in the cargo-weekly group ([#301](https://github.com/alloy-rs/chains/issues/301))
+- [deps] Bump astral-sh/setup-uv from 6 to 7 ([#295](https://github.com/alloy-rs/chains/issues/295))
+- [deps] Bump taiki-e/install-action from 2.74.0 to 2.75.14 ([#281](https://github.com/alloy-rs/chains/issues/281))
+- Harden supply chain — pin actions, lock permissions ([#276](https://github.com/alloy-rs/chains/issues/276))
+
+### Documentation
+
+- Correct etherscan url examples in Chain spec
 
 ### Features
 
-- Add Redbelly Network and Redbelly Testnet ([#273](https://github.com/alloy-rs/chains/issues/273))
+- Add BattleChain ([#299](https://github.com/alloy-rs/chains/issues/299))
+- [fluent] Add fluent mainnet, fix incorrect explorer links for fluent devnet and testnet ([#282](https://github.com/alloy-rs/chains/issues/282))
+- Add Gravity mainnet (127001) ([#275](https://github.com/alloy-rs/chains/issues/275))
+- Add Redbelly Network (151) and testnet (153) ([#273](https://github.com/alloy-rs/chains/issues/273))
 - Add Radius Network and Radius Testnet ([#269](https://github.com/alloy-rs/chains/issues/269))
-- Add Tempo Devnet ([#272](https://github.com/alloy-rs/chains/issues/272))
+- Add TempoDevnet chain (31318) ([#272](https://github.com/alloy-rs/chains/issues/272))
 - Add Plume support ([#268](https://github.com/alloy-rs/chains/issues/268))
+
+### Miscellaneous Tasks
+
+- Group weekly dependabot updates ([#296](https://github.com/alloy-rs/chains/issues/296))
+- Group dependabot updates by ecosystem ([#284](https://github.com/alloy-rs/chains/issues/284))
+- [release] V0.2.34 ([#274](https://github.com/alloy-rs/chains/issues/274))
+- Update assets
 
 ### Other
 
-- Move BattleChainTestnet from legacy -> EIP-1559 supporting chains ([#270](https://github.com/alloy-rs/chains/issues/270))
+- Add Robinhood mainnet ([#303](https://github.com/alloy-rs/chains/issues/303))
+- Set rust-toolchain inputs explicitly ([#302](https://github.com/alloy-rs/chains/issues/302))
+- Update BSC block interval ([#288](https://github.com/alloy-rs/chains/issues/288))
+- Add cargo dependabot updates ([#278](https://github.com/alloy-rs/chains/issues/278))
+
+### Refactor
+
+- Generate chain registry ([#291](https://github.com/alloy-rs/chains/issues/291))
+
+### Styling
+
+- Add Linea blocktime hints ([#292](https://github.com/alloy-rs/chains/issues/292))
 
 ## [0.2.33](https://github.com/alloy-rs/chains/releases/tag/v0.2.33) - 2026-03-24
 
@@ -31,6 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Miscellaneous Tasks
 
+- Release 0.2.33
 - [release] V0.2.32 ([#264](https://github.com/alloy-rs/chains/issues/264))
 
 ### Other
