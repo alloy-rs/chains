@@ -948,6 +948,18 @@
       "etherscanBaseUrl": "https://explorer.gravity.xyz",
       "etherscanApiKeyName": null
     },
+    "1672": {
+      "internalId": "Pharos",
+      "name": "pharos",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "PROS",
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
+      "etherscanApiKeyName": null
+    },
     "1776": {
       "internalId": "Injective",
       "name": "injective",
@@ -2087,6 +2099,18 @@
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=660279",
       "etherscanBaseUrl": "https://xaiscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "688688": {
+      "internalId": "PharosTestnet",
+      "name": "pharos-testnet",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "PHRS",
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
+      "etherscanApiKeyName": null
     },
     "723487": {
       "internalId": "Radius",

@@ -2442,6 +2442,25 @@
       "nativeCurrencySymbol": "ETH",
       "etherscanApiUrl": "https://explorer.testnet.chain.robinhood.com/api",
       "etherscanBaseUrl": "https://explorer.testnet.chain.robinhood.com"
+    },
+    {
+      "chainId": 1672,
+      "internalId": "Pharos",
+      "name": "pharos",
+      "averageBlocktimeHint": 1000,
+      "supportsShanghai": true,
+      "nativeCurrencySymbol": "PROS",
+      "etherscanBaseUrl": "https://pharosscan.xyz"
+    },
+    {
+      "chainId": 688688,
+      "internalId": "PharosTestnet",
+      "name": "pharos-testnet",
+      "averageBlocktimeHint": 1000,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "PHRS",
+      "etherscanBaseUrl": "https://testnet.pharosscan.xyz"
     }
   ]
 }
