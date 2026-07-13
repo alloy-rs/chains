@@ -956,8 +956,8 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "PROS",
-      "etherscanApiUrl": "https://api.socialscan.io/pharos-mainnet/v1/explorer/command_api/contract",
-      "etherscanBaseUrl": "https://pharosscan.xyz",
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
       "etherscanApiKeyName": null
     },
     "1776": {
@@ -2108,8 +2108,8 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "PHRS",
-      "etherscanApiUrl": "https://api.socialscan.io/pharos-testnet/v1/explorer/command_api/contract",
-      "etherscanBaseUrl": "https://testnet.pharosscan.xyz",
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
       "etherscanApiKeyName": null
     },
     "723487": {
