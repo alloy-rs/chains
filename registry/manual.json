@@ -2449,7 +2449,9 @@
       "name": "pharos",
       "averageBlocktimeHint": 1000,
       "supportsShanghai": true,
-      "nativeCurrencySymbol": "PROS"
+      "nativeCurrencySymbol": "PROS",
+      "etherscanApiUrl": "https://api.socialscan.io/pharos-mainnet/v1/explorer/command_api/contract",
+      "etherscanBaseUrl": "https://pharosscan.xyz"
     },
     {
       "chainId": 688688,
@@ -2458,7 +2460,9 @@
       "averageBlocktimeHint": 1000,
       "supportsShanghai": true,
       "isTestnet": true,
-      "nativeCurrencySymbol": "PHRS"
+      "nativeCurrencySymbol": "PHRS",
+      "etherscanApiUrl": "https://api.socialscan.io/pharos-testnet/v1/explorer/command_api/contract",
+      "etherscanBaseUrl": "https://testnet.pharosscan.xyz"
     }
   ]
 }
