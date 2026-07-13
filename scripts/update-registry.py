@@ -172,6 +172,11 @@ def validate_chains(chains: list[Chain]) -> None:
         seen_ids.add(chain.chain_id)
         seen_variants.add(chain.internal_id)
 
+        if (chain.etherscan_api_url is None) != (chain.etherscan_base_url is None):
+            raise ValueError(
+                f"Chain {chain.internal_id} must define both etherscanApiUrl and etherscanBaseUrl"
+            )
+
         for name in [chain.name, *chain.aliases]:
             previous = parse_names.setdefault(name, chain.internal_id)
             if previous != chain.internal_id:
