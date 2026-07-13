@@ -957,7 +957,7 @@
       "isTestnet": false,
       "nativeCurrencySymbol": "PROS",
       "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
+      "etherscanBaseUrl": "https://pharosscan.xyz",
       "etherscanApiKeyName": null
     },
     "1776": {
@@ -2109,7 +2109,7 @@
       "isTestnet": true,
       "nativeCurrencySymbol": "PHRS",
       "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
+      "etherscanBaseUrl": "https://testnet.pharosscan.xyz",
       "etherscanApiKeyName": null
     },
     "723487": {
