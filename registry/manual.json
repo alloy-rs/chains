@@ -398,6 +398,9 @@
       ],
       "averageBlocktimeHint": 450,
       "supportsShanghai": true,
+      "tags": [
+        "bsc"
+      ],
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=56",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY",
       "wrappedNativeToken": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
@@ -418,6 +421,9 @@
       "averageBlocktimeHint": 450,
       "supportsShanghai": true,
       "isTestnet": true,
+      "tags": [
+        "bsc"
+      ],
       "nativeCurrencySymbol": "BNB",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=97",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY",
