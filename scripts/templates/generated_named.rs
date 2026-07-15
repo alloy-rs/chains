@@ -86,6 +86,12 @@ impl NamedChain {
         %%gnosis_predicate
     }
 
+    /// Returns true if this chain is a BNB Smart Chain (BSC) network.
+    #[inline]
+    pub const fn is_bsc(&self) -> bool {
+        %%bsc_predicate
+    }
+
     /// Returns true if the chain contains Polygon configuration.
     #[inline]
     pub const fn is_polygon(self) -> bool {

@@ -743,6 +743,12 @@ impl Chain {
         matches!(self.named(), Some(named) if named.is_gnosis())
     }
 
+    /// Returns true if this chain is a BNB Smart Chain (BSC) network.
+    #[inline]
+    pub const fn is_bsc(&self) -> bool {
+        matches!(self.named(), Some(named) if named.is_bsc())
+    }
+
     /// Returns `true` if this chain is a Polygon chain.
     #[inline]
     pub const fn is_polygon(&self) -> bool {
@@ -926,6 +932,17 @@ mod tests {
         let default = Chain::default();
         let expected = Chain::from_named(NamedChain::Mainnet);
         assert_eq!(default, expected);
+    }
+
+    #[test]
+    fn test_is_bsc() {
+        assert!(NamedChain::BinanceSmartChain.is_bsc());
+        assert!(NamedChain::BinanceSmartChainTestnet.is_bsc());
+        assert!(Chain::bsc_mainnet().is_bsc());
+        assert!(Chain::bsc_testnet().is_bsc());
+
+        assert!(!NamedChain::Mainnet.is_bsc());
+        assert!(!Chain::mainnet().is_bsc());
     }
 
     #[cfg(feature = "rlp")]

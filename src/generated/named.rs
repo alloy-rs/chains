@@ -886,6 +886,12 @@ impl NamedChain {
         matches!(self, Self::Gnosis | Self::Chiado)
     }
 
+    /// Returns true if this chain is a BNB Smart Chain (BSC) network.
+    #[inline]
+    pub const fn is_bsc(&self) -> bool {
+        matches!(self, Self::BinanceSmartChain | Self::BinanceSmartChainTestnet)
+    }
+
     /// Returns true if the chain contains Polygon configuration.
     #[inline]
     pub const fn is_polygon(self) -> bool {
