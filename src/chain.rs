@@ -945,6 +945,24 @@ mod tests {
         assert!(!Chain::mainnet().is_bsc());
     }
 
+    #[test]
+    fn test_tempo_devnet_metadata() {
+        let named = NamedChain::TempoDevnet;
+        let chain = Chain::from_named(named);
+
+        assert_eq!(chain.id(), 31318);
+        assert_eq!(chain.average_blocktime_hint(), Some(Duration::from_millis(500)));
+        assert!(chain.supports_shanghai());
+        assert!(named.is_testnet());
+        assert!(chain.is_tempo());
+        assert!(chain.is_custom_sourcify());
+        assert_eq!(named.native_currency_symbol(), Some("USD"));
+        assert_eq!(
+            chain.etherscan_urls(),
+            Some(("https://contracts.tempo.xyz", "https://explore.devnet.tempo.xyz"))
+        );
+    }
+
     #[cfg(feature = "rlp")]
     #[test]
     fn test_id_chain_encodable_length() {

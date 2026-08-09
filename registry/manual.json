@@ -2375,9 +2375,12 @@
       "averageBlocktimeHint": 500,
       "supportsShanghai": true,
       "isTestnet": true,
+      "etherscanApiUrl": "https://contracts.tempo.xyz",
+      "etherscanBaseUrl": "https://explore.devnet.tempo.xyz",
       "nativeCurrencySymbol": "USD",
       "tags": [
-        "tempo"
+        "tempo",
+        "custom-sourcify"
       ]
     },
     {

@@ -1460,8 +1460,8 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "USD",
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
+      "etherscanApiUrl": "https://contracts.tempo.xyz",
+      "etherscanBaseUrl": "https://explore.devnet.tempo.xyz",
       "etherscanApiKeyName": null
     },
     "31337": {
