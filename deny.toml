@@ -3,6 +3,11 @@ yanked = "warn"
 ignore = [
     # https://rustsec.org/advisories/RUSTSEC-2024-0436 paste! is unmaintained
     "RUSTSEC-2024-0436",
+    # ruint's affected Uint operations are not used; alloy-chains only uses
+    # alloy-primitives' Address type. The fixed ruint release requires Rust 1.90,
+    # while alloy-chains supports Rust 1.85.
+    # https://rustsec.org/advisories/RUSTSEC-2026-0220
+    "RUSTSEC-2026-0220",
 ]
 
 [bans]
