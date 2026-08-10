@@ -1001,11 +1001,11 @@
       "name": "ronin",
       "averageBlocktimeHint": 3000,
       "isLegacy": false,
-      "supportsShanghai": false,
+      "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "RON",
-      "etherscanApiUrl": "https://skynet-api.roninchain.com/ronin",
-      "etherscanBaseUrl": "https://app.roninchain.com",
+      "etherscanApiUrl": "https://explorer.roninchain.com/api/v2",
+      "etherscanBaseUrl": "https://explorer.roninchain.com",
       "etherscanApiKeyName": null
     },
     "2201": {
@@ -1973,10 +1973,10 @@
       "name": "ronin-testnet",
       "averageBlocktimeHint": 3000,
       "isLegacy": false,
-      "supportsShanghai": false,
+      "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "RON",
-      "etherscanApiUrl": "https://api-gateway.skymavis.com/rpc/testnet",
+      "etherscanApiUrl": "https://explorer-saigon-testnet-cc58e966ql.t.conduit.xyz/api/v2",
       "etherscanBaseUrl": "https://saigon-explorer.roninchain.com",
       "etherscanApiKeyName": null
     },
