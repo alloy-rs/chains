@@ -2035,6 +2035,15 @@
       "wrappedNativeToken": "0x5555555555555555555555555555555555555555"
     },
     {
+      "chainId": 998,
+      "internalId": "HyperliquidTestnet",
+      "name": "hyperliquid-testnet",
+      "averageBlocktimeHint": 1000,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "HYPE",
+      "wrappedNativeToken": "0x5555555555555555555555555555555555555555"
+    },
+    {
       "chainId": 2741,
       "internalId": "Abstract",
       "name": "abstract",
