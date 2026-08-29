@@ -744,6 +744,18 @@
       "etherscanBaseUrl": "https://stablescan.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "998": {
+      "internalId": "HyperliquidTestnet",
+      "name": "hyperliquid-testnet",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": false,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "HYPE",
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
+      "etherscanApiKeyName": null
+    },
     "999": {
       "internalId": "Hyperliquid",
       "name": "hyperliquid",
