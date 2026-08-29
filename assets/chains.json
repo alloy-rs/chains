@@ -759,7 +759,7 @@
     "999": {
       "internalId": "Hyperliquid",
       "name": "hyperliquid",
-      "averageBlocktimeHint": 2000,
+      "averageBlocktimeHint": 1000,
       "isLegacy": false,
       "supportsShanghai": false,
       "isTestnet": false,

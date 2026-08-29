@@ -2027,7 +2027,7 @@
       "chainId": 999,
       "internalId": "Hyperliquid",
       "name": "hyperliquid",
-      "averageBlocktimeHint": 2000,
+      "averageBlocktimeHint": 1000,
       "nativeCurrencySymbol": "HYPE",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=999",
       "etherscanBaseUrl": "https://hyperevmscan.io",
