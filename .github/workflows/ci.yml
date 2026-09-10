@@ -9,6 +9,9 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
+  NODE_OPTIONS: --no-network-family-autoselection
+  SFW_UNKNOWN_HOST_ACTION: ignore
+  CARGO_NET_GIT_FETCH_WITH_CLI: "true"
 
 jobs:
   test:
@@ -17,6 +20,7 @@ jobs:
     timeout-minutes: 30
     permissions:
       contents: read
+      id-token: write
     strategy:
       fail-fast: false
       matrix:
@@ -33,6 +37,12 @@ jobs:
       - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # master
         with:
           toolchain: ${{ matrix.rust }}
+      - name: Secure runner
+        uses: tempoxyz/gh-actions/actions/secure-runner@5338a3746a2ac2ddd88cbede733c79f907aca3a0
+        with:
+          egress-policy: audit
+      - name: Verify Socket Cargo interception
+        uses: ./.github/actions/check-socket-shim
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:
           cache-on-failure: true
@@ -50,6 +60,7 @@ jobs:
     timeout-minutes: 30
     permissions:
       contents: read
+      id-token: write
     strategy:
       fail-fast: false
       matrix:
@@ -64,6 +75,12 @@ jobs:
         with:
           toolchain: nightly
           components: miri
+      - name: Secure runner
+        uses: tempoxyz/gh-actions/actions/secure-runner@5338a3746a2ac2ddd88cbede733c79f907aca3a0
+        with:
+          egress-policy: audit
+      - name: Verify Socket Cargo interception
+        uses: ./.github/actions/check-socket-shim
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:
           cache-on-failure: true
@@ -75,6 +92,7 @@ jobs:
     timeout-minutes: 30
     permissions:
       contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -83,6 +101,12 @@ jobs:
         with:
           toolchain: stable
           targets: wasm32-unknown-unknown
+      - name: Secure runner
+        uses: tempoxyz/gh-actions/actions/secure-runner@5338a3746a2ac2ddd88cbede733c79f907aca3a0
+        with:
+          egress-policy: audit
+      - name: Verify Socket Cargo interception
+        uses: ./.github/actions/check-socket-shim
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:
           cache-on-failure: true
@@ -94,6 +118,7 @@ jobs:
     timeout-minutes: 30
     permissions:
       contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -101,6 +126,12 @@ jobs:
       - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # master
         with:
           toolchain: stable
+      - name: Secure runner
+        uses: tempoxyz/gh-actions/actions/secure-runner@5338a3746a2ac2ddd88cbede733c79f907aca3a0
+        with:
+          egress-policy: audit
+      - name: Verify Socket Cargo interception
+        uses: ./.github/actions/check-socket-shim
       - uses: taiki-e/install-action@1ed6d7be6168f6c9046541087ff549b6bc581fdf # v2
         with:
           tool: cargo-hack
@@ -115,6 +146,7 @@ jobs:
     timeout-minutes: 30
     permissions:
       contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -123,10 +155,16 @@ jobs:
         with:
           toolchain: nightly
           components: clippy
+      - name: Secure runner
+        uses: tempoxyz/gh-actions/actions/secure-runner@5338a3746a2ac2ddd88cbede733c79f907aca3a0
+        with:
+          egress-policy: audit
+      - name: Verify Socket Cargo interception
+        uses: ./.github/actions/check-socket-shim
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:
           cache-on-failure: true
-      - run: cargo clippy --workspace --all-targets --all-features
+      - run: cargo +nightly clippy --workspace --all-targets --all-features
         env:
           RUSTFLAGS: -Dwarnings
 
@@ -135,6 +173,7 @@ jobs:
     timeout-minutes: 30
     permissions:
       contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -142,6 +181,12 @@ jobs:
       - uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # master
         with:
           toolchain: nightly
+      - name: Secure runner
+        uses: tempoxyz/gh-actions/actions/secure-runner@5338a3746a2ac2ddd88cbede733c79f907aca3a0
+        with:
+          egress-policy: audit
+      - name: Verify Socket Cargo interception
+        uses: ./.github/actions/check-socket-shim
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:
           cache-on-failure: true
@@ -154,6 +199,7 @@ jobs:
     timeout-minutes: 30
     permissions:
       contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -162,6 +208,12 @@ jobs:
         with:
           toolchain: nightly
           components: rustfmt
+      - name: Secure runner
+        uses: tempoxyz/gh-actions/actions/secure-runner@5338a3746a2ac2ddd88cbede733c79f907aca3a0
+        with:
+          egress-policy: audit
+      - name: Verify Socket Cargo interception
+        uses: ./.github/actions/check-socket-shim
       - uses: astral-sh/setup-uv@v10.0.1
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:
@@ -173,6 +225,7 @@ jobs:
     timeout-minutes: 30
     permissions:
       contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -181,7 +234,13 @@ jobs:
         with:
           toolchain: nightly
           components: rustfmt
-      - run: cargo fmt --all --check
+      - name: Secure runner
+        uses: tempoxyz/gh-actions/actions/secure-runner@5338a3746a2ac2ddd88cbede733c79f907aca3a0
+        with:
+          egress-policy: audit
+      - name: Verify Socket Cargo interception
+        uses: ./.github/actions/check-socket-shim
+      - run: cargo +nightly fmt --all --check
 
   deny:
     uses: tempoxyz/ci/.github/workflows/deny.yml@main
