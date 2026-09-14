@@ -2485,6 +2485,17 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "PHRS"
+    },
+    {
+      "chainId": 1874,
+      "internalId": "WhitechainSepolia",
+      "name": "whitechain-sepolia",
+      "averageBlocktimeHint": 1000,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "etherscanApiUrl": "https://explorer.testnet.whitechain.io/api",
+      "etherscanBaseUrl": "https://explorer.testnet.whitechain.io",
+      "nativeCurrencySymbol": "WBT"
     }
   ]
 }
