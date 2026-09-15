@@ -1977,30 +1977,6 @@
       "etherscanBaseUrl": "https://berascan.com"
     },
     {
-      "chainId": 98985,
-      "internalId": "SuperpositionTestnet",
-      "name": "superposition-testnet",
-      "averageBlocktimeHint": 260,
-      "supportsShanghai": true,
-      "isTestnet": true,
-      "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://testnet-explorer.superposition.so/api",
-      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY",
-      "etherscanBaseUrl": "https://testnet-explorer.superposition.so"
-    },
-    {
-      "chainId": 55244,
-      "internalId": "Superposition",
-      "name": "superposition",
-      "averageBlocktimeHint": 260,
-      "supportsShanghai": true,
-      "etherscanApiUrl": "https://explorer.superposition.so/api",
-      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY",
-      "wrappedNativeToken": "0x1fB719f10b56d7a85DCD32f27f897375fB21cfdd",
-      "nativeCurrencySymbol": "ETH",
-      "etherscanBaseUrl": "https://explorer.superposition.so"
-    },
-    {
       "chainId": 143,
       "internalId": "Monad",
       "name": "monad",
