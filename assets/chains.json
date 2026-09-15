@@ -1704,18 +1704,6 @@
       "etherscanBaseUrl": "https://sophscan.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
-    "55244": {
-      "internalId": "Superposition",
-      "name": "superposition",
-      "averageBlocktimeHint": 260,
-      "isLegacy": false,
-      "supportsShanghai": true,
-      "isTestnet": false,
-      "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://explorer.superposition.so/api",
-      "etherscanBaseUrl": "https://explorer.superposition.so",
-      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
-    },
     "57073": {
       "internalId": "Ink",
       "name": "ink",
@@ -1907,18 +1895,6 @@
       "etherscanApiUrl": "https://testnet-explorer.plume.org/api",
       "etherscanBaseUrl": "https://testnet-explorer.plume.org",
       "etherscanApiKeyName": null
-    },
-    "98985": {
-      "internalId": "SuperpositionTestnet",
-      "name": "superposition-testnet",
-      "averageBlocktimeHint": 260,
-      "isLegacy": false,
-      "supportsShanghai": true,
-      "isTestnet": true,
-      "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://testnet-explorer.superposition.so/api",
-      "etherscanBaseUrl": "https://testnet-explorer.superposition.so",
-      "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "127001": {
       "internalId": "Gravity",
