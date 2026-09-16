@@ -2401,6 +2401,16 @@
       ]
     },
     {
+      "chainId": 5042,
+      "internalId": "Arc",
+      "name": "arc",
+      "averageBlocktimeHint": 500,
+      "supportsShanghai": true,
+      "etherscanApiUrl": "https://api.arc-scan.org/api",
+      "nativeCurrencySymbol": "USDC",
+      "etherscanBaseUrl": "https://arc-scan.org"
+    },
+    {
       "chainId": 5042002,
       "internalId": "ArcTestnet",
       "name": "arc-testnet",
