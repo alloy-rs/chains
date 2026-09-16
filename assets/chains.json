@@ -1136,9 +1136,9 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://robinhoodchain.blockscout.com/api",
-      "etherscanBaseUrl": "https://robinhoodchain.blockscout.com",
-      "etherscanApiKeyName": null
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=4663",
+      "etherscanBaseUrl": "https://robin.etherscan.io",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "4689": {
       "internalId": "Iotex",
@@ -1196,9 +1196,9 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "USDC",
-      "etherscanApiUrl": "https://api.arc-scan.org/api",
-      "etherscanBaseUrl": "https://arc-scan.org",
-      "etherscanApiKeyName": null
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=5042",
+      "etherscanBaseUrl": "https://arc.etherscan.io",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "5611": {
       "internalId": "OpBNBTestnet",
