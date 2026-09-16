@@ -996,6 +996,18 @@
       "etherscanBaseUrl": "https://soneium.blockscout.com",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "1874": {
+      "internalId": "WhitechainSepolia",
+      "name": "whitechain-sepolia",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "WBT",
+      "etherscanApiUrl": "https://explorer.testnet.whitechain.io/api",
+      "etherscanBaseUrl": "https://explorer.testnet.whitechain.io",
+      "etherscanApiKeyName": null
+    },
     "1946": {
       "internalId": "SoneiumMinatoTestnet",
       "name": "soneium-minato-testnet",
