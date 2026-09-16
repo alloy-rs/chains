@@ -2406,9 +2406,10 @@
       "name": "arc",
       "averageBlocktimeHint": 500,
       "supportsShanghai": true,
-      "etherscanApiUrl": "https://api.arc-scan.org/api",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=5042",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY",
       "nativeCurrencySymbol": "USDC",
-      "etherscanBaseUrl": "https://arc-scan.org"
+      "etherscanBaseUrl": "https://arc.etherscan.io"
     },
     {
       "chainId": 5042002,
@@ -2462,8 +2463,9 @@
         "arbitrum"
       ],
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://robinhoodchain.blockscout.com/api",
-      "etherscanBaseUrl": "https://robinhoodchain.blockscout.com"
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=4663",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY",
+      "etherscanBaseUrl": "https://robin.etherscan.io"
     },
     {
       "chainId": 46630,
