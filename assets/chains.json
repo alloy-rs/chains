@@ -1188,6 +1188,18 @@
       "etherscanBaseUrl": "https://sepolia.mantlescan.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "5042": {
+      "internalId": "Arc",
+      "name": "arc",
+      "averageBlocktimeHint": 500,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "USDC",
+      "etherscanApiUrl": "https://api.arc-scan.org/api",
+      "etherscanBaseUrl": "https://arc-scan.org",
+      "etherscanApiKeyName": null
+    },
     "5611": {
       "internalId": "OpBNBTestnet",
       "name": "opbnb-testnet",
