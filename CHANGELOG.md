@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.39](https://github.com/alloy-rs/chains/releases/tag/v0.2.39) - 2026-09-16
+
+### Dependencies
+
+- [deps] Bump taiki-e/install-action from 2.87.2 to 2.87.8 in the ci-weekly group ([#324](https://github.com/alloy-rs/chains/issues/324))
+
+### Features
+
+- [registry] Add whitechain-sepolia (1874) ([#325](https://github.com/alloy-rs/chains/issues/325))
+- Add Arc mainnet ([#327](https://github.com/alloy-rs/chains/issues/327))
+
 ## [0.2.38](https://github.com/alloy-rs/chains/releases/tag/v0.2.38) - 2026-09-11
 
 ### Bug Fixes
@@ -25,6 +36,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add hyperliquid testnet ([#318](https://github.com/alloy-rs/chains/issues/318))
 - Update Ronin and Ronin testnet chain metadata ([#314](https://github.com/alloy-rs/chains/issues/314))
+
+### Miscellaneous Tasks
+
+- Release 0.2.38
 
 ## [0.2.37](https://github.com/alloy-rs/chains/releases/tag/v0.2.37) - 2026-08-09
 
