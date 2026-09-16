@@ -2406,7 +2406,9 @@
       "name": "arc",
       "averageBlocktimeHint": 500,
       "supportsShanghai": true,
-      "nativeCurrencySymbol": "USDC"
+      "etherscanApiUrl": "https://api.arc-scan.org/api",
+      "nativeCurrencySymbol": "USDC",
+      "etherscanBaseUrl": "https://arc-scan.org"
     },
     {
       "chainId": 5042002,

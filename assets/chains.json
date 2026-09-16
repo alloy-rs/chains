@@ -1184,8 +1184,8 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "USDC",
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
+      "etherscanApiUrl": "https://api.arc-scan.org/api",
+      "etherscanBaseUrl": "https://arc-scan.org",
       "etherscanApiKeyName": null
     },
     "5611": {
