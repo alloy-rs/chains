@@ -167,6 +167,7 @@ jobs:
         with:
           cache-on-failure: true
       - run: uv run python scripts/update-registry.py --check
+      - run: uv run python -m unittest discover -s scripts -p 'test_*.py'
 
   fmt:
     runs-on: ubuntu-latest

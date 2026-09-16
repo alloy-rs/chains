@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import subprocess
 import sys
@@ -70,9 +71,10 @@ class Chain:
 
 
 class StaticStringTable:
-    def __init__(self):
+    def __init__(self, index_type: str):
+        self.index_type = index_type
         self.values: list[str] = []
-        self.indexes: dict[str, int] = {}
+        self.indexes: dict[str, str] = {}
 
     def add(self, value: str | None) -> str:
         if value is None:
@@ -82,13 +84,16 @@ class StaticStringTable:
 
         index = self.indexes.get(value)
         if index is None:
-            index = len(self.values)
-            if index >= 0xFF:
+            if len(self.values) >= 0xFF:
                 raise ValueError("Too many static strings for compact storage")
+            # Name values independently of insertion order or the first chain using them.
+            index = "V" + hashlib.sha256(value.encode()).hexdigest()[:16]
+            if index in self.indexes.values():
+                raise ValueError("Static table identifier collision")
             self.values.append(value)
             self.indexes[value] = index
 
-        return str(index)
+        return f"{self.index_type}::{index} as u8"
 
 
 def main() -> int:
@@ -223,18 +228,13 @@ def generated_named(chains: list[Chain]) -> str:
         chain_index_type = "u8"
 
     string_tables = {
-        "CHAIN_NAMES": StaticStringTable(),
-        "NATIVE_CURRENCY_SYMBOLS": StaticStringTable(),
-        "ETHERSCAN_API_URLS": StaticStringTable(),
-        "ETHERSCAN_BASE_URLS": StaticStringTable(),
-        "ETHERSCAN_API_KEY_NAMES": StaticStringTable(),
+        "CHAIN_NAMES": StaticStringTable("NameIndex"),
+        "NATIVE_CURRENCY_SYMBOLS": StaticStringTable("CurrencyIndex"),
+        "ETHERSCAN_API_URLS": StaticStringTable("ApiUrlIndex"),
+        "ETHERSCAN_BASE_URLS": StaticStringTable("BaseUrlIndex"),
+        "ETHERSCAN_API_KEY_NAMES": StaticStringTable("ApiKeyIndex"),
     }
-    wrapped_native_tokens = unique(
-        [chain.wrapped_native_token for chain in chains if chain.wrapped_native_token is not None]
-    )
-    if len(wrapped_native_tokens) > 0xFF:
-        raise ValueError("Too many wrapped native tokens for compact storage")
-    wrapped_native_token_indexes = {token: index for index, token in enumerate(wrapped_native_tokens)}
+    wrapped_native_tokens = StaticStringTable("WrappedTokenIndex")
 
     enum_variants = "\n".join(f"    {chain.internal_id} = {chain.chain_id}," for chain in chains)
     variants = "\n".join(f"        Self::{chain.internal_id}," for chain in chains)
@@ -242,9 +242,10 @@ def generated_named(chains: list[Chain]) -> str:
         f"            {chain.chain_id} => Some(Self::{chain.internal_id})," for chain in chains
     )
     chain_index_arms = "\n".join(
-        f"            Self::{chain.internal_id} => {index},"
-        for index, chain in enumerate(chains)
+        f"            Self::{chain.internal_id} => ChainOrdinal::{chain.internal_id} as ChainIndex,"
+        for chain in chains
     )
+    chain_index_variants = "\n".join(f"    {chain.internal_id}," for chain in chains)
     stored_flags = stored_chain_flags(chains)
     flag_type, flag_consts = generated_flag_consts(stored_flags)
     flag_aliases = generated_flag_aliases(stored_flags)
@@ -253,15 +254,15 @@ def generated_named(chains: list[Chain]) -> str:
         f"{chain_string_indexes(string_tables, chain)}, "
         f"{average_blocktime_millis(chain)}, "
         f"{chain_flags(chain, stored_flags)}, "
-        f"{wrapped_native_token_index(chain, wrapped_native_token_indexes)}"
+        f"{wrapped_native_tokens.add(chain.wrapped_native_token)}"
         "),"
         for chain in chains
     )
     string_table_data = "\n\n".join(
         static_string_table(name, table) for name, table in string_tables.items()
     )
-    wrapped_native_token_data = "\n".join(
-        f"    address!({rs_str(token)})," for token in wrapped_native_tokens
+    wrapped_native_token_data = static_string_table(
+        "WRAPPED_NATIVE_TOKENS", wrapped_native_tokens, address=True
     )
     parse_aliases = "\n".join(
         f"    (NamedChain::{chain.internal_id}, {rs_str(alias)}),"
@@ -285,7 +286,6 @@ def generated_named(chains: list[Chain]) -> str:
     ]
     phf_maps = generate_phf_maps(parse_entries, serde_entries)
     chain_data_len = len(chains)
-    wrapped_native_token_len = len(wrapped_native_tokens)
     flag_predicates = {
         flag.predicate: flag_predicate_expr(chains, stored_flags, flag, "self")
         for flag in CHAIN_FLAGS
@@ -297,6 +297,7 @@ def generated_named(chains: list[Chain]) -> str:
         chain_data_len=chain_data_len,
         chain_id_arms=chain_id_arms,
         chain_index_arms=chain_index_arms,
+        chain_index_variants=chain_index_variants,
         chain_index_type=chain_index_type,
         custom_sourcify_predicate=flag_predicates["custom_sourcify"],
         elastic_predicate=flag_predicates["elastic"],
@@ -320,7 +321,6 @@ def generated_named(chains: list[Chain]) -> str:
         testnet_predicate=flag_predicates["testnet"],
         variants=variants,
         wrapped_native_token_data=wrapped_native_token_data,
-        wrapped_native_token_len=wrapped_native_token_len,
     )
 
 
@@ -419,15 +419,14 @@ def chain_string_indexes(string_tables: dict[str, StaticStringTable], chain: Cha
     return ", ".join(indexes)
 
 
-def static_string_table(name: str, table: StaticStringTable) -> str:
-    values = "\n".join(f"    {rs_str(value)}," for value in table.values)
-    return f"static {name}: [&str; {len(table.values)}] = [\n{values}\n];"
-
-
-def wrapped_native_token_index(chain: Chain, indexes: dict[str, int]) -> str:
-    if chain.wrapped_native_token is None:
-        return "W"
-    return str(indexes[chain.wrapped_native_token])
+def static_string_table(name: str, table: StaticStringTable, *, address: bool = False) -> str:
+    entries = []
+    for value in table.values:
+        literal = f"address!({rs_str(value)})" if address else rs_str(value)
+        entries.append(f"    {table.indexes[value]} => {literal},")
+    values = "\n".join(entries)
+    ty = "Address" if address else "&str"
+    return f"indexed_table! {{ {name}, {table.index_type}, {ty},\n{values}\n}}"
 
 
 def generate_phf_maps(

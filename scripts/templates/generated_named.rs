@@ -195,6 +195,12 @@ impl NamedChain {
 type ChainIndex = %%chain_index_type;
 type ChainFlags = %%flag_type;
 
+// Keep ordinal numbers out of the generated source so insertions do not renumber references.
+#[repr(%%chain_index_type)]
+enum ChainOrdinal {
+%%chain_index_variants
+}
+
 %%flag_consts
 const NO_INDEX: u8 = u8::MAX;
 
@@ -252,15 +258,26 @@ pub(crate) const SERDE_ALIASES: &[(NamedChain, &str)] = &[
 %%serde_aliases
 ];
 
+// Define the values and their implicit indices together to keep their ordering in sync.
+// Value-derived identifiers remain stable even when a new chain shares an existing value.
+macro_rules! indexed_table {
+    ($table:ident, $index:ident, $ty:ty,) => {
+        static $table: [$ty; 0] = [];
+    };
+    ($table:ident, $index:ident, $ty:ty, $($variant:ident => $value:expr,)*) => {
+        #[repr(u8)]
+        enum $index { $($variant,)* }
+
+        static $table: [$ty; [$(stringify!($variant)),*].len()] = [$($value,)*];
+    };
+}
+
 %%string_table_data
 
-static WRAPPED_NATIVE_TOKENS: [Address; %%wrapped_native_token_len] = [
 %%wrapped_native_token_data
-];
 
 static CHAIN_DATA: [ChainData; %%chain_data_len] = {
     use NO_INDEX as N;
-    use NO_INDEX as W;
 %%flag_aliases
 
     #[allow(clippy::too_many_arguments)]
