@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.39](https://github.com/alloy-rs/chains/releases/tag/v0.2.39) - 2026-09-16
+
+### Dependencies
+
+- [deps] Bump taiki-e/install-action from 2.87.2 to 2.87.8 in the ci-weekly group ([#324](https://github.com/alloy-rs/chains/issues/324))
+
+### Features
+
+- [registry] Add whitechain-sepolia (1874) ([#325](https://github.com/alloy-rs/chains/issues/325))
+- Add Arc mainnet ([#327](https://github.com/alloy-rs/chains/issues/327))
+
+## [0.2.38](https://github.com/alloy-rs/chains/releases/tag/v0.2.38) - 2026-09-11
+
+### Bug Fixes
+
+- Preserve changelog history during releases ([#321](https://github.com/alloy-rs/chains/issues/321))
+- Correct hyperliquid mainnet blocktime hint ([#319](https://github.com/alloy-rs/chains/issues/319))
+- Ignore unaffected ruint advisory ([#313](https://github.com/alloy-rs/chains/issues/313))
+
+### Dependencies
+
+- [deps] Bump taiki-e/install-action from 2.86.7 to 2.87.2 in the ci-weekly group ([#322](https://github.com/alloy-rs/chains/issues/322))
+- [deps] Bump taiki-e/install-action from 2.86.2 to 2.86.7 in the ci-weekly group ([#320](https://github.com/alloy-rs/chains/issues/320))
+- [deps] Bump the ci-weekly group with 2 updates ([#317](https://github.com/alloy-rs/chains/issues/317))
+- [deps] Bump the ci-weekly group with 3 updates ([#316](https://github.com/alloy-rs/chains/issues/316))
+- [deps] Bump taiki-e/install-action from 2.85.2 to 2.85.7 in the ci-weekly group ([#315](https://github.com/alloy-rs/chains/issues/315))
+
+### Features
+
+- Add hyperliquid testnet ([#318](https://github.com/alloy-rs/chains/issues/318))
+- Update Ronin and Ronin testnet chain metadata ([#314](https://github.com/alloy-rs/chains/issues/314))
+
+### Miscellaneous Tasks
+
+- Release 0.2.38
+
 ## [0.2.37](https://github.com/alloy-rs/chains/releases/tag/v0.2.37) - 2026-08-09
 
 ### Dependencies
@@ -16,6 +52,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add Tempo devnet explorer metadata ([#312](https://github.com/alloy-rs/chains/issues/312))
 - Add BSC chain helper ([#308](https://github.com/alloy-rs/chains/issues/308))
+
+### Miscellaneous Tasks
+
+- Release 0.2.37
 
 ## [0.2.36](https://github.com/alloy-rs/chains/releases/tag/v0.2.36) - 2026-07-13
 

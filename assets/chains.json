@@ -996,6 +996,18 @@
       "etherscanBaseUrl": "https://soneium.blockscout.com",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "1874": {
+      "internalId": "WhitechainSepolia",
+      "name": "whitechain-sepolia",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "WBT",
+      "etherscanApiUrl": "https://explorer.testnet.whitechain.io/api",
+      "etherscanBaseUrl": "https://explorer.testnet.whitechain.io",
+      "etherscanApiKeyName": null
+    },
     "1946": {
       "internalId": "SoneiumMinatoTestnet",
       "name": "soneium-minato-testnet",
@@ -1124,9 +1136,9 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://robinhoodchain.blockscout.com/api",
-      "etherscanBaseUrl": "https://robinhoodchain.blockscout.com",
-      "etherscanApiKeyName": null
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=4663",
+      "etherscanBaseUrl": "https://robin.etherscan.io",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "4689": {
       "internalId": "Iotex",
@@ -1174,6 +1186,18 @@
       "nativeCurrencySymbol": "MNT",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=5003",
       "etherscanBaseUrl": "https://sepolia.mantlescan.xyz",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "5042": {
+      "internalId": "Arc",
+      "name": "arc",
+      "averageBlocktimeHint": 500,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "USDC",
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=5042",
+      "etherscanBaseUrl": "https://arc.etherscan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
     "5611": {

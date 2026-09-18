@@ -2401,6 +2401,17 @@
       ]
     },
     {
+      "chainId": 5042,
+      "internalId": "Arc",
+      "name": "arc",
+      "averageBlocktimeHint": 500,
+      "supportsShanghai": true,
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=5042",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY",
+      "nativeCurrencySymbol": "USDC",
+      "etherscanBaseUrl": "https://arc.etherscan.io"
+    },
+    {
       "chainId": 5042002,
       "internalId": "ArcTestnet",
       "name": "arc-testnet",
@@ -2452,8 +2463,9 @@
         "arbitrum"
       ],
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://robinhoodchain.blockscout.com/api",
-      "etherscanBaseUrl": "https://robinhoodchain.blockscout.com"
+      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=4663",
+      "etherscanApiKeyName": "ETHERSCAN_API_KEY",
+      "etherscanBaseUrl": "https://robin.etherscan.io"
     },
     {
       "chainId": 46630,
@@ -2485,6 +2497,20 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "PHRS"
+    },
+    {
+      "chainId": 1874,
+      "internalId": "WhitechainSepolia",
+      "name": "whitechain-sepolia",
+      "tags": [
+        "optimism"
+      ],
+      "averageBlocktimeHint": 1000,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "etherscanApiUrl": "https://explorer.testnet.whitechain.io/api",
+      "etherscanBaseUrl": "https://explorer.testnet.whitechain.io",
+      "nativeCurrencySymbol": "WBT"
     }
   ]
 }
