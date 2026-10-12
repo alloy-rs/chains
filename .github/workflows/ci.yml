@@ -211,7 +211,7 @@ jobs:
       - run: cargo fmt --all --check
 
   deny:
-    uses: tempoxyz/gh-actions/.github/workflows/rust-deny.yml@2ab28a31ae569be9f780c7675b684471060afa40
+    uses: tempoxyz/gh-actions/.github/workflows/rust-deny.yml@2ab28a31ae569be9f780c7675b684471060afa40 # 2026-10-09T21-43-19Z-2ab28a31
     permissions:
       contents: read
       id-token: write
