@@ -716,6 +716,7 @@
       "chainId": 10200,
       "internalId": "Chiado",
       "name": "chiado",
+      "isTestnet": true,
       "averageBlocktimeHint": 5000,
       "supportsShanghai": true,
       "nativeCurrencySymbol": null,

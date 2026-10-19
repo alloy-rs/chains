@@ -963,6 +963,12 @@ mod tests {
         );
     }
 
+    #[test]
+    fn test_chiado_is_testnet() {
+        assert!(NamedChain::Chiado.is_testnet());
+        assert!(!NamedChain::Gnosis.is_testnet());
+    }
+
     #[cfg(feature = "rlp")]
     #[test]
     fn test_id_chain_encodable_length() {

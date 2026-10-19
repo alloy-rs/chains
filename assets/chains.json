@@ -1338,7 +1338,7 @@
       "averageBlocktimeHint": 5000,
       "isLegacy": false,
       "supportsShanghai": true,
-      "isTestnet": false,
+      "isTestnet": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://gnosis-chiado.blockscout.com/api",
       "etherscanBaseUrl": "https://gnosis-chiado.blockscout.com",
