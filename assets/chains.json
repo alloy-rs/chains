@@ -1968,6 +1968,18 @@
       "etherscanBaseUrl": "https://shadownet.explorer.etherlink.com",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
+    "138565": {
+      "internalId": "ValueChainTestnet",
+      "name": "valuechain-testnet",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "SOSO",
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
+      "etherscanApiKeyName": null
+    },
     "167000": {
       "internalId": "Taiko",
       "name": "taiko",
@@ -2014,6 +2026,18 @@
       "nativeCurrencySymbol": "RON",
       "etherscanApiUrl": "https://explorer-saigon-testnet-cc58e966ql.t.conduit.xyz/api/v2",
       "etherscanBaseUrl": "https://saigon-explorer.roninchain.com",
+      "etherscanApiKeyName": null
+    },
+    "286623": {
+      "internalId": "ValueChain",
+      "name": "valuechain",
+      "averageBlocktimeHint": 2000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "SOSO",
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
       "etherscanApiKeyName": null
     },
     "314159": {

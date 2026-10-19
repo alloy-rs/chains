@@ -2511,6 +2511,28 @@
       "etherscanApiUrl": "https://explorer.testnet.whitechain.io/api",
       "etherscanBaseUrl": "https://explorer.testnet.whitechain.io",
       "nativeCurrencySymbol": "WBT"
+    },
+    {
+      "chainId": 286623,
+      "internalId": "ValueChain",
+      "name": "valuechain",
+      "averageBlocktimeHint": 2000,
+      "supportsShanghai": true,
+      "nativeCurrencySymbol": "SOSO",
+      "wrappedNativeToken": "0x5050505050505050505050505050505050505050"
+    },
+    {
+      "chainId": 138565,
+      "internalId": "ValueChainTestnet",
+      "name": "valuechain-testnet",
+      "serdeAliases": [
+        "valuechain_testnet"
+      ],
+      "averageBlocktimeHint": 2000,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "SOSO",
+      "wrappedNativeToken": "0x5050505050505050505050505050505050505050"
     }
   ]
 }
