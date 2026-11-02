@@ -1520,8 +1520,8 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "APE",
-      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=33111",
-      "etherscanBaseUrl": "https://curtis.apescan.io",
+      "etherscanApiUrl": "https://apechain-curtis.blockscout.com/api",
+      "etherscanBaseUrl": "https://apechain-curtis.blockscout.com",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY"
     },
     "33139": {
@@ -1532,9 +1532,9 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "APE",
-      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=33139",
-      "etherscanBaseUrl": "https://apescan.io",
-      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+      "etherscanApiUrl": "https://apechain.blockscout.com/api",
+      "etherscanBaseUrl": "https://apechain.blockscout.com",
+      "etherscanApiKeyName": null
     },
     "34443": {
       "internalId": "Mode",
@@ -1580,9 +1580,9 @@
       "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "ETH",
-      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=42170",
-      "etherscanBaseUrl": "https://nova.arbiscan.io",
-      "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+      "etherscanApiUrl": "https://arbitrum-nova.blockscout.com/api",
+      "etherscanBaseUrl": "https://arbitrum-nova.blockscout.com",
+      "etherscanApiKeyName": null
     },
     "42220": {
       "internalId": "Celo",

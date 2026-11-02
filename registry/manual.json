@@ -276,9 +276,8 @@
       "name": "arbitrum-nova",
       "averageBlocktimeHint": 260,
       "supportsShanghai": true,
-      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=42170",
-      "etherscanBaseUrl": "https://nova.arbiscan.io",
-      "etherscanApiKeyName": "ETHERSCAN_API_KEY",
+      "etherscanApiUrl": "https://arbitrum-nova.blockscout.com/api",
+      "etherscanBaseUrl": "https://arbitrum-nova.blockscout.com",
       "tags": [
         "arbitrum"
       ],
@@ -1840,11 +1839,10 @@
       "name": "apechain",
       "averageBlocktimeHint": 260,
       "supportsShanghai": true,
-      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=33139",
-      "etherscanApiKeyName": "ETHERSCAN_API_KEY",
+      "etherscanApiUrl": "https://apechain.blockscout.com/api",
       "wrappedNativeToken": "0x48b62137EdfA95a428D35C09E44256a739F6B557",
       "nativeCurrencySymbol": "APE",
-      "etherscanBaseUrl": "https://apescan.io"
+      "etherscanBaseUrl": "https://apechain.blockscout.com"
     },
     {
       "chainId": 33111,
@@ -1856,8 +1854,8 @@
       "averageBlocktimeHint": 260,
       "supportsShanghai": true,
       "isTestnet": true,
-      "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=33111",
-      "etherscanBaseUrl": "https://curtis.apescan.io",
+      "etherscanApiUrl": "https://apechain-curtis.blockscout.com/api",
+      "etherscanBaseUrl": "https://apechain-curtis.blockscout.com",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY",
       "nativeCurrencySymbol": "APE"
     },
