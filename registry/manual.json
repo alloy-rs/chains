@@ -2458,7 +2458,7 @@
       "chainId": 4663,
       "internalId": "Robinhood",
       "name": "robinhood",
-      "averageBlocktimeHint": 400,
+      "averageBlocktimeHint": 100,
       "supportsShanghai": true,
       "tags": [
         "arbitrum"
@@ -2472,7 +2472,7 @@
       "chainId": 46630,
       "internalId": "RobinhoodTestnet",
       "name": "robinhood-testnet",
-      "averageBlocktimeHint": 400,
+      "averageBlocktimeHint": 120,
       "supportsShanghai": true,
       "isTestnet": true,
       "tags": [
