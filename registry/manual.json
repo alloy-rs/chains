@@ -2534,6 +2534,21 @@
       "isTestnet": true,
       "nativeCurrencySymbol": "SOSO",
       "wrappedNativeToken": "0x5050505050505050505050505050505050505050"
+    },
+    {
+      "chainId": 196,
+      "internalId": "XLayer",
+      "name": "xlayer",
+      "aliases": [
+        "x-layer"
+      ],
+      "averageBlocktimeHint": 1000,
+      "supportsShanghai": true,
+      "etherscanApiUrl": "https://www.oklink.com/api/v5/explorer/contract/verify-source-code-plugin/XLAYER",
+      "etherscanBaseUrl": "https://www.oklink.com/x-layer/evm",
+      "etherscanApiKeyName": "OKLINK_API_KEY",
+      "nativeCurrencySymbol": "OKB",
+      "wrappedNativeToken": "0xe538905cf8410324e03A5A23C1c177a474D59b2b"
     }
   ]
 }
