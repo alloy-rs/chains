@@ -2244,6 +2244,18 @@
       "etherscanBaseUrl": null,
       "etherscanApiKeyName": null
     },
+    "1234571": {
+      "internalId": "PrimiumTestnet",
+      "name": "primium-testnet",
+      "averageBlocktimeHint": 520,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "DEX",
+      "etherscanApiUrl": null,
+      "etherscanBaseUrl": null,
+      "etherscanApiKeyName": null
+    },
     "5042002": {
       "internalId": "ArcTestnet",
       "name": "arc-testnet",

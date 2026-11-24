@@ -2534,6 +2534,18 @@
       "isTestnet": true,
       "nativeCurrencySymbol": "SOSO",
       "wrappedNativeToken": "0x5050505050505050505050505050505050505050"
+    },
+    {
+      "chainId": 1234571,
+      "internalId": "PrimiumTestnet",
+      "name": "primium-testnet",
+      "serdeAliases": [
+        "primium_testnet"
+      ],
+      "averageBlocktimeHint": 520,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "DEX"
     }
   ]
 }
