@@ -1431,7 +1431,7 @@ static NATIVE_CURRENCY_SYMBOLS: [&str; 67] = [
     "DEX", "BTCN", "PAS", "KSM", "DOT", "DEGEN",
 ];
 
-static ETHERSCAN_API_URLS: [&str; 163] = [
+static ETHERSCAN_API_URLS: [&str; 164] = [
     "https://api.etherscan.io/v2/api?chainid=1",
     "https://api.etherscan.io/v2/api?chainid=10",
     "https://flare-explorer.flare.network/api",
@@ -1576,6 +1576,7 @@ static ETHERSCAN_API_URLS: [&str; 163] = [
     "https://explorer-sepolia.inkonchain.com/api/v2",
     "https://bob-sepolia.explorer.gobob.xyz/api",
     "https://odyssey-explorer.ithaca.xyz/api",
+    "https://explorer-testnet.codexnetwork.org/api",
     "https://testnet.arcscan.app/api",
     "https://explorer.zora.energy/api",
     "https://api.etherscan.io/v2/api?chainid=11142220",
@@ -1597,7 +1598,7 @@ static ETHERSCAN_API_URLS: [&str; 163] = [
     "https://api.etherscan.io/v2/api?chainid=37714555429",
 ];
 
-static ETHERSCAN_BASE_URLS: [&str; 166] = [
+static ETHERSCAN_BASE_URLS: [&str; 167] = [
     "https://etherscan.io",
     "https://optimistic.etherscan.io",
     "https://flare-explorer.flare.network",
@@ -1745,6 +1746,7 @@ static ETHERSCAN_BASE_URLS: [&str; 166] = [
     "https://explorer-sepolia.inkonchain.com",
     "https://bob-sepolia.explorer.gobob.xyz",
     "https://odyssey-explorer.ithaca.xyz",
+    "https://explorer-testnet.codexnetwork.org",
     "https://testnet.arcscan.app",
     "https://explorer.zora.energy",
     "https://sepolia.celoscan.io",
@@ -2042,26 +2044,26 @@ static CHAIN_DATA: [ChainData; 207] = {
         d(184, N, 142, 145, N, 2000, S | T, W),
         d(185, N, 143, 146, N, 1000, S | T | O, W),
         d(186, 54, N, N, N, 0, L | T, W),
-        d(187, 61, N, N, N, 520, S | T, W),
-        d(188, 41, 144, 147, 1, 500, S | T, W),
-        d(189, N, 145, 148, 1, 2000, O, W),
-        d(190, 50, 146, 149, 1, 1000, S | T, W),
-        d(191, 0, 147, 150, 0, 0, S | T | E, W),
-        d(192, 0, 148, 151, 0, 2000, S | T | O, W),
-        d(193, 62, 149, 152, 2, 0, S, W),
-        d(194, 62, 150, 153, 2, 0, S | T, W),
-        d(195, N, 151, 154, 0, 2000, S | T | O, W),
-        d(196, N, 152, 155, 1, 1000, T, W),
-        d(197, 63, 153, 156, 1, 2000, S | T, W),
-        d(198, 64, 154, 157, 1, 2000, S, W),
-        d(199, 65, 155, 158, 1, 2000, S, W),
-        d(200, 53, 156, 159, 0, 1000, L | T | X, W),
-        d(201, 66, 157, 160, N, 600, 0, W),
-        d(202, N, 158, 161, 1, 2000, S | T | O, W),
-        d(203, N, 159, 162, 1, 1000, 0, W),
-        d(204, N, 160, 163, 0, 1100, 0, W),
-        d(205, N, 161, 164, 0, 1100, T, W),
-        d(206, 59, 162, 165, 0, 260, S | T, W),
+        d(187, 61, 144, 147, N, 520, S | T, W),
+        d(188, 41, 145, 148, 1, 500, S | T, W),
+        d(189, N, 146, 149, 1, 2000, O, W),
+        d(190, 50, 147, 150, 1, 1000, S | T, W),
+        d(191, 0, 148, 151, 0, 0, S | T | E, W),
+        d(192, 0, 149, 152, 0, 2000, S | T | O, W),
+        d(193, 62, 150, 153, 2, 0, S, W),
+        d(194, 62, 151, 154, 2, 0, S | T, W),
+        d(195, N, 152, 155, 0, 2000, S | T | O, W),
+        d(196, N, 153, 156, 1, 1000, T, W),
+        d(197, 63, 154, 157, 1, 2000, S | T, W),
+        d(198, 64, 155, 158, 1, 2000, S, W),
+        d(199, 65, 156, 159, 1, 2000, S, W),
+        d(200, 53, 157, 160, 0, 1000, L | T | X, W),
+        d(201, 66, 158, 161, N, 600, 0, W),
+        d(202, N, 159, 162, 1, 2000, S | T | O, W),
+        d(203, N, 160, 163, 1, 1000, 0, W),
+        d(204, N, 161, 164, 0, 1100, 0, W),
+        d(205, N, 162, 165, 0, 1100, T, W),
+        d(206, 59, 163, 166, 0, 260, S | T, W),
     ]
 };
 

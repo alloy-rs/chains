@@ -2545,7 +2545,9 @@
       "averageBlocktimeHint": 520,
       "supportsShanghai": true,
       "isTestnet": true,
-      "nativeCurrencySymbol": "DEX"
+      "nativeCurrencySymbol": "DEX",
+      "etherscanApiUrl": "https://explorer-testnet.codexnetwork.org/api",
+      "etherscanBaseUrl": "https://explorer-testnet.codexnetwork.org"
     }
   ]
 }

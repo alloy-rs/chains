@@ -2252,8 +2252,8 @@
       "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "DEX",
-      "etherscanApiUrl": null,
-      "etherscanBaseUrl": null,
+      "etherscanApiUrl": "https://explorer-testnet.codexnetwork.org/api",
+      "etherscanBaseUrl": "https://explorer-testnet.codexnetwork.org",
       "etherscanApiKeyName": null
     },
     "5042002": {
