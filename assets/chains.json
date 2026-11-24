@@ -420,6 +420,18 @@
       "etherscanBaseUrl": "https://redbelly.testnet.routescan.io",
       "etherscanApiKeyName": "ROUTESCAN_API_KEY"
     },
+    "196": {
+      "internalId": "XLayer",
+      "name": "xlayer",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "OKB",
+      "etherscanApiUrl": "https://www.oklink.com/api/v5/explorer/contract/verify-source-code-plugin/XLAYER",
+      "etherscanBaseUrl": "https://www.oklink.com/x-layer/evm",
+      "etherscanApiKeyName": "OKLINK_API_KEY"
+    },
     "204": {
       "internalId": "OpBNBMainnet",
       "name": "opbnb-mainnet",
