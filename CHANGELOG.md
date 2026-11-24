@@ -5,6 +5,50 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.40](https://github.com/alloy-rs/chains/releases/tag/v0.2.40) - 2026-11-24
+
+### Bug Fixes
+
+- Mark Gnosis Chiado as a testnet ([#340](https://github.com/alloy-rs/chains/issues/340))
+- [ci] Buffer the action update cooldown ([#342](https://github.com/alloy-rs/chains/issues/342))
+- [ci] Reuse shared deny and refresh runner pins ([#331](https://github.com/alloy-rs/chains/issues/331))
+
+### Dependencies
+
+- [deps] Bump astral-sh/setup-uv from 10.3.2 to 10.3.3 in the ci-weekly group ([#354](https://github.com/alloy-rs/chains/issues/354))
+- [deps] Bump alloy-rlp from 0.3.16 to 0.3.17 in the cargo-weekly group ([#355](https://github.com/alloy-rs/chains/issues/355))
+- [deps] Bump the ci-weekly group with 2 updates ([#352](https://github.com/alloy-rs/chains/issues/352))
+- Update deps ([#348](https://github.com/alloy-rs/chains/issues/348))
+- [deps] Bump astral-sh/setup-uv from 10.2.0 to 10.3.0 in the ci-weekly group ([#345](https://github.com/alloy-rs/chains/issues/345))
+- Allow Git dependency sources ([#344](https://github.com/alloy-rs/chains/issues/344))
+- Remove redundant package homepages ([#343](https://github.com/alloy-rs/chains/issues/343))
+- Bump gh-actions to d5402286 ([#338](https://github.com/alloy-rs/chains/issues/338))
+- [deps] Bump astral-sh/setup-uv from 10.1.0 to 10.2.0 in the ci-weekly group ([#335](https://github.com/alloy-rs/chains/issues/335))
+- [ci] Bump shared deny and gh-actions pins ([#336](https://github.com/alloy-rs/chains/issues/336))
+- [deps] Bump the ci-weekly group with 2 updates ([#330](https://github.com/alloy-rs/chains/issues/330))
+
+### Features
+
+- Add X Layer mainnet ([#359](https://github.com/alloy-rs/chains/issues/359))
+- Add ValueChain mainnet and testnet ([#346](https://github.com/alloy-rs/chains/issues/346))
+
+### Miscellaneous Tasks
+
+- Commit Cargo.lock ([#350](https://github.com/alloy-rs/chains/issues/350))
+- [ci] Enable automatic Cyclops PR review ([#349](https://github.com/alloy-rs/chains/issues/349))
+- [ci] Update gh-actions to latest revision ([#341](https://github.com/alloy-rs/chains/issues/341))
+- [ci] Use vendored dtolnay/rust-toolchain ([#339](https://github.com/alloy-rs/chains/issues/339))
+- [ci] Migrate deny to gh-actions ([#337](https://github.com/alloy-rs/chains/issues/337))
+- Update gh-actions to ee2960a6 ([#334](https://github.com/alloy-rs/chains/issues/334))
+- [ci] Scan GitHub Actions workflows ([#333](https://github.com/alloy-rs/chains/issues/333))
+- [ci] Update gh-actions pins ([#332](https://github.com/alloy-rs/chains/issues/332))
+- [ci] Route package installs through Aegis ([#323](https://github.com/alloy-rs/chains/issues/323))
+
+### Other
+
+- Publish crates with trusted publishing ([#358](https://github.com/alloy-rs/chains/issues/358))
+- Add Etherscan explorers for Robinhood and Arc mainnets ([#329](https://github.com/alloy-rs/chains/issues/329))
+
 ## [0.2.39](https://github.com/alloy-rs/chains/releases/tag/v0.2.39) - 2026-09-16
 
 ### Dependencies
@@ -15,6 +59,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [registry] Add whitechain-sepolia (1874) ([#325](https://github.com/alloy-rs/chains/issues/325))
 - Add Arc mainnet ([#327](https://github.com/alloy-rs/chains/issues/327))
+
+### Miscellaneous Tasks
+
+- Release 0.2.39
 
 ## [0.2.38](https://github.com/alloy-rs/chains/releases/tag/v0.2.38) - 2026-09-11
 
