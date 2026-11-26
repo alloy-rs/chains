@@ -420,6 +420,18 @@
       "etherscanBaseUrl": "https://redbelly.testnet.routescan.io",
       "etherscanApiKeyName": "ROUTESCAN_API_KEY"
     },
+    "196": {
+      "internalId": "XLayer",
+      "name": "xlayer",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "OKB",
+      "etherscanApiUrl": "https://www.oklink.com/api/v5/explorer/contract/verify-source-code-plugin/XLAYER",
+      "etherscanBaseUrl": "https://www.oklink.com/x-layer/evm",
+      "etherscanApiKeyName": "OKLINK_API_KEY"
+    },
     "204": {
       "internalId": "OpBNBMainnet",
       "name": "opbnb-mainnet",
@@ -749,7 +761,7 @@
       "name": "hyperliquid-testnet",
       "averageBlocktimeHint": 1000,
       "isLegacy": false,
-      "supportsShanghai": false,
+      "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "HYPE",
       "etherscanApiUrl": null,
@@ -761,7 +773,7 @@
       "name": "hyperliquid",
       "averageBlocktimeHint": 1000,
       "isLegacy": false,
-      "supportsShanghai": false,
+      "supportsShanghai": true,
       "isTestnet": false,
       "nativeCurrencySymbol": "HYPE",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=999",
