@@ -2564,6 +2564,20 @@
       "etherscanApiKeyName": "OKLINK_API_KEY",
       "nativeCurrencySymbol": "OKB",
       "wrappedNativeToken": "0xe538905cf8410324e03A5A23C1c177a474D59b2b"
+    },
+    {
+      "chainId": 1234571,
+      "internalId": "PrimiumTestnet",
+      "name": "primium-testnet",
+      "serdeAliases": [
+        "primium_testnet"
+      ],
+      "averageBlocktimeHint": 520,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "DEX",
+      "etherscanApiUrl": "https://explorer-testnet.codexnetwork.org/api",
+      "etherscanBaseUrl": "https://explorer-testnet.codexnetwork.org"
     }
   ]
 }
