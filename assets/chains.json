@@ -1020,6 +1020,18 @@
       "etherscanBaseUrl": "https://explorer.testnet.whitechain.io",
       "etherscanApiKeyName": null
     },
+    "1875": {
+      "internalId": "Whitechain",
+      "name": "whitechain",
+      "averageBlocktimeHint": 1000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "WBT",
+      "etherscanApiUrl": "https://explorer.whitechain.io/api",
+      "etherscanBaseUrl": "https://explorer.whitechain.io",
+      "etherscanApiKeyName": null
+    },
     "1946": {
       "internalId": "SoneiumMinatoTestnet",
       "name": "soneium-minato-testnet",

@@ -2516,6 +2516,19 @@
       "nativeCurrencySymbol": "WBT"
     },
     {
+      "chainId": 1875,
+      "internalId": "Whitechain",
+      "name": "whitechain",
+      "tags": [
+        "optimism"
+      ],
+      "averageBlocktimeHint": 1000,
+      "supportsShanghai": true,
+      "etherscanApiUrl": "https://explorer.whitechain.io/api",
+      "etherscanBaseUrl": "https://explorer.whitechain.io",
+      "nativeCurrencySymbol": "WBT"
+    },
+    {
       "chainId": 286623,
       "internalId": "ValueChain",
       "name": "valuechain",
