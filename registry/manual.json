@@ -2029,6 +2029,7 @@
       "internalId": "Hyperliquid",
       "name": "hyperliquid",
       "averageBlocktimeHint": 1000,
+      "supportsShanghai": true,
       "nativeCurrencySymbol": "HYPE",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=999",
       "etherscanBaseUrl": "https://hyperevmscan.io",
@@ -2040,6 +2041,7 @@
       "internalId": "HyperliquidTestnet",
       "name": "hyperliquid-testnet",
       "averageBlocktimeHint": 1000,
+      "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "HYPE",
       "wrappedNativeToken": "0x5555555555555555555555555555555555555555"
