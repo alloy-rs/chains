@@ -4,7 +4,7 @@ version = 4
 
 [[package]]
 name = "alloy-chains"
-version = "0.2.39"
+version = "0.2.40"
 dependencies = [
  "alloy-primitives",
  "alloy-rlp",

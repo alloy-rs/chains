@@ -969,6 +969,13 @@ mod tests {
         assert!(!NamedChain::Gnosis.is_testnet());
     }
 
+    #[test]
+    fn test_hyperliquid_supports_shanghai() {
+        // HyperEVM runs the Cancun hardfork (without blobs), so PUSH0 is available.
+        assert!(Chain::from_named(NamedChain::Hyperliquid).supports_shanghai());
+        assert!(Chain::from_named(NamedChain::HyperliquidTestnet).supports_shanghai());
+    }
+
     #[cfg(feature = "rlp")]
     #[test]
     fn test_id_chain_encodable_length() {

@@ -2029,6 +2029,7 @@
       "internalId": "Hyperliquid",
       "name": "hyperliquid",
       "averageBlocktimeHint": 1000,
+      "supportsShanghai": true,
       "nativeCurrencySymbol": "HYPE",
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=999",
       "etherscanBaseUrl": "https://hyperevmscan.io",
@@ -2040,6 +2041,7 @@
       "internalId": "HyperliquidTestnet",
       "name": "hyperliquid-testnet",
       "averageBlocktimeHint": 1000,
+      "supportsShanghai": true,
       "isTestnet": true,
       "nativeCurrencySymbol": "HYPE",
       "wrappedNativeToken": "0x5555555555555555555555555555555555555555"
@@ -2514,6 +2516,19 @@
       "nativeCurrencySymbol": "WBT"
     },
     {
+      "chainId": 1875,
+      "internalId": "Whitechain",
+      "name": "whitechain",
+      "tags": [
+        "optimism"
+      ],
+      "averageBlocktimeHint": 1000,
+      "supportsShanghai": true,
+      "etherscanApiUrl": "https://explorer.whitechain.io/api",
+      "etherscanBaseUrl": "https://explorer.whitechain.io",
+      "nativeCurrencySymbol": "WBT"
+    },
+    {
       "chainId": 286623,
       "internalId": "ValueChain",
       "name": "valuechain",
@@ -2534,6 +2549,21 @@
       "isTestnet": true,
       "nativeCurrencySymbol": "SOSO",
       "wrappedNativeToken": "0x5050505050505050505050505050505050505050"
+    },
+    {
+      "chainId": 196,
+      "internalId": "XLayer",
+      "name": "xlayer",
+      "aliases": [
+        "x-layer"
+      ],
+      "averageBlocktimeHint": 1000,
+      "supportsShanghai": true,
+      "etherscanApiUrl": "https://www.oklink.com/api/v5/explorer/contract/verify-source-code-plugin/XLAYER",
+      "etherscanBaseUrl": "https://www.oklink.com/x-layer/evm",
+      "etherscanApiKeyName": "OKLINK_API_KEY",
+      "nativeCurrencySymbol": "OKB",
+      "wrappedNativeToken": "0xe538905cf8410324e03A5A23C1c177a474D59b2b"
     },
     {
       "chainId": 1234571,
