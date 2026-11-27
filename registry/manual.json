@@ -2578,6 +2578,44 @@
       "nativeCurrencySymbol": "DEX",
       "etherscanApiUrl": "https://explorer-testnet.codexnetwork.org/api",
       "etherscanBaseUrl": "https://explorer-testnet.codexnetwork.org"
+    },
+    {
+      "chainId": 4646,
+      "internalId": "MSTChain",
+      "name": "mst",
+      "aliases": [
+        "mst-chain",
+        "mst-mainnet"
+      ],
+      "averageBlocktimeHint": 3000,
+      "supportsShanghai": true,
+      "tags": [
+        "mst"
+      ],
+      "nativeCurrencySymbol": "MSTC",
+      "wrappedNativeToken": "0x30e4ba6867a9232E8f65fDE161297F9486424Ba5",
+      "etherscanBaseUrl": "https://mstscan.com",
+      "etherscanApiUrl": "https://mstscan.com/api"
+    },
+    {
+      "chainId": 54635,
+      "internalId": "MSTChainTestnet",
+      "name": "mst-testnet",
+      "aliases": [
+        "mst-testnet"
+      ],
+      "serdeAliases": [
+        "mst_testnet"
+      ],
+      "averageBlocktimeHint": 3000,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "tags": [
+        "mst"
+      ],
+      "nativeCurrencySymbol": "tMSTC",
+      "etherscanBaseUrl": "https://testnet.mstscan.com",
+      "etherscanApiUrl": "https://testnet.mstscan.com/api"
     }
   ]
 }
