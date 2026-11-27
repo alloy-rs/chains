@@ -547,6 +547,7 @@
         "polygon-amoy"
       ],
       "averageBlocktimeHint": 2100,
+      "supportsShanghai": true,
       "isTestnet": true,
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=80002",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY",
@@ -869,6 +870,7 @@
       "chainId": 288,
       "internalId": "Boba",
       "name": "boba",
+      "supportsShanghai": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://api.bobascan.com/api",
       "etherscanApiKeyName": "BOBASCAN_API_KEY",
@@ -1181,6 +1183,7 @@
       "internalId": "Zora",
       "name": "zora",
       "averageBlocktimeHint": 2000,
+      "supportsShanghai": true,
       "nativeCurrencySymbol": null,
       "etherscanApiUrl": "https://explorer.zora.energy/api",
       "etherscanApiKeyName": "BLOCKSCOUT_API_KEY",
