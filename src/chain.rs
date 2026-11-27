@@ -976,6 +976,15 @@ mod tests {
         assert!(Chain::from_named(NamedChain::HyperliquidTestnet).supports_shanghai());
     }
 
+    #[test]
+    fn test_zora_boba_and_polygon_amoy_support_shanghai() {
+        // Zora and Boba activated Canyon (Shanghai) and Ecotone (Cancun) in the
+        // superchain registry; Polygon Amoy's bor genesis sets shanghaiBlock 73100.
+        assert!(Chain::from_named(NamedChain::Zora).supports_shanghai());
+        assert!(Chain::from_named(NamedChain::Boba).supports_shanghai());
+        assert!(Chain::from_named(NamedChain::PolygonAmoy).supports_shanghai());
+    }
+
     #[cfg(feature = "rlp")]
     #[test]
     fn test_id_chain_encodable_length() {
