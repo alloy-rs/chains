@@ -1152,6 +1152,18 @@
       "etherscanBaseUrl": "https://memecorescan.io",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
     },
+    "4646": {
+      "internalId": "MSTChain",
+      "name": "mst",
+      "averageBlocktimeHint": 3000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": false,
+      "nativeCurrencySymbol": "MSTC",
+      "etherscanApiUrl": "https://mstscan.com/api",
+      "etherscanBaseUrl": "https://mstscan.com",
+      "etherscanApiKeyName": null
+    },
     "4663": {
       "internalId": "Robinhood",
       "name": "robinhood",
@@ -1751,6 +1763,18 @@
       "etherscanApiUrl": "https://api.etherscan.io/v2/api?chainid=50104",
       "etherscanBaseUrl": "https://sophscan.xyz",
       "etherscanApiKeyName": "ETHERSCAN_API_KEY"
+    },
+    "54635": {
+      "internalId": "MSTChainTestnet",
+      "name": "mst-testnet",
+      "averageBlocktimeHint": 3000,
+      "isLegacy": false,
+      "supportsShanghai": true,
+      "isTestnet": true,
+      "nativeCurrencySymbol": "tMSTC",
+      "etherscanApiUrl": "https://testnet.mstscan.com/api",
+      "etherscanBaseUrl": "https://testnet.mstscan.com",
+      "etherscanApiKeyName": null
     },
     "55244": {
       "internalId": "Superposition",
